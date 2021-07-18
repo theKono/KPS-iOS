@@ -2,8 +2,6 @@
 //  KPS.h
 //  KPS
 //
-//  Created by mingshing on 2021/7/18.
-//
 
 #import <Foundation/Foundation.h>
 

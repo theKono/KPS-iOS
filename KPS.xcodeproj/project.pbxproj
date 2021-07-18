@@ -10,6 +10,15 @@
 		E833100926A4100E00A6AA59 /* KPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8330FFF26A4100E00A6AA59 /* KPS.framework */; };
 		E833100E26A4100E00A6AA59 /* KPSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833100D26A4100E00A6AA59 /* KPSTests.swift */; };
 		E833101026A4100E00A6AA59 /* KPS.h in Headers */ = {isa = PBXBuildFile; fileRef = E833100226A4100E00A6AA59 /* KPS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E833102026A410A000A6AA59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833101F26A410A000A6AA59 /* AppDelegate.swift */; };
+		E833102226A410A000A6AA59 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833102126A410A000A6AA59 /* SceneDelegate.swift */; };
+		E833102426A410A000A6AA59 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833102326A410A000A6AA59 /* ViewController.swift */; };
+		E833102726A410A000A6AA59 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E833102526A410A000A6AA59 /* Main.storyboard */; };
+		E833102926A410A200A6AA59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E833102826A410A200A6AA59 /* Assets.xcassets */; };
+		E833102C26A410A200A6AA59 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E833102A26A410A200A6AA59 /* LaunchScreen.storyboard */; };
+		E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833103126A417CC00A6AA59 /* KPSUtility.swift */; };
+		E833103326A417CC00A6AA59 /* KPSUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833103126A417CC00A6AA59 /* KPSUtility.swift */; };
+		E833103526A417F800A6AA59 /* KPSUtilityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833103426A417F800A6AA59 /* KPSUtilityTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +38,16 @@
 		E833100826A4100E00A6AA59 /* KPSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E833100D26A4100E00A6AA59 /* KPSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSTests.swift; sourceTree = "<group>"; };
 		E833100F26A4100E00A6AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E833101D26A410A000A6AA59 /* KPSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E833101F26A410A000A6AA59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E833102126A410A000A6AA59 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E833102326A410A000A6AA59 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E833102626A410A000A6AA59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E833102826A410A200A6AA59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E833102B26A410A200A6AA59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E833102D26A410A200A6AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E833103126A417CC00A6AA59 /* KPSUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSUtility.swift; sourceTree = "<group>"; };
+		E833103426A417F800A6AA59 /* KPSUtilityTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSUtilityTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +66,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E833101A26A410A000A6AA59 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -55,6 +81,7 @@
 			children = (
 				E833100126A4100E00A6AA59 /* KPS */,
 				E833100C26A4100E00A6AA59 /* KPSTests */,
+				E833101E26A410A000A6AA59 /* KPSExample */,
 				E833100026A4100E00A6AA59 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,6 +91,7 @@
 			children = (
 				E8330FFF26A4100E00A6AA59 /* KPS.framework */,
 				E833100826A4100E00A6AA59 /* KPSTests.xctest */,
+				E833101D26A410A000A6AA59 /* KPSExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,6 +101,7 @@
 			children = (
 				E833100226A4100E00A6AA59 /* KPS.h */,
 				E833100326A4100E00A6AA59 /* Info.plist */,
+				E833103126A417CC00A6AA59 /* KPSUtility.swift */,
 			);
 			path = KPS;
 			sourceTree = "<group>";
@@ -81,9 +110,24 @@
 			isa = PBXGroup;
 			children = (
 				E833100D26A4100E00A6AA59 /* KPSTests.swift */,
+				E833103426A417F800A6AA59 /* KPSUtilityTest.swift */,
 				E833100F26A4100E00A6AA59 /* Info.plist */,
 			);
 			path = KPSTests;
+			sourceTree = "<group>";
+		};
+		E833101E26A410A000A6AA59 /* KPSExample */ = {
+			isa = PBXGroup;
+			children = (
+				E833101F26A410A000A6AA59 /* AppDelegate.swift */,
+				E833102126A410A000A6AA59 /* SceneDelegate.swift */,
+				E833102326A410A000A6AA59 /* ViewController.swift */,
+				E833102526A410A000A6AA59 /* Main.storyboard */,
+				E833102826A410A200A6AA59 /* Assets.xcassets */,
+				E833102A26A410A200A6AA59 /* LaunchScreen.storyboard */,
+				E833102D26A410A200A6AA59 /* Info.plist */,
+			);
+			path = KPSExample;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,6 +180,23 @@
 			productReference = E833100826A4100E00A6AA59 /* KPSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		E833101C26A410A000A6AA59 /* KPSExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E833102E26A410A200A6AA59 /* Build configuration list for PBXNativeTarget "KPSExample" */;
+			buildPhases = (
+				E833101926A410A000A6AA59 /* Sources */,
+				E833101A26A410A000A6AA59 /* Frameworks */,
+				E833101B26A410A000A6AA59 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KPSExample;
+			productName = KPSExample;
+			productReference = E833101D26A410A000A6AA59 /* KPSExample.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -147,8 +208,12 @@
 				TargetAttributes = {
 					E8330FFE26A4100E00A6AA59 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 					E833100726A4100E00A6AA59 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					E833101C26A410A000A6AA59 = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
 				};
@@ -168,6 +233,7 @@
 			targets = (
 				E8330FFE26A4100E00A6AA59 /* KPS */,
 				E833100726A4100E00A6AA59 /* KPSTests */,
+				E833101C26A410A000A6AA59 /* KPSExample */,
 			);
 		};
 /* End PBXProject section */
@@ -187,6 +253,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E833101B26A410A000A6AA59 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E833102C26A410A200A6AA59 /* LaunchScreen.storyboard in Resources */,
+				E833102926A410A200A6AA59 /* Assets.xcassets in Resources */,
+				E833102726A410A000A6AA59 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -194,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,7 +278,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E833103526A417F800A6AA59 /* KPSUtilityTest.swift in Sources */,
 				E833100E26A4100E00A6AA59 /* KPSTests.swift in Sources */,
+				E833103326A417CC00A6AA59 /* KPSUtility.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E833101926A410A000A6AA59 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E833102426A410A000A6AA59 /* ViewController.swift in Sources */,
+				E833102026A410A000A6AA59 /* AppDelegate.swift in Sources */,
+				E833102226A410A000A6AA59 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +303,25 @@
 			targetProxy = E833100A26A4100E00A6AA59 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E833102526A410A000A6AA59 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E833102626A410A000A6AA59 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E833102A26A410A200A6AA59 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E833102B26A410A200A6AA59 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E833101126A4100E00A6AA59 /* Debug */ = {
@@ -341,6 +449,7 @@
 		E833101426A4100E00A6AA59 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = KSFL9L3S98;
@@ -357,7 +466,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.KPS;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -365,6 +475,7 @@
 		E833101526A4100E00A6AA59 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = KSFL9L3S98;
@@ -381,7 +492,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.KPS;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -389,6 +500,7 @@
 		E833101726A4100E00A6AA59 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KSFL9L3S98;
 				INFOPLIST_FILE = KPSTests/Info.plist;
@@ -407,6 +519,7 @@
 		E833101826A4100E00A6AA59 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KSFL9L3S98;
 				INFOPLIST_FILE = KPSTests/Info.plist;
@@ -416,6 +529,44 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.KPSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E833102F26A410A200A6AA59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KSFL9L3S98;
+				INFOPLIST_FILE = KPSExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.KPSExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E833103026A410A200A6AA59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KSFL9L3S98;
+				INFOPLIST_FILE = KPSExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.KPSExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -448,6 +599,15 @@
 			buildConfigurations = (
 				E833101726A4100E00A6AA59 /* Debug */,
 				E833101826A4100E00A6AA59 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E833102E26A410A200A6AA59 /* Build configuration list for PBXNativeTarget "KPSExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E833102F26A410A200A6AA59 /* Debug */,
+				E833103026A410A200A6AA59 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

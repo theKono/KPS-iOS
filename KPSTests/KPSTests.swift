@@ -2,8 +2,7 @@
 //  KPSTests.swift
 //  KPSTests
 //
-//  Created by mingshing on 2021/7/18.
-//
+
 
 import XCTest
 @testable import KPS
