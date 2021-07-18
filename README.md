@@ -3,11 +3,9 @@ KPS iOS SDK
 
 # API
 
----
 
 ## Setup
 
----
 
 #### Init
 
@@ -20,7 +18,7 @@ Init the KPS SDK. Please init the SDK before calling any KPS API, preferably at 
 ---
 
 ## User
----
+
 #### Login
 
 Login A KPS user and build a session with the KPS server
@@ -58,12 +56,14 @@ fun KPS.isLoggedIn(): Boolean
 ```
 
 **Return:**
-The function return whether the a user has logged in or not. **Note:** the result reflects only local status and might not be accurate if the session has been cancelled remotely.
+The function return whether the user has logged in or not.
+
+**Note: The result reflects only local status and might not be accurate if the session has been cancelled remotely**
+
 ---
 
 
 ## Content
----
 
 #### Get Content List
 
@@ -83,7 +83,6 @@ fun KPS.openKPSContent(contentId: String?, callback: (errMsg: String?, kpsConten
 ---
 
 ## UI
----
 
 #### Display Content List View
 
@@ -114,10 +113,8 @@ fun KPS.openKPSArticleUI(activity: Activity, folderId: String, selectedAid: Stri
 
 
 # Model
----
 
 ## User
----
 
 #### KPSUser
 
@@ -131,7 +128,6 @@ data class KPSUser {
 ---
 
 ## Content
----
 
 #### KPSContent
 
