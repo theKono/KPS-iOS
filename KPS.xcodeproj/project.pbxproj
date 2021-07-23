@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99055DDFF113AC4A0DF56D70 /* Pods_KPSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C763CF4E42A361D69F0D222F /* Pods_KPSTests.framework */; };
+		B0148C73424AACBA6D4BF1A6 /* Pods_KPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */; };
 		E833100926A4100E00A6AA59 /* KPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8330FFF26A4100E00A6AA59 /* KPS.framework */; };
 		E833100E26A4100E00A6AA59 /* KPSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833100D26A4100E00A6AA59 /* KPSTests.swift */; };
 		E833101026A4100E00A6AA59 /* KPS.h in Headers */ = {isa = PBXBuildFile; fileRef = E833100226A4100E00A6AA59 /* KPS.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -32,6 +34,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		884A072A2B934E70F2DC37B1 /* Pods-KPS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPS.release.xcconfig"; path = "Target Support Files/Pods-KPS/Pods-KPS.release.xcconfig"; sourceTree = "<group>"; };
+		A66D57C2677888A955154D08 /* Pods-KPSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPSTests.release.xcconfig"; path = "Target Support Files/Pods-KPSTests/Pods-KPSTests.release.xcconfig"; sourceTree = "<group>"; };
+		AD706920647B740C3155C11F /* Pods-KPSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPSTests.debug.xcconfig"; path = "Target Support Files/Pods-KPSTests/Pods-KPSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B1B1F3A83BAAA5F378116184 /* Pods-KPS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPS.debug.xcconfig"; path = "Target Support Files/Pods-KPS/Pods-KPS.debug.xcconfig"; sourceTree = "<group>"; };
+		C763CF4E42A361D69F0D222F /* Pods_KPSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8330FFF26A4100E00A6AA59 /* KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E833100226A4100E00A6AA59 /* KPS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPS.h; sourceTree = "<group>"; };
 		E833100326A4100E00A6AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -48,6 +55,7 @@
 		E833102D26A410A200A6AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E833103126A417CC00A6AA59 /* KPSUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSUtility.swift; sourceTree = "<group>"; };
 		E833103426A417F800A6AA59 /* KPSUtilityTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSUtilityTest.swift; sourceTree = "<group>"; };
+		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0148C73424AACBA6D4BF1A6 /* Pods_KPS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E833100926A4100E00A6AA59 /* KPS.framework in Frameworks */,
+				99055DDFF113AC4A0DF56D70 /* Pods_KPSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +86,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B8565A7A6114029A8E8889F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B1B1F3A83BAAA5F378116184 /* Pods-KPS.debug.xcconfig */,
+				884A072A2B934E70F2DC37B1 /* Pods-KPS.release.xcconfig */,
+				AD706920647B740C3155C11F /* Pods-KPSTests.debug.xcconfig */,
+				A66D57C2677888A955154D08 /* Pods-KPSTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		882C46E2586F7E06198F2091 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */,
+				C763CF4E42A361D69F0D222F /* Pods_KPSTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E8330FF526A4100E00A6AA59 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +114,8 @@
 				E833100C26A4100E00A6AA59 /* KPSTests */,
 				E833101E26A410A000A6AA59 /* KPSExample */,
 				E833100026A4100E00A6AA59 /* Products */,
+				5B8565A7A6114029A8E8889F /* Pods */,
+				882C46E2586F7E06198F2091 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -148,6 +181,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E833101326A4100E00A6AA59 /* Build configuration list for PBXNativeTarget "KPS" */;
 			buildPhases = (
+				0F3D33621D6B25D4AAC43852 /* [CP] Check Pods Manifest.lock */,
 				E8330FFA26A4100E00A6AA59 /* Headers */,
 				E8330FFB26A4100E00A6AA59 /* Sources */,
 				E8330FFC26A4100E00A6AA59 /* Frameworks */,
@@ -166,6 +200,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E833101626A4100E00A6AA59 /* Build configuration list for PBXNativeTarget "KPSTests" */;
 			buildPhases = (
+				29DF9E280A8D6E4168C5A71E /* [CP] Check Pods Manifest.lock */,
 				E833100426A4100E00A6AA59 /* Sources */,
 				E833100526A4100E00A6AA59 /* Frameworks */,
 				E833100626A4100E00A6AA59 /* Resources */,
@@ -264,6 +299,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0F3D33621D6B25D4AAC43852 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KPS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		29DF9E280A8D6E4168C5A71E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KPSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E8330FFB26A4100E00A6AA59 /* Sources */ = {
@@ -448,6 +530,7 @@
 		};
 		E833101426A4100E00A6AA59 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1B1F3A83BAAA5F378116184 /* Pods-KPS.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -474,6 +557,7 @@
 		};
 		E833101526A4100E00A6AA59 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 884A072A2B934E70F2DC37B1 /* Pods-KPS.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -499,6 +583,7 @@
 		};
 		E833101726A4100E00A6AA59 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD706920647B740C3155C11F /* Pods-KPSTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -518,6 +603,7 @@
 		};
 		E833101826A4100E00A6AA59 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A66D57C2677888A955154D08 /* Pods-KPSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
