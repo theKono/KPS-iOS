@@ -2,7 +2,26 @@
 //  LoginResponse.swift
 //  KPS
 //
-//  Created by mingshing on 2021/7/23.
-//
 
-import Foundation
+// MARK: - LoginResponse
+public struct LoginResponse: Codable {
+    let isNew: Bool
+    let kpsSession: String
+    let user: KPSUser
+
+    enum CodingKeys: String, CodingKey {
+        case isNew
+        case kpsSession = "kps_session"
+        case user = "puser"
+    }
+}
+public struct KPSUser: Codable {
+    
+    let id: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "puid"
+    }
+}
+
+
