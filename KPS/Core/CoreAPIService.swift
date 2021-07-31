@@ -13,6 +13,7 @@ enum CoreAPIService {
 
 
 extension CoreAPIService: TargetType {
+    
     var baseURL: URL {
         switch self {
         case .login(_, _, let server), .logout(let server), .fetchFolders(let server), .fetchArticle(_, let server):
@@ -50,17 +51,17 @@ extension CoreAPIService: TargetType {
     var sampleData: Data {
         switch self {
         case .login(_, _, _):
-            return "{\"error\": \"null\", \"isNew\": false,\"kps_session\":\"s:02yyUyzMnVKJ3K2EH6mN11lDDNQZlDWO.yHaCOzniJX0SINUKR1XVz4vH+UUdOGEu7jl9h9GtJIw\",\"puser\": {\"puid\": \"testNewPili0\"}".utf8Encoded
+            return "{\"error\": \"null\", \"isNew\": false,\"kps_session\":\"testSessionToken\",\"puser\": {\"puid\": \"testUser\"}}".utf8Encoded
         case .logout(_):
             return "{\"first_name\": \"Harry\", \"last_name\": \"Potter\"}".utf8Encoded
         case .fetchFolders(_):
-            guard let url = Bundle.main.url(forResource: "folderList", withExtension: "json"),
+            guard let url = Bundle.current.url(forResource: "folderList", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
             return data
         case .fetchArticle(_, _):
-            guard let url = Bundle.main.url(forResource: "articleContent", withExtension: "json"),
+            guard let url = Bundle.current.url(forResource: "articleContent", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
@@ -73,7 +74,7 @@ extension CoreAPIService: TargetType {
 
 }
 // MARK: - Helpers
-private extension String {
+internal extension String {
     var urlEscaped: String {
         return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
