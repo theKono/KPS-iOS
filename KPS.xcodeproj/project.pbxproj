@@ -3,22 +3,28 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2E82FE58B8F9BF98685E74B /* Pods_KPS_KPSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BAE52B314AE2D8F2390C9C7 /* Pods_KPS_KPSTests.framework */; };
 		E833100926A4100E00A6AA59 /* KPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8330FFF26A4100E00A6AA59 /* KPS.framework */; };
-		E833100E26A4100E00A6AA59 /* KPSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833100D26A4100E00A6AA59 /* KPSTests.swift */; };
 		E833101026A4100E00A6AA59 /* KPS.h in Headers */ = {isa = PBXBuildFile; fileRef = E833100226A4100E00A6AA59 /* KPS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E833102026A410A000A6AA59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833101F26A410A000A6AA59 /* AppDelegate.swift */; };
-		E833102226A410A000A6AA59 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833102126A410A000A6AA59 /* SceneDelegate.swift */; };
-		E833102426A410A000A6AA59 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833102326A410A000A6AA59 /* ViewController.swift */; };
-		E833102726A410A000A6AA59 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E833102526A410A000A6AA59 /* Main.storyboard */; };
-		E833102926A410A200A6AA59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E833102826A410A200A6AA59 /* Assets.xcassets */; };
-		E833102C26A410A200A6AA59 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E833102A26A410A200A6AA59 /* LaunchScreen.storyboard */; };
 		E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833103126A417CC00A6AA59 /* KPSUtility.swift */; };
 		E833103326A417CC00A6AA59 /* KPSUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833103126A417CC00A6AA59 /* KPSUtility.swift */; };
 		E833103526A417F800A6AA59 /* KPSUtilityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833103426A417F800A6AA59 /* KPSUtilityTest.swift */; };
+		E833103826AAAE1D00A6AA59 /* KPSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833103726AAAE1D00A6AA59 /* KPSClient.swift */; };
+		E833103C26AAB60800A6AA59 /* CoreAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833103B26AAB60800A6AA59 /* CoreAPIService.swift */; };
+		E833105226AB0A4500A6AA59 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833105126AB0A4500A6AA59 /* LoginResponse.swift */; };
+		E833105426AB0FED00A6AA59 /* KPSContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833105326AB0FED00A6AA59 /* KPSContent.swift */; };
+		E833105B26AC634B00A6AA59 /* Pods_KPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3AEEF5E789FDC4CF50D8D15 /* Pods_KPS.framework */; };
+		E833108B26B3B0F100A6AA59 /* Codable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833108A26B3B0F100A6AA59 /* Codable+Extension.swift */; };
+		E833109326B44C1B00A6AA59 /* KPSClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833109226B44C1B00A6AA59 /* KPSClientTests.swift */; };
+		E83310A226B5327800A6AA59 /* folderList.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109726B50CB700A6AA59 /* folderList.json */; };
+		E83310A326B5327C00A6AA59 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109826B50CB700A6AA59 /* articleContent.json */; };
+		E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */; };
+		E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E83310A626B547B300A6AA59 /* previewArticleContent.json */; };
+		E83310A926B54B1400A6AA59 /* KPSFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A826B54B1400A6AA59 /* KPSFolder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,22 +38,36 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5BAE52B314AE2D8F2390C9C7 /* Pods_KPS_KPSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS_KPSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C1D0C14A13FA98376B32B51 /* Pods-KPS-KPSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPS-KPSTests.release.xcconfig"; path = "Target Support Files/Pods-KPS-KPSTests/Pods-KPS-KPSTests.release.xcconfig"; sourceTree = "<group>"; };
+		884A072A2B934E70F2DC37B1 /* Pods-KPS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPS.release.xcconfig"; path = "Target Support Files/Pods-KPS/Pods-KPS.release.xcconfig"; sourceTree = "<group>"; };
+		B1B1F3A83BAAA5F378116184 /* Pods-KPS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPS.debug.xcconfig"; path = "Target Support Files/Pods-KPS/Pods-KPS.debug.xcconfig"; sourceTree = "<group>"; };
+		E3AEEF5E789FDC4CF50D8D15 /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7DF22ABB67C81660A12B8C6 /* Pods-KPS-KPSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPS-KPSTests.debug.xcconfig"; path = "Target Support Files/Pods-KPS-KPSTests/Pods-KPS-KPSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E8330FFF26A4100E00A6AA59 /* KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E833100226A4100E00A6AA59 /* KPS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPS.h; sourceTree = "<group>"; };
 		E833100326A4100E00A6AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E833100826A4100E00A6AA59 /* KPSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E833100D26A4100E00A6AA59 /* KPSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSTests.swift; sourceTree = "<group>"; };
 		E833100F26A4100E00A6AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E833101D26A410A000A6AA59 /* KPSExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPSExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E833101F26A410A000A6AA59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E833102126A410A000A6AA59 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E833102326A410A000A6AA59 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		E833102626A410A000A6AA59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E833102826A410A200A6AA59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E833102B26A410A200A6AA59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		E833102D26A410A200A6AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E833103126A417CC00A6AA59 /* KPSUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSUtility.swift; sourceTree = "<group>"; };
 		E833103426A417F800A6AA59 /* KPSUtilityTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSUtilityTest.swift; sourceTree = "<group>"; };
+		E833103726AAAE1D00A6AA59 /* KPSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClient.swift; sourceTree = "<group>"; };
+		E833103B26AAB60800A6AA59 /* CoreAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAPIService.swift; sourceTree = "<group>"; };
+		E833103D26AAF83B00A6AA59 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E833104226AAF96A00A6AA59 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E833104526AAF97200A6AA59 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E833105126AB0A4500A6AA59 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		E833105326AB0FED00A6AA59 /* KPSContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSContent.swift; sourceTree = "<group>"; };
+		E833106426AC65FA00A6AA59 /* KPS_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KPS_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E833108A26B3B0F100A6AA59 /* Codable+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+Extension.swift"; sourceTree = "<group>"; };
+		E833109226B44C1B00A6AA59 /* KPSClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientTests.swift; sourceTree = "<group>"; };
+		E833109726B50CB700A6AA59 /* folderList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = folderList.json; sourceTree = "<group>"; };
+		E833109826B50CB700A6AA59 /* articleContent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
+		E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
+		E83310A626B547B300A6AA59 /* previewArticleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = previewArticleContent.json; sourceTree = "<group>"; };
+		E83310A826B54B1400A6AA59 /* KPSFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSFolder.swift; sourceTree = "<group>"; };
+		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E833105B26AC634B00A6AA59 /* Pods_KPS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,26 +84,47 @@
 			buildActionMask = 2147483647;
 			files = (
 				E833100926A4100E00A6AA59 /* KPS.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E833101A26A410A000A6AA59 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				C2E82FE58B8F9BF98685E74B /* Pods_KPS_KPSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B8565A7A6114029A8E8889F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B1B1F3A83BAAA5F378116184 /* Pods-KPS.debug.xcconfig */,
+				884A072A2B934E70F2DC37B1 /* Pods-KPS.release.xcconfig */,
+				E7DF22ABB67C81660A12B8C6 /* Pods-KPS-KPSTests.debug.xcconfig */,
+				6C1D0C14A13FA98376B32B51 /* Pods-KPS-KPSTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		882C46E2586F7E06198F2091 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E833106426AC65FA00A6AA59 /* KPS_iOS.framework */,
+				E833104526AAF97200A6AA59 /* Moya.framework */,
+				E833104226AAF96A00A6AA59 /* Alamofire.framework */,
+				E833103D26AAF83B00A6AA59 /* Alamofire.framework */,
+				E3AEEF5E789FDC4CF50D8D15 /* Pods_KPS.framework */,
+				FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */,
+				5BAE52B314AE2D8F2390C9C7 /* Pods_KPS_KPSTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E8330FF526A4100E00A6AA59 = {
 			isa = PBXGroup;
 			children = (
 				E833100126A4100E00A6AA59 /* KPS */,
 				E833100C26A4100E00A6AA59 /* KPSTests */,
-				E833101E26A410A000A6AA59 /* KPSExample */,
 				E833100026A4100E00A6AA59 /* Products */,
+				5B8565A7A6114029A8E8889F /* Pods */,
+				882C46E2586F7E06198F2091 /* Frameworks */,
+				E833104F26AB03DF00A6AA59 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,7 +133,6 @@
 			children = (
 				E8330FFF26A4100E00A6AA59 /* KPS.framework */,
 				E833100826A4100E00A6AA59 /* KPSTests.xctest */,
-				E833101D26A410A000A6AA59 /* KPSExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,6 +140,10 @@
 		E833100126A4100E00A6AA59 /* KPS */ = {
 			isa = PBXGroup;
 			children = (
+				E833108C26B3B1E400A6AA59 /* Extension */,
+				E833103626AAADDF00A6AA59 /* Core */,
+				E833105026AB077600A6AA59 /* Model */,
+				E833108D26B43CDE00A6AA59 /* Resource */,
 				E833100226A4100E00A6AA59 /* KPS.h */,
 				E833100326A4100E00A6AA59 /* Info.plist */,
 				E833103126A417CC00A6AA59 /* KPSUtility.swift */,
@@ -109,25 +154,57 @@
 		E833100C26A4100E00A6AA59 /* KPSTests */ = {
 			isa = PBXGroup;
 			children = (
-				E833100D26A4100E00A6AA59 /* KPSTests.swift */,
+				E833109226B44C1B00A6AA59 /* KPSClientTests.swift */,
 				E833103426A417F800A6AA59 /* KPSUtilityTest.swift */,
 				E833100F26A4100E00A6AA59 /* Info.plist */,
 			);
 			path = KPSTests;
 			sourceTree = "<group>";
 		};
-		E833101E26A410A000A6AA59 /* KPSExample */ = {
+		E833103626AAADDF00A6AA59 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				E833101F26A410A000A6AA59 /* AppDelegate.swift */,
-				E833102126A410A000A6AA59 /* SceneDelegate.swift */,
-				E833102326A410A000A6AA59 /* ViewController.swift */,
-				E833102526A410A000A6AA59 /* Main.storyboard */,
-				E833102826A410A200A6AA59 /* Assets.xcassets */,
-				E833102A26A410A200A6AA59 /* LaunchScreen.storyboard */,
-				E833102D26A410A200A6AA59 /* Info.plist */,
+				E833103726AAAE1D00A6AA59 /* KPSClient.swift */,
+				E833103B26AAB60800A6AA59 /* CoreAPIService.swift */,
 			);
-			path = KPSExample;
+			path = Core;
+			sourceTree = "<group>";
+		};
+		E833104F26AB03DF00A6AA59 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		E833105026AB077600A6AA59 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E833105126AB0A4500A6AA59 /* LoginResponse.swift */,
+				E833105326AB0FED00A6AA59 /* KPSContent.swift */,
+				E83310A826B54B1400A6AA59 /* KPSFolder.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E833108C26B3B1E400A6AA59 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				E833108A26B3B0F100A6AA59 /* Codable+Extension.swift */,
+				E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		E833108D26B43CDE00A6AA59 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				E833109726B50CB700A6AA59 /* folderList.json */,
+				E833109826B50CB700A6AA59 /* articleContent.json */,
+				E83310A626B547B300A6AA59 /* previewArticleContent.json */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +225,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E833101326A4100E00A6AA59 /* Build configuration list for PBXNativeTarget "KPS" */;
 			buildPhases = (
+				0F3D33621D6B25D4AAC43852 /* [CP] Check Pods Manifest.lock */,
 				E8330FFA26A4100E00A6AA59 /* Headers */,
 				E8330FFB26A4100E00A6AA59 /* Sources */,
 				E8330FFC26A4100E00A6AA59 /* Frameworks */,
@@ -166,9 +244,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E833101626A4100E00A6AA59 /* Build configuration list for PBXNativeTarget "KPSTests" */;
 			buildPhases = (
+				29DF9E280A8D6E4168C5A71E /* [CP] Check Pods Manifest.lock */,
 				E833100426A4100E00A6AA59 /* Sources */,
 				E833100526A4100E00A6AA59 /* Frameworks */,
 				E833100626A4100E00A6AA59 /* Resources */,
+				ADF93FFE0EC53B7F9CF4E5C3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -179,23 +259,6 @@
 			productName = KPSTests;
 			productReference = E833100826A4100E00A6AA59 /* KPSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		E833101C26A410A000A6AA59 /* KPSExample */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E833102E26A410A200A6AA59 /* Build configuration list for PBXNativeTarget "KPSExample" */;
-			buildPhases = (
-				E833101926A410A000A6AA59 /* Sources */,
-				E833101A26A410A000A6AA59 /* Frameworks */,
-				E833101B26A410A000A6AA59 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = KPSExample;
-			productName = KPSExample;
-			productReference = E833101D26A410A000A6AA59 /* KPSExample.app */;
-			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -211,9 +274,6 @@
 						LastSwiftMigration = 1250;
 					};
 					E833100726A4100E00A6AA59 = {
-						CreatedOnToolsVersion = 12.5.1;
-					};
-					E833101C26A410A000A6AA59 = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
 				};
@@ -233,7 +293,6 @@
 			targets = (
 				E8330FFE26A4100E00A6AA59 /* KPS */,
 				E833100726A4100E00A6AA59 /* KPSTests */,
-				E833101C26A410A000A6AA59 /* KPSExample */,
 			);
 		};
 /* End PBXProject section */
@@ -243,6 +302,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E83310A326B5327C00A6AA59 /* articleContent.json in Resources */,
+				E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */,
+				E83310A226B5327800A6AA59 /* folderList.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,24 +315,85 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E833101B26A410A000A6AA59 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0F3D33621D6B25D4AAC43852 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E833102C26A410A200A6AA59 /* LaunchScreen.storyboard in Resources */,
-				E833102926A410A200A6AA59 /* Assets.xcassets in Resources */,
-				E833102726A410A000A6AA59 /* Main.storyboard in Resources */,
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KPS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
-/* End PBXResourcesBuildPhase section */
+		29DF9E280A8D6E4168C5A71E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KPS-KPSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ADF93FFE0EC53B7F9CF4E5C3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KPS-KPSTests/Pods-KPS-KPSTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-KPS-KPSTests/Pods-KPS-KPSTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KPS-KPSTests/Pods-KPS-KPSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E8330FFB26A4100E00A6AA59 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E833108B26B3B0F100A6AA59 /* Codable+Extension.swift in Sources */,
+				E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */,
 				E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */,
+				E833103826AAAE1D00A6AA59 /* KPSClient.swift in Sources */,
+				E83310A926B54B1400A6AA59 /* KPSFolder.swift in Sources */,
+				E833105426AB0FED00A6AA59 /* KPSContent.swift in Sources */,
+				E833105226AB0A4500A6AA59 /* LoginResponse.swift in Sources */,
+				E833103C26AAB60800A6AA59 /* CoreAPIService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,18 +402,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E833103526A417F800A6AA59 /* KPSUtilityTest.swift in Sources */,
-				E833100E26A4100E00A6AA59 /* KPSTests.swift in Sources */,
 				E833103326A417CC00A6AA59 /* KPSUtility.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E833101926A410A000A6AA59 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E833102426A410A000A6AA59 /* ViewController.swift in Sources */,
-				E833102026A410A000A6AA59 /* AppDelegate.swift in Sources */,
-				E833102226A410A000A6AA59 /* SceneDelegate.swift in Sources */,
+				E833109326B44C1B00A6AA59 /* KPSClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,25 +416,6 @@
 			targetProxy = E833100A26A4100E00A6AA59 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		E833102526A410A000A6AA59 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E833102626A410A000A6AA59 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		E833102A26A410A200A6AA59 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E833102B26A410A200A6AA59 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E833101126A4100E00A6AA59 /* Debug */ = {
@@ -448,6 +542,7 @@
 		};
 		E833101426A4100E00A6AA59 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1B1F3A83BAAA5F378116184 /* Pods-KPS.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -466,6 +561,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.KPS;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -474,6 +570,7 @@
 		};
 		E833101526A4100E00A6AA59 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 884A072A2B934E70F2DC37B1 /* Pods-KPS.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -489,9 +586,11 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.KPS;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -499,8 +598,9 @@
 		};
 		E833101726A4100E00A6AA59 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7DF22ABB67C81660A12B8C6 /* Pods-KPS-KPSTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KSFL9L3S98;
 				INFOPLIST_FILE = KPSTests/Info.plist;
@@ -518,8 +618,9 @@
 		};
 		E833101826A4100E00A6AA59 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C1D0C14A13FA98376B32B51 /* Pods-KPS-KPSTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KSFL9L3S98;
 				INFOPLIST_FILE = KPSTests/Info.plist;
@@ -529,44 +630,6 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.KPSTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		E833102F26A410A200A6AA59 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KSFL9L3S98;
-				INFOPLIST_FILE = KPSExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.KPSExample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		E833103026A410A200A6AA59 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KSFL9L3S98;
-				INFOPLIST_FILE = KPSExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.KPSExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -599,15 +662,6 @@
 			buildConfigurations = (
 				E833101726A4100E00A6AA59 /* Debug */,
 				E833101826A4100E00A6AA59 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E833102E26A410A200A6AA59 /* Build configuration list for PBXNativeTarget "KPSExample" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E833102F26A410A200A6AA59 /* Debug */,
-				E833103026A410A200A6AA59 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

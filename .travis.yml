@@ -1,5 +1,8 @@
 language: swift
 osx_image: xcode12.5
-
+before_install:
+- gem install cocoapods
+- pod repo update
+- pod install
 script:
-  - set -o pipefail && xcodebuild test -enableCodeCoverage YES -project KPS.xcodeproj -scheme KPS -sdk iphonesimulator -destination "platform=iOS Simulator,OS=14.5,name=iPhone 12" ONLY_ACTIVE_ARCH=YES
+  - set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace KPS.xcworkspace -scheme KPS -sdk iphonesimulator -destination "platform=iOS Simulator,OS=14.5,name=iPhone 12" ONLY_ACTIVE_ARCH=YES
