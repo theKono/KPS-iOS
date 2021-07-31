@@ -31,21 +31,15 @@ public final class Client {
     /// - Note: Setup `KPSClient.config` before using a shared client.
     /// ```
     /// // Setup a shared client.
-    /// KPSClient.config = .init(apiKey: "API_KEY", appId: "APP_ID", token: "TOKEN")
+    /// KPSClient.config = .init(apiKey: "API_KEY", appId: "APP_ID")
 
-    public static let shared = Client(apiKey: Client.config.apiKey,
-                                      appId: Client.config.appId,
-                                      networkProvider: Client.config.networkProvider)
+    public static let shared = Client(apiKey: Client.config.apiKey, appId: Client.config.appId)
     
     
-    private init(apiKey: String,
-                 appId: String,
-                 networkProvider: NetworkProvider? = nil) {
+    init(apiKey: String, appId: String, networkProvider: NetworkProvider? = nil) {
         
         self.apiKey = apiKey
         self.appId = appId
-        
-        //networkAuthorization = AuthorizationMoyaPlugin()
         
         if let networkProvider = networkProvider {
             self.networkProvider = networkProvider
@@ -53,14 +47,7 @@ public final class Client {
             self.networkProvider =
                 NetworkProvider(plugins: [NetworkLoggerPlugin()])
         }
-        
     }
-    /*
-    case login(keyId: String, token: String, server: Server)
-    case logout(server: Server)
-    case fetchFolders(server: Server)
-    case fetchArticle(articleId: String, server: Server)
-    */
     
     public func login(keyID: String, token: String, completion: @escaping (Result<LoginResponse, Error>) -> ()) {
         request(target:.login(keyId: keyID, token: token, server: Client.config.baseServer) , completion: completion)
@@ -99,21 +86,25 @@ public final class Client {
         }
     }
     
-    public func fetchArticle(articleId: String, completion: @escaping(Result<Moya.Response, MoyaError>) -> ()) {
-        //request(target:.fetchFolders(server: Client.config.baseServer) , completion: completion)
-        networkProvider.request(.fetchArticle(articleId: articleId, server: Client.config.baseServer)) { result in
+    public func fetchArticle(articleId: String, completion: @escaping(Result<KPSContent, Error>) -> ()) {
+        
+        let resultClosure: ((Result<KPSContent, Error>) -> Void) = { result in
+            
             switch result {
             case let .success(response):
-                do {
-                    let data = try response.mapJSON()
-                    print(data)
-                } catch _ {
-                    print("decode error")
+                var content = response
+                content.images = response.images.map {
+                    var mutableImage = $0
+                    mutableImage.baseURL = Client.config.baseServer.baseUrl.absoluteString
+                    return mutableImage
                 }
+                completion(.success(content))
+                
             case let .failure(error):
                 completion(.failure(error))
             }
         }
+        request(target:.fetchArticle(articleId: articleId, server: Client.config.baseServer), completion: resultClosure)
     }
         
 }
@@ -145,28 +136,28 @@ extension Client {
         let apiKey: String
         let appId: String
         let baseServer: Server
-        let networkProvider: NetworkProvider?
         
         /// Setup a configuration for the shared Instance `Client`.
         ///
         /// - Parameters:
         ///     - apiKey: the KPS API key
         ///     - appId: the KPS project id
-
-        public init(apiKey: String = "",
-                    appId: String) {
+        ///     - server: the KPS backend server setting
+        public init(apiKey: String = "", appId: String) {
             self.init(apiKey: apiKey,
                       appId: appId,
-                      networkProvider: nil)
+                      server: nil)
         }
         
-        init(apiKey: String,
-             appId: String,
-             networkProvider: NetworkProvider?) {
+        init(apiKey: String, appId: String, server: Server?) {
             self.apiKey = apiKey
             self.appId = appId
-            self.baseServer = .develop(appId: appId, version: "1")
-            self.networkProvider = networkProvider
+            
+            if let baseServer = server {
+                self.baseServer = baseServer
+            } else {
+                self.baseServer = .prod(appId: appId, version: "1")
+            }
         }
     }
 }
@@ -179,12 +170,19 @@ enum Server {
   
     var baseUrl: URL {
         switch self {
-        case .develop(let appId, let version):
-            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)/projects/\(appId)")!
-        case .staging(let appId, let version):
-            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)/projects/\(appId)")!
-        case .prod(let appId, let version):
-            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)/projects/\(appId)")!
+        case .develop(_, let version):
+            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)")!
+        case .staging(_, let version):
+            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)")!
+        case .prod(_, let version):
+            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)")!
+        }
+    }
+    
+    var projectUrl: URL {
+        switch self {
+        case .develop(let appId, _), .staging(let appId, _), .prod(let appId, _):
+            return baseUrl.appendingPathComponent("/projects/\(appId)")
         }
     }
 }
