@@ -26,7 +26,7 @@ Pod::Spec.new do |spec|
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = "This SDK provide an encapsulation to connect Kono Publisher Service(KPS). "
 
-  spec.homepage     = "https://www.thekono.com"
+  spec.homepage     = "https://github.com/theKono/KPS-iOS"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -61,7 +61,8 @@ Pod::Spec.new do |spec|
   #  the deployment target. You can optionally include the target after the platform.
   #
   # spec.platform     = :ios
-    spec.platform     = :ios, "13.0"
+  # spec.platform     = :ios, "13.0"
+    spec.ios.deployment_target = '13.0'
     spec.swift_version = "4.2"
 
   #  When using multiple platforms
@@ -88,7 +89,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "Classes", "Classes/**/*.{h,m}","KPS/**/*.{h,m,swift}"
+  spec.source_files  = "Classes", "Classes/**/*.{h,m}","KPS/**/*.{h,m,swift,json}"
   spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
@@ -104,6 +105,7 @@ Pod::Spec.new do |spec|
 
   # spec.resource  = "icon.png"
   # spec.resources = "Resources/*.png"
+    spec.resource_bundles = {"KPS_iOS" => "KPS/Resource/*"}
 
   # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
@@ -116,6 +118,7 @@ Pod::Spec.new do |spec|
 
   # spec.framework  = "SomeFramework"
   # spec.frameworks = "SomeFramework", "AnotherFramework"
+    spec.framework = "Foundation"
 
   # spec.library   = "iconv"
   # spec.libraries = "iconv", "xml2"
@@ -131,5 +134,6 @@ Pod::Spec.new do |spec|
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
+    spec.dependency "Moya", "~> 14.0"
 
 end
