@@ -108,6 +108,7 @@ extension UnkeyedDecodingContainer {
 }
 
 //MARK:- Encoding Extensions
+/*
 extension KeyedEncodingContainer {
     mutating func encodeIfPresent(_ value: [String: Any]?, forKey key: KeyedEncodingContainer<K>.Key) throws {
         guard let safeValue = value, !safeValue.isEmpty else {
@@ -182,3 +183,4 @@ extension UnkeyedEncodingContainer {
         }
     }
 }
+*/

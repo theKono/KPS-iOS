@@ -46,8 +46,8 @@ extension KPSContent: Decodable {
 
         let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .res)
         
-        fitReadingData = try contentDataContainer.decode([String: Any].self, forKey: .fitReading)
-        pdfData = try contentDataContainer.decode([String: Any].self, forKey: .html)
+        fitReadingData = try contentDataContainer.decodeIfPresent([String: Any].self, forKey: .fitReading)
+        pdfData = try contentDataContainer.decodeIfPresent([String: Any].self, forKey: .html)
         
         let listContainer = try contentDataContainer.nestedContainer(keyedBy: imageContainerKeys.self, forKey: .image)
         images = try listContainer.decode([KPSImage].self, forKey: .list)
