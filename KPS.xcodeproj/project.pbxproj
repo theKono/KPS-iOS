@@ -19,9 +19,12 @@
 		E833105426AB0FED00A6AA59 /* KPSContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833105326AB0FED00A6AA59 /* KPSContent.swift */; };
 		E833105B26AC634B00A6AA59 /* Pods_KPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3AEEF5E789FDC4CF50D8D15 /* Pods_KPS.framework */; };
 		E833108B26B3B0F100A6AA59 /* Codable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833108A26B3B0F100A6AA59 /* Codable+Extension.swift */; };
-		E833108F26B43D2300A6AA59 /* folderList.json in Resources */ = {isa = PBXBuildFile; fileRef = E833108E26B43D2300A6AA59 /* folderList.json */; };
-		E833109126B43D4A00A6AA59 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109026B43D4A00A6AA59 /* articleContent.json */; };
 		E833109326B44C1B00A6AA59 /* KPSClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833109226B44C1B00A6AA59 /* KPSClientTests.swift */; };
+		E83310A226B5327800A6AA59 /* folderList.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109726B50CB700A6AA59 /* folderList.json */; };
+		E83310A326B5327C00A6AA59 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109826B50CB700A6AA59 /* articleContent.json */; };
+		E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */; };
+		E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E83310A626B547B300A6AA59 /* previewArticleContent.json */; };
+		E83310A926B54B1400A6AA59 /* KPSFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A826B54B1400A6AA59 /* KPSFolder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,9 +60,12 @@
 		E833105326AB0FED00A6AA59 /* KPSContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSContent.swift; sourceTree = "<group>"; };
 		E833106426AC65FA00A6AA59 /* KPS_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KPS_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E833108A26B3B0F100A6AA59 /* Codable+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+Extension.swift"; sourceTree = "<group>"; };
-		E833108E26B43D2300A6AA59 /* folderList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = folderList.json; sourceTree = "<group>"; };
-		E833109026B43D4A00A6AA59 /* articleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
 		E833109226B44C1B00A6AA59 /* KPSClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientTests.swift; sourceTree = "<group>"; };
+		E833109726B50CB700A6AA59 /* folderList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = folderList.json; sourceTree = "<group>"; };
+		E833109826B50CB700A6AA59 /* articleContent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
+		E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
+		E83310A626B547B300A6AA59 /* previewArticleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = previewArticleContent.json; sourceTree = "<group>"; };
+		E83310A826B54B1400A6AA59 /* KPSFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSFolder.swift; sourceTree = "<group>"; };
 		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -177,6 +183,7 @@
 			children = (
 				E833105126AB0A4500A6AA59 /* LoginResponse.swift */,
 				E833105326AB0FED00A6AA59 /* KPSContent.swift */,
+				E83310A826B54B1400A6AA59 /* KPSFolder.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -185,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				E833108A26B3B0F100A6AA59 /* Codable+Extension.swift */,
+				E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -192,8 +200,9 @@
 		E833108D26B43CDE00A6AA59 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				E833108E26B43D2300A6AA59 /* folderList.json */,
-				E833109026B43D4A00A6AA59 /* articleContent.json */,
+				E833109726B50CB700A6AA59 /* folderList.json */,
+				E833109826B50CB700A6AA59 /* articleContent.json */,
+				E83310A626B547B300A6AA59 /* previewArticleContent.json */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -293,8 +302,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E833109126B43D4A00A6AA59 /* articleContent.json in Resources */,
-				E833108F26B43D2300A6AA59 /* folderList.json in Resources */,
+				E83310A326B5327C00A6AA59 /* articleContent.json in Resources */,
+				E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */,
+				E83310A226B5327800A6AA59 /* folderList.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,8 +387,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E833108B26B3B0F100A6AA59 /* Codable+Extension.swift in Sources */,
+				E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */,
 				E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */,
 				E833103826AAAE1D00A6AA59 /* KPSClient.swift in Sources */,
+				E83310A926B54B1400A6AA59 /* KPSFolder.swift in Sources */,
 				E833105426AB0FED00A6AA59 /* KPSContent.swift in Sources */,
 				E833105226AB0A4500A6AA59 /* LoginResponse.swift in Sources */,
 				E833103C26AAB60800A6AA59 /* CoreAPIService.swift in Sources */,
