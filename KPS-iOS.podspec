@@ -26,7 +26,7 @@ Pod::Spec.new do |spec|
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = "This SDK provide an encapsulation to connect Kono Publisher Service(KPS). "
 
-  spec.homepage     = "https://www.thekono.com"
+  spec.homepage     = "https://github.com/theKono/KPS-iOS"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -61,7 +61,8 @@ Pod::Spec.new do |spec|
   #  the deployment target. You can optionally include the target after the platform.
   #
   # spec.platform     = :ios
-    spec.platform     = :ios, "13.0"
+  # spec.platform     = :ios, "13.0"
+    spec.ios.deployment_target = '13.0'
     spec.swift_version = "4.2"
 
   #  When using multiple platforms

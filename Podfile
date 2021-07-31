@@ -10,9 +10,9 @@ post_install do |installer|
         end
     end
 end
-use_frameworks!
+
 target 'KPS' do
-  
+  use_frameworks!
   # ignore all warnings from all pods
   inhibit_all_warnings!
   
