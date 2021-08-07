@@ -5,13 +5,15 @@
 
 
 import Foundation
+import AVFoundation
 import UIKit
 import Moya
 
 typealias NetworkProvider = MoyaProvider<CoreAPIService>
 
 
-public final class Client {
+
+public final class KPSClient: NSObject {
     let apiKey: String
     let appId: String
     
@@ -34,16 +36,69 @@ public final class Client {
     }
     
     
-    /// A configuration to initialize the shared Client.
+    public weak var mediaContentDelegate: KPSClientMediaContentDelegate?
+    public lazy var mediaPlayer: AVQueuePlayer = {
+        let player = AVQueuePlayer()
+        player.addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 100), queue: DispatchQueue.main) { [weak self] time in
+          guard let self = self else { return }
+            
+            if let currentItem = self.mediaPlayer.currentItem {
+                let duration = currentItem.duration
+                let currentTime = CMTimeGetSeconds(time)
+                let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
+            self.mediaContentDelegate?.kpsClient(client: self, playerPlayTimeDidChange: currentTime, totalTime: totalTime)
+            }
+          
+        }
+        player.addObserver(self, forKeyPath: "currentItem", options: [.initial, .new], context: nil)
+        player.actionAtItemEnd = .advance
+        return player
+    }()
+    public var isMediaPlaying: Bool = false {
+        didSet {
+            if oldValue != isMediaPlaying {
+                mediaContentDelegate?.kpsClient(client: self, playerIsPlaying: isMediaPlaying)
+            }
+        }
+    }
+    public var mediaPlayerRate: Float = 1.0 {
+        didSet {
+            mediaPlayer.playImmediately(atRate: mediaPlayerRate)
+        }
+    }
+    
+    public var currentTrack: Int = -1 {
+        didSet {
+            if currentTrack != -1 {
+                mediaContentDelegate?.kpsClient(client: self, playerCurrentTrack: currentTrack)
+            }
+        }
+    }
+    
+    internal var mediaPlayerState = MediaPlayerState.nonSetSource {
+        didSet {
+            if oldValue != mediaPlayerState {
+                mediaContentDelegate?.kpsClient(client: self, playerStateDidChange: mediaPlayerState)
+            }
+        }
+    }
+    
+    internal var mediaPlayList = [AVPlayerItem]() {
+        didSet {
+            
+            for item in mediaPlayList {
+                mediaPlayer.insert(item, after: nil)
+            }
+            
+            NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: mediaPlayList.last)
+            currentTrack = 0
+        }
+    }
+    
     public static var config = Config(apiKey: "", appId: "")
 
-    /// A shared client.
-    /// - Note: Setup `KPSClient.config` before using a shared client.
-    /// ```
-    /// // Setup a shared client.
-    /// KPSClient.config = .init(apiKey: "API_KEY", appId: "APP_ID")
-
-    public static let shared = Client(apiKey: Client.config.apiKey, appId: Client.config.appId)
+    public static let shared = KPSClient(apiKey: KPSClient.config.apiKey, appId: KPSClient.config.appId)
     
     
     init(apiKey: String, appId: String, networkProvider: NetworkProvider? = nil) {
@@ -80,11 +135,11 @@ public final class Client {
                 }
             }
         }
-        request(target: .login(keyId: keyID, token: token, server: Client.config.baseServer), completion: resultClosure)
+        request(target: .login(keyId: keyID, token: token, server: KPSClient.config.baseServer), completion: resultClosure)
     }
     
     public func logout(completion: @escaping(Result<Moya.Response, MoyaError>) -> ()) {
-        networkProvider.request(.logout(server: Client.config.baseServer)) { result in
+        networkProvider.request(.logout(server: KPSClient.config.baseServer)) { result in
             switch result {
             case let .success(response):
                 do {
@@ -104,9 +159,14 @@ public final class Client {
             }
         }
     }
+        
+}
+
+// MARK: Data Related API
+extension KPSClient {
     
     public func fetchFolders(completion: @escaping(Result<KPSFolder, MoyaError>) -> ()) {
-        request(target:.fetchFolders(server: Client.config.baseServer) , completion: completion)
+        request(target:.fetchFolders(server: KPSClient.config.baseServer) , completion: completion)
     }
     
     public func fetchArticle(articleId: String, completion: @escaping(Result<KPSContent, MoyaError>, Bool) -> ()) {
@@ -118,7 +178,7 @@ public final class Client {
                 var content = response
                 content.images = response.images.map {
                     var mutableImage = $0
-                    mutableImage.baseURL = Client.config.baseServer.baseUrl.absoluteString
+                    mutableImage.baseURL = KPSClient.config.baseServer.baseUrl.absoluteString
                     return mutableImage
                 }
                 completion(.success(content), true)
@@ -138,13 +198,22 @@ public final class Client {
                 completion(.failure(error), false)
             }
         }
-        request(target:.fetchArticle(articleId: articleId, server: Client.config.baseServer), completion: resultClosure)
+        request(target:.fetchArticle(articleId: articleId, server: KPSClient.config.baseServer), completion: resultClosure)
     }
-        
+
 }
 
 
-extension Client {
+// MARK: View Related API
+extension KPSClient {
+    
+    
+    
+}
+
+
+// MARK: - Utility function
+extension KPSClient {
     private func request<T: Decodable>(target: CoreAPIService, completion: @escaping (Result<T, MoyaError>) -> ()) {
         
         networkProvider.request(target) { result in
@@ -171,7 +240,7 @@ extension Client {
 
 
 // MARK: - Config
-extension Client {
+extension KPSClient {
     /// A configuration for the shared Instance `Client`.
     public struct Config {
         let apiKey: String

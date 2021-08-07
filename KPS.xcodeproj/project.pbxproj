@@ -25,6 +25,8 @@
 		E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */; };
 		E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E83310A626B547B300A6AA59 /* previewArticleContent.json */; };
 		E83310A926B54B1400A6AA59 /* KPSFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A826B54B1400A6AA59 /* KPSFolder.swift */; };
+		E8A4C8C026BB869A0082B4F7 /* KPSClient+Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */; };
+		E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		E83310A626B547B300A6AA59 /* previewArticleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = previewArticleContent.json; sourceTree = "<group>"; };
 		E83310A826B54B1400A6AA59 /* KPSFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSFolder.swift; sourceTree = "<group>"; };
+		E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KPSClient+Media.swift"; sourceTree = "<group>"; };
+		E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = IronBacon.mp3; sourceTree = "<group>"; };
 		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -143,7 +147,7 @@
 				E833108C26B3B1E400A6AA59 /* Extension */,
 				E833103626AAADDF00A6AA59 /* Core */,
 				E833105026AB077600A6AA59 /* Model */,
-				E833108D26B43CDE00A6AA59 /* Resource */,
+				E833108D26B43CDE00A6AA59 /* Resources */,
 				E833100226A4100E00A6AA59 /* KPS.h */,
 				E833100326A4100E00A6AA59 /* Info.plist */,
 				E833103126A417CC00A6AA59 /* KPSUtility.swift */,
@@ -165,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				E833103726AAAE1D00A6AA59 /* KPSClient.swift */,
+				E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */,
 				E833103B26AAB60800A6AA59 /* CoreAPIService.swift */,
 			);
 			path = Core;
@@ -197,14 +202,15 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		E833108D26B43CDE00A6AA59 /* Resource */ = {
+		E833108D26B43CDE00A6AA59 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */,
 				E833109726B50CB700A6AA59 /* folderList.json */,
 				E833109826B50CB700A6AA59 /* articleContent.json */,
 				E83310A626B547B300A6AA59 /* previewArticleContent.json */,
 			);
-			path = Resource;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,6 +308,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */,
 				E83310A326B5327C00A6AA59 /* articleContent.json in Resources */,
 				E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */,
 				E83310A226B5327800A6AA59 /* folderList.json in Resources */,
@@ -394,6 +401,7 @@
 				E833105426AB0FED00A6AA59 /* KPSContent.swift in Sources */,
 				E833105226AB0A4500A6AA59 /* LoginResponse.swift in Sources */,
 				E833103C26AAB60800A6AA59 /* CoreAPIService.swift in Sources */,
+				E8A4C8C026BB869A0082B4F7 /* KPSClient+Media.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
