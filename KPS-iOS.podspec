@@ -105,7 +105,7 @@ Pod::Spec.new do |spec|
 
   # spec.resource  = "icon.png"
   # spec.resources = "Resources/*.png"
-    spec.resource_bundles = {"KPS_iOS" => "KPS/Resource/*"}
+    spec.resource_bundles = {"KPS_iOS" => "KPS/Resources/*"}
 
   # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
@@ -118,7 +118,7 @@ Pod::Spec.new do |spec|
 
   # spec.framework  = "SomeFramework"
   # spec.frameworks = "SomeFramework", "AnotherFramework"
-    spec.framework = "Foundation"
+    spec.framework = "Foundation", "UIKit", "AVFoundation"
 
   # spec.library   = "iconv"
   # spec.libraries = "iconv", "xml2"
