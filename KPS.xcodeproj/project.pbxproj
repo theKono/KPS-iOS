@@ -27,6 +27,10 @@
 		E83310A926B54B1400A6AA59 /* KPSFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A826B54B1400A6AA59 /* KPSFolder.swift */; };
 		E8A4C8C026BB869A0082B4F7 /* KPSClient+Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */; };
 		E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */; };
+		E8A4C8CB26BFD2590082B4F7 /* KPSClientMediaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8CA26BFD2590082B4F7 /* KPSClientMediaTests.swift */; };
+		E8A4C8CE26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8CD26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift */; };
+		E8A4C8D026C11EAC0082B4F7 /* WhatYouWant.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */; };
+		E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +74,10 @@
 		E83310A826B54B1400A6AA59 /* KPSFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSFolder.swift; sourceTree = "<group>"; };
 		E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KPSClient+Media.swift"; sourceTree = "<group>"; };
 		E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = IronBacon.mp3; sourceTree = "<group>"; };
+		E8A4C8CA26BFD2590082B4F7 /* KPSClientMediaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientMediaTests.swift; sourceTree = "<group>"; };
+		E8A4C8CD26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientMediaContentDelegateMock.swift; sourceTree = "<group>"; };
+		E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = WhatYouWant.mp3; sourceTree = "<group>"; };
+		E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Eventually.swift"; sourceTree = "<group>"; };
 		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -158,9 +166,12 @@
 		E833100C26A4100E00A6AA59 /* KPSTests */ = {
 			isa = PBXGroup;
 			children = (
+				E8A4C8CC26BFD3FA0082B4F7 /* Mocks */,
 				E833109226B44C1B00A6AA59 /* KPSClientTests.swift */,
+				E8A4C8CA26BFD2590082B4F7 /* KPSClientMediaTests.swift */,
 				E833103426A417F800A6AA59 /* KPSUtilityTest.swift */,
 				E833100F26A4100E00A6AA59 /* Info.plist */,
+				E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */,
 			);
 			path = KPSTests;
 			sourceTree = "<group>";
@@ -205,12 +216,21 @@
 		E833108D26B43CDE00A6AA59 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */,
 				E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */,
 				E833109726B50CB700A6AA59 /* folderList.json */,
 				E833109826B50CB700A6AA59 /* articleContent.json */,
 				E83310A626B547B300A6AA59 /* previewArticleContent.json */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		E8A4C8CC26BFD3FA0082B4F7 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				E8A4C8CD26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +332,7 @@
 				E83310A326B5327C00A6AA59 /* articleContent.json in Resources */,
 				E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */,
 				E83310A226B5327800A6AA59 /* folderList.json in Resources */,
+				E8A4C8D026C11EAC0082B4F7 /* WhatYouWant.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,9 +430,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8A4C8CB26BFD2590082B4F7 /* KPSClientMediaTests.swift in Sources */,
 				E833103526A417F800A6AA59 /* KPSUtilityTest.swift in Sources */,
 				E833103326A417CC00A6AA59 /* KPSUtility.swift in Sources */,
+				E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */,
 				E833109326B44C1B00A6AA59 /* KPSClientTests.swift in Sources */,
+				E8A4C8CE26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

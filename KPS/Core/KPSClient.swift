@@ -50,7 +50,9 @@ public final class KPSClient: NSObject {
             }
           
         }
-        player.addObserver(self, forKeyPath: "currentItem", options: [.initial, .new], context: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        player.addObserver(self, forKeyPath: "currentItem", options: [.initial, .new, .old], context: nil)
+        
         player.actionAtItemEnd = .advance
         return player
     }()
@@ -69,9 +71,12 @@ public final class KPSClient: NSObject {
     
     public var currentTrack: Int = -1 {
         didSet {
-            if currentTrack != -1 {
-                mediaContentDelegate?.kpsClient(client: self, playerCurrentTrack: currentTrack)
+            if currentTrack != -1 && currentTrack < mediaPlayList.count {
+                mediaContentDelegate?.kpsClient(client: self, playerCurrentContent: mediaPlayList[currentTrack])
+            } else {
+                mediaContentDelegate?.kpsClient(client: self, playerCurrentContent: nil)
             }
+            mediaContentDelegate?.kpsClient(client: self, playerCurrentTrack: currentTrack)
         }
     }
     
@@ -83,15 +88,15 @@ public final class KPSClient: NSObject {
         }
     }
     
-    internal var mediaPlayList = [AVPlayerItem]() {
+    internal var mediaPlayList = [KPSAudioContent]() {
         didSet {
             
             for item in mediaPlayList {
-                mediaPlayer.insert(item, after: nil)
+                mediaPlayer.insert(getAVPlayerItem(source: item), after: nil)
             }
             
-            NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: mediaPlayList.last)
+            //NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+            
             currentTrack = 0
         }
     }
