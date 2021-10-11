@@ -28,7 +28,7 @@ class KPSClientMediaTests: XCTestCase {
         sut.mediaPlayerStop()
     }
     
-    func testOpenAudioContent() {
+    func testFetchAudioContent() {
         
     }
     
@@ -43,7 +43,7 @@ class KPSClientMediaTests: XCTestCase {
         
         let url1 = Bundle.current.url(forResource: "IronBacon", withExtension: "mp3")!
         sut.playURL(url1)
-        _ = sut.mediaPlayerPlay()
+        sut.mediaPlayerPlay()
         XCTAssertEqual(sut.mediaPlayList.count, 1)
         XCTAssertTrue(sut.isMediaPlaying)
         
@@ -53,14 +53,14 @@ class KPSClientMediaTests: XCTestCase {
         
         let testAudioFiles = mockTestAudioFiles()
         sut.mediaPlayList = testAudioFiles
-        XCTAssertTrue(sut.mediaPlayerPlay())
+        sut.mediaPlayerPlay()
         XCTAssertTrue(sut.isMediaPlaying)
         XCTAssertEqual(sut.mediaPlayer.items().count, sut.mediaPlayList.count)
         
         XCTAssertEqual(mockMediaDelegate.isMediaPlaying, true)
         XCTAssertEqual(mockMediaDelegate.mediaTrackIndex, 0)
         XCTAssertNotNil(mockMediaDelegate.currentContent)
-        XCTAssertEqual(mockMediaDelegate.currentContent?.url, testAudioFiles[0].url)
+        XCTAssertEqual(mockMediaDelegate.currentContent?.streamingUrl, testAudioFiles[0].streamingUrl)
         
         eventually(timeout: 0.5) {
             XCTAssertEqual(self.mockMediaDelegate.mediaState, .readyToPlay)
@@ -73,7 +73,7 @@ class KPSClientMediaTests: XCTestCase {
         
         sut.mediaPlayList.removeAll()
         
-        XCTAssertFalse(sut.mediaPlayerPlay(), "Playlist is empty, we can't play normally")
+        sut.mediaPlayerPlay()
         XCTAssertFalse(sut.isMediaPlaying)
         
     }
@@ -82,15 +82,15 @@ class KPSClientMediaTests: XCTestCase {
         
         let testAudioFiles = mockTestAudioFiles()
         sut.mediaPlayList = testAudioFiles
-        _ = sut.mediaPlayerPlay()
+        sut.mediaPlayerPlay()
         
-        XCTAssertTrue(sut.mediaPlayerPlayNext())
+        sut.mediaPlayerPlayNext()
         XCTAssertEqual(mockMediaDelegate.mediaTrackIndex, 1)
         XCTAssertNotNil(mockMediaDelegate.currentContent)
-        XCTAssertEqual(mockMediaDelegate.currentContent?.url, testAudioFiles[1].url)
+        XCTAssertEqual(mockMediaDelegate.currentContent?.streamingUrl, testAudioFiles[1].streamingUrl)
         
         for _ in 1..<testAudioFiles.count {
-            _ = sut.mediaPlayerPlayNext()
+            sut.mediaPlayerPlayNext()
         }
         XCTAssertEqual(mockMediaDelegate.mediaTrackIndex, -1, "Reach the playlist end, the current track should be -1")
         XCTAssertNil(mockMediaDelegate.currentContent, "Current content should be nil")
@@ -102,7 +102,7 @@ class KPSClientMediaTests: XCTestCase {
         
         sut.mediaPlayList.removeAll()
         
-        XCTAssertFalse(sut.mediaPlayerPlayNext(), "Playlist is empty, we can't play next track")
+        sut.mediaPlayerPlayNext()
         XCTAssertFalse(sut.isMediaPlaying)
         
     }
@@ -110,8 +110,8 @@ class KPSClientMediaTests: XCTestCase {
     
     func testClientMediaPlayPauseSuccess() {
         sut.mediaPlayList = mockTestAudioFiles()
-        _ = sut.mediaPlayerSeekTime(10)
-        _ = sut.mediaPlayerPlay()
+        sut.mediaPlayerSeekTime(10)
+        sut.mediaPlayerPlay()
         
         sut.mediaPlayerPause()
         XCTAssertFalse(self.sut.isMediaPlaying)
@@ -132,15 +132,15 @@ class KPSClientMediaTests: XCTestCase {
         
         let testAudioFiles = mockTestAudioFiles()
         sut.mediaPlayList = testAudioFiles
-        _ = sut.mediaPlayerPlay()
-        _ = sut.mediaPlayerPlayNext()
+        sut.mediaPlayerPlay()
+        sut.mediaPlayerPlayNext()
         
-        XCTAssertTrue(sut.mediaPlayerPlayPrev())
+        sut.mediaPlayerPlayPrev()
         XCTAssertEqual(mockMediaDelegate.mediaTrackIndex, 0)
         XCTAssertNotNil(mockMediaDelegate.currentContent)
-        XCTAssertEqual(mockMediaDelegate.currentContent?.url, testAudioFiles[0].url)
+        XCTAssertEqual(mockMediaDelegate.currentContent?.streamingUrl, testAudioFiles[0].streamingUrl)
         
-        _ = sut.mediaPlayerPlayPrev()
+        sut.mediaPlayerPlayPrev()
         XCTAssertEqual(mockMediaDelegate.mediaTrackIndex, 0)
         XCTAssertEqual(sut.mediaPlayer.currentTime(), CMTime.zero)
         
@@ -150,7 +150,7 @@ class KPSClientMediaTests: XCTestCase {
         
         sut.mediaPlayList.removeAll()
         
-        XCTAssertFalse(sut.mediaPlayerPlayPrev(), "Playlist is empty, we can't play previous track")
+        sut.mediaPlayerPlayPrev()
         XCTAssertFalse(sut.isMediaPlaying)
         
     }
@@ -160,9 +160,9 @@ class KPSClientMediaTests: XCTestCase {
         let baseTimeSec = 0.0
         let forwardTimeSec = 10.0
         sut.mediaPlayList = mockTestAudioFiles()
-        _ = sut.mediaPlayerPlay()
-        _ = sut.mediaPlayerSeekTime(baseTimeSec)
-        XCTAssertTrue(sut.mediaPlayerPlayForward(forwardTimeSec))
+        sut.mediaPlayerPlay()
+        sut.mediaPlayerSeekTime(baseTimeSec)
+        sut.mediaPlayerPlayForward(forwardTimeSec)
         XCTAssertEqual(sut.mediaPlayer.currentTime(), CMTimeMake(value: Int64((baseTimeSec + forwardTimeSec) * 1000 as Float64), timescale: 1000))
         
     }
@@ -173,8 +173,8 @@ class KPSClientMediaTests: XCTestCase {
         sut.mediaPlayer.pause()
         sut.mediaPlayer.removeAllItems()
         
-        XCTAssertFalse(sut.mediaPlayerPlayForward(1), "Player queue is empty, we can't play forward")
-        
+        sut.mediaPlayerPlayForward(1)
+        XCTAssert(true, "Play forward should not crash with empty state")
     }
     
     func testClientMediaPlayRewindSuccess() {
@@ -182,9 +182,9 @@ class KPSClientMediaTests: XCTestCase {
         let baseTimeSec = 20.0
         let rewindTimeSec = 10.0
         sut.mediaPlayList = mockTestAudioFiles()
-        _ = sut.mediaPlayerPlay()
-        _ = sut.mediaPlayerSeekTime(baseTimeSec)
-        XCTAssertTrue(sut.mediaPlayerPlayRewind(rewindTimeSec))
+        sut.mediaPlayerPlay()
+        sut.mediaPlayerSeekTime(baseTimeSec)
+        sut.mediaPlayerPlayRewind(rewindTimeSec)
         XCTAssertEqual(sut.mediaPlayer.currentTime(), CMTimeMake(value: Int64((baseTimeSec - rewindTimeSec) * 1000 as Float64), timescale: 1000))
         
         
@@ -195,8 +195,8 @@ class KPSClientMediaTests: XCTestCase {
         sut.mediaPlayer.pause()
         sut.mediaPlayer.removeAllItems()
         
-        XCTAssertFalse(sut.mediaPlayerPlayRewind(1), "Player queue is empty, we can't play rewind")
-        
+        sut.mediaPlayerPlayRewind(1)
+        XCTAssert(true, "Play rewind should not crash with empty state")
     }
     
     
@@ -207,12 +207,12 @@ class KPSClientMediaTests: XCTestCase {
         
         
         sut.mediaPlayList = mockTestAudioFiles()
-        _ = sut.mediaPlayerPlay()
+        sut.mediaPlayerPlay()
         
-        XCTAssertTrue(sut.mediaPlayerSeekTime(normalTime), "Seek action completed, should return true")
+        sut.mediaPlayerSeekTime(normalTime)
         XCTAssertEqual(sut.mediaPlayer.currentTime(), CMTimeMake(value: Int64((normalTime) * 1000 as Float64), timescale: 1000))
         
-        XCTAssertTrue(sut.mediaPlayerSeekTime(negativeTime), "Seek action completed, should return true")
+        sut.mediaPlayerSeekTime(negativeTime)
         XCTAssertEqual(sut.mediaPlayer.currentTime(), CMTime.zero)
         
     }
@@ -226,7 +226,7 @@ class KPSClientMediaTests: XCTestCase {
         XCTAssertEqual(sut.currentTrack, sut.mediaPlayList.count - 1)
         XCTAssertTrue(sut.isMediaPlaying)
 
-        XCTAssertTrue(sut.mediaPlayerPlayNext())
+        sut.mediaPlayerPlayNext()
         XCTAssertEqual(sut.currentTrack, -1)
         
     }
@@ -252,7 +252,7 @@ class KPSClientMediaTests: XCTestCase {
     func testClientMediaPlayPause() {
         
         sut.mediaPlayList = mockTestAudioFiles()
-        _ = sut.mediaPlayerPlay()
+        sut.mediaPlayerPlay()
         sut.mediaPlayerPause()
         
         XCTAssertFalse(sut.isMediaPlaying)
@@ -262,7 +262,7 @@ class KPSClientMediaTests: XCTestCase {
     func testClientMediaPlayStop() {
         
         sut.mediaPlayList = mockTestAudioFiles()
-        _ = sut.mediaPlayerPlay()
+        sut.mediaPlayerPlay()
         sut.mediaPlayerStop()
         
         XCTAssertEqual(sut.mediaPlayer.items().count, 0)
@@ -286,7 +286,7 @@ class KPSClientMediaTests: XCTestCase {
     func testClientMediaPlayFinishNotification() {
         
         sut.mediaPlayList = mockTestAudioFiles()
-        _ = sut.mediaPlayerPlay()
+        sut.mediaPlayerPlay()
         var track = sut.currentTrack
         
         while track < sut.mediaPlayList.count - 1{

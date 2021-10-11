@@ -35,27 +35,49 @@ public final class KPSClient: NSObject {
         }
     }
     
-    
     public weak var mediaContentDelegate: KPSClientMediaContentDelegate?
+    
     public lazy var mediaPlayer: AVQueuePlayer = {
         let player = AVQueuePlayer()
-        player.addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 100), queue: DispatchQueue.main) { [weak self] time in
+        
+        player.addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 10), queue: .main) { [weak self] time in
           guard let self = self else { return }
             
             if let currentItem = self.mediaPlayer.currentItem {
                 let duration = currentItem.duration
                 let currentTime = CMTimeGetSeconds(time)
+                
+                guard duration.value > 0 && duration.timescale > 0 else {return}
                 let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
-            self.mediaContentDelegate?.kpsClient(client: self, playerPlayTimeDidChange: currentTime, totalTime: totalTime)
+                
+                let endTimes = self.mediaPlayList[self.currentTrack].content.filter({ sentence in
+                    sentence.startTime > 0
+                }).map { sentence in
+                    return sentence.endTime
+                }
+                var left: Int = 0, right: Int = endTimes.count-1
+                while left <= right {
+                    var mid = left + (right-left) / 2
+                    if endTimes[mid] > currentTime {
+                        right = mid - 1
+                    } else {
+                        left = mid + 1
+                    }
+                }
+                self.mediaContentDelegate?.kpsClient(client: self, playerPlayTimeDidChange: currentTime, totalTime: totalTime)
+                self.currentSegment = left
             }
           
         }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+
         player.addObserver(self, forKeyPath: "currentItem", options: [.initial, .new, .old], context: nil)
         
         player.actionAtItemEnd = .advance
         return player
     }()
+    
     public var isMediaPlaying: Bool = false {
         didSet {
             if oldValue != isMediaPlaying {
@@ -63,9 +85,12 @@ public final class KPSClient: NSObject {
             }
         }
     }
+    
     public var mediaPlayerRate: Float = 1.0 {
         didSet {
-            mediaPlayer.playImmediately(atRate: mediaPlayerRate)
+            if isMediaPlaying {
+                mediaPlayer.playImmediately(atRate: mediaPlayerRate)
+            }
         }
     }
     
@@ -73,12 +98,32 @@ public final class KPSClient: NSObject {
         didSet {
             if currentTrack != -1 && currentTrack < mediaPlayList.count {
                 mediaContentDelegate?.kpsClient(client: self, playerCurrentContent: mediaPlayList[currentTrack])
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSCurrentPlayingTrackUpdated"), object: nil, userInfo: nil)
             } else {
                 mediaContentDelegate?.kpsClient(client: self, playerCurrentContent: nil)
             }
             mediaContentDelegate?.kpsClient(client: self, playerCurrentTrack: currentTrack)
         }
     }
+    
+    public var currentSegment: Int = -1 {
+        didSet {
+            if self.currentTrack < self.mediaPlayList.count && currentSegment != -1 && currentSegment < self.mediaPlayList[self.currentTrack].content.count && oldValue != currentSegment {
+                self.mediaContentDelegate?.kpsClient(client: self, playerCurrentSegment: currentSegment)
+            }
+        }
+    }
+    
+    //MARK: get only variable
+    public var isPlayListLoaded: Bool {
+        return mediaPlayList.count > 0
+    }
+    
+    public var currentPlayAudioContent: KPSAudioContent? {
+        guard currentTrack >= 0 && currentTrack < mediaPlayList.count  else { return nil }
+        return mediaPlayList[currentTrack]
+    }
+    
     
     internal var mediaPlayerState = MediaPlayerState.nonSetSource {
         didSet {
@@ -94,9 +139,11 @@ public final class KPSClient: NSObject {
             for item in mediaPlayList {
                 mediaPlayer.insert(getAVPlayerItem(source: item), after: nil)
             }
-            
-            //NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
-            
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            } catch {
+                print(error)
+            }
             currentTrack = 0
         }
     }
@@ -114,8 +161,9 @@ public final class KPSClient: NSObject {
         if let networkProvider = networkProvider {
             self.networkProvider = networkProvider
         } else {
-            self.networkProvider =
-                NetworkProvider(plugins: [NetworkLoggerPlugin()])
+            //self.networkProvider = NetworkProvider(plugins: [NetworkLoggerPlugin()])
+            self.networkProvider = NetworkProvider()
+            
         }
     }
     
@@ -170,20 +218,59 @@ public final class KPSClient: NSObject {
 // MARK: Data Related API
 extension KPSClient {
     
-    public func fetchFolders(completion: @escaping(Result<KPSFolder, MoyaError>) -> ()) {
-        request(target:.fetchFolders(server: KPSClient.config.baseServer) , completion: completion)
+    public func fetchCollection(Id: String? = nil, isNeedParent: Bool = false, isNeedSiblings: Bool = false, completion: @escaping(Result<KPSCollection, MoyaError>) -> ()) {
+        
+        if let collectionId = Id {
+            request(target: .fetchCollection(Id: collectionId, isNeedParent: isNeedParent, isNeedSiblings: isNeedSiblings, server: KPSClient.config.baseServer), completion: completion)
+
+        } else {
+            request(target: .fetchRootCollection(server: KPSClient.config.baseServer) , completion: completion)
+            
+        }
+        
     }
     
-    public func fetchArticle(articleId: String, completion: @escaping(Result<KPSContent, MoyaError>, Bool) -> ()) {
+    public func fetchRootFolder(completion: @escaping(Result<KPSFolder, MoyaError>) -> ()) {
+        request(target:.fetchRootFolder(server: KPSClient.config.baseServer) , completion: completion)
+    }
+    
+    public func fetchFolder(folderId: String, completion: @escaping(Result<KPSFolder, MoyaError>) -> ()) {
+        let resultClosure: ((Result<KPSFolder, MoyaError>) -> Void) = { result in
+            
+            switch result {
+            case let .success(folder):
+                var modifyFolder = folder
+                var modifyContents = [KPSContent]()
+                for data in folder.children {
+                    var mutableData = data
+                    mutableData.images = data.images.map {
+                        var mutableImage = $0
+                        mutableImage.config = KPSClient.config.baseServer
+                        return mutableImage
+                    }
+                    modifyContents.append(mutableData)
+                }
+                modifyFolder.children = modifyContents
+                completion(.success(modifyFolder))
+            case let .failure(error):
+                guard error.response != nil else { return }
+                
+                completion(.failure(error))
+            }
+        }
+        request(target:.fetchFolder(folderId: folderId, server: KPSClient.config.baseServer) , completion: resultClosure)
+    }
+    
+    public func fetchArticle(articleId: String, completion: @escaping(Result<KPSArticle, MoyaError>, Bool) -> ()) {
         
-        let resultClosure: ((Result<KPSContent, MoyaError>) -> Void) = { result in
+        let resultClosure: ((Result<KPSArticle, MoyaError>) -> Void) = { result in
             
             switch result {
             case let .success(response):
                 var content = response
                 content.images = response.images.map {
                     var mutableImage = $0
-                    mutableImage.baseURL = KPSClient.config.baseServer.baseUrl.absoluteString
+                    mutableImage.config = KPSClient.config.baseServer
                     return mutableImage
                 }
                 completion(.success(content), true)
@@ -193,7 +280,7 @@ extension KPSClient {
                 
                 if response.statusCode == 403 {
                     do {
-                        let previewContent = try JSONDecoder().decode(KPSContent.self, from: response.data)
+                        let previewContent = try JSONDecoder().decode(KPSArticle.self, from: response.data)
                         completion(.success(previewContent), false)
                     } catch {
                         print("decode error")
@@ -206,6 +293,7 @@ extension KPSClient {
         request(target:.fetchArticle(articleId: articleId, server: KPSClient.config.baseServer), completion: resultClosure)
     }
 
+    
 }
 
 
@@ -219,14 +307,14 @@ extension KPSClient {
 
 // MARK: - Utility function
 extension KPSClient {
-    private func request<T: Decodable>(target: CoreAPIService, completion: @escaping (Result<T, MoyaError>) -> ()) {
+    internal func request<T: Decodable>(target: CoreAPIService, completion: @escaping (Result<T, MoyaError>) -> ()) {
         
         networkProvider.request(target) { result in
             switch result {
             case let .success(response):
                 do {
-                    let filteredResponse = try response.filterSuccessfulStatusCodes()
-                    let results = try JSONDecoder().decode(T.self, from: filteredResponse.data)
+                    //let filteredResponse = try response.filterSuccessfulStatusCodes()
+                    let results = try JSONDecoder().decode(T.self, from: response.data)
                     
                     completion(.success(results))
                 } catch let error {
@@ -271,7 +359,7 @@ extension KPSClient {
             if let baseServer = server {
                 self.baseServer = baseServer
             } else {
-                self.baseServer = .prod(appId: appId, version: "1")
+                self.baseServer = .staging(appId: appId, version: "1")
             }
         }
     }
@@ -282,15 +370,29 @@ enum Server {
     case develop(appId: String, version: String)
     case staging(appId: String, version: String)
     case prod(appId: String, version: String)
-  
+
+    var env: String {
+        switch self {
+        case .develop(_, _):
+            return "dev"
+        case .staging(_, _):
+            return "dev"
+        case .prod(_, _):
+            return "dev"
+        }
+    }
+    
+    var cloudStorage: String {
+        return "https://storage.googleapis.com/"
+    }
     var baseUrl: URL {
         switch self {
         case .develop(_, let version):
-            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)")!
+            return URL(string: "https://kps-dev.thekono.com/api/v\(version)")!
         case .staging(_, let version):
-            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)")!
+            return URL(string: "https://kps-stg.thekono.com/api/v\(version)")!
         case .prod(_, let version):
-            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)")!
+            return URL(string: "https://kps-dev.thekono.com/api/v\(version)")!
         }
     }
     
