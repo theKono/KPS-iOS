@@ -78,29 +78,6 @@ extension KPSClient {
         }
         request(target:.fetchAudio(audioId: audioId, server: KPSClient.config.baseServer), completion: resultClosure)
     }
-    /*
-    public func fetchAudioContentWithFolder(_ folder: KPSFolder, completion: @escaping([KPSAudioContent]) -> ()) {
-        
-        let group = DispatchGroup()
-        let audioContents = ThreadSafeArray<KPSAudioContent>()
-        for child in folder.children {
-            if child.type == "audio" {
-                group.enter()
-                fetchAudioContent(audioId: child.id, folderName: folder.name ?? "") { result in
-                    defer { group.leave() }
-                    
-                    if let track = try? result.get() {
-                        audioContents.append(track)
-                    }
-                }
-            }
-        }
-
-        group.notify(queue: .main) {
-            let sortedResult = audioContents.sorted { $0.order < $1.order }
-            completion(sortedResult.items())
-        }
-        */
     
     public func fetchAudioContentWithIds(_ audioIds: [String], collection: KPSContentMeta?,completion: @escaping([KPSAudioContent]) -> ()) {
             

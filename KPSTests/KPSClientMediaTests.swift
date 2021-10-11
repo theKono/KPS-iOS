@@ -36,19 +36,6 @@ class KPSClientMediaTests: XCTestCase {
         
     }
     
-    
-    func testClientMediaPlayURL() {
-        
-        sut.mediaPlayList.removeAll()
-        
-        let url1 = Bundle.current.url(forResource: "IronBacon", withExtension: "mp3")!
-        sut.playURL(url1)
-        sut.mediaPlayerPlay()
-        XCTAssertEqual(sut.mediaPlayList.count, 1)
-        XCTAssertTrue(sut.isMediaPlaying)
-        
-    }
-    
     func testClientMediaPlaySuccess() {
         
         let testAudioFiles = mockTestAudioFiles()
@@ -222,7 +209,7 @@ class KPSClientMediaTests: XCTestCase {
         sut.mediaPlayList = mockTestAudioFiles()
         let seekContent = sut.mediaPlayList.last
         
-        XCTAssertTrue(sut.mediaPlayerSeekTrack(seekContent!))
+        XCTAssertTrue(sut.mediaPlayerSeekTrack(seekContent!.id))
         XCTAssertEqual(sut.currentTrack, sut.mediaPlayList.count - 1)
         XCTAssertTrue(sut.isMediaPlaying)
 
@@ -236,7 +223,7 @@ class KPSClientMediaTests: XCTestCase {
         sut.mediaPlayList = mockTestAudioFiles()
         let seekContent = KPSAudioContent(url: URL(string: "test_url")!)
         
-        XCTAssertFalse(sut.mediaPlayerSeekTrack(seekContent))
+        XCTAssertFalse(sut.mediaPlayerSeekTrack(seekContent.id))
         
     }
     
@@ -245,7 +232,7 @@ class KPSClientMediaTests: XCTestCase {
         sut.mediaPlayList.removeAll()
         let seekContent = KPSAudioContent(url: URL(string: "test_url")!)
         
-        XCTAssertFalse(sut.mediaPlayerSeekTrack(seekContent))
+        XCTAssertFalse(sut.mediaPlayerSeekTrack(seekContent.id))
         
     }
     
@@ -259,11 +246,11 @@ class KPSClientMediaTests: XCTestCase {
         
     }
     
-    func testClientMediaPlayStop() {
+    func testClientMediaPlayClear() {
         
         sut.mediaPlayList = mockTestAudioFiles()
         sut.mediaPlayerPlay()
-        sut.mediaPlayerStop()
+        sut.mediaPlayerReset(isNeedClearPlayList: true)
         
         XCTAssertEqual(sut.mediaPlayer.items().count, 0)
         XCTAssertFalse(sut.isMediaPlaying)

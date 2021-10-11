@@ -7,8 +7,6 @@ import Moya
 enum CoreAPIService {
     case login(keyId: String, token: String, server: Server)
     case logout(server: Server)
-    case fetchRootFolder(server: Server)
-    case fetchFolder(folderId: String, server: Server)
     case fetchArticle(articleId: String, server: Server)
     case fetchAudio(audioId: String, server: Server)
     
@@ -21,7 +19,7 @@ extension CoreAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .login(_, _, let server), .logout(let server), .fetchRootFolder(let server), .fetchFolder(_, let server), .fetchArticle(_, let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server):
+        case .login(_, _, let server), .logout(let server), .fetchArticle(_, let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server):
           return server.projectUrl
         }
     }
@@ -29,10 +27,6 @@ extension CoreAPIService: TargetType {
         switch self {
         case .login(_, _, _), .logout(_):
             return "/sessions"
-        case .fetchRootFolder(_):
-            return "/folders"
-        case .fetchFolder(let folderId, _):
-            return "/folders/\(folderId)"
         case .fetchArticle(let articleId, _):
             return "/articles/\(articleId)"
         case .fetchAudio(let audioId, _):
@@ -49,13 +43,13 @@ extension CoreAPIService: TargetType {
             return .put
         case .logout(_):
             return .delete
-        case .fetchRootFolder(_), .fetchFolder(_, _), .fetchArticle(_, _), .fetchAudio(_, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _):
+        case .fetchArticle(_, _), .fetchAudio(_, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _):
             return .get
         }
     }
     var task: Task {
         switch self {
-        case .logout(_), .fetchRootFolder(_), .fetchFolder(_, _), .fetchArticle(_, _), .fetchAudio(_, _), .fetchRootCollection(_): // Send no parameters
+        case .logout(_), .fetchArticle(_, _), .fetchAudio(_, _), .fetchRootCollection(_): // Send no parameters
             return .requestPlain
         case .fetchCollection(_, let isNeedParent, let isNeedSibling, _):
             return .requestParameters(parameters: ["parent": isNeedParent, "siblings": isNeedSibling], encoding: URLEncoding.queryString)
@@ -69,18 +63,6 @@ extension CoreAPIService: TargetType {
             return "{\"error\": \"null\", \"isNew\": false,\"kps_session\":\"testSessionToken\",\"puser\": {\"puid\": \"testUser\"}}".utf8Encoded
         case .logout(_):
             return "{\"first_name\": \"Harry\", \"last_name\": \"Potter\"}".utf8Encoded
-        case .fetchRootFolder(_):
-            guard let url = Bundle.current.url(forResource: "folderList", withExtension: "json"),
-                  let data = try? Data(contentsOf: url) else {
-                        return Data()
-                    }
-            return data
-        case .fetchFolder(_, _):
-            guard let url = Bundle.current.url(forResource: "folderContent", withExtension: "json"),
-                  let data = try? Data(contentsOf: url) else {
-                        return Data()
-                    }
-            return data
         case .fetchArticle(_, _):
             guard let url = Bundle.current.url(forResource: "articleContent", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {

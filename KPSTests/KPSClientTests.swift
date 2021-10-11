@@ -27,14 +27,14 @@ class KPSClientTests: XCTestCase {
     func testDevClientInit() {
         
         KPSClient.config = .init(apiKey: appKey, appId: appId, server: .develop(appId: appId, version: kpsAPIVersion))
-        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(kpsAPIVersion)")
-        XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(kpsAPIVersion)/projects/\(appId)")
+        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-dev.thekono.com/api/v\(kpsAPIVersion)")
+        XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-dev.thekono.com/api/v\(kpsAPIVersion)/projects/\(appId)")
     }
     
     func testStagClientInit() {
         KPSClient.config = .init(apiKey: appKey, appId: appId, server: .staging(appId: appId, version: kpsAPIVersion))
-        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(kpsAPIVersion)")
-        XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(kpsAPIVersion)/projects/\(appId)")
+        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-stg.thekono.com/api/v\(kpsAPIVersion)")
+        XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-stg.thekono.com/api/v\(kpsAPIVersion)/projects/\(appId)")
     }
     
     
@@ -43,8 +43,8 @@ class KPSClientTests: XCTestCase {
         KPSClient.config = .init(apiKey: appKey, appId: appId)
         XCTAssertEqual(KPSClient.shared.apiKey, appKey)
         XCTAssertEqual(KPSClient.shared.appId, appId)
-        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v1")
-        XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v1/projects/\(appId)")
+        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-stg.thekono.com/api/v1")
+        XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-stg.thekono.com/api/v1/projects/\(appId)")
     }
     
     func testLoginSucceed() {
@@ -132,14 +132,7 @@ class KPSClientTests: XCTestCase {
         stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
         stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         
-        stubClient.fetchRootFolder() { result in
-            if let content = try? result.get() {
-                XCTAssertNotNil(content.children, "Folder without any children")
-                guard let firstArticle = content.children.first else { return }
-                
-                XCTAssertEqual(firstArticle.id, "5f86baece0187e26a841def5")
-            }
-        }
+        
     }
     
     func testFetchFolderSucceed() {

@@ -230,36 +230,6 @@ extension KPSClient {
         
     }
     
-    public func fetchRootFolder(completion: @escaping(Result<KPSFolder, MoyaError>) -> ()) {
-        request(target:.fetchRootFolder(server: KPSClient.config.baseServer) , completion: completion)
-    }
-    
-    public func fetchFolder(folderId: String, completion: @escaping(Result<KPSFolder, MoyaError>) -> ()) {
-        let resultClosure: ((Result<KPSFolder, MoyaError>) -> Void) = { result in
-            
-            switch result {
-            case let .success(folder):
-                var modifyFolder = folder
-                var modifyContents = [KPSContent]()
-                for data in folder.children {
-                    var mutableData = data
-                    mutableData.images = data.images.map {
-                        var mutableImage = $0
-                        mutableImage.config = KPSClient.config.baseServer
-                        return mutableImage
-                    }
-                    modifyContents.append(mutableData)
-                }
-                modifyFolder.children = modifyContents
-                completion(.success(modifyFolder))
-            case let .failure(error):
-                guard error.response != nil else { return }
-                
-                completion(.failure(error))
-            }
-        }
-        request(target:.fetchFolder(folderId: folderId, server: KPSClient.config.baseServer) , completion: resultClosure)
-    }
     
     public func fetchArticle(articleId: String, completion: @escaping(Result<KPSArticle, MoyaError>, Bool) -> ()) {
         
@@ -392,7 +362,7 @@ enum Server {
         case .staging(_, let version):
             return URL(string: "https://kps-stg.thekono.com/api/v\(version)")!
         case .prod(_, let version):
-            return URL(string: "https://kps-dev.thekono.com/api/v\(version)")!
+            return URL(string: "https://kps.thekono.com/api/v\(version)")!
         }
     }
     
