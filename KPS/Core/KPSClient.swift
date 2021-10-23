@@ -82,6 +82,7 @@ public final class KPSClient: NSObject {
         didSet {
             if oldValue != isMediaPlaying {
                 mediaContentDelegate?.kpsClient(client: self, playerIsPlaying: isMediaPlaying)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSCurrentPlayingStateChanged"), object: nil, userInfo: ["isMediaPlaying": isMediaPlaying])
             }
         }
     }
