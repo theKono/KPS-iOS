@@ -6,6 +6,7 @@
 
 import Foundation
 import AVFoundation
+import MediaPlayer
 import UIKit
 import Moya
 
@@ -39,33 +40,39 @@ public final class KPSClient: NSObject {
     
     public lazy var mediaPlayer: AVQueuePlayer = {
         let player = AVQueuePlayer()
-        
-        player.addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 10), queue: .main) { [weak self] time in
+        let monitorTime = CMTime(seconds: 0.1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        player.addPeriodicTimeObserver(forInterval: monitorTime, queue: .main) { [weak self] time in
           guard let self = self else { return }
             
             if let currentItem = self.mediaPlayer.currentItem {
                 let duration = currentItem.duration
-                let currentTime = CMTimeGetSeconds(time)
+                let currentTime = CMTimeGetSeconds(currentItem.currentTime())
                 
                 guard duration.value > 0 && duration.timescale > 0 else {return}
                 let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
+                self.currentTime = currentTime
                 
-                let endTimes = self.mediaPlayList[self.currentTrack].content.filter({ sentence in
-                    sentence.startTime > 0
-                }).map { sentence in
-                    return sentence.endTime
-                }
-                var left: Int = 0, right: Int = endTimes.count-1
+                guard let timeFrames = self.currentPlayAudioContent?.timeFrames else { return }
+                var highlightSegment: Int = -1
+                var left: Int = 0, right: Int = timeFrames.count - 1
                 while left <= right {
                     var mid = left + (right-left) / 2
-                    if endTimes[mid] > currentTime {
+                    if timeFrames[mid].endTime > currentTime {
                         right = mid - 1
                     } else {
                         left = mid + 1
                     }
                 }
-                self.mediaContentDelegate?.kpsClient(client: self, playerPlayTimeDidChange: currentTime, totalTime: totalTime)
-                self.currentSegment = left
+                if left < timeFrames.count && timeFrames[left].startTime < currentTime {
+                    if self.seekSegment == timeFrames[left].mappingIdx {
+                        self.seekSegment = -1
+                    }
+                    self.currentSegment = timeFrames[left].mappingIdx
+
+                } else {
+                    self.currentSegment = -1
+                }
+                
             }
           
         }
@@ -75,14 +82,26 @@ public final class KPSClient: NSObject {
         player.addObserver(self, forKeyPath: "currentItem", options: [.initial, .new, .old], context: nil)
         
         player.actionAtItemEnd = .advance
+        
+        enableRemoteCommand()
+        setupRemoteCommandHandler()
         return player
     }()
+    
+    internal let commandCenter = MPRemoteCommandCenter.shared()
+    internal let nowPlayingCenter = MPNowPlayingInfoCenter.default()
     
     public var isMediaPlaying: Bool = false {
         didSet {
             if oldValue != isMediaPlaying {
                 mediaContentDelegate?.kpsClient(client: self, playerIsPlaying: isMediaPlaying)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSCurrentPlayingStateChanged"), object: nil, userInfo: ["isMediaPlaying": isMediaPlaying])
+            }
+            if var currentInfo = nowPlayingCenter.nowPlayingInfo,
+               let currentTime = mediaPlayer.currentItem?.currentTime() {
+                currentInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime.seconds
+                currentInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMediaPlaying ? mediaPlayerRate : 0.0
+                nowPlayingCenter.nowPlayingInfo = currentInfo
             }
         }
     }
@@ -92,28 +111,48 @@ public final class KPSClient: NSObject {
             if isMediaPlaying {
                 mediaPlayer.playImmediately(atRate: mediaPlayerRate)
             }
+            if var currentInfo = nowPlayingCenter.nowPlayingInfo,
+               let currentTime = mediaPlayer.currentItem?.currentTime() {
+                currentInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMediaPlaying ? mediaPlayerRate : 0.0
+                currentInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime.seconds
+                nowPlayingCenter.nowPlayingInfo = currentInfo
+            }
         }
     }
     
     public var currentTrack: Int = -1 {
         didSet {
             if currentTrack != -1 && currentTrack < mediaPlayList.count {
-                mediaContentDelegate?.kpsClient(client: self, playerCurrentContent: mediaPlayList[currentTrack])
+                
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSCurrentPlayingTrackUpdated"), object: nil, userInfo: nil)
-            } else {
-                mediaContentDelegate?.kpsClient(client: self, playerCurrentContent: nil)
-            }
+            } 
             mediaContentDelegate?.kpsClient(client: self, playerCurrentTrack: currentTrack)
         }
     }
     
     public var currentSegment: Int = -1 {
         didSet {
-            if self.currentTrack < self.mediaPlayList.count && currentSegment != -1 && currentSegment < self.mediaPlayList[self.currentTrack].content.count && oldValue != currentSegment {
+            if self.currentTrack < self.mediaPlayList.count &&
+                currentSegment < (self.currentPlayAudioContent?.content.count ?? 0) &&
+                seekSegment == -1 &&
+                oldValue != currentSegment {
                 self.mediaContentDelegate?.kpsClient(client: self, playerCurrentSegment: currentSegment)
             }
         }
     }
+    
+    public var currentTime: TimeInterval = 0.0 {
+        didSet {
+            guard let currentItem = self.mediaPlayer.currentItem else {return}
+            let duration = currentItem.duration
+            
+            guard duration.value > 0 && duration.timescale > 0 else {return}
+                let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
+            self.mediaContentDelegate?.kpsClient(client: self, playerPlayTimeDidChange: currentTime, totalTime: totalTime)
+        }
+    }
+    
+    internal var seekSegment: Int = -1
     
     //MARK: get only variable
     public var isPlayListLoaded: Bool {
@@ -121,8 +160,13 @@ public final class KPSClient: NSObject {
     }
     
     public var currentPlayAudioContent: KPSAudioContent? {
-        guard currentTrack >= 0 && currentTrack < mediaPlayList.count  else { return nil }
-        return mediaPlayList[currentTrack]
+        didSet {
+            if oldValue?.id != currentPlayAudioContent?.id {
+                currentSegment = -1
+                setNowPlayingInfo()
+                mediaContentDelegate?.kpsClient(client: self, playerCurrentContent: currentPlayAudioContent)
+            }
+        }
     }
     
     
@@ -134,20 +178,22 @@ public final class KPSClient: NSObject {
         }
     }
     
-    internal var mediaPlayList = [KPSAudioContent]() {
+    internal var mediaPlayList = [KPSContentMeta]() {
         didSet {
             
-            for item in mediaPlayList {
-                mediaPlayer.insert(getAVPlayerItem(source: item), after: nil)
-            }
             do {
                 try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
             } catch {
                 print(error)
             }
-            currentTrack = 0
         }
     }
+    
+    internal var mediaPlayCollectionId: String?
+    
+    internal var mediaPlayCollectionName: [String: String]?
+    
+    internal var mediaPlayCollectionImage: KPSImageResource?
     
     public static var config = Config(apiKey: "", appId: "")
 
@@ -192,28 +238,61 @@ public final class KPSClient: NSObject {
         request(target: .login(keyId: keyID, token: token, server: KPSClient.config.baseServer), completion: resultClosure)
     }
     
-    public func logout(completion: @escaping(Result<Moya.Response, MoyaError>) -> ()) {
+    public func logout(completion: ((Result<Moya.Response, MoyaError>) -> ())? = nil) {
         networkProvider.request(.logout(server: KPSClient.config.baseServer)) { result in
             switch result {
             case let .success(response):
                 do {
                     let _ = try response.filterSuccessfulStatusCodes()
                     self.isUserLoggedIn = false
-                    completion(.success(response))
+                    completion?(.success(response))
                 } catch let error {
                     if let customError = error as? MoyaError {
-                        completion(.failure(customError))
+                        completion?(.failure(customError))
                     } else {
-                        completion(.failure(.jsonMapping(response)))
+                        completion?(.failure(.jsonMapping(response)))
                     }
                 }
                 
             case let .failure(error):
-                completion(.failure(error))
+                completion?(.failure(error))
             }
         }
     }
+    
+    internal func setNowPlayingInfo() {
         
+        guard let content = currentPlayAudioContent,
+              let collectionImage = mediaPlayCollectionImage?.mainImageURL else { return }
+        var info = [String: Any]()
+        info[MPMediaItemPropertyTitle] = content.name["zh-TW"]
+        info[MPMediaItemPropertyAlbumTitle] = mediaPlayCollectionName?["zh-TW"]
+        info[MPMediaItemPropertyPlaybackDuration] = content.length
+        info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0.0
+        info[MPNowPlayingInfoPropertyPlaybackRate] = mediaPlayerRate
+        info[MPNowPlayingInfoPropertyDefaultPlaybackRate] = 1.0
+        
+            
+        DispatchQueue.global().async { [weak self] in
+            if let artworkUrl = URL(string: collectionImage),
+               let artworkData = try? Data(contentsOf: artworkUrl),
+               let artworkImage = UIImage(data: artworkData) {
+                if var currentInfo = self?.nowPlayingCenter.nowPlayingInfo {
+                    currentInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artworkImage.size) { _ in artworkImage }
+                    self?.nowPlayingCenter.nowPlayingInfo = currentInfo
+                }
+            }
+        }
+        self.nowPlayingCenter.nowPlayingInfo = info
+    }
+    
+    internal func enableRemoteCommand() {
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.previousTrackCommand.isEnabled = true
+        commandCenter.nextTrackCommand.isEnabled = true
+        commandCenter.changePlaybackPositionCommand.isEnabled = true
+    }
 }
 
 // MARK: Data Related API
@@ -292,6 +371,14 @@ extension KPSClient {
                     if let customError = error as? MoyaError {
                         completion(.failure(customError))
                     } else {
+
+                        do{
+                            let json = try JSONSerialization.jsonObject(with: response.data, options: .mutableContainers)
+                            let dic = json as! Dictionary<String, Any>
+                            print(dic)
+                        } catch _ {
+                            
+                        }
                         completion(.failure(.jsonMapping(response)))
                     }
                 }
@@ -330,7 +417,7 @@ extension KPSClient {
             if let baseServer = server {
                 self.baseServer = baseServer
             } else {
-                self.baseServer = .staging(appId: appId, version: "1")
+                self.baseServer = .prod(appId: appId, version: "1")
             }
         }
     }
@@ -373,4 +460,10 @@ enum Server {
             return baseUrl.appendingPathComponent("/projects/\(appId)")
         }
     }
+}
+
+
+public enum KPSContentError: Swift.Error {
+    case needLogin
+    case needPurchase
 }
