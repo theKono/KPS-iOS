@@ -24,6 +24,7 @@
 		E83310A326B5327C00A6AA59 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109826B50CB700A6AA59 /* articleContent.json */; };
 		E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */; };
 		E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E83310A626B547B300A6AA59 /* previewArticleContent.json */; };
+		E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */ = {isa = PBXBuildFile; fileRef = E85FAB77275A3152006418CD /* KPS-iOS.podspec */; };
 		E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */; };
 		E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C526ECF76800B9C9F7 /* KPSCollection.swift */; };
 		E88396C826ECFACC00B9C9F7 /* KPSImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */; };
@@ -79,6 +80,7 @@
 		E833109826B50CB700A6AA59 /* articleContent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
 		E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		E83310A626B547B300A6AA59 /* previewArticleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = previewArticleContent.json; sourceTree = "<group>"; };
+		E85FAB77275A3152006418CD /* KPS-iOS.podspec */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KPS-iOS.podspec"; sourceTree = SOURCE_ROOT; };
 		E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSContentMeta.swift; sourceTree = "<group>"; };
 		E88396C526ECF76800B9C9F7 /* KPSCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSCollection.swift; sourceTree = "<group>"; };
 		E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSImageResource.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 		E833100126A4100E00A6AA59 /* KPS */ = {
 			isa = PBXGroup;
 			children = (
+				E85FAB77275A3152006418CD /* KPS-iOS.podspec */,
 				E833108C26B3B1E400A6AA59 /* Extension */,
 				E833103626AAADDF00A6AA59 /* Core */,
 				E833105026AB077600A6AA59 /* Model */,
@@ -353,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */,
+				E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */,
 				E83310A326B5327C00A6AA59 /* articleContent.json in Resources */,
 				E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */,
 				E83310A226B5327800A6AA59 /* folderList.json in Resources */,
