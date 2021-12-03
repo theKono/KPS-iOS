@@ -14,10 +14,15 @@ public struct KPSContentMeta {
     }
     
     public var id, type: String
+    public var isPublic, isFree: Bool?
     public var name, description: [String: String]
     public var authors: [String:[String]]?
     public let publicContentInfo: [String: Any]?
     public var images: [KPSImageResource]
+    
+    public var isCollectionType: Bool {
+        return type != "article" && type != "audio" && type != "video"
+    }
 }
 
 extension KPSContentMeta: Decodable {
@@ -29,6 +34,8 @@ extension KPSContentMeta: Decodable {
         type = try container.decode(String.self, forKey: .type)
         name = try container.decode([String: String].self, forKey: .name)
         description = try container.decode([String: String].self, forKey: .description)
+        isPublic = try container.decodeIfPresent(Bool.self, forKey: .publicData)
+        isFree = try container.decodeIfPresent(Bool.self, forKey: .free)
         publicContentInfo = try container.decode([String: Any].self, forKey: .content)
         
         if let contentInfo = try container.decodeIfPresent([String: Any].self, forKey: .info) {
