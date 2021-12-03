@@ -1,9 +1,13 @@
 //
-//  KPSContent.swift
+//  KPSArticle.swift
 //  KPS
 
 
-public struct KPSContent {
+public struct KPSArticle {
+    
+    enum CodingKeys: String, CodingKey {
+        case article, error
+    }
     
     enum RootKeys: String, CodingKey {
         case id,type,name,description
@@ -27,11 +31,12 @@ public struct KPSContent {
     
 }
 
-extension KPSContent: Decodable {
+extension KPSArticle: Decodable {
     
     public init(from decoder: Decoder) throws {
 
-        let container = try decoder.container(keyedBy: RootKeys.self)
+        let baseContainer = try decoder.container(keyedBy: CodingKeys.self)
+        let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .article)
         
         id = try container.decode(String.self, forKey: .id)
         type = try container.decode(String.self, forKey: .type)
@@ -50,7 +55,4 @@ extension KPSContent: Decodable {
     }
     
 }
-
-
-
 
