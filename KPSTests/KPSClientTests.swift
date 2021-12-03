@@ -18,7 +18,7 @@ class KPSClientTests: XCTestCase {
     
     
     var stubbingProvider: MoyaProvider<CoreAPIService>!
-    var stubClient: Client!
+    var stubClient: KPSClient!
     
     override func setUp() {
         
@@ -26,25 +26,25 @@ class KPSClientTests: XCTestCase {
 
     func testDevClientInit() {
         
-        Client.config = .init(apiKey: appKey, appId: appId, server: .develop(appId: appId, version: kpsAPIVersion))
-        XCTAssertEqual(Client.config.baseServer.baseUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(kpsAPIVersion)")
-        XCTAssertEqual(Client.config.baseServer.projectUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(kpsAPIVersion)/projects/\(appId)")
+        KPSClient.config = .init(apiKey: appKey, appId: appId, server: .develop(appId: appId, version: kpsAPIVersion))
+        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-dev.thekono.com/api/v\(kpsAPIVersion)")
+        XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-dev.thekono.com/api/v\(kpsAPIVersion)/projects/\(appId)")
     }
     
     func testStagClientInit() {
-        Client.config = .init(apiKey: appKey, appId: appId, server: .staging(appId: appId, version: kpsAPIVersion))
-        XCTAssertEqual(Client.config.baseServer.baseUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(kpsAPIVersion)")
-        XCTAssertEqual(Client.config.baseServer.projectUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(kpsAPIVersion)/projects/\(appId)")
+        KPSClient.config = .init(apiKey: appKey, appId: appId, server: .staging(appId: appId, version: kpsAPIVersion))
+        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-stg.thekono.com/api/v\(kpsAPIVersion)")
+        XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-stg.thekono.com/api/v\(kpsAPIVersion)/projects/\(appId)")
     }
     
     
     func testClientInit() {
         
-        Client.config = .init(apiKey: appKey, appId: appId)
-        XCTAssertEqual(Client.shared.apiKey, appKey)
-        XCTAssertEqual(Client.shared.appId, appId)
-        XCTAssertEqual(Client.config.baseServer.baseUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v1")
-        XCTAssertEqual(Client.config.baseServer.projectUrl.absoluteString, "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v1/projects/\(appId)")
+        KPSClient.config = .init(apiKey: appKey, appId: appId)
+        XCTAssertEqual(KPSClient.shared.apiKey, appKey)
+        XCTAssertEqual(KPSClient.shared.appId, appId)
+        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-stg.thekono.com/api/v1")
+        XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-stg.thekono.com/api/v1/projects/\(appId)")
     }
     
     func testLoginSucceed() {
@@ -53,7 +53,7 @@ class KPSClientTests: XCTestCase {
         let access_id = "mockUserId"
         
         stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-        stubClient = Client(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
+        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         
         stubClient.login(keyID: access_id, token: access_token, completion: {result in })
         XCTAssertEqual(stubClient.currentUserId, "testUser")
@@ -75,7 +75,7 @@ class KPSClientTests: XCTestCase {
         }
 
         stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customFailedEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-        stubClient = Client(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
+        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         
         stubClient.login(keyID: access_id, token: access_token) { result in
             switch result {
@@ -91,7 +91,7 @@ class KPSClientTests: XCTestCase {
     
     func testLogoutSucceed() {
         stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-        stubClient = Client(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
+        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         
         stubClient.logout(completion: {result in})
         XCTAssertFalse(stubClient.isUserLoggedIn)
@@ -109,7 +109,7 @@ class KPSClientTests: XCTestCase {
         }
 
         stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customFailedEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-        stubClient = Client(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
+        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         
         stubClient.logout(){ result in
             switch result {
@@ -127,33 +127,46 @@ class KPSClientTests: XCTestCase {
         }
     }
     
-    func testFetchFolderSucceed() {
+    func testFetchRootFolderSucceed() {
         
         stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-        stubClient = Client(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
+        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         
-        stubClient.fetchFolders() { result in
-            if let content = try? result.get() {
-                XCTAssertNotNil(content.children, "Folder without any children")
-                guard let firstArticle = content.children.first else { return }
-                
-                XCTAssertEqual(firstArticle.id, "5f86baece0187e26a841def5")
-            }
-        }
+        
     }
+    
+    func testFetchFolderSucceed() {
+        let folderId = "testFolderId"
+        
+    }
+    
     
     func testFetchArticleContentSucceed() {
         
         let articleId = "testArticleId"
         stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-        stubClient = Client(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
-        let baseUrl = Client.config.baseServer.baseUrl.absoluteString
+        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
+        let baseUrl = KPSClient.config.baseServer.baseUrl.absoluteString
         stubClient.fetchArticle(articleId: articleId) { (result, isFullArticle) in
             if let content = try? result.get() {
                 XCTAssertEqual(content.id, "5f86bcabe0187ed43f41dfa7")
                 
-                if let firstImage = content.images.first {
-                    XCTAssertEqual(firstImage.mainImageURL, baseUrl+firstImage.uri)
+                if let firstImage = content.images.first,
+                   let largestThumbnailSize = content.images.first?.thumbnailSizes.last,
+                   let smallestThumbnailSize = content.images.first?.thumbnailSizes.first{
+                    XCTAssertEqual(firstImage.mainImageURL, baseUrl + "/" + firstImage.uri)
+                    
+                    let bucketName = "kps_public_" + KPSClient.config.baseServer.env + "_thumbnails/"
+                    let index = firstImage.uri.lastIndex(of: ".")
+                    let prefix = String(firstImage.uri.prefix(upTo: index ?? firstImage.uri.endIndex))
+                    
+                    let largestThumbnailURL = String(format: "%@%@%@-%d.jpg", KPSClient.config.baseServer.cloudStorage, bucketName, prefix ,largestThumbnailSize)
+                    
+                    let smallestThumbnailURL = String(format: "%@%@%@-%d.jpg", KPSClient.config.baseServer.cloudStorage, bucketName, prefix ,smallestThumbnailSize)
+                    XCTAssertEqual(firstImage.thumbnailImageURL(of: largestThumbnailSize + 10),
+                                   largestThumbnailURL)
+                    XCTAssertEqual(firstImage.thumbnailImageURL(of: 0),
+                                   smallestThumbnailURL)
                 }
                 XCTAssertNotNil(content.fitReadingData)
                 XCTAssertNotNil(content.pdfData)
@@ -176,7 +189,7 @@ class KPSClientTests: XCTestCase {
                             httpHeaderFields: target.headers)
         }
         stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customFailedEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-        stubClient = Client(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
+        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         
         stubClient.fetchArticle(articleId: articleId) { (result, isFullArticle) in
             if let content = try? result.get() {
@@ -184,7 +197,7 @@ class KPSClientTests: XCTestCase {
                 //XCTAssertNil(content.fitReadingData)
                 //XCTAssertNil(content.pdfData)
             }
-            XCTAssertFalse(isFullArticle)
+            //XCTAssertFalse(isFullArticle)
         }
         
     }

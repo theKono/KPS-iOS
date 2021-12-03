@@ -5,13 +5,16 @@
 
 
 import Foundation
+import AVFoundation
+import MediaPlayer
 import UIKit
 import Moya
 
 typealias NetworkProvider = MoyaProvider<CoreAPIService>
 
 
-public final class Client {
+
+public final class KPSClient: NSObject {
     let apiKey: String
     let appId: String
     
@@ -33,17 +36,168 @@ public final class Client {
         }
     }
     
+    public weak var mediaContentDelegate: KPSClientMediaContentDelegate?
     
-    /// A configuration to initialize the shared Client.
+    public lazy var mediaPlayer: AVQueuePlayer = {
+        let player = AVQueuePlayer()
+        let monitorTime = CMTime(seconds: 0.1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        player.addPeriodicTimeObserver(forInterval: monitorTime, queue: .main) { [weak self] time in
+          guard let self = self else { return }
+            
+            if let currentItem = self.mediaPlayer.currentItem {
+                let duration = currentItem.duration
+                let currentTime = CMTimeGetSeconds(currentItem.currentTime())
+                
+                guard duration.value > 0 && duration.timescale > 0 else {return}
+                let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
+                self.currentTime = currentTime
+                
+                guard let timeFrames = self.currentPlayAudioContent?.timeFrames else { return }
+                var highlightSegment: Int = -1
+                var left: Int = 0, right: Int = timeFrames.count - 1
+                while left <= right {
+                    var mid = left + (right-left) / 2
+                    if timeFrames[mid].endTime > currentTime {
+                        right = mid - 1
+                    } else {
+                        left = mid + 1
+                    }
+                }
+                if left < timeFrames.count && timeFrames[left].startTime < currentTime {
+                    if self.seekSegment == timeFrames[left].mappingIdx {
+                        self.seekSegment = -1
+                    }
+                    self.currentSegment = timeFrames[left].mappingIdx
+
+                } else {
+                    self.currentSegment = -1
+                }
+                
+            }
+          
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+
+        player.addObserver(self, forKeyPath: "currentItem", options: [.initial, .new, .old], context: nil)
+        
+        player.actionAtItemEnd = .advance
+        
+        enableRemoteCommand()
+        setupRemoteCommandHandler()
+        return player
+    }()
+    
+    internal let commandCenter = MPRemoteCommandCenter.shared()
+    internal let nowPlayingCenter = MPNowPlayingInfoCenter.default()
+    
+    public var isMediaPlaying: Bool = false {
+        didSet {
+            if oldValue != isMediaPlaying {
+                mediaContentDelegate?.kpsClient(client: self, playerIsPlaying: isMediaPlaying)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSCurrentPlayingStateChanged"), object: nil, userInfo: ["isMediaPlaying": isMediaPlaying])
+            }
+            if var currentInfo = nowPlayingCenter.nowPlayingInfo,
+               let currentTime = mediaPlayer.currentItem?.currentTime() {
+                currentInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime.seconds
+                currentInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMediaPlaying ? mediaPlayerRate : 0.0
+                nowPlayingCenter.nowPlayingInfo = currentInfo
+            }
+        }
+    }
+    
+    public var mediaPlayerRate: Float = 1.0 {
+        didSet {
+            if isMediaPlaying {
+                mediaPlayer.playImmediately(atRate: mediaPlayerRate)
+            }
+            if var currentInfo = nowPlayingCenter.nowPlayingInfo,
+               let currentTime = mediaPlayer.currentItem?.currentTime() {
+                currentInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMediaPlaying ? mediaPlayerRate : 0.0
+                currentInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime.seconds
+                nowPlayingCenter.nowPlayingInfo = currentInfo
+            }
+        }
+    }
+    
+    public var currentTrack: Int = -1 {
+        didSet {
+            if currentTrack != -1 && currentTrack < mediaPlayList.count {
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSCurrentPlayingTrackUpdated"), object: nil, userInfo: nil)
+            } 
+            mediaContentDelegate?.kpsClient(client: self, playerCurrentTrack: currentTrack)
+        }
+    }
+    
+    public var currentSegment: Int = -1 {
+        didSet {
+            if self.currentTrack < self.mediaPlayList.count &&
+                currentSegment < (self.currentPlayAudioContent?.content.count ?? 0) &&
+                seekSegment == -1 &&
+                oldValue != currentSegment {
+                self.mediaContentDelegate?.kpsClient(client: self, playerCurrentSegment: currentSegment)
+            }
+        }
+    }
+    
+    public var currentTime: TimeInterval = 0.0 {
+        didSet {
+            guard let currentItem = self.mediaPlayer.currentItem else {return}
+            let duration = currentItem.duration
+            
+            guard duration.value > 0 && duration.timescale > 0 else {return}
+                let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
+            self.mediaContentDelegate?.kpsClient(client: self, playerPlayTimeDidChange: currentTime, totalTime: totalTime)
+        }
+    }
+    
+    internal var seekSegment: Int = -1
+    
+    //MARK: get only variable
+    public var isPlayListLoaded: Bool {
+        return mediaPlayList.count > 0
+    }
+    
+    public var currentPlayAudioContent: KPSAudioContent? {
+        didSet {
+            if oldValue?.id != currentPlayAudioContent?.id {
+                currentSegment = -1
+                setNowPlayingInfo()
+                mediaContentDelegate?.kpsClient(client: self, playerCurrentContent: currentPlayAudioContent)
+            }
+        }
+    }
+    
+    
+    internal var mediaPlayerState = MediaPlayerState.nonSetSource {
+        didSet {
+            if oldValue != mediaPlayerState {
+                mediaContentDelegate?.kpsClient(client: self, playerStateDidChange: mediaPlayerState)
+            }
+        }
+    }
+    
+    internal var mediaPlayList = [KPSContentMeta]() {
+        didSet {
+            
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    internal var mediaPlayCollectionId: String?
+    
+    internal var mediaPlayCollectionName: [String: String]?
+    
+    internal var mediaPlayCollectionImage: KPSImageResource?
+    
     public static var config = Config(apiKey: "", appId: "")
 
-    /// A shared client.
-    /// - Note: Setup `KPSClient.config` before using a shared client.
-    /// ```
-    /// // Setup a shared client.
-    /// KPSClient.config = .init(apiKey: "API_KEY", appId: "APP_ID")
-
-    public static let shared = Client(apiKey: Client.config.apiKey, appId: Client.config.appId)
+    public static let shared = KPSClient(apiKey: KPSClient.config.apiKey, appId: KPSClient.config.appId)
     
     
     init(apiKey: String, appId: String, networkProvider: NetworkProvider? = nil) {
@@ -54,8 +208,9 @@ public final class Client {
         if let networkProvider = networkProvider {
             self.networkProvider = networkProvider
         } else {
-            self.networkProvider =
-                NetworkProvider(plugins: [NetworkLoggerPlugin()])
+            //self.networkProvider = NetworkProvider(plugins: [NetworkLoggerPlugin()])
+            self.networkProvider = NetworkProvider()
+            
         }
     }
     
@@ -80,45 +235,92 @@ public final class Client {
                 }
             }
         }
-        request(target: .login(keyId: keyID, token: token, server: Client.config.baseServer), completion: resultClosure)
+        request(target: .login(keyId: keyID, token: token, server: KPSClient.config.baseServer), completion: resultClosure)
     }
     
-    public func logout(completion: @escaping(Result<Moya.Response, MoyaError>) -> ()) {
-        networkProvider.request(.logout(server: Client.config.baseServer)) { result in
+    public func logout(completion: ((Result<Moya.Response, MoyaError>) -> ())? = nil) {
+        networkProvider.request(.logout(server: KPSClient.config.baseServer)) { result in
             switch result {
             case let .success(response):
                 do {
                     let _ = try response.filterSuccessfulStatusCodes()
                     self.isUserLoggedIn = false
-                    completion(.success(response))
+                    completion?(.success(response))
                 } catch let error {
                     if let customError = error as? MoyaError {
-                        completion(.failure(customError))
+                        completion?(.failure(customError))
                     } else {
-                        completion(.failure(.jsonMapping(response)))
+                        completion?(.failure(.jsonMapping(response)))
                     }
                 }
                 
             case let .failure(error):
-                completion(.failure(error))
+                completion?(.failure(error))
             }
         }
     }
     
-    public func fetchFolders(completion: @escaping(Result<KPSFolder, MoyaError>) -> ()) {
-        request(target:.fetchFolders(server: Client.config.baseServer) , completion: completion)
+    internal func setNowPlayingInfo() {
+        
+        guard let content = currentPlayAudioContent,
+              let collectionImage = mediaPlayCollectionImage?.mainImageURL else { return }
+        var info = [String: Any]()
+        info[MPMediaItemPropertyTitle] = content.name["zh-TW"]
+        info[MPMediaItemPropertyAlbumTitle] = mediaPlayCollectionName?["zh-TW"]
+        info[MPMediaItemPropertyPlaybackDuration] = content.length
+        info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0.0
+        info[MPNowPlayingInfoPropertyPlaybackRate] = mediaPlayerRate
+        info[MPNowPlayingInfoPropertyDefaultPlaybackRate] = 1.0
+        
+            
+        DispatchQueue.global().async { [weak self] in
+            if let artworkUrl = URL(string: collectionImage),
+               let artworkData = try? Data(contentsOf: artworkUrl),
+               let artworkImage = UIImage(data: artworkData) {
+                if var currentInfo = self?.nowPlayingCenter.nowPlayingInfo {
+                    currentInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artworkImage.size) { _ in artworkImage }
+                    self?.nowPlayingCenter.nowPlayingInfo = currentInfo
+                }
+            }
+        }
+        self.nowPlayingCenter.nowPlayingInfo = info
     }
     
-    public func fetchArticle(articleId: String, completion: @escaping(Result<KPSContent, MoyaError>, Bool) -> ()) {
+    internal func enableRemoteCommand() {
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.previousTrackCommand.isEnabled = true
+        commandCenter.nextTrackCommand.isEnabled = true
+        commandCenter.changePlaybackPositionCommand.isEnabled = true
+    }
+}
+
+// MARK: Data Related API
+extension KPSClient {
+    
+    public func fetchCollection(Id: String? = nil, isNeedParent: Bool = false, isNeedSiblings: Bool = false, completion: @escaping(Result<KPSCollection, MoyaError>) -> ()) {
         
-        let resultClosure: ((Result<KPSContent, MoyaError>) -> Void) = { result in
+        if let collectionId = Id {
+            request(target: .fetchCollection(Id: collectionId, isNeedParent: isNeedParent, isNeedSiblings: isNeedSiblings, server: KPSClient.config.baseServer), completion: completion)
+
+        } else {
+            request(target: .fetchRootCollection(server: KPSClient.config.baseServer) , completion: completion)
+            
+        }
+        
+    }
+    
+    
+    public func fetchArticle(articleId: String, completion: @escaping(Result<KPSArticle, MoyaError>, Bool) -> ()) {
+        
+        let resultClosure: ((Result<KPSArticle, MoyaError>) -> Void) = { result in
             
             switch result {
             case let .success(response):
                 var content = response
                 content.images = response.images.map {
                     var mutableImage = $0
-                    mutableImage.baseURL = Client.config.baseServer.baseUrl.absoluteString
+                    mutableImage.config = KPSClient.config.baseServer
                     return mutableImage
                 }
                 completion(.success(content), true)
@@ -128,7 +330,7 @@ public final class Client {
                 
                 if response.statusCode == 403 {
                     do {
-                        let previewContent = try JSONDecoder().decode(KPSContent.self, from: response.data)
+                        let previewContent = try JSONDecoder().decode(KPSArticle.self, from: response.data)
                         completion(.success(previewContent), false)
                     } catch {
                         print("decode error")
@@ -138,27 +340,45 @@ public final class Client {
                 completion(.failure(error), false)
             }
         }
-        request(target:.fetchArticle(articleId: articleId, server: Client.config.baseServer), completion: resultClosure)
+        request(target:.fetchArticle(articleId: articleId, server: KPSClient.config.baseServer), completion: resultClosure)
     }
-        
+
+    
 }
 
 
-extension Client {
-    private func request<T: Decodable>(target: CoreAPIService, completion: @escaping (Result<T, MoyaError>) -> ()) {
+// MARK: View Related API
+extension KPSClient {
+    
+    
+    
+}
+
+
+// MARK: - Utility function
+extension KPSClient {
+    internal func request<T: Decodable>(target: CoreAPIService, completion: @escaping (Result<T, MoyaError>) -> ()) {
         
         networkProvider.request(target) { result in
             switch result {
             case let .success(response):
                 do {
-                    let filteredResponse = try response.filterSuccessfulStatusCodes()
-                    let results = try JSONDecoder().decode(T.self, from: filteredResponse.data)
+                    //let filteredResponse = try response.filterSuccessfulStatusCodes()
+                    let results = try JSONDecoder().decode(T.self, from: response.data)
                     
                     completion(.success(results))
                 } catch let error {
                     if let customError = error as? MoyaError {
                         completion(.failure(customError))
                     } else {
+
+                        do{
+                            let json = try JSONSerialization.jsonObject(with: response.data, options: .mutableContainers)
+                            let dic = json as! Dictionary<String, Any>
+                            print(dic)
+                        } catch _ {
+                            
+                        }
                         completion(.failure(.jsonMapping(response)))
                     }
                 }
@@ -171,7 +391,7 @@ extension Client {
 
 
 // MARK: - Config
-extension Client {
+extension KPSClient {
     /// A configuration for the shared Instance `Client`.
     public struct Config {
         let apiKey: String
@@ -197,7 +417,7 @@ extension Client {
             if let baseServer = server {
                 self.baseServer = baseServer
             } else {
-                self.baseServer = .prod(appId: appId, version: "1")
+                self.baseServer = .staging(appId: appId, version: "1")
             }
         }
     }
@@ -208,15 +428,29 @@ enum Server {
     case develop(appId: String, version: String)
     case staging(appId: String, version: String)
     case prod(appId: String, version: String)
-  
+
+    var env: String {
+        switch self {
+        case .develop(_, _):
+            return "dev"
+        case .staging(_, _):
+            return "dev"
+        case .prod(_, _):
+            return "dev"
+        }
+    }
+    
+    var cloudStorage: String {
+        return "https://storage.googleapis.com/"
+    }
     var baseUrl: URL {
         switch self {
         case .develop(_, let version):
-            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)")!
+            return URL(string: "https://kps-dev.thekono.com/api/v\(version)")!
         case .staging(_, let version):
-            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)")!
+            return URL(string: "https://kps-stg.thekono.com/api/v\(version)")!
         case .prod(_, let version):
-            return URL(string: "https://kps-server-ojx42ulvaa-uc.a.run.app/platform/api/v\(version)")!
+            return URL(string: "https://kps.thekono.com/api/v\(version)")!
         }
     }
     
@@ -226,4 +460,10 @@ enum Server {
             return baseUrl.appendingPathComponent("/projects/\(appId)")
         }
     }
+}
+
+
+public enum KPSContentError: Swift.Error {
+    case needLogin
+    case needPurchase
 }

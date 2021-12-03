@@ -24,7 +24,22 @@
 		E83310A326B5327C00A6AA59 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109826B50CB700A6AA59 /* articleContent.json */; };
 		E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */; };
 		E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E83310A626B547B300A6AA59 /* previewArticleContent.json */; };
-		E83310A926B54B1400A6AA59 /* KPSFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A826B54B1400A6AA59 /* KPSFolder.swift */; };
+		E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */ = {isa = PBXBuildFile; fileRef = E85FAB77275A3152006418CD /* KPS-iOS.podspec */; };
+		E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */; };
+		E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C526ECF76800B9C9F7 /* KPSCollection.swift */; };
+		E88396C826ECFACC00B9C9F7 /* KPSImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */; };
+		E88C466626CCAE0C001243F5 /* audioContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E88C466526CCAE0C001243F5 /* audioContent.json */; };
+		E88C466826CCB034001243F5 /* KPSAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88C466726CCB034001243F5 /* KPSAudio.swift */; };
+		E88C466A26CD260C001243F5 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88C466926CD260C001243F5 /* ThreadSafeArray.swift */; };
+		E8A4C8C026BB869A0082B4F7 /* KPSClient+Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */; };
+		E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */; };
+		E8A4C8CB26BFD2590082B4F7 /* KPSClientMediaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8CA26BFD2590082B4F7 /* KPSClientMediaTests.swift */; };
+		E8A4C8CE26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8CD26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift */; };
+		E8A4C8D026C11EAC0082B4F7 /* WhatYouWant.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */; };
+		E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */; };
+		E8A4C8DA26C3FC0B0082B4F7 /* folderContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8D926C3FC0B0082B4F7 /* folderContent.json */; };
+		E8A4C8DC26C4B3AE0082B4F7 /* KPSArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */; };
+		E8A4C8DE26C4B5B70082B4F7 /* KPSImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8DD26C4B5B70082B4F7 /* KPSImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +80,22 @@
 		E833109826B50CB700A6AA59 /* articleContent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
 		E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		E83310A626B547B300A6AA59 /* previewArticleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = previewArticleContent.json; sourceTree = "<group>"; };
-		E83310A826B54B1400A6AA59 /* KPSFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSFolder.swift; sourceTree = "<group>"; };
+		E85FAB77275A3152006418CD /* KPS-iOS.podspec */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KPS-iOS.podspec"; sourceTree = SOURCE_ROOT; };
+		E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSContentMeta.swift; sourceTree = "<group>"; };
+		E88396C526ECF76800B9C9F7 /* KPSCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSCollection.swift; sourceTree = "<group>"; };
+		E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSImageResource.swift; sourceTree = "<group>"; };
+		E88C466526CCAE0C001243F5 /* audioContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = audioContent.json; sourceTree = "<group>"; };
+		E88C466726CCB034001243F5 /* KPSAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSAudio.swift; sourceTree = "<group>"; };
+		E88C466926CD260C001243F5 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
+		E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KPSClient+Media.swift"; sourceTree = "<group>"; };
+		E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = IronBacon.mp3; sourceTree = "<group>"; };
+		E8A4C8CA26BFD2590082B4F7 /* KPSClientMediaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientMediaTests.swift; sourceTree = "<group>"; };
+		E8A4C8CD26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientMediaContentDelegateMock.swift; sourceTree = "<group>"; };
+		E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = WhatYouWant.mp3; sourceTree = "<group>"; };
+		E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Eventually.swift"; sourceTree = "<group>"; };
+		E8A4C8D926C3FC0B0082B4F7 /* folderContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = folderContent.json; sourceTree = "<group>"; };
+		E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSArticle.swift; sourceTree = "<group>"; };
+		E8A4C8DD26C4B5B70082B4F7 /* KPSImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSImage.swift; sourceTree = "<group>"; };
 		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -140,10 +170,11 @@
 		E833100126A4100E00A6AA59 /* KPS */ = {
 			isa = PBXGroup;
 			children = (
+				E85FAB77275A3152006418CD /* KPS-iOS.podspec */,
 				E833108C26B3B1E400A6AA59 /* Extension */,
 				E833103626AAADDF00A6AA59 /* Core */,
 				E833105026AB077600A6AA59 /* Model */,
-				E833108D26B43CDE00A6AA59 /* Resource */,
+				E833108D26B43CDE00A6AA59 /* Resources */,
 				E833100226A4100E00A6AA59 /* KPS.h */,
 				E833100326A4100E00A6AA59 /* Info.plist */,
 				E833103126A417CC00A6AA59 /* KPSUtility.swift */,
@@ -154,9 +185,12 @@
 		E833100C26A4100E00A6AA59 /* KPSTests */ = {
 			isa = PBXGroup;
 			children = (
+				E8A4C8CC26BFD3FA0082B4F7 /* Mocks */,
 				E833109226B44C1B00A6AA59 /* KPSClientTests.swift */,
+				E8A4C8CA26BFD2590082B4F7 /* KPSClientMediaTests.swift */,
 				E833103426A417F800A6AA59 /* KPSUtilityTest.swift */,
 				E833100F26A4100E00A6AA59 /* Info.plist */,
+				E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */,
 			);
 			path = KPSTests;
 			sourceTree = "<group>";
@@ -165,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				E833103726AAAE1D00A6AA59 /* KPSClient.swift */,
+				E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */,
 				E833103B26AAB60800A6AA59 /* CoreAPIService.swift */,
 			);
 			path = Core;
@@ -182,8 +217,13 @@
 			isa = PBXGroup;
 			children = (
 				E833105126AB0A4500A6AA59 /* LoginResponse.swift */,
+				E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */,
+				E88C466726CCB034001243F5 /* KPSAudio.swift */,
 				E833105326AB0FED00A6AA59 /* KPSContent.swift */,
-				E83310A826B54B1400A6AA59 /* KPSFolder.swift */,
+				E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */,
+				E88396C526ECF76800B9C9F7 /* KPSCollection.swift */,
+				E8A4C8DD26C4B5B70082B4F7 /* KPSImage.swift */,
+				E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -193,18 +233,31 @@
 			children = (
 				E833108A26B3B0F100A6AA59 /* Codable+Extension.swift */,
 				E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */,
+				E88C466926CD260C001243F5 /* ThreadSafeArray.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		E833108D26B43CDE00A6AA59 /* Resource */ = {
+		E833108D26B43CDE00A6AA59 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */,
+				E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */,
 				E833109726B50CB700A6AA59 /* folderList.json */,
 				E833109826B50CB700A6AA59 /* articleContent.json */,
+				E88C466526CCAE0C001243F5 /* audioContent.json */,
 				E83310A626B547B300A6AA59 /* previewArticleContent.json */,
+				E8A4C8D926C3FC0B0082B4F7 /* folderContent.json */,
 			);
-			path = Resource;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E8A4C8CC26BFD3FA0082B4F7 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				E8A4C8CD26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,9 +355,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */,
+				E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */,
 				E83310A326B5327C00A6AA59 /* articleContent.json in Resources */,
 				E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */,
 				E83310A226B5327800A6AA59 /* folderList.json in Resources */,
+				E8A4C8D026C11EAC0082B4F7 /* WhatYouWant.mp3 in Resources */,
+				E88C466626CCAE0C001243F5 /* audioContent.json in Resources */,
+				E8A4C8DA26C3FC0B0082B4F7 /* folderContent.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,14 +444,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */,
 				E833108B26B3B0F100A6AA59 /* Codable+Extension.swift in Sources */,
 				E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */,
 				E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */,
 				E833103826AAAE1D00A6AA59 /* KPSClient.swift in Sources */,
-				E83310A926B54B1400A6AA59 /* KPSFolder.swift in Sources */,
+				E88C466826CCB034001243F5 /* KPSAudio.swift in Sources */,
+				E88C466A26CD260C001243F5 /* ThreadSafeArray.swift in Sources */,
+				E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */,
+				E8A4C8DC26C4B3AE0082B4F7 /* KPSArticle.swift in Sources */,
+				E88396C826ECFACC00B9C9F7 /* KPSImageResource.swift in Sources */,
+				E8A4C8DE26C4B5B70082B4F7 /* KPSImage.swift in Sources */,
 				E833105426AB0FED00A6AA59 /* KPSContent.swift in Sources */,
 				E833105226AB0A4500A6AA59 /* LoginResponse.swift in Sources */,
 				E833103C26AAB60800A6AA59 /* CoreAPIService.swift in Sources */,
+				E8A4C8C026BB869A0082B4F7 /* KPSClient+Media.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,9 +466,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8A4C8CB26BFD2590082B4F7 /* KPSClientMediaTests.swift in Sources */,
 				E833103526A417F800A6AA59 /* KPSUtilityTest.swift in Sources */,
 				E833103326A417CC00A6AA59 /* KPSUtility.swift in Sources */,
+				E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */,
 				E833109326B44C1B00A6AA59 /* KPSClientTests.swift in Sources */,
+				E8A4C8CE26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
