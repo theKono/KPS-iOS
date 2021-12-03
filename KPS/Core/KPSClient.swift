@@ -417,7 +417,7 @@ extension KPSClient {
             if let baseServer = server {
                 self.baseServer = baseServer
             } else {
-                self.baseServer = .prod(appId: appId, version: "1")
+                self.baseServer = .staging(appId: appId, version: "1")
             }
         }
     }
