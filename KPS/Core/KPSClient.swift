@@ -52,7 +52,9 @@ public final class KPSClient: NSObject {
                 let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
                 self.currentTime = currentTime
                 
-                guard let timeFrames = self.currentPlayAudioContent?.timeFrames else { return }
+                guard let timeFrames = self.currentPlayAudioContent?.timeFrames,
+                      let paragraphContent = self.currentPlayAudioContent?.paragraphContents else { return }
+                
                 var highlightSegment: Int = -1
                 var left: Int = 0, right: Int = timeFrames.count - 1
                 while left <= right {
@@ -68,11 +70,38 @@ public final class KPSClient: NSObject {
                         self.seekSegment = -1
                     }
                     self.currentSegment = timeFrames[left].mappingIdx
+                    left = 0
+                    right = paragraphContent.count - 1
+                    while left <= right {
+                        var mid = left + (right - left) / 2
+                        if paragraphContent[mid].segmentIdx >= self.currentSegment {
+                            right = mid - 1
+                        } else {
+                            left = mid + 1
+                        }
+                    }
+                    if left < paragraphContent.count  {
+                        self.currentParagraph = left
+                        for rangeInfo in paragraphContent[left].partitionInfos {
+                            if rangeInfo.startTime < currentTime && rangeInfo.endTime > currentTime {
+                                self.currentHighlightRange = rangeInfo.paragraphLocation
+                            }
+                        }
+                                            
+                    } else {
+                        
+                        self.currentParagraph = -1
+                        self.currentHighlightRange = nil
+                    }
 
+                } else if left < timeFrames.count {
+                    
+                    self.currentSegment = -1
+                    self.currentParagraph = -1
+                    self.currentHighlightRange = nil
                 } else {
                     self.currentSegment = -1
                 }
-                
             }
           
         }
@@ -137,6 +166,20 @@ public final class KPSClient: NSObject {
                 seekSegment == -1 &&
                 oldValue != currentSegment {
                 self.mediaContentDelegate?.kpsClient(client: self, playerCurrentSegment: currentSegment)
+            }
+        }
+    }
+    
+    public var currentParagraph: Int = -1 
+    
+    public var currentHighlightRange: NSRange? {
+        didSet {
+            if self.currentTrack < self.mediaPlayList.count &&
+                currentParagraph < (self.currentPlayAudioContent?.paragraphContents.count ?? 0) &&
+                seekSegment == -1 &&
+                oldValue != currentHighlightRange {
+                
+                self.mediaContentDelegate?.kpsClient(client: self, playerCurrentParagraph: currentParagraph, highlightRange: currentHighlightRange)
             }
         }
     }
