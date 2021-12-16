@@ -183,11 +183,12 @@ public struct KPSAudioFileInfo {
 
 public struct KPSAudioText {
     
-    public let type: String
-    public let segmentIdx: Int
+    public var type: String
+    public var segmentIdx: Int
     public let defaultLang: String
-    public let startTime, endTime: Double
+    public var startTime, endTime: Double
     public var translation: [String: String]
+    internal var partitionInfos: [TimeFrameInfo]
     
     init(info: KPSAudioTextInfo, idx: Int, lang: String) {
         
@@ -198,6 +199,7 @@ public struct KPSAudioText {
         
         defaultLang = lang
         translation = [String: String]()
+        partitionInfos = [TimeFrameInfo]()
     }
     
     public var text: String {
@@ -212,11 +214,13 @@ public struct KPSAudioText {
 internal struct TimeFrameInfo {
     public let startTime, endTime: Double
     public let mappingIdx: Int
+    public var paragraphLocation: NSRange
     
     init(_ info: KPSAudioText, idx: Int) {
         startTime = info.startTime
         endTime = info.endTime
         mappingIdx = idx
+        paragraphLocation = NSRange(location: 0, length: info.text.count)
     }
 }
 
