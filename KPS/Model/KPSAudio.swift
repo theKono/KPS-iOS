@@ -37,6 +37,7 @@ public struct KPSAudioContent {
     public var length: Double?
     public var customData: [String: Any]?
     public var content: [KPSAudioText] = []
+    public var paragraphContents: [KPSAudioText] = []
     internal var timeFrames: [TimeFrameInfo] = []
     public var streamingUrl: URL?
     public var collectionId: String?
@@ -75,12 +76,26 @@ extension KPSAudioContent: Decodable {
             let textLangInfos: [String: Any] = try contentDataContainer.decode([String : Any].self, forKey: .languages)
             var parsedText = [KPSAudioText]()
         
+            var encounterParagraphEnd: Bool = true
             for i in 0..<textTypeInfos.count {
                 let audioText = KPSAudioText(info: textTypeInfos[i], idx: i, lang: defaultLang)
                 parsedText.append(audioText)
                 if audioText.startTime != audioText.endTime {
                     timeFrames.append(TimeFrameInfo(audioText, idx: i))
                 }
+                
+                if audioText.type == "SPACE" {
+                    encounterParagraphEnd = true
+                } else if !paragraphContents.isEmpty && !encounterParagraphEnd {
+                    let lastIdx = paragraphContents.count - 1
+                    paragraphContents[lastIdx].segmentIdx = i
+                    paragraphContents[lastIdx].endTime = textTypeInfos[i].end.doubleValue
+                } else if encounterParagraphEnd {
+                    encounterParagraphEnd = false
+                    let paragraphText = KPSAudioText(info: textTypeInfos[i], idx: i, lang: defaultLang)
+                    paragraphContents.append(paragraphText)
+                }
+                
             }
             timeFrames.sort { (frame1, frame2) in
                 return frame1.startTime < frame2.startTime
@@ -90,7 +105,37 @@ extension KPSAudioContent: Decodable {
                 for i in 0..<parsedText.count {
                     parsedText[i].translation[lang] = translation[i]["content"]
                 }
-            
+                var translationIdx: Int = 0
+                for itemIdx in 0..<paragraphContents.count {
+                    var currentLocation = 0
+                    var currentLength = 0
+                    
+                    for i in translationIdx...paragraphContents[itemIdx].segmentIdx {
+                        
+                        if let sentence = translation[i]["content"] {
+                            if paragraphContents[itemIdx].translation[lang] == nil {
+                                paragraphContents[itemIdx].translation[lang] = sentence
+                                
+                                currentLength = sentence.withoutHtmlTags.count
+                            } else {
+                                var nextSentence = paragraphContents[itemIdx].translation[lang]!.isEmpty ? "" : " "
+                                nextSentence += (translation[i]["content"] ?? "")
+                                paragraphContents[itemIdx].translation[lang]! += nextSentence
+                                
+                                currentLength = nextSentence.withoutHtmlTags.count
+                            }
+                            if lang == defaultLang {
+                                var partitionInfo = TimeFrameInfo(parsedText[i], idx: i)
+                                partitionInfo.paragraphLocation = NSRange(location: currentLocation, length: currentLength)
+                                paragraphContents[itemIdx].partitionInfos.append(partitionInfo)
+                                currentLocation += currentLength                        }
+                        }
+                    }
+                    translationIdx = paragraphContents[itemIdx].segmentIdx + 1
+                    paragraphContents[itemIdx].partitionInfos = paragraphContents[itemIdx].partitionInfos.filter { info in
+                        return info.paragraphLocation.length > 0
+                    }
+                }
             }
             content = parsedText
         
