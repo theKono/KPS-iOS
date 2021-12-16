@@ -28,7 +28,14 @@ public protocol KPSClientMediaContentDelegate: class {
     func kpsClient(client: KPSClient, playerCurrentContent content: KPSAudioContent?)
     func kpsClient(client: KPSClient, playerCurrentTrack trackIndex: Int)
     func kpsClient(client: KPSClient, playerCurrentSegment segmentIndex: Int)
-    
+    func kpsClient(client: KPSClient, playerCurrentParagraph paragraphIndex: Int, highlightRange range: NSRange?)
+}
+
+public extension KPSClientMediaContentDelegate {
+    func kpsClient(client: KPSClient, playerCurrentTrack trackIndex: Int) {}
+    func kpsClient(client: KPSClient, playerCurrentSegment segmentIndex: Int) {}
+    func kpsClient(client: KPSClient, playerCurrentParagraph paragraphIndex: Int, highlightRange range: NSRange?) {}
+
 }
 
 extension KPSClient {
