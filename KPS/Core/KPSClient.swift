@@ -38,6 +38,8 @@ public final class KPSClient: NSObject {
     
     public weak var mediaContentDelegate: KPSClientMediaContentDelegate?
     
+    public weak var analyticDelegate: KPSClientAnalyticDelegate?
+    
     public lazy var mediaPlayer: AVQueuePlayer = {
         let player = AVQueuePlayer()
         let monitorTime = CMTime(seconds: 0.1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
@@ -192,8 +194,17 @@ public final class KPSClient: NSObject {
             guard duration.value > 0 && duration.timescale > 0 else {return}
                 let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
             self.mediaContentDelegate?.kpsClient(client: self, playerPlayTimeDidChange: currentTime, totalTime: totalTime)
+
+            if self.currentPlayRecord != nil && isMediaPlaying == true && currentTime > 0{
+                
+                let timeIndex: Int = Int(currentTime * 10)
+                self.currentPlayRecord!.endTime = currentTime
+                self.currentPlayRecord!.addPlayedTimeSlot(timeIndex)
+            }
         }
     }
+    
+    public var currentPlayRecord: KPSPlayRecord?
     
     internal var seekSegment: Int = -1
     
@@ -206,8 +217,18 @@ public final class KPSClient: NSObject {
         didSet {
             if oldValue?.id != currentPlayAudioContent?.id {
                 currentSegment = -1
+                currentParagraph = -1
+                currentHighlightRange = nil
                 setNowPlayingInfo()
                 mediaContentDelegate?.kpsClient(client: self, playerCurrentContent: currentPlayAudioContent)
+                
+                if currentPlayRecord != nil {
+                    
+                    uploadPlayedRecord()
+                }
+                if currentPlayAudioContent != nil {
+                    currentPlayRecord = KPSPlayRecord(info: currentPlayAudioContent!, rate: mediaPlayerRate)
+                }
             }
         }
     }
@@ -240,7 +261,7 @@ public final class KPSClient: NSObject {
     
     public static var config = Config(apiKey: "", appId: "")
 
-    public static let shared = KPSClient(apiKey: KPSClient.config.apiKey, appId: KPSClient.config.appId)
+    public static let shared = KPSClient(apiKey: KPSClient.config.apiKey, server: KPSClient.config.baseServer)
     
     
     init(apiKey: String, appId: String, networkProvider: NetworkProvider? = nil) {
@@ -256,6 +277,15 @@ public final class KPSClient: NSObject {
             
         }
     }
+    
+    init(apiKey: String, server: Server) {
+        
+        self.apiKey = apiKey
+        self.appId = server.appId
+        self.networkProvider = NetworkProvider()
+
+    }
+    
     
     public func login(keyID: String, token: String, completion: @escaping (Result<LoginResponse, MoyaError>) -> ()) {
         
@@ -433,7 +463,7 @@ extension KPSClient {
     public struct Config {
         let apiKey: String
         let appId: String
-        let baseServer: Server
+        var baseServer: Server
         
         /// Setup a configuration for the shared Instance `Client`.
         ///
@@ -447,58 +477,87 @@ extension KPSClient {
                       server: nil)
         }
         
-        init(apiKey: String, appId: String, server: Server?) {
+        public init(apiKey: String, appId: String, server: Server?) {
             self.apiKey = apiKey
             self.appId = appId
             
             if let baseServer = server {
                 self.baseServer = baseServer
             } else {
-                self.baseServer = .staging(appId: appId, version: "1")
+                self.baseServer = Server.prod()
             }
+            self.baseServer.appId = appId
         }
     }
 }
 
 
-enum Server {
-    case develop(appId: String, version: String)
-    case staging(appId: String, version: String)
-    case prod(appId: String, version: String)
-
-    var env: String {
-        switch self {
-        case .develop(_, _):
-            return "dev"
-        case .staging(_, _):
-            return "dev"
-        case .prod(_, _):
-            return "dev"
-        }
+public struct Server {
+    
+    var appId: String = ""
+    var baseUrl: URL
+    var projectUrl: URL {
+        return baseUrl.appendingPathComponent("/projects/\(appId)")
     }
     
+    private init(baseUrl: URL) {
+        self.baseUrl = baseUrl
+    }
+    
+    public static func develop() -> Server {
+        return Server(
+            baseUrl: URL(string: "https://kps-dev.thekono.com/api/v1")!
+        )
+    }
+    
+    public static func staging() -> Server {
+        return Server(
+            baseUrl: URL(string: "https://kps-stg.thekono.com/api/v1")!
+        )
+    }
+    
+    public static func prod() -> Server {
+        return Server(
+            baseUrl: URL(string: "https://kps.thekono.com/api/v1")!
+        )
+    }
+    
+}
+
+/*
+public enum Server {
+    case develop(appId: String)
+    case staging(appId: String)
+    case prod(appId: String)
+
+    var appId: String {
+        switch self {
+        case .develop(let appId), .staging(let appId), .prod(let appId):
+            return appId
+        }
+    }
     var cloudStorage: String {
         return "https://storage.googleapis.com/"
     }
     var baseUrl: URL {
         switch self {
-        case .develop(_, let version):
-            return URL(string: "https://kps-dev.thekono.com/api/v\(version)")!
-        case .staging(_, let version):
-            return URL(string: "https://kps-stg.thekono.com/api/v\(version)")!
-        case .prod(_, let version):
-            return URL(string: "https://kps.thekono.com/api/v\(version)")!
+        case .develop(_):
+            return URL(string: "https://kps-dev.thekono.com/api/v1")!
+        case .staging(_):
+            return URL(string: "https://kps-stg.thekono.com/api/v1")!
+        case .prod(_):
+            return URL(string: "https://kps.thekono.com/api/v1")!
         }
     }
     
     var projectUrl: URL {
         switch self {
-        case .develop(let appId, _), .staging(let appId, _), .prod(let appId, _):
+        case .develop(let appId), .staging(let appId), .prod(let appId):
             return baseUrl.appendingPathComponent("/projects/\(appId)")
         }
     }
 }
-
+*/
 
 public enum KPSContentError: Swift.Error {
     case needLogin

@@ -68,7 +68,9 @@ extension KPSClient {
         mediaPlayList = contents
         
     }
-    */
+     */
+    /// Play all audio contents within given KPSCollection
+    /// - Parameter collection: KPS content folder type node
     public func playAudioContents(from collection: KPSCollection) {
 
         mediaPlayList = collection.children
