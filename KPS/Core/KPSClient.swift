@@ -360,13 +360,7 @@ extension KPSClient {
             
             switch result {
             case let .success(response):
-                var content = response
-                content.images = response.images.map {
-                    var mutableImage = $0
-                    mutableImage.config = KPSClient.config.baseServer
-                    return mutableImage
-                }
-                completion(.success(content), true)
+                completion(.success(response), true)
                 
             case let .failure(error):
                 guard let response = error.response else { return }

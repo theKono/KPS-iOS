@@ -138,7 +138,7 @@ data class KPSContent {
     public val name: String,
     public val description: String,
     public val customData: JSONObject?,
-    public val images: ArrayList<KPSImage>
+    public val images: ArrayList<KPSImageResource>
 }
 ```
 
