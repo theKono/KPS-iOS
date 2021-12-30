@@ -26,13 +26,13 @@ class KPSClientTests: XCTestCase {
 
     func testDevClientInit() {
         
-        KPSClient.config = .init(apiKey: appKey, appId: appId, server: .develop(appId: appId, version: kpsAPIVersion))
+        KPSClient.config = .init(apiKey: appKey, appId: appId, server: .develop())
         XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-dev.thekono.com/api/v\(kpsAPIVersion)")
         XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-dev.thekono.com/api/v\(kpsAPIVersion)/projects/\(appId)")
     }
     
     func testStagClientInit() {
-        KPSClient.config = .init(apiKey: appKey, appId: appId, server: .staging(appId: appId, version: kpsAPIVersion))
+        KPSClient.config = .init(apiKey: appKey, appId: appId, server: .staging())
         XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-stg.thekono.com/api/v\(kpsAPIVersion)")
         XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-stg.thekono.com/api/v\(kpsAPIVersion)/projects/\(appId)")
     }
@@ -151,23 +151,6 @@ class KPSClientTests: XCTestCase {
             if let content = try? result.get() {
                 XCTAssertEqual(content.id, "5f86bcabe0187ed43f41dfa7")
                 
-                if let firstImage = content.images.first,
-                   let largestThumbnailSize = content.images.first?.thumbnailSizes.last,
-                   let smallestThumbnailSize = content.images.first?.thumbnailSizes.first{
-                    XCTAssertEqual(firstImage.mainImageURL, baseUrl + "/" + firstImage.uri)
-                    
-                    let bucketName = "kps_public_" + KPSClient.config.baseServer.env + "_thumbnails/"
-                    let index = firstImage.uri.lastIndex(of: ".")
-                    let prefix = String(firstImage.uri.prefix(upTo: index ?? firstImage.uri.endIndex))
-                    
-                    let largestThumbnailURL = String(format: "%@%@%@-%d.jpg", KPSClient.config.baseServer.cloudStorage, bucketName, prefix ,largestThumbnailSize)
-                    
-                    let smallestThumbnailURL = String(format: "%@%@%@-%d.jpg", KPSClient.config.baseServer.cloudStorage, bucketName, prefix ,smallestThumbnailSize)
-                    XCTAssertEqual(firstImage.thumbnailImageURL(of: largestThumbnailSize + 10),
-                                   largestThumbnailURL)
-                    XCTAssertEqual(firstImage.thumbnailImageURL(of: 0),
-                                   smallestThumbnailURL)
-                }
                 XCTAssertNotNil(content.fitReadingData)
                 XCTAssertNotNil(content.pdfData)
             }
