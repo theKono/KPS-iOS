@@ -28,7 +28,14 @@ public protocol KPSClientMediaContentDelegate: class {
     func kpsClient(client: KPSClient, playerCurrentContent content: KPSAudioContent?)
     func kpsClient(client: KPSClient, playerCurrentTrack trackIndex: Int)
     func kpsClient(client: KPSClient, playerCurrentSegment segmentIndex: Int)
-    
+    func kpsClient(client: KPSClient, playerCurrentParagraph paragraphIndex: Int, highlightRange range: NSRange?)
+}
+
+public extension KPSClientMediaContentDelegate {
+    func kpsClient(client: KPSClient, playerCurrentTrack trackIndex: Int) {}
+    func kpsClient(client: KPSClient, playerCurrentSegment segmentIndex: Int) {}
+    func kpsClient(client: KPSClient, playerCurrentParagraph paragraphIndex: Int, highlightRange range: NSRange?) {}
+
 }
 
 extension KPSClient {
@@ -61,7 +68,9 @@ extension KPSClient {
         mediaPlayList = contents
         
     }
-    */
+     */
+    /// Play all audio contents within given KPSCollection
+    /// - Parameter collection: KPS content folder type node
     public func playAudioContents(from collection: KPSCollection) {
 
         mediaPlayList = collection.children
@@ -242,6 +251,29 @@ extension KPSClient {
         let playerCurrentTime = CMTimeGetSeconds(mediaPlayer.currentTime())
         
         mediaPlayerSeekTime(playerCurrentTime - seconds, completion: completion)
+    }
+    
+    public func mediaPlayerSeekParagraph(_ paragraphIndex: Int, location range: NSRange? = nil, completion: @escaping (Bool) -> Void) {
+        
+        guard mediaPlayer.currentItem != nil else { return }
+        guard let contents = self.currentPlayAudioContent?.paragraphContents else { return }
+        if contents.count > paragraphIndex {
+            let targetParagraph = contents[paragraphIndex]
+            
+            if range == nil {
+                mediaPlayerSeekTime(targetParagraph.startTime, completion: completion)
+
+            } else {
+                for partitionInfo in targetParagraph.partitionInfos {
+                    if range!.location <= (partitionInfo.paragraphLocation.location + partitionInfo.paragraphLocation.length) {
+                        mediaPlayerSeekTime(partitionInfo.startTime, completion: completion)
+                        break
+                    }
+                }
+            }
+            currentParagraph = paragraphIndex
+            currentHighlightRange = range
+        }
     }
     
     public func mediaPlayerSeekSegment(_ segmentIndex: Int, completion: @escaping (Bool) -> Void) {

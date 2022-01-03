@@ -27,7 +27,7 @@ public struct KPSArticle {
     
     public let customData, fitReadingData, pdfData: [String: Any]?
     
-    public var images: [KPSImage]
+    public var images: [KPSImageResource]
     
 }
 
@@ -50,7 +50,7 @@ extension KPSArticle: Decodable {
         pdfData = try contentDataContainer.decodeIfPresent([String: Any].self, forKey: .html)
         
         let listContainer = try contentDataContainer.nestedContainer(keyedBy: imageContainerKeys.self, forKey: .image)
-        images = try listContainer.decode([KPSImage].self, forKey: .list)
+        images = try listContainer.decode([KPSImageResource].self, forKey: .list)
         
     }
     
