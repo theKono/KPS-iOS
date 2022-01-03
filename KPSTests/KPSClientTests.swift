@@ -135,55 +135,6 @@ class KPSClientTests: XCTestCase {
         
     }
     
-    func testFetchFolderSucceed() {
-        let folderId = "testFolderId"
-        
-    }
-    
-    
-    func testFetchArticleContentSucceed() {
-        
-        let articleId = "testArticleId"
-        stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
-        let baseUrl = KPSClient.config.baseServer.baseUrl.absoluteString
-        stubClient.fetchArticle(articleId: articleId) { (result, isFullArticle) in
-            if let content = try? result.get() {
-                XCTAssertEqual(content.id, "5f86bcabe0187ed43f41dfa7")
-                
-                XCTAssertNotNil(content.fitReadingData)
-                XCTAssertNotNil(content.pdfData)
-            }
-            XCTAssertTrue(isFullArticle)
-        }
-    }
-    
-    func testFetchArticleContentFailedWithNoPermission() {
-        
-        let articleId = "testArticleId"
-        guard let url = Bundle.current.url(forResource: "previewArticleContent", withExtension: "json"),
-              let data = try? Data(contentsOf: url) else { return }
-    
-        let customFailedEndpointClosure = { (target: CoreAPIService) -> Endpoint in
-            return Endpoint(url: URL(target: target).absoluteString,
-                            sampleResponseClosure: { .networkResponse(403, data) },
-                            method: target.method,
-                            task: target.task,
-                            httpHeaderFields: target.headers)
-        }
-        stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customFailedEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
-        
-        stubClient.fetchArticle(articleId: articleId) { (result, isFullArticle) in
-            if let content = try? result.get() {
-                XCTAssertEqual(content.id, "5f86bcabe0187ed43f41dfa7")
-                //XCTAssertNil(content.fitReadingData)
-                //XCTAssertNil(content.pdfData)
-            }
-            //XCTAssertFalse(isFullArticle)
-        }
-        
-    }
     
     func customSuccessEndpointClosure(_ target: CoreAPIService) -> Endpoint {
         return Endpoint(url: URL(target: target).absoluteString,
