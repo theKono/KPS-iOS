@@ -168,7 +168,7 @@ extension KPSClient {
         }
     }
     
-    private func mediaPlayerPlayAction() {
+    internal func mediaPlayerPlayAction() {
         mediaPlayer.play()
         mediaPlayer.rate = mediaPlayerRate
         isMediaPlaying = true
@@ -264,9 +264,8 @@ extension KPSClient {
         guard let duration = mediaPlayer.currentItem?.duration else { return }
 
         let newTime = min( max(0, time), CMTimeGetSeconds(duration) )
-        let frameRate : Int32 = (mediaPlayer.currentItem?.currentTime().timescale)!
 
-        let targetTime = CMTimeMakeWithSeconds(newTime, preferredTimescale: frameRate)
+        let targetTime = CMTimeMakeWithSeconds(newTime, preferredTimescale: 1000)
         mediaPlayer.seek(to: targetTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] res in
             if var currentInfo = self?.nowPlayingCenter.nowPlayingInfo,
                let currentTime = self?.mediaPlayer.currentItem?.currentTime(){
@@ -277,20 +276,20 @@ extension KPSClient {
         }
     }
     
-    public func mediaPlayerSeekTrack(_ targetID: String) -> Int {
+    public func mediaPlayerGetTrackOrder(_ targetID: String) -> Int {
         
         guard mediaPlayList.count > 0 else { return -1 }
         
-        var targetTrackIndex = -1
+        var targetTrackOrder = -1
         for (idx, item) in mediaPlayList.enumerated() {
             
             if targetID == item.id {
-                targetTrackIndex = idx
+                targetTrackOrder = idx
                 break
             }
         }
 
-        return targetTrackIndex
+        return targetTrackOrder
     }
     
     public func mediaPlayerPause() {
@@ -303,7 +302,7 @@ extension KPSClient {
     public func mediaPlayerStop() {
     
         mediaPlayerReset()
-        currentTrack = 0
+        currentTrack = -1
     }
     
     public func mediaPlayerReset(isNeedClearPlayList: Bool = false) {
