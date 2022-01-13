@@ -382,33 +382,6 @@ extension KPSClient {
         }
         
     }
-    
-    
-    public func fetchArticle(articleId: String, completion: @escaping(Result<KPSArticle, MoyaError>, Bool) -> ()) {
-        
-        let resultClosure: ((Result<KPSArticle, MoyaError>) -> Void) = { result in
-            
-            switch result {
-            case let .success(response):
-                completion(.success(response), true)
-                
-            case let .failure(error):
-                guard let response = error.response else { return }
-                
-                if response.statusCode == 403 {
-                    do {
-                        let previewContent = try JSONDecoder().decode(KPSArticle.self, from: response.data)
-                        completion(.success(previewContent), false)
-                    } catch {
-                        print("decode error")
-                    }
-                }
-                
-                completion(.failure(error), false)
-            }
-        }
-        request(target:.fetchArticle(articleId: articleId, server: KPSClient.config.baseServer), completion: resultClosure)
-    }
 
     
 }

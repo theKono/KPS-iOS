@@ -40,35 +40,6 @@ public extension KPSClientMediaContentDelegate {
 
 extension KPSClient {
     
-    public func setupTestAudioFile() {
-        
-        let frameworkBundle = Bundle(for: KPSClient.self)
-        
-        /*
-        if let url = frameworkBundle.resourceURL?.appendingPathComponent("KPS_iOS.bundle/IronBacon.mp3"),
-           let url2 = frameworkBundle.resourceURL?.appendingPathComponent("KPS_iOS.bundle/WhatYouWant.mp3"){
-            mediaPlayList = getPlayerItem(urls: [url, url2])
-            
-        } else {
-            print("can't find the file")
-        }
-        */
-    }
-    
-    internal func getPlayerItem(urls: [URL]) -> [KPSAudioContent] {
-        var playerList = [KPSAudioContent]()
-        for url in urls {
-            playerList.append(KPSAudioContent(url: url))
-        }
-        return playerList
-    }
-    /*
-    public func playAudioContents(_ contents: [KPSAudioContent]) {
-
-        mediaPlayList = contents
-        
-    }
-     */
     /// Play all audio contents within given KPSCollection
     /// - Parameter collection: KPS content folder type node
     public func playAudioContents(from collection: KPSCollection) {
