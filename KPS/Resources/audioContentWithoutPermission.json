@@ -1,0 +1,51 @@
+{
+    "error": "puser not logged in",
+    "contentNode": {
+        "id": "613ec497238d20728afdaf96",
+        "type": "audio",
+        "name": {
+            "zh-TW": "Essential Practice 2"
+        },
+        "description": {
+            "zh-TW": "Essential Practice 2"
+        },
+        "orderInParent": 30,
+        "customData": null,
+        "covers": {
+            "list": [
+                "613ec497238d20728afdaf97"
+            ]
+        },
+        "resources": {
+            "613ec497238d20728afdaf97": {
+                "type": "IMAGE",
+                "width": 533,
+                "height": 900,
+                "thumbnails": [
+                    100,
+                    320,
+                    480,
+                    533
+                ],
+                "urls": {
+                    "100": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/100.jpeg",
+                    "320": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/320.jpeg",
+                    "480": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/480.jpeg",
+                    "533": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/533.jpeg"
+                },
+                "webpUrls": {
+                    "100": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/100.webp",
+                    "320": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/320.webp",
+                    "480": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/480.webp",
+                    "533": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/533.webp"
+                }
+            }
+        },
+        "public": false,
+        "free": true,
+        "content": {
+            "duration": 235.128,
+            "audioLanguage": "en-US"
+        }
+    }
+}

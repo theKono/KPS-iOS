@@ -14,6 +14,7 @@ public enum MediaPlayerState {
     case fetchingSource
     case sourceFetched
     case buffering
+    case bufferFetched
     case playedToTheEnd
     case error
     
@@ -27,48 +28,21 @@ public protocol KPSClientMediaContentDelegate: class {
     func kpsClient(client: KPSClient, playerIsPlaying playing: Bool)
     func kpsClient(client: KPSClient, playerCurrentContent content: KPSAudioContent?)
     func kpsClient(client: KPSClient, playerCurrentTrack trackIndex: Int)
-    func kpsClient(client: KPSClient, playerCurrentSegment segmentIndex: Int)
-    func kpsClient(client: KPSClient, playerCurrentParagraph paragraphIndex: Int, highlightRange range: NSRange?)
+    func kpsClient(client: KPSClient, playerCurrentSegmentDidChange segmentIndex: Int, paragraph paragraphIndex: Int, highlightRange range: NSRange?)
+    func kpsClient(client: KPSClient, playerCurrentParagraphDidChange paragraphIndex: Int, segment segmentIndex: Int, highlightRange range: NSRange?)
+    func kpsClient(client: KPSClient, playerHighlightRangeDidChange range: NSRange?, paragraph paragraphIndex: Int, segment segmentIndex: Int)
 }
 
 public extension KPSClientMediaContentDelegate {
     func kpsClient(client: KPSClient, playerCurrentTrack trackIndex: Int) {}
-    func kpsClient(client: KPSClient, playerCurrentSegment segmentIndex: Int) {}
-    func kpsClient(client: KPSClient, playerCurrentParagraph paragraphIndex: Int, highlightRange range: NSRange?) {}
+    func kpsClient(client: KPSClient, playerCurrentSegmentDidChange segmentIndex: Int, paragraph paragraphIndex: Int, highlightRange range: NSRange?) {}
+    func kpsClient(client: KPSClient, playerCurrentParagraphDidChange paragraphIndex: Int, segment segmentIndex: Int, highlightRange range: NSRange?) {}
+    func kpsClient(client: KPSClient, playerHighlightRangeDidChange range: NSRange?, paragraph paragraphIndex: Int, segment segmentIndex: Int) {}
 
 }
 
 extension KPSClient {
     
-    public func setupTestAudioFile() {
-        
-        let frameworkBundle = Bundle(for: KPSClient.self)
-        
-        /*
-        if let url = frameworkBundle.resourceURL?.appendingPathComponent("KPS_iOS.bundle/IronBacon.mp3"),
-           let url2 = frameworkBundle.resourceURL?.appendingPathComponent("KPS_iOS.bundle/WhatYouWant.mp3"){
-            mediaPlayList = getPlayerItem(urls: [url, url2])
-            
-        } else {
-            print("can't find the file")
-        }
-        */
-    }
-    
-    internal func getPlayerItem(urls: [URL]) -> [KPSAudioContent] {
-        var playerList = [KPSAudioContent]()
-        for url in urls {
-            playerList.append(KPSAudioContent(url: url))
-        }
-        return playerList
-    }
-    /*
-    public func playAudioContents(_ contents: [KPSAudioContent]) {
-
-        mediaPlayList = contents
-        
-    }
-     */
     /// Play all audio contents within given KPSCollection
     /// - Parameter collection: KPS content folder type node
     public func playAudioContents(from collection: KPSCollection) {
@@ -123,6 +97,7 @@ extension KPSClient {
                 guard let weakSelf = self else { return }
                 if let track = try? result.get() {
                     weakSelf.currentTrack = targetTrack
+                    weakSelf.currentTime = 0.0
                     weakSelf.currentPlayAudioContent = track
                     weakSelf.mediaPlayerState = .sourceFetched
                     weakSelf.mediaPlayer.removeAllItems()
@@ -197,7 +172,7 @@ extension KPSClient {
         }
     }
     
-    private func mediaPlayerPlayAction() {
+    internal func mediaPlayerPlayAction() {
         mediaPlayer.play()
         mediaPlayer.rate = mediaPlayerRate
         isMediaPlaying = true
@@ -293,9 +268,8 @@ extension KPSClient {
         guard let duration = mediaPlayer.currentItem?.duration else { return }
 
         let newTime = min( max(0, time), CMTimeGetSeconds(duration) )
-        let frameRate : Int32 = (mediaPlayer.currentItem?.currentTime().timescale)!
 
-        let targetTime = CMTimeMakeWithSeconds(newTime, preferredTimescale: frameRate)
+        let targetTime = CMTimeMakeWithSeconds(newTime, preferredTimescale: 1000)
         mediaPlayer.seek(to: targetTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] res in
             if var currentInfo = self?.nowPlayingCenter.nowPlayingInfo,
                let currentTime = self?.mediaPlayer.currentItem?.currentTime(){
@@ -306,20 +280,20 @@ extension KPSClient {
         }
     }
     
-    public func mediaPlayerSeekTrack(_ targetID: String) -> Int {
+    public func mediaPlayerGetTrackOrder(_ targetID: String) -> Int {
         
         guard mediaPlayList.count > 0 else { return -1 }
         
-        var targetTrackIndex = -1
+        var targetTrackOrder = -1
         for (idx, item) in mediaPlayList.enumerated() {
             
             if targetID == item.id {
-                targetTrackIndex = idx
+                targetTrackOrder = idx
                 break
             }
         }
 
-        return targetTrackIndex
+        return targetTrackOrder
     }
     
     public func mediaPlayerPause() {
@@ -332,7 +306,7 @@ extension KPSClient {
     public func mediaPlayerStop() {
     
         mediaPlayerReset()
-        currentTrack = 0
+        currentTrack = -1
     }
     
     public func mediaPlayerReset(isNeedClearPlayList: Bool = false) {
@@ -400,7 +374,7 @@ extension KPSClient {
                     if item.status == .failed || mediaPlayer.status == AVPlayer.Status.failed {
                         mediaPlayerState = .error
                     } else if mediaPlayer.status == AVPlayer.Status.readyToPlay {
-                        mediaPlayerState = .sourceFetched
+                        mediaPlayerState = .bufferFetched
                     }
                 case "playbackBufferEmpty":
                     if let isBufferEmpty = mediaPlayer.currentItem?.isPlaybackBufferEmpty {
@@ -409,7 +383,7 @@ extension KPSClient {
                         }
                     }
                 case "playbackLikelyToKeepUp":
-                    mediaPlayerState = .sourceFetched
+                    mediaPlayerState = .bufferFetched
                 default:
                     break;
                 }

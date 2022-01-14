@@ -1,0 +1,68 @@
+{
+    "error": null,
+    "childNodes": [
+        {
+            "id": "613b16e3dc74e5b90cac90b4",
+            "type": "category",
+            "name": {
+                "zh-TW": "職場管理"
+            },
+            "description": {
+                "zh-TW": "職場管理"
+            },
+            "orderInParent": 0,
+            "customData": null,
+            "covers": {
+                "list": [
+                    "613b16e3dc74e5b90cac90b5"
+                ]
+            },
+            "resources": {
+                "613b16e3dc74e5b90cac90b5": {
+                    "type": "IMAGE",
+                    "width": 1567,
+                    "height": 1175,
+                    "thumbnails": [
+                        100,
+                        320,
+                        480,
+                        640,
+                        800,
+                        1024,
+                        1280,
+                        1567
+                    ],
+                    "urls": {
+                        "100": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/100.jpeg",
+                        "320": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/320.jpeg",
+                        "480": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/480.jpeg",
+                        "640": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/640.jpeg",
+                        "800": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/800.jpeg",
+                        "1024": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/1024.jpeg",
+                        "1280": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/1280.jpeg",
+                        "1567": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/1567.jpeg"
+                    },
+                    "webpUrls": {
+                        "100": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/100.webp",
+                        "320": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/320.webp",
+                        "480": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/480.webp",
+                        "640": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/640.webp",
+                        "800": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/800.webp",
+                        "1024": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/1024.webp",
+                        "1280": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/1280.webp",
+                        "1567": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613b16e3dc74e5b90cac90b5/1567.webp"
+                    }
+                }
+            },
+            "content": {
+                "orderChildrenIncreaseRight": true
+            }
+        }
+    ],
+    "contentNode": {
+        "id": "",
+        "content": {
+            "orderChildrenIncreaseRight": true
+        }
+    }
+}

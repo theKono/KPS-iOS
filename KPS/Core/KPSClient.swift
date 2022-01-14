@@ -84,10 +84,17 @@ public final class KPSClient: NSObject {
                     }
                     if left < paragraphContent.count  {
                         self.currentParagraph = left
+                        var hasFindMatchedRange: Bool = false
                         for rangeInfo in paragraphContent[left].partitionInfos {
-                            if rangeInfo.startTime < currentTime && rangeInfo.endTime > currentTime {
+                            if rangeInfo.startTime <= currentTime && rangeInfo.endTime > currentTime && rangeInfo.startTime >= timeFrames[left].startTime {
                                 self.currentHighlightRange = rangeInfo.paragraphLocation
+                                //print("current:\(currentTime) text:\(rangeInfo.text)")
+                                hasFindMatchedRange = true
+                                break
                             }
+                        }
+                        if !hasFindMatchedRange {
+                            self.currentHighlightRange = nil
                         }
                                             
                     } else {
@@ -96,13 +103,15 @@ public final class KPSClient: NSObject {
                         self.currentHighlightRange = nil
                     }
 
-                } else if left < timeFrames.count {
+                } /*else if left < timeFrames.count {
                     
                     self.currentSegment = -1
                     self.currentParagraph = -1
                     self.currentHighlightRange = nil
-                } else {
+                } */ else {
                     self.currentSegment = -1
+                    self.currentParagraph = -1
+                    self.currentHighlightRange = nil
                 }
             }
           
@@ -167,12 +176,23 @@ public final class KPSClient: NSObject {
                 currentSegment < (self.currentPlayAudioContent?.content.count ?? 0) &&
                 seekSegment == -1 &&
                 oldValue != currentSegment {
-                self.mediaContentDelegate?.kpsClient(client: self, playerCurrentSegment: currentSegment)
+                self.mediaContentDelegate?.kpsClient(client: self, playerCurrentSegmentDidChange: currentSegment, paragraph: currentParagraph, highlightRange: currentHighlightRange)
             }
         }
     }
+
+
     
-    public var currentParagraph: Int = -1 
+    public var currentParagraph: Int = -1 {
+        didSet {
+            if self.currentTrack < self.mediaPlayList.count &&
+                currentParagraph < (self.currentPlayAudioContent?.paragraphContents.count ?? 0) &&
+                seekSegment == -1 &&
+                oldValue != currentParagraph {
+                self.mediaContentDelegate?.kpsClient(client: self, playerCurrentParagraphDidChange: currentParagraph, segment: currentSegment, highlightRange: currentHighlightRange)
+            }
+        }
+    }
     
     public var currentHighlightRange: NSRange? {
         didSet {
@@ -180,8 +200,8 @@ public final class KPSClient: NSObject {
                 currentParagraph < (self.currentPlayAudioContent?.paragraphContents.count ?? 0) &&
                 seekSegment == -1 &&
                 oldValue != currentHighlightRange {
+                self.mediaContentDelegate?.kpsClient(client: self, playerHighlightRangeDidChange: currentHighlightRange, paragraph: currentParagraph, segment: currentSegment)
                 
-                self.mediaContentDelegate?.kpsClient(client: self, playerCurrentParagraph: currentParagraph, highlightRange: currentHighlightRange)
             }
         }
     }
@@ -381,33 +401,6 @@ extension KPSClient {
             
         }
         
-    }
-    
-    
-    public func fetchArticle(articleId: String, completion: @escaping(Result<KPSArticle, MoyaError>, Bool) -> ()) {
-        
-        let resultClosure: ((Result<KPSArticle, MoyaError>) -> Void) = { result in
-            
-            switch result {
-            case let .success(response):
-                completion(.success(response), true)
-                
-            case let .failure(error):
-                guard let response = error.response else { return }
-                
-                if response.statusCode == 403 {
-                    do {
-                        let previewContent = try JSONDecoder().decode(KPSArticle.self, from: response.data)
-                        completion(.success(previewContent), false)
-                    } catch {
-                        print("decode error")
-                    }
-                }
-                
-                completion(.failure(error), false)
-            }
-        }
-        request(target:.fetchArticle(articleId: articleId, server: KPSClient.config.baseServer), completion: resultClosure)
     }
 
     
