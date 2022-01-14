@@ -53,7 +53,7 @@ public final class KPSClient: NSObject {
                 guard duration.value > 0 && duration.timescale > 0 else {return}
                 let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
                 self.currentTime = currentTime
-                
+
                 guard let timeFrames = self.currentPlayAudioContent?.timeFrames,
                       let paragraphContent = self.currentPlayAudioContent?.paragraphContents else { return }
                 
@@ -68,9 +68,7 @@ public final class KPSClient: NSObject {
                     }
                 }
                 if left < timeFrames.count && timeFrames[left].startTime < currentTime {
-                    if self.seekSegment == timeFrames[left].mappingIdx {
-                        self.seekSegment = -1
-                    }
+                    
                     self.currentSegment = timeFrames[left].mappingIdx
                     left = 0
                     right = paragraphContent.count - 1
@@ -174,7 +172,6 @@ public final class KPSClient: NSObject {
         didSet {
             if self.currentTrack < self.mediaPlayList.count &&
                 currentSegment < (self.currentPlayAudioContent?.content.count ?? 0) &&
-                seekSegment == -1 &&
                 oldValue != currentSegment {
                 self.mediaContentDelegate?.kpsClient(client: self, playerCurrentSegmentDidChange: currentSegment, paragraph: currentParagraph, highlightRange: currentHighlightRange)
             }
@@ -187,7 +184,6 @@ public final class KPSClient: NSObject {
         didSet {
             if self.currentTrack < self.mediaPlayList.count &&
                 currentParagraph < (self.currentPlayAudioContent?.paragraphContents.count ?? 0) &&
-                seekSegment == -1 &&
                 oldValue != currentParagraph {
                 self.mediaContentDelegate?.kpsClient(client: self, playerCurrentParagraphDidChange: currentParagraph, segment: currentSegment, highlightRange: currentHighlightRange)
             }
@@ -198,7 +194,6 @@ public final class KPSClient: NSObject {
         didSet {
             if self.currentTrack < self.mediaPlayList.count &&
                 currentParagraph < (self.currentPlayAudioContent?.paragraphContents.count ?? 0) &&
-                seekSegment == -1 &&
                 oldValue != currentHighlightRange {
                 self.mediaContentDelegate?.kpsClient(client: self, playerHighlightRangeDidChange: currentHighlightRange, paragraph: currentParagraph, segment: currentSegment)
                 
@@ -225,8 +220,6 @@ public final class KPSClient: NSObject {
     }
     
     public var currentPlayRecord: KPSPlayRecord?
-    
-    internal var seekSegment: Int = -1
     
     //MARK: get only variable
     public var isPlayListLoaded: Bool {
