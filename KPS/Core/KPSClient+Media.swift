@@ -14,6 +14,7 @@ public enum MediaPlayerState {
     case fetchingSource
     case sourceFetched
     case buffering
+    case bufferFetched
     case playedToTheEnd
     case error
     
@@ -27,14 +28,16 @@ public protocol KPSClientMediaContentDelegate: class {
     func kpsClient(client: KPSClient, playerIsPlaying playing: Bool)
     func kpsClient(client: KPSClient, playerCurrentContent content: KPSAudioContent?)
     func kpsClient(client: KPSClient, playerCurrentTrack trackIndex: Int)
-    func kpsClient(client: KPSClient, playerCurrentSegment segmentIndex: Int)
-    func kpsClient(client: KPSClient, playerCurrentParagraph paragraphIndex: Int, highlightRange range: NSRange?)
+    func kpsClient(client: KPSClient, playerCurrentSegmentDidChange segmentIndex: Int, paragraph paragraphIndex: Int, highlightRange range: NSRange?)
+    func kpsClient(client: KPSClient, playerCurrentParagraphDidChange paragraphIndex: Int, segment segmentIndex: Int, highlightRange range: NSRange?)
+    func kpsClient(client: KPSClient, playerHighlightRangeDidChange range: NSRange?, paragraph paragraphIndex: Int, segment segmentIndex: Int)
 }
 
 public extension KPSClientMediaContentDelegate {
     func kpsClient(client: KPSClient, playerCurrentTrack trackIndex: Int) {}
-    func kpsClient(client: KPSClient, playerCurrentSegment segmentIndex: Int) {}
-    func kpsClient(client: KPSClient, playerCurrentParagraph paragraphIndex: Int, highlightRange range: NSRange?) {}
+    func kpsClient(client: KPSClient, playerCurrentSegmentDidChange segmentIndex: Int, paragraph paragraphIndex: Int, highlightRange range: NSRange?) {}
+    func kpsClient(client: KPSClient, playerCurrentParagraphDidChange paragraphIndex: Int, segment segmentIndex: Int, highlightRange range: NSRange?) {}
+    func kpsClient(client: KPSClient, playerHighlightRangeDidChange range: NSRange?, paragraph paragraphIndex: Int, segment segmentIndex: Int) {}
 
 }
 
@@ -94,6 +97,7 @@ extension KPSClient {
                 guard let weakSelf = self else { return }
                 if let track = try? result.get() {
                     weakSelf.currentTrack = targetTrack
+                    weakSelf.currentTime = 0.0
                     weakSelf.currentPlayAudioContent = track
                     weakSelf.mediaPlayerState = .sourceFetched
                     weakSelf.mediaPlayer.removeAllItems()
@@ -370,7 +374,7 @@ extension KPSClient {
                     if item.status == .failed || mediaPlayer.status == AVPlayer.Status.failed {
                         mediaPlayerState = .error
                     } else if mediaPlayer.status == AVPlayer.Status.readyToPlay {
-                        mediaPlayerState = .sourceFetched
+                        mediaPlayerState = .bufferFetched
                     }
                 case "playbackBufferEmpty":
                     if let isBufferEmpty = mediaPlayer.currentItem?.isPlaybackBufferEmpty {
@@ -379,7 +383,7 @@ extension KPSClient {
                         }
                     }
                 case "playbackLikelyToKeepUp":
-                    mediaPlayerState = .sourceFetched
+                    mediaPlayerState = .bufferFetched
                 default:
                     break;
                 }
