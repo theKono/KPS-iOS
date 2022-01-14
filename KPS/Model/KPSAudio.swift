@@ -39,6 +39,7 @@ public struct KPSAudioContent {
     public var content: [KPSAudioText] = []
     public var paragraphContents: [KPSAudioText] = []
     internal var timeFrames: [TimeFrameInfo] = []
+    internal var byWordTimeFrames: [TimeFrameInfo] = []
     public var streamingUrl: URL?
     public var collectionId: String?
     public var collectionName: [String: String]?
@@ -76,6 +77,16 @@ extension KPSAudioContent: Decodable {
             let textLangInfos: [String: Any] = try contentDataContainer.decode([String : Any].self, forKey: .languages)
             var parsedText = [KPSAudioText]()
         
+            // MARK: Handle resource info
+            let resources = try container.decode([String: Any].self, forKey: .resources)
+            let audioResourceInfoRaw = resources[audioResourceId] as! [String: Any]
+            let audioResourceInfo = KPSAudioFileInfo(info: audioResourceInfoRaw)
+            length = audioResourceInfo.duration
+            streamingUrl = URL(string: audioResourceInfo.streamingUrl)!
+            
+            byWordTimeFrames = parsedWordTimeFrames(info: audioResourceInfoRaw)
+            
+            // Mark: Handle content info
             var encounterParagraphEnd: Bool = true
             for i in 0..<textTypeInfos.count {
                 let audioText = KPSAudioText(info: textTypeInfos[i], idx: i, lang: defaultLang)
@@ -105,46 +116,117 @@ extension KPSAudioContent: Decodable {
                 for i in 0..<parsedText.count {
                     parsedText[i].translation[lang] = translation[i]["content"]
                 }
-                var translationIdx: Int = 0
-                for itemIdx in 0..<paragraphContents.count {
+                var opSentenceIdx: Int = 0
+                var mappingTimeFrameIdx: Int = 0
+                
+                for paragraphIdx in 0..<paragraphContents.count {
                     var currentLocation = 0
-                    var currentLength = 0
+                    var currentSentenceLength = 0
+                    let maxSentenceIdx = paragraphContents[paragraphIdx].segmentIdx
                     
-                    for i in translationIdx...paragraphContents[itemIdx].segmentIdx {
+                    for i in opSentenceIdx...maxSentenceIdx {
                         
                         if let sentence = translation[i]["content"] {
-                            if paragraphContents[itemIdx].translation[lang] == nil {
-                                paragraphContents[itemIdx].translation[lang] = sentence
-                                
-                                currentLength = sentence.withoutHtmlTags.count
+                            let trimmed = sentence.trimmingCharacters(in: .whitespacesAndNewlines)
+                            currentSentenceLength = trimmed.withoutHtmlTags.count
+                            if paragraphContents[paragraphIdx].translation[lang] == nil {
+                                paragraphContents[paragraphIdx].translation[lang] = trimmed
+
                             } else {
-                                var nextSentence = paragraphContents[itemIdx].translation[lang]!.isEmpty ? "" : " "
-                                nextSentence += (translation[i]["content"] ?? "")
-                                paragraphContents[itemIdx].translation[lang]! += nextSentence
+                                var nextSentence: String = trimmed
                                 
-                                currentLength = nextSentence.withoutHtmlTags.count
+                                if !paragraphContents[paragraphIdx].translation[lang]!.isEmpty {
+                                    nextSentence = " " + nextSentence
+                                    currentLocation += 1
+                                }
+                                paragraphContents[paragraphIdx].translation[lang]! += nextSentence
+
                             }
+                            currentLocation += currentSentenceLength
+                            
                             if lang == defaultLang {
-                                var partitionInfo = TimeFrameInfo(parsedText[i], idx: i)
-                                partitionInfo.paragraphLocation = NSRange(location: currentLocation, length: currentLength)
-                                paragraphContents[itemIdx].partitionInfos.append(partitionInfo)
-                                currentLocation += currentLength                        }
+                                let sentenceStartPosition = currentLocation - trimmed.withoutHtmlTags.count
+                                
+                                /** Implementation note:
+                                 *  We need to split the string by white space first, then remove the html tag
+                                 *  The reason is sometimes the html will not concated to any string,
+                                 *  If we remove the html tag first, we will lack of a white space when we put the raw string into richString generator
+                                 **/
+                                // if we have time info for word
+                                if !byWordTimeFrames.isEmpty {
+                                    let allTokens = parsedText[i].text.components(separatedBy: [" "]).filter({!$0.isEmpty})
+                                    var accumlatedLength = 0
+
+                                    if !allTokens.isEmpty {
+                                        let lookForwardCount = 3
+                                        var googleParsedStartTime: Double = 0.0
+                                        for word in allTokens {
+                                            var displayLength: Int
+                                            
+                                            if word.isHTMLTag {
+                                                displayLength = 0
+                                            } else {
+                                                let checkBound = min(byWordTimeFrames.count, lookForwardCount)
+                                                let checkedWord = word.withoutHtmlTags.trimmingCharacters(in: .whitespacesAndNewlines)
+                                                
+                                                if checkedWord.isSymbol {
+                                                    // Ignore find the time frame process for symbol
+                                                    displayLength = word.count
+                                                } else {
+                                                    for i in 0...checkBound {
+                                                    
+                                                        if checkedWord =~ byWordTimeFrames[i].text {
+                                                            byWordTimeFrames[i].paragraphLocation = NSRange(location: sentenceStartPosition, length: accumlatedLength + checkedWord.count)
+                                                            byWordTimeFrames[i].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, byWordTimeFrames[i].startTime)
+                                                            if accumlatedLength == 0 {
+                                                                googleParsedStartTime = byWordTimeFrames[i].startTime
+                                                            }
+                                                            paragraphContents[paragraphIdx].partitionInfos.append(byWordTimeFrames[i])
+                                                        
+                                                            byWordTimeFrames.removeFirst(i+1)
+                                                            break
+                                                        }
+                                                    }
+                                                    displayLength = checkedWord.count
+                                                }
+                                            }
+                                            accumlatedLength += (displayLength + 1)
+                                            //currentLocation = currentLocation + displayLength + 1
+                                        }
+                                        
+                                        if let currentSentenceMaxTimeFrame = paragraphContents[paragraphIdx].partitionInfos.last {
+                                            if timeFrames[mappingTimeFrameIdx].mappingIdx == i {
+                                                timeFrames[mappingTimeFrameIdx].endTime = max(timeFrames[mappingTimeFrameIdx].endTime, currentSentenceMaxTimeFrame.endTime)
+                                                timeFrames[mappingTimeFrameIdx].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, googleParsedStartTime)
+                                                
+                                                mappingTimeFrameIdx += 1
+                                            } else {
+                                                print("time frame")
+                                            }
+                                            
+                                        }
+                                    }
+                                } else {
+                                    // parse the sentence timeframe info
+                                    var partitionInfo = TimeFrameInfo(parsedText[i], idx: i)
+                                    partitionInfo.paragraphLocation = NSRange(location: sentenceStartPosition, length: currentSentenceLength)
+                                    paragraphContents[paragraphIdx].partitionInfos.append(partitionInfo)
+                                }
+                            }
                         }
                     }
-                    translationIdx = paragraphContents[itemIdx].segmentIdx + 1
-                    paragraphContents[itemIdx].partitionInfos = paragraphContents[itemIdx].partitionInfos.filter { info in
+                    opSentenceIdx = paragraphContents[paragraphIdx].segmentIdx + 1
+                    paragraphContents[paragraphIdx].partitionInfos = paragraphContents[paragraphIdx].partitionInfos.filter { info in
                         return info.paragraphLocation.length > 0
                     }
                 }
             }
             content = parsedText
         
-            let resources = try container.decode([String: Any].self, forKey: .resources)
-            let audioResourceInfo = KPSAudioFileInfo(info: resources[audioResourceId] as! [String: Any])
-            length = audioResourceInfo.duration
-            streamingUrl = URL(string: audioResourceInfo.streamingUrl)!
         } else {
             error = isPublic ? .needPurchase : .needLogin
+            let contentInfo = try container.decode([String: Any].self, forKey: .content)
+            length = contentInfo["duration"] as? Double
         }
     }
     
@@ -165,6 +247,25 @@ extension KPSAudioContent: Decodable {
     
 }
 
+private func parsedWordTimeFrames(info: [String: Any]) -> [TimeFrameInfo] {
+    
+    var res: [TimeFrameInfo] = []
+    
+    
+    if let sentences = info["sentences"] as? [[String: Any]] {
+        for sentence in sentences {
+            if let wordRawInfos = sentence["words"] as? [[String: Any]] {
+            
+                for wordRawInfo in wordRawInfos {
+                    res.append(TimeFrameInfo(wordRawInfo))
+                }
+            }
+        }
+    }
+    
+    return res
+}
+
 public struct KPSAudioTextInfo: Decodable {
     public let type: String
     public let end, start: TimeValue
@@ -174,7 +275,6 @@ public struct KPSAudioTextInfo: Decodable {
 public struct KPSAudioFileInfo {
     public let duration: Double
     public let streamingUrl: String
-    
     init(info: [String: Any]) {
         duration = info["duration"] as! Double
         streamingUrl = info["streamingUrl"] as! String
@@ -212,15 +312,30 @@ public struct KPSAudioText {
 }
 
 internal struct TimeFrameInfo {
-    public let startTime, endTime: Double
+    public var startTime, endTime: Double
     public let mappingIdx: Int
+    public let text: String
     public var paragraphLocation: NSRange
     
     init(_ info: KPSAudioText, idx: Int) {
         startTime = info.startTime
         endTime = info.endTime
         mappingIdx = idx
+        text = info.text
         paragraphLocation = NSRange(location: 0, length: info.text.count)
+    }
+    
+    init(_ wordInfo: [String: Any]) {
+        //Hack for sync issue
+        let start = (wordInfo["start"] as! NSNumber).doubleValue
+        let end = (wordInfo["end"] as! NSNumber).doubleValue
+        startTime = start
+        endTime = start == end ? end + 0.05 : end
+        text = wordInfo["word"] as! String
+        
+        
+        mappingIdx = -1
+        paragraphLocation = NSRange(location: 0, length: text.count)
     }
 }
 
