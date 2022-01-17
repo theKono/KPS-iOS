@@ -18,7 +18,9 @@
         },
         "info": {
             "authors": {
-                "zh-TW": ""
+                "zh-TW": [
+                    "Kono"
+                ]
             }
         },
         "public": true,

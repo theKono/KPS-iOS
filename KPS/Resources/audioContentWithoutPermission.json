@@ -16,6 +16,13 @@
                 "613ec497238d20728afdaf97"
             ]
         },
+        "info": {
+            "authors": {
+                "zh-TW": [
+                    "Kono Digital Inc"
+                ]
+            }
+        },
         "resources": {
             "613ec497238d20728afdaf97": {
                 "type": "IMAGE",
