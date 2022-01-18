@@ -119,6 +119,7 @@ public final class KPSClient: NSObject {
         
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
         player.addObserver(self, forKeyPath: "currentItem", options: [.initial, .new, .old], context: nil)
         
         player.actionAtItemEnd = .advance
