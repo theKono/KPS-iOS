@@ -334,9 +334,7 @@ extension KPSClient {
         return item
     }
     
-    
-    
-    @objc func playerDidFinishPlaying(notification: NSNotification) {
+    @objc internal func playerDidFinishPlaying(notification: NSNotification) {
     
         if (currentTrack + 1) == mediaPlayList.count {
             mediaPlayerStop()
@@ -367,6 +365,26 @@ extension KPSClient {
             }
             
         default: break
+        }
+    }
+    
+    @objc func audioRouteChanged(_ notification:Notification) {
+        guard let userInfo = notification.userInfo,
+            let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+            let reason = AVAudioSession.RouteChangeReason(rawValue:reasonValue) else {
+                return
+        }
+        switch reason {
+        case .oldDeviceUnavailable:
+            if let previousRoute =
+                userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription {
+                
+                for output in previousRoute.outputs where (output.portType == AVAudioSession.Port.headphones || output.portType == AVAudioSession.Port.bluetoothA2DP) {
+                    mediaPlayerPause()
+                    break
+                }
+            }
+        default: ()
         }
     }
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
