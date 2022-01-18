@@ -258,7 +258,6 @@ extension KPSClient {
         if content.count > segmentIndex {
             let targetPlayTime = content[segmentIndex].startTime
             currentSegment = segmentIndex
-            seekSegment = segmentIndex
             mediaPlayerSeekTime(targetPlayTime, completion: completion)
         }
     }
