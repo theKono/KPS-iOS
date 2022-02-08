@@ -18,9 +18,11 @@ public struct LoginResponse: Codable {
 public struct KPSUser: Codable {
     
     let id: String
+    let status: Int
     
     enum CodingKeys: String, CodingKey {
         case id = "puid"
+        case status
     }
 }
 

@@ -573,4 +573,5 @@ public enum Server {
 public enum KPSContentError: Swift.Error {
     case needLogin
     case needPurchase
+    case userBlocked
 }
