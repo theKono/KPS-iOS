@@ -79,9 +79,12 @@ extension KPSAudioContent: Decodable {
         isFree = try container.decode(Bool.self, forKey: .free)
         customData = try container.decodeIfPresent([String: Any].self, forKey: .customData)
         
-        let infoDataContainer = try container.nestedContainer(keyedBy: InfoKeys.self, forKey: .info)
-        authors = try infoDataContainer.decode([String: [String]].self, forKey: .authors)
-        
+        if let _ = try container.decodeIfPresent([String: Any].self, forKey: .info) {
+            let infoDataContainer = try container.nestedContainer(keyedBy: InfoKeys.self, forKey: .info)
+            authors = try infoDataContainer.decodeIfPresent([String: [String]].self, forKey: .authors) ?? [:]
+        } else {
+            authors = [:]
+        }
         
         let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .content)
         let defaultLang = try contentDataContainer.decode(String.self, forKey: .audioLanguage)
