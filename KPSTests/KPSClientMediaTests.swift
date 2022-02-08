@@ -60,6 +60,8 @@ class KPSClientMediaTests: XCTestCase {
                 XCTAssertEqual(audioContent.length, 149.4)
                 XCTAssertEqual(audioContent.streamingUrl?.absoluteString, "https://kps-dev.thekono.com/api/v1/projects/61398d3c62cbe46b8b9e58af/streams/61de651d3940e9000ea36fcf/playlist.m3u8")
                 XCTAssertTrue(audioContent.isFree)
+                XCTAssertNotNil(audioContent.firstAuthor)
+                XCTAssertEqual(audioContent.firstAuthor["zh-TW"], "Kono")
                 XCTAssertTrue(audioContent.isPublic)
                 XCTAssertEqual(audioContent.type, "audio")
                 XCTAssertGreaterThan(audioContent.content.count, 0)
@@ -282,7 +284,7 @@ class KPSClientMediaTests: XCTestCase {
             XCTAssertTrue(res)
             XCTAssertEqual(self?.mockMediaDelegate.mediaTrackIndex, 0)
             XCTAssertNotNil(self?.mockMediaDelegate.currentContent)
-            XCTAssertEqual(self?.mockMediaDelegate.currentContent?.id, "613ec199238d20728afdaf84")
+            XCTAssertEqual(self?.mockMediaDelegate.currentContent?.id, "61c96b9de5d8c397e48dfa75")
         }
         sut.mediaPlayerPlay(targetTrack: 0) { res in
             

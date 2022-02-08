@@ -354,6 +354,8 @@ public final class KPSClient: NSObject {
         var info = [String: Any]()
         info[MPMediaItemPropertyTitle] = content.name["zh-TW"]
         info[MPMediaItemPropertyAlbumTitle] = mediaPlayCollectionName?["zh-TW"]
+        info[MPMediaItemPropertyArtist] = content.firstAuthor["zh-TW"]
+        info[MPMediaItemPropertyAlbumArtist] = content.firstAuthor["zh-TW"]
         info[MPMediaItemPropertyPlaybackDuration] = content.length
         info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0.0
         info[MPNowPlayingInfoPropertyPlaybackRate] = mediaPlayerRate

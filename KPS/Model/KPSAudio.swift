@@ -14,12 +14,16 @@ public struct KPSAudioContent {
     }
     
     enum RootKeys: String, CodingKey {
-        case id, type, name, description, orderInParent
+        case id, type, name, description, orderInParent, info
         case customData
         case publicData = "public"
         case free
         case covers
         case resources, content
+    }
+    
+    enum InfoKeys: String, CodingKey {
+        case authors
     }
     
     enum ContentDataKeys: String, CodingKey {
@@ -32,6 +36,7 @@ public struct KPSAudioContent {
     
     public let id, type: String
     public let name, description: [String: String]
+    public let authors: [String: [String]]
     public let order: Int
     public let isPublic, isFree: Bool
     public var length: Double?
@@ -46,6 +51,13 @@ public struct KPSAudioContent {
     public var collectionImage: KPSImageResource?
     public var errorDescription: String?
     public var error: KPSContentError?
+    public var firstAuthor: [String: String] {
+        var res = [String: String]()
+        for key in authors.keys {
+            res[key] = authors[key]?.first ?? ""
+        }
+        return res
+    }
     
 }
 
@@ -66,7 +78,14 @@ extension KPSAudioContent: Decodable {
         isPublic = try container.decode(Bool.self, forKey: .publicData)
         isFree = try container.decode(Bool.self, forKey: .free)
         customData = try container.decodeIfPresent([String: Any].self, forKey: .customData)
-
+        
+        if let _ = try container.decodeIfPresent([String: Any].self, forKey: .info) {
+            let infoDataContainer = try container.nestedContainer(keyedBy: InfoKeys.self, forKey: .info)
+            authors = try infoDataContainer.decodeIfPresent([String: [String]].self, forKey: .authors) ?? [:]
+        } else {
+            authors = [:]
+        }
+        
         let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .content)
         let defaultLang = try contentDataContainer.decode(String.self, forKey: .audioLanguage)
         
@@ -237,12 +256,14 @@ extension KPSAudioContent: Decodable {
         type = "Invalid"
         name = [String: String]()
         description = [String: String]()
+        authors = [String: [String]]()
         length = 0.0
         order = -1
         isPublic = false
         isFree = false
         customData = [String: Any]()
         content = [KPSAudioText]()
+        
     }
     
 }
