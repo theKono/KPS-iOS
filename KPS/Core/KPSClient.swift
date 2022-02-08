@@ -19,12 +19,33 @@ public final class KPSClient: NSObject {
     let appId: String
     
     private let networkProvider: NetworkProvider
-    
+    private let customizeEndpoint = { (target: CoreAPIService) -> Endpoint in
+        let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
+        
+        guard let sessionToken = KPSClient.sessionToken else {return defaultEndpoint}
+        switch target {
+        case .login(_, _, _):
+            return defaultEndpoint
+        default:
+            return defaultEndpoint.adding(newHTTPHeaderFields: ["kps_session": sessionToken])
+        }
+    }
     /// The current user id from the Token.
     public internal(set) var currentUserId: String?
 
     /// Current session token
-    var currentSessionToken: String?
+    static var sessionToken: String? {
+        get {
+            return UserDefaults.standard.string(forKey: "kps_session")
+        }
+        set(newToken) {
+            guard let token = newToken else {
+                UserDefaults.standard.removeObject(forKey: "kps_session")
+                return
+            }
+            UserDefaults.standard.set(token, forKey: "kps_session")
+        }
+    }
     
     public var isUserLoggedIn: Bool {
         get {
@@ -287,7 +308,7 @@ public final class KPSClient: NSObject {
             self.networkProvider = networkProvider
         } else {
             //self.networkProvider = NetworkProvider(plugins: [NetworkLoggerPlugin()])
-            self.networkProvider = NetworkProvider()
+            self.networkProvider = NetworkProvider(endpointClosure: self.customizeEndpoint)
             
         }
     }
@@ -296,7 +317,7 @@ public final class KPSClient: NSObject {
         
         self.apiKey = apiKey
         self.appId = server.appId
-        self.networkProvider = NetworkProvider()
+        self.networkProvider = NetworkProvider(endpointClosure: self.customizeEndpoint)
 
     }
     
@@ -308,7 +329,7 @@ public final class KPSClient: NSObject {
             switch result {
             case let .success(response):
                 self.currentUserId = response.user.id
-                self.currentSessionToken = response.kpsSession
+                KPSClient.sessionToken = response.kpsSession
                 self.isUserLoggedIn = true
                 completion(.success(response))
             case let .failure(error):
@@ -332,6 +353,7 @@ public final class KPSClient: NSObject {
                 do {
                     let _ = try response.filterSuccessfulStatusCodes()
                     self.isUserLoggedIn = false
+                    KPSClient.sessionToken = nil
                     completion?(.success(response))
                 } catch let error {
                     if let customError = error as? MoyaError {
