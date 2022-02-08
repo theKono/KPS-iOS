@@ -285,9 +285,13 @@ private func parsedWordTimeFrames(info: [String: Any]) -> [TimeFrameInfo] {
     
     if let sentences = info["sentences"] as? [[String: Any]] {
         for sentence in sentences {
+            
             if let wordRawInfos = sentence["words"] as? [[String: Any]] {
             
                 for wordRawInfo in wordRawInfos {
+                    guard let _ = wordRawInfo["word"],
+                          let _ = wordRawInfo["start"],
+                          let _ = wordRawInfo["end"] else { continue }
                     res.append(TimeFrameInfo(wordRawInfo))
                 }
             }
