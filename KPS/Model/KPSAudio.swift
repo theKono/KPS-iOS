@@ -10,7 +10,7 @@ import Foundation
 public struct KPSAudioContent {
     
     enum CodingKeys: String, CodingKey {
-        case error, contentNode
+        case error, contentNode, puser
     }
     
     enum RootKeys: String, CodingKey {
@@ -243,7 +243,17 @@ extension KPSAudioContent: Decodable {
             content = parsedText
         
         } else {
-            error = isPublic ? .needPurchase : .needLogin
+            if !isPublic && isFree {
+                if let user = try baseContainer.decodeIfPresent(KPSUser.self, forKey: .puser) {
+                    if user.status == 0 {
+                        error = .userBlocked
+                    }
+                } else {
+                    error = .needLogin
+                }
+            } else if !isPublic && !isFree {
+                error = .needPurchase
+            }
             let contentInfo = try container.decode([String: Any].self, forKey: .content)
             length = contentInfo["duration"] as? Double
         }
@@ -275,9 +285,13 @@ private func parsedWordTimeFrames(info: [String: Any]) -> [TimeFrameInfo] {
     
     if let sentences = info["sentences"] as? [[String: Any]] {
         for sentence in sentences {
+            
             if let wordRawInfos = sentence["words"] as? [[String: Any]] {
             
                 for wordRawInfo in wordRawInfos {
+                    guard let _ = wordRawInfo["word"],
+                          let _ = wordRawInfo["start"],
+                          let _ = wordRawInfo["end"] else { continue }
                     res.append(TimeFrameInfo(wordRawInfo))
                 }
             }

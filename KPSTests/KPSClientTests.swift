@@ -57,7 +57,6 @@ class KPSClientTests: XCTestCase {
         
         stubClient.login(keyID: access_id, token: access_token, completion: {result in })
         XCTAssertEqual(stubClient.currentUserId, "testUser")
-        XCTAssertEqual(stubClient.currentSessionToken, "testSessionToken")
         XCTAssertTrue(stubClient.isUserLoggedIn)
     }
     
