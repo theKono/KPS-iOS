@@ -12,7 +12,14 @@
                 "zh-TW": "1"
             },
             "orderInParent": 1,
-            "customData": null,
+            "customData": {
+                "hashtags": [
+                    "心理學",
+                    "科學",
+                    "知識",
+                    "成功"
+                ]
+            },
             "covers": {
                 "list": [
                     "61dbb4052422e40a2cd63e99"
