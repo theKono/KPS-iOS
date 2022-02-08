@@ -58,7 +58,7 @@ extension CoreAPIService: TargetType {
     var sampleData: Data {
         switch self {
         case .login(_, _, _):
-            return "{\"error\": \"null\", \"isNew\": false,\"kps_session\":\"testSessionToken\",\"puser\": {\"puid\": \"testUser\"}}".utf8Encoded
+            return "{\"error\": \"null\", \"isNew\": false,\"kps_session\":\"testSessionToken\",\"puser\": {\"puid\": \"testUser\", \"status\": 1}}".utf8Encoded
         case .logout(_):
             return "{\"first_name\": \"Harry\", \"last_name\": \"Potter\"}".utf8Encoded
         case .fetchRootCollection(_):
