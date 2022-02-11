@@ -105,7 +105,7 @@ public final class KPSClient: NSObject {
                         self.currentParagraph = left
                         var hasFindMatchedRange: Bool = false
                         for rangeInfo in paragraphContent[left].partitionInfos {
-                            if rangeInfo.startTime <= currentTime && rangeInfo.endTime > currentTime && rangeInfo.startTime >= timeFrames[left].startTime {
+                            if rangeInfo.startTime <= currentTime && rangeInfo.endTime > currentTime {
                                 self.currentHighlightRange = rangeInfo.paragraphLocation
                                 //print("current:\(currentTime) text:\(rangeInfo.text)")
                                 hasFindMatchedRange = true

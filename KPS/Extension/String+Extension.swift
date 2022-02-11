@@ -66,5 +66,5 @@ extension String {
 
 infix operator =~
 func =~(string: String, otherString: String) -> Bool {
-    return string.levenshteinDistanceScore(to: otherString) >= 0.49
+    return string.levenshteinDistanceScore(to: otherString) >= 0.75
 }
