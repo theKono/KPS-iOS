@@ -234,8 +234,8 @@ class KPSClientMediaTests: XCTestCase {
         }
         sut.mediaPlayerPlayNext { [weak self] res in
             XCTAssertTrue(res)
-            XCTAssertEqual(self?.mockMediaDelegate.mediaTrackIndex, -1, "Reach the playlist end, the current track should be -1")
-            XCTAssertNil(self?.mockMediaDelegate.currentContent, "Current content should be nil")
+            XCTAssertEqual(self?.mockMediaDelegate.mediaTrackIndex, 0, "Reach the playlist end, the current track should reset to first track")
+            XCTAssertNotNil(self?.mockMediaDelegate.currentContent, "Current content should not be nil")
             XCTAssertEqual(self?.sut.isMediaPlaying, false, "Reach the playlist end, the media player should stop playing")
         }
         
@@ -503,7 +503,7 @@ class KPSClientMediaTests: XCTestCase {
                 track += 1
             }
             NotificationCenter.default.post(name: .AVPlayerItemDidPlayToEndTime, object: nil)
-            XCTAssertEqual(self?.sut.currentTrack, -1)
+            XCTAssertEqual(self?.sut.currentTrack, 0, "The media player should auto reset to the first track if we reach the end")
             XCTAssertEqual(self?.sut.isMediaPlaying, false)
         }
     }
