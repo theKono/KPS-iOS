@@ -177,7 +177,7 @@ extension KPSAudioContent: Decodable {
                                     var accumlatedLength = 0
 
                                     if !allTokens.isEmpty {
-                                        let lookForwardCount = 3
+                                        let lookForwardCount = 10
                                         var googleParsedStartTime: Double = 0.0
                                         for word in allTokens {
                                             var displayLength: Int
@@ -192,11 +192,46 @@ extension KPSAudioContent: Decodable {
                                                     // Ignore find the time frame process for symbol
                                                     displayLength = word.count
                                                 } else {
-                                                    for i in 0...checkBound {
+                                                    for i in 0..<checkBound {
                                                     
                                                         if checkedWord =~ byWordTimeFrames[i].text {
+                                                            
+                                                            // add missing mapping word highlight
+                                                            if let previousInfo = paragraphContents[paragraphIdx].partitionInfos.last {
+                                                                var googlePredictCharCount: Int = 0
+                                                                let currentUnMappedCharCount = sentenceStartPosition + accumlatedLength - previousInfo.paragraphLocation.length - previousInfo.paragraphLocation.location
+                                                                
+                                                                //TODO: do we need the unmapped char count check?
+                                                                // Creative careers, American-supermodel-turned-  這邊需要
+                                                                // What happend to you裡 98.7秒的不用
+                                                                
+                                                                if i > 0 {
+                                                                    
+                                                                    /* special case
+                                                                       original text: fly on the wall listening in on a casual
+                                                                       google return: fly-on-the-wall, listening, in, on
+                                                                       
+                                                                       our algo will map the first "on" to the google's second on
+                                                                       and insert the wrong time stamp
+                                                                       
+                                                                       Try to add additional check to skip this mapping
+                                                                     */
+                                                                    for idx in 0..<i {
+                                                                        googlePredictCharCount += byWordTimeFrames[idx].text.count
+                                                                    }
+                                                                    if abs(googlePredictCharCount - currentUnMappedCharCount) > 2*i {
+                                                                        continue
+                                                                    }
+                                                                    
+                                                                    byWordTimeFrames[i-1].paragraphLocation = NSRange(location: sentenceStartPosition, length: accumlatedLength)
+                                                                    byWordTimeFrames[i-1].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, byWordTimeFrames[0].startTime)
+                                                                    paragraphContents[paragraphIdx].partitionInfos.append(byWordTimeFrames[i-1])
+                                                                }
+                                                            }
+                                                            
                                                             byWordTimeFrames[i].paragraphLocation = NSRange(location: sentenceStartPosition, length: accumlatedLength + checkedWord.count)
                                                             byWordTimeFrames[i].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, byWordTimeFrames[i].startTime)
+                                                            byWordTimeFrames[i].startTime = min(byWordTimeFrames[i].startTime, byWordTimeFrames[i].endTime - 0.1)
                                                             if accumlatedLength == 0 {
                                                                 googleParsedStartTime = byWordTimeFrames[i].startTime
                                                             }
@@ -206,6 +241,7 @@ extension KPSAudioContent: Decodable {
                                                             break
                                                         }
                                                     }
+                                                    
                                                     displayLength = checkedWord.count
                                                 }
                                             }
@@ -362,8 +398,8 @@ internal struct TimeFrameInfo {
     
     init(_ wordInfo: [String: Any]) {
         //Hack for sync issue
-        let start = (wordInfo["start"] as! NSNumber).doubleValue
-        let end = (wordInfo["end"] as! NSNumber).doubleValue
+        let start = (wordInfo["start"] as! NSNumber).doubleValue + 0.02
+        let end = (wordInfo["end"] as! NSNumber).doubleValue + 0.02
         startTime = start
         endTime = start == end ? end + 0.05 : end
         text = wordInfo["word"] as! String

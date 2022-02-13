@@ -430,7 +430,8 @@ class KPSClientMediaTests: XCTestCase {
         setUpMockPlayList()
         setUpTestAudioFileAndPlay()
         
-        let testTargetTime = 14.5
+        // Try to make the view sync with the playing audio, we add a magic number to adjust the target time provided by server
+        let testTargetTime = 14.5 + 0.02
         let testTouchRange = NSRange(location: 19, length: 2)
         // Use the track3, second paragraph as the test data
         sut.mediaPlayerPlay(targetTrack: 2)
