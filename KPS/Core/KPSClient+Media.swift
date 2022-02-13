@@ -304,8 +304,11 @@ extension KPSClient {
     
     public func mediaPlayerStop() {
     
-        mediaPlayerReset()
-        currentTrack = -1
+        // Define the stop action is reset to the first item within the play list
+        mediaPlayer.pause()
+        mediaPlayerPlay(targetTrack: 0) { _ in
+            self.mediaPlayerPause()
+        }
     }
     
     public func mediaPlayerReset(isNeedClearPlayList: Bool = false) {
