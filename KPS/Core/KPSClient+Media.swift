@@ -304,8 +304,11 @@ extension KPSClient {
     
     public func mediaPlayerStop() {
     
-        mediaPlayerReset()
-        currentTrack = -1
+        // Define the stop action is reset to the first item within the play list
+        mediaPlayer.pause()
+        mediaPlayerPlay(targetTrack: 0) { _ in
+            self.mediaPlayerPause()
+        }
     }
     
     public func mediaPlayerReset(isNeedClearPlayList: Bool = false) {
@@ -418,11 +421,7 @@ extension KPSClient {
                         mediaPlayerState = .bufferFetched
                     }
                 case "playbackBufferEmpty":
-                    if let isBufferEmpty = mediaPlayer.currentItem?.isPlaybackBufferEmpty {
-                        if isBufferEmpty {
-                            mediaPlayerState = .buffering
-                        }
-                    }
+                    mediaPlayerState = .buffering
                 case "playbackLikelyToKeepUp":
                     mediaPlayerState = .bufferFetched
                 default:
