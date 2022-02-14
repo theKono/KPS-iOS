@@ -179,6 +179,12 @@ extension KPSAudioContent: Decodable {
                                     if !allTokens.isEmpty {
                                         let lookForwardCount = 10
                                         var googleParsedStartTime: Double = 0.0
+                                        
+                                        //HACK solution for google api missing lots of words
+                                        byWordTimeFrames = byWordTimeFrames.filter({
+                                            $0.endTime > (timeFrames[mappingTimeFrameIdx].startTime - 1.0)
+                                        })
+                                        
                                         for word in allTokens {
                                             var displayLength: Int
                                             
@@ -192,9 +198,9 @@ extension KPSAudioContent: Decodable {
                                                     // Ignore find the time frame process for symbol
                                                     displayLength = word.count
                                                 } else {
-                                                    for i in 0..<checkBound {
+                                                    for checkedIdx in 0..<checkBound {
                                                     
-                                                        if checkedWord =~ byWordTimeFrames[i].text {
+                                                        if checkedWord =~ byWordTimeFrames[checkedIdx].text {
                                                             
                                                             // add missing mapping word highlight
                                                             if let previousInfo = paragraphContents[paragraphIdx].partitionInfos.last {
@@ -205,7 +211,7 @@ extension KPSAudioContent: Decodable {
                                                                 // Creative careers, American-supermodel-turned-  這邊需要
                                                                 // What happend to you裡 98.7秒的不用
                                                                 
-                                                                if i > 0 {
+                                                                if checkedIdx > 0 {
                                                                     
                                                                     /* special case
                                                                        original text: fly on the wall listening in on a casual
@@ -216,28 +222,28 @@ extension KPSAudioContent: Decodable {
                                                                        
                                                                        Try to add additional check to skip this mapping
                                                                      */
-                                                                    for idx in 0..<i {
+                                                                    for idx in 0..<checkedIdx {
                                                                         googlePredictCharCount += byWordTimeFrames[idx].text.count
                                                                     }
                                                                     if abs(googlePredictCharCount - currentUnMappedCharCount) > 2*i {
                                                                         continue
                                                                     }
                                                                     
-                                                                    byWordTimeFrames[i-1].paragraphLocation = NSRange(location: sentenceStartPosition, length: accumlatedLength)
-                                                                    byWordTimeFrames[i-1].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, byWordTimeFrames[0].startTime)
-                                                                    paragraphContents[paragraphIdx].partitionInfos.append(byWordTimeFrames[i-1])
+                                                                    byWordTimeFrames[checkedIdx-1].paragraphLocation = NSRange(location: sentenceStartPosition, length: accumlatedLength)
+                                                                    byWordTimeFrames[checkedIdx-1].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, byWordTimeFrames[0].startTime)
+                                                                    paragraphContents[paragraphIdx].partitionInfos.append(byWordTimeFrames[checkedIdx-1])
                                                                 }
                                                             }
                                                             
-                                                            byWordTimeFrames[i].paragraphLocation = NSRange(location: sentenceStartPosition, length: accumlatedLength + checkedWord.count)
-                                                            byWordTimeFrames[i].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, byWordTimeFrames[i].startTime)
-                                                            byWordTimeFrames[i].startTime = min(byWordTimeFrames[i].startTime, byWordTimeFrames[i].endTime - 0.1)
+                                                            byWordTimeFrames[checkedIdx].paragraphLocation = NSRange(location: sentenceStartPosition, length: accumlatedLength + checkedWord.count)
+                                                            byWordTimeFrames[checkedIdx].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, byWordTimeFrames[checkedIdx].startTime)
+                                                            byWordTimeFrames[checkedIdx].startTime = min(byWordTimeFrames[checkedIdx].startTime, byWordTimeFrames[checkedIdx].endTime - 0.1)
                                                             if accumlatedLength == 0 {
-                                                                googleParsedStartTime = byWordTimeFrames[i].startTime
+                                                                googleParsedStartTime = byWordTimeFrames[checkedIdx].startTime
                                                             }
-                                                            paragraphContents[paragraphIdx].partitionInfos.append(byWordTimeFrames[i])
+                                                            paragraphContents[paragraphIdx].partitionInfos.append(byWordTimeFrames[checkedIdx])
                                                         
-                                                            byWordTimeFrames.removeFirst(i+1)
+                                                            byWordTimeFrames.removeFirst(checkedIdx+1)
                                                             break
                                                         }
                                                     }
@@ -256,7 +262,7 @@ extension KPSAudioContent: Decodable {
                                                 
                                                 mappingTimeFrameIdx += 1
                                             } else {
-                                                print("time frame")
+                                                print("current sentence is without time frame")
                                             }
                                             
                                         }
