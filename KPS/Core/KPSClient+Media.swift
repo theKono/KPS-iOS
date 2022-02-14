@@ -421,11 +421,7 @@ extension KPSClient {
                         mediaPlayerState = .bufferFetched
                     }
                 case "playbackBufferEmpty":
-                    if let isBufferEmpty = mediaPlayer.currentItem?.isPlaybackBufferEmpty {
-                        if isBufferEmpty {
-                            mediaPlayerState = .buffering
-                        }
-                    }
+                    mediaPlayerState = .buffering
                 case "playbackLikelyToKeepUp":
                     mediaPlayerState = .bufferFetched
                 default:
