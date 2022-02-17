@@ -182,7 +182,7 @@ extension KPSAudioContent: Decodable {
                                         
                                         //HACK solution for google api missing lots of words
                                         byWordTimeFrames = byWordTimeFrames.filter({
-                                            $0.endTime > (timeFrames[mappingTimeFrameIdx].startTime - 1.0)
+                                            $0.endTime > (timeFrames[mappingTimeFrameIdx].startTime - 0.2)
                                         })
                                         
                                         for word in allTokens {
@@ -207,9 +207,6 @@ extension KPSAudioContent: Decodable {
                                                                 var googlePredictCharCount: Int = 0
                                                                 let currentUnMappedCharCount = sentenceStartPosition + accumlatedLength - previousInfo.paragraphLocation.length - previousInfo.paragraphLocation.location
                                                                 
-                                                                //TODO: do we need the unmapped char count check?
-                                                                // Creative careers, American-supermodel-turned-  這邊需要
-                                                                // What happend to you裡 98.7秒的不用
                                                                 
                                                                 if checkedIdx > 0 {
                                                                     
@@ -225,7 +222,7 @@ extension KPSAudioContent: Decodable {
                                                                     for idx in 0..<checkedIdx {
                                                                         googlePredictCharCount += byWordTimeFrames[idx].text.count
                                                                     }
-                                                                    if abs(googlePredictCharCount - currentUnMappedCharCount) > 2*i {
+                                                                    if (googlePredictCharCount - currentUnMappedCharCount) > 2*checkedIdx {
                                                                         continue
                                                                     }
                                                                     
