@@ -21,6 +21,7 @@ public struct KPSCollection {
     public var type: String?
     public var name: [String: String]?
     public var images: [KPSImageResource]
+    public var metaData: KPSContentMeta
 }
 
 extension KPSCollection: Decodable {
@@ -28,6 +29,7 @@ extension KPSCollection: Decodable {
 
         let baseContainer = try decoder.container(keyedBy: CodingKeys.self)
         children = try baseContainer.decode([KPSContentMeta].self, forKey: .childNodes)
+        metaData = try baseContainer.decode(KPSContentMeta.self, forKey: .contentNode)
         
         let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .contentNode)
         id = try container.decode(String.self, forKey: .id)
