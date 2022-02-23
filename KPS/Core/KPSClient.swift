@@ -254,15 +254,16 @@ public final class KPSClient: NSObject {
                 currentSegment = -1
                 currentParagraph = -1
                 currentHighlightRange = nil
-                setNowPlayingInfo()
                 mediaContentDelegate?.kpsClient(client: self, playerCurrentContent: currentPlayAudioContent)
-                
+                setNowPlayingInfo()
                 if currentPlayRecord != nil {
                     
                     uploadPlayedRecord()
                 }
-                if currentPlayAudioContent != nil {
+                if currentPlayAudioContent != nil && currentPlayAudioContent?.error == nil {
                     currentPlayRecord = KPSPlayRecord(info: currentPlayAudioContent!, rate: mediaPlayerRate)
+                } else {
+                    
                 }
             }
         }
@@ -353,6 +354,7 @@ public final class KPSClient: NSObject {
                 do {
                     let _ = try response.filterSuccessfulStatusCodes()
                     self.isUserLoggedIn = false
+                    self.mediaPlayerReset(isNeedClearPlayList: true)
                     KPSClient.sessionToken = nil
                     completion?(.success(response))
                 } catch let error {
@@ -373,28 +375,36 @@ public final class KPSClient: NSObject {
         
         guard let content = currentPlayAudioContent,
               let collectionImage = mediaPlayCollectionImage?.mainImageURL else { return }
-        var info = [String: Any]()
-        info[MPMediaItemPropertyTitle] = content.name["zh-TW"]
-        info[MPMediaItemPropertyAlbumTitle] = mediaPlayCollectionName?["zh-TW"]
-        info[MPMediaItemPropertyArtist] = content.firstAuthor["zh-TW"]
-        info[MPMediaItemPropertyAlbumArtist] = content.firstAuthor["zh-TW"]
-        info[MPMediaItemPropertyPlaybackDuration] = content.length
-        info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0.0
-        info[MPNowPlayingInfoPropertyPlaybackRate] = mediaPlayerRate
-        info[MPNowPlayingInfoPropertyDefaultPlaybackRate] = 1.0
         
+        if content.error != nil {
+            //try! AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            self.nowPlayingCenter.nowPlayingInfo = [:]
             
-        DispatchQueue.global().async { [weak self] in
-            if let artworkUrl = URL(string: collectionImage),
-               let artworkData = try? Data(contentsOf: artworkUrl),
-               let artworkImage = UIImage(data: artworkData) {
-                if var currentInfo = self?.nowPlayingCenter.nowPlayingInfo {
-                    currentInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artworkImage.size) { _ in artworkImage }
-                    self?.nowPlayingCenter.nowPlayingInfo = currentInfo
+        } else {
+        
+            var info = [String: Any]()
+            info[MPMediaItemPropertyTitle] = content.name["zh-TW"]
+            info[MPMediaItemPropertyAlbumTitle] = mediaPlayCollectionName?["zh-TW"]
+            info[MPMediaItemPropertyArtist] = content.firstAuthor["zh-TW"]
+            info[MPMediaItemPropertyAlbumArtist] = content.firstAuthor["zh-TW"]
+            info[MPMediaItemPropertyPlaybackDuration] = content.length
+            info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0.0
+            info[MPNowPlayingInfoPropertyPlaybackRate] = mediaPlayerRate
+            info[MPNowPlayingInfoPropertyDefaultPlaybackRate] = 1.0
+            
+                
+            DispatchQueue.global().async { [weak self] in
+                if let artworkUrl = URL(string: collectionImage),
+                   let artworkData = try? Data(contentsOf: artworkUrl),
+                   let artworkImage = UIImage(data: artworkData) {
+                    if var currentInfo = self?.nowPlayingCenter.nowPlayingInfo {
+                        currentInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artworkImage.size) { _ in artworkImage }
+                        self?.nowPlayingCenter.nowPlayingInfo = currentInfo
+                    }
                 }
             }
+            self.nowPlayingCenter.nowPlayingInfo = info
         }
-        self.nowPlayingCenter.nowPlayingInfo = info
     }
     
     internal func enableRemoteCommand() {
