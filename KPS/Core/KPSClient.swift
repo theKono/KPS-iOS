@@ -329,6 +329,7 @@ public final class KPSClient: NSObject {
             
             switch result {
             case let .success(response):
+                self.mediaPlayerReset(isNeedClearPlayList: true)
                 self.currentUserId = response.user.id
                 KPSClient.sessionToken = response.kpsSession
                 self.isUserLoggedIn = true
