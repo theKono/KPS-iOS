@@ -312,15 +312,16 @@ extension KPSClient {
     }
     
     public func mediaPlayerReset(isNeedClearPlayList: Bool = false) {
+        if isNeedClearPlayList {
+            mediaPlayList.removeAll()
+        }
+        
         mediaPlayer.pause()
         mediaPlayer.removeAllItems()
         isMediaPlaying = false
         currentTrack = -1
         currentSegment = -1
         currentPlayAudioContent = nil
-        if isNeedClearPlayList {
-            mediaPlayList.removeAll()
-        }
     }
     
     public func mediaPlayerChangeSpeed(rate: Double) {
