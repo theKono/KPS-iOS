@@ -30,6 +30,10 @@ internal struct SK2StoreProduct: StoreProductType {
 
     var price: Decimal { underlyingProduct.price }
 
+    var localizedCurrencyString: String { return "" }
+    
+    var localizedCurrencySymbol: String { return "" }
+    
     var localizedPriceString: String { underlyingProduct.displayPrice }
 
     var productIdentifier: String { underlyingProduct.id }

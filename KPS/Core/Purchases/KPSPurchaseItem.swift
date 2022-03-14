@@ -17,7 +17,7 @@ public typealias SK2Product = StoreKit.Product
 
 
 public final class KPSPurchaseItem: NSObject, StoreProductType {
-
+    
     let product: StoreProductType
 
     /// Designated initializer.
@@ -51,6 +51,10 @@ public final class KPSPurchaseItem: NSObject, StoreProductType {
     public var localizedTitle: String { self.product.localizedTitle }
 
     public var price: Decimal { self.product.price }
+    
+    public var localizedCurrencyString: String { self.product.localizedCurrencyString }
+    
+    public var localizedCurrencySymbol: String { self.product.localizedCurrencySymbol }
 
     public var localizedPriceString: String { self.product.localizedPriceString}
 
@@ -89,6 +93,11 @@ internal protocol StoreProductType {
     /// - Seealso: `pricePerMonth`.
     var price: Decimal { get }
 
+    
+    var localizedCurrencyString: String { get }
+    
+    var localizedCurrencySymbol: String { get }
+    
     /// The price of this product using ``priceFormatter``.
     var localizedPriceString: String { get }
 

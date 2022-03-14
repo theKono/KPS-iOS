@@ -131,11 +131,9 @@ public class KPSPurchases: NSObject {
 public extension KPSPurchases {
 
     /**
-     * Fetches the `SKProducts` for your IAPs for given `productIdentifiers`.
-     * Use this method if you aren't using `getOfferings(completion:)`.
-     * You should use getOfferings though.
+     * Fetches the `KPSPurchaseItem` for your IAPs for given `productIdentifiers`.
      *
-     * - Note: `completion` may be called without `SKProduct`s that you are expecting. This is usually caused by
+     * - Note: `completion` may be called without `KPSPurchaseItem`s that you are expecting. This is usually caused by
      * iTunesConnect configuration errors. Ensure your IAPs have the "Ready to Submit" status in iTunesConnect.
      * Also ensure that you have an active developer program subscription and you have signed the latest paid
      * application agreements.

@@ -20,6 +20,19 @@ internal struct SK1StoreProduct: StoreProductType {
 
     var price: Decimal { return underlyingProduct.price as Decimal }
 
+    var localizedCurrencyString: String {
+        
+        let local = underlyingProduct.priceLocale
+        let countryCode: String = local.regionCode ?? ""
+        
+        if (countryCode.range(of: "TW") != nil) {
+            return "NT"
+        }
+        return underlyingProduct.priceLocale.currencyCode ?? ""
+    }
+    
+    var localizedCurrencySymbol: String { return underlyingProduct.priceLocale.currencySymbol ?? "$" }
+    
     var localizedPriceString: String {
         return priceFormatter?.string(from: underlyingProduct.price) ?? ""
     }
@@ -35,6 +48,7 @@ internal struct SK1StoreProduct: StoreProductType {
 
     var priceFormatter: NumberFormatter? {
         let formatter = NumberFormatter()
+        formatter.formatterBehavior = .behavior10_4
         formatter.numberStyle = .currency
         formatter.locale = underlyingProduct.priceLocale
         return formatter
