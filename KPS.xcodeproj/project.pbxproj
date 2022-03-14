@@ -43,6 +43,21 @@
 		E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */; };
 		E8A4C8DA26C3FC0B0082B4F7 /* folderContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8D926C3FC0B0082B4F7 /* folderContent.json */; };
 		E8A4C8DC26C4B3AE0082B4F7 /* KPSArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */; };
+		E8E14EFE27D893CE007D6875 /* KPSPurchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14EFD27D893CE007D6875 /* KPSPurchases.swift */; };
+		E8E14F0027D8949D007D6875 /* KPSPurchaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14EFF27D8949D007D6875 /* KPSPurchaseDelegate.swift */; };
+		E8E14F0427D895AD007D6875 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F0327D895AD007D6875 /* Strings.swift */; };
+		E8E14F0627D895FB007D6875 /* PurchaseStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F0527D895FB007D6875 /* PurchaseStrings.swift */; };
+		E8E14F0927DB166E007D6875 /* IdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F0827DB166E007D6875 /* IdentityManager.swift */; };
+		E8E14F0B27DB1EAC007D6875 /* KPSPurchaseProductManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F0A27DB1EAC007D6875 /* KPSPurchaseProductManager.swift */; };
+		E8E14F1127DB1EFE007D6875 /* KPSTransactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1027DB1EFE007D6875 /* KPSTransactionManager.swift */; };
+		E8E14F1327DB22EB007D6875 /* KPSPurchaseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1227DB22EB007D6875 /* KPSPurchaseItem.swift */; };
+		E8E14F1627DB253E007D6875 /* SK1StoreProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1527DB253E007D6875 /* SK1StoreProduct.swift */; };
+		E8E14F1827DB264B007D6875 /* SK2StoreProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1727DB264B007D6875 /* SK2StoreProduct.swift */; };
+		E8E14F1A27DB274E007D6875 /* SubscriptionPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1927DB274E007D6875 /* SubscriptionPeriod.swift */; };
+		E8E14F1C27DB28BB007D6875 /* StoreProductDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1B27DB28BB007D6875 /* StoreProductDiscount.swift */; };
+		E8E14F1E27DB2996007D6875 /* SK2StoreProductDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1D27DB2996007D6875 /* SK2StoreProductDiscount.swift */; };
+		E8E14F2027DB29EA007D6875 /* SK1StoreProductDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1F27DB29EA007D6875 /* SK1StoreProductDiscount.swift */; };
+		E8E14F2227DF1B77007D6875 /* CustomerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F2127DF1B77007D6875 /* CustomerInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +117,21 @@
 		E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Eventually.swift"; sourceTree = "<group>"; };
 		E8A4C8D926C3FC0B0082B4F7 /* folderContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = folderContent.json; sourceTree = "<group>"; };
 		E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSArticle.swift; sourceTree = "<group>"; };
+		E8E14EFD27D893CE007D6875 /* KPSPurchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchases.swift; sourceTree = "<group>"; };
+		E8E14EFF27D8949D007D6875 /* KPSPurchaseDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchaseDelegate.swift; sourceTree = "<group>"; };
+		E8E14F0327D895AD007D6875 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		E8E14F0527D895FB007D6875 /* PurchaseStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseStrings.swift; sourceTree = "<group>"; };
+		E8E14F0827DB166E007D6875 /* IdentityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityManager.swift; sourceTree = "<group>"; };
+		E8E14F0A27DB1EAC007D6875 /* KPSPurchaseProductManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchaseProductManager.swift; sourceTree = "<group>"; };
+		E8E14F1027DB1EFE007D6875 /* KPSTransactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSTransactionManager.swift; sourceTree = "<group>"; };
+		E8E14F1227DB22EB007D6875 /* KPSPurchaseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchaseItem.swift; sourceTree = "<group>"; };
+		E8E14F1527DB253E007D6875 /* SK1StoreProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SK1StoreProduct.swift; sourceTree = "<group>"; };
+		E8E14F1727DB264B007D6875 /* SK2StoreProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SK2StoreProduct.swift; sourceTree = "<group>"; };
+		E8E14F1927DB274E007D6875 /* SubscriptionPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPeriod.swift; sourceTree = "<group>"; };
+		E8E14F1B27DB28BB007D6875 /* StoreProductDiscount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProductDiscount.swift; sourceTree = "<group>"; };
+		E8E14F1D27DB2996007D6875 /* SK2StoreProductDiscount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SK2StoreProductDiscount.swift; sourceTree = "<group>"; };
+		E8E14F1F27DB29EA007D6875 /* SK1StoreProductDiscount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SK1StoreProductDiscount.swift; sourceTree = "<group>"; };
+		E8E14F2127DF1B77007D6875 /* CustomerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerInfo.swift; sourceTree = "<group>"; };
 		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -179,7 +209,9 @@
 				E85FAB77275A3152006418CD /* KPS-iOS.podspec */,
 				E833108C26B3B1E400A6AA59 /* Extension */,
 				E833103626AAADDF00A6AA59 /* Core */,
+				E8E14F0127D89560007D6875 /* Logging */,
 				E833105026AB077600A6AA59 /* Model */,
+				E8E14EFC27D89356007D6875 /* Networking */,
 				E833108D26B43CDE00A6AA59 /* Resources */,
 				E833100226A4100E00A6AA59 /* KPS.h */,
 				E833100326A4100E00A6AA59 /* Info.plist */,
@@ -204,10 +236,11 @@
 		E833103626AAADDF00A6AA59 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				E8E14F0727D89778007D6875 /* Identity */,
+				E8E14EFB27D8932D007D6875 /* Purchases */,
 				E89BC168277DA5FA001633C5 /* KPSClient+Analytic.swift */,
 				E833103726AAAE1D00A6AA59 /* KPSClient.swift */,
 				E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */,
-				E833103B26AAB60800A6AA59 /* CoreAPIService.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -267,6 +300,66 @@
 				E8A4C8CD26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift */,
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		E8E14EFB27D8932D007D6875 /* Purchases */ = {
+			isa = PBXGroup;
+			children = (
+				E8E14F1427DB2516007D6875 /* StoreKitAbstractions */,
+				E8E14EFD27D893CE007D6875 /* KPSPurchases.swift */,
+				E8E14EFF27D8949D007D6875 /* KPSPurchaseDelegate.swift */,
+				E8E14F0A27DB1EAC007D6875 /* KPSPurchaseProductManager.swift */,
+				E8E14F1027DB1EFE007D6875 /* KPSTransactionManager.swift */,
+				E8E14F1227DB22EB007D6875 /* KPSPurchaseItem.swift */,
+			);
+			path = Purchases;
+			sourceTree = "<group>";
+		};
+		E8E14EFC27D89356007D6875 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E833103B26AAB60800A6AA59 /* CoreAPIService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		E8E14F0127D89560007D6875 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				E8E14F0227D89577007D6875 /* Strings */,
+			);
+			path = Logging;
+			sourceTree = "<group>";
+		};
+		E8E14F0227D89577007D6875 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				E8E14F0327D895AD007D6875 /* Strings.swift */,
+				E8E14F0527D895FB007D6875 /* PurchaseStrings.swift */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
+		E8E14F0727D89778007D6875 /* Identity */ = {
+			isa = PBXGroup;
+			children = (
+				E8E14F0827DB166E007D6875 /* IdentityManager.swift */,
+				E8E14F2127DF1B77007D6875 /* CustomerInfo.swift */,
+			);
+			path = Identity;
+			sourceTree = "<group>";
+		};
+		E8E14F1427DB2516007D6875 /* StoreKitAbstractions */ = {
+			isa = PBXGroup;
+			children = (
+				E8E14F1527DB253E007D6875 /* SK1StoreProduct.swift */,
+				E8E14F1727DB264B007D6875 /* SK2StoreProduct.swift */,
+				E8E14F1927DB274E007D6875 /* SubscriptionPeriod.swift */,
+				E8E14F1B27DB28BB007D6875 /* StoreProductDiscount.swift */,
+				E8E14F1F27DB29EA007D6875 /* SK1StoreProductDiscount.swift */,
+				E8E14F1D27DB2996007D6875 /* SK2StoreProductDiscount.swift */,
+			);
+			path = StoreKitAbstractions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -458,13 +551,28 @@
 				E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */,
 				E89BC16B277DA60C001633C5 /* KPSPlayRecord.swift in Sources */,
 				E833108B26B3B0F100A6AA59 /* Codable+Extension.swift in Sources */,
+				E8E14F0B27DB1EAC007D6875 /* KPSPurchaseProductManager.swift in Sources */,
+				E8E14F1C27DB28BB007D6875 /* StoreProductDiscount.swift in Sources */,
+				E8E14EFE27D893CE007D6875 /* KPSPurchases.swift in Sources */,
 				E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */,
+				E8E14F0427D895AD007D6875 /* Strings.swift in Sources */,
+				E8E14F0027D8949D007D6875 /* KPSPurchaseDelegate.swift in Sources */,
+				E8E14F1827DB264B007D6875 /* SK2StoreProduct.swift in Sources */,
+				E8E14F2227DF1B77007D6875 /* CustomerInfo.swift in Sources */,
+				E8E14F2027DB29EA007D6875 /* SK1StoreProductDiscount.swift in Sources */,
+				E8E14F1327DB22EB007D6875 /* KPSPurchaseItem.swift in Sources */,
 				E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */,
+				E8E14F1127DB1EFE007D6875 /* KPSTransactionManager.swift in Sources */,
 				E833103826AAAE1D00A6AA59 /* KPSClient.swift in Sources */,
+				E8E14F0627D895FB007D6875 /* PurchaseStrings.swift in Sources */,
 				E88C466826CCB034001243F5 /* KPSAudio.swift in Sources */,
 				E89BC169277DA5FA001633C5 /* KPSClient+Analytic.swift in Sources */,
+				E8E14F1E27DB2996007D6875 /* SK2StoreProductDiscount.swift in Sources */,
+				E8E14F0927DB166E007D6875 /* IdentityManager.swift in Sources */,
 				E88C466A26CD260C001243F5 /* ThreadSafeArray.swift in Sources */,
 				E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */,
+				E8E14F1A27DB274E007D6875 /* SubscriptionPeriod.swift in Sources */,
+				E8E14F1627DB253E007D6875 /* SK1StoreProduct.swift in Sources */,
 				E89BC167277D883D001633C5 /* String+Extension.swift in Sources */,
 				E8A4C8DC26C4B3AE0082B4F7 /* KPSArticle.swift in Sources */,
 				E88396C826ECFACC00B9C9F7 /* KPSImageResource.swift in Sources */,
