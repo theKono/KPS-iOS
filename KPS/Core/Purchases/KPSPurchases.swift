@@ -80,14 +80,17 @@ public class KPSPurchases: NSObject {
     private let productManager: KPSPurchaseProductManager
     private let transactionManager: KPSTransactionManager
     private let identityManager: IdentityManager
+    private let serverUrl: String
     fileprivate static let initLock = NSLock()
 
 
-    init(productManager: KPSPurchaseProductManager = KPSPurchaseProductManager(),
+    init(serverUrl: String,
+         productManager: KPSPurchaseProductManager = KPSPurchaseProductManager(),
          transactionManager: KPSTransactionManager = KPSTransactionManager(),
          identityManager: IdentityManager,
          notificationCenter: NotificationCenter = NotificationCenter.default) {
         
+        self.serverUrl = serverUrl
         self.notificationCenter = notificationCenter
         self.productManager = productManager
         self.transactionManager = transactionManager
@@ -171,8 +174,10 @@ public extension KPSPurchases {
      */
     func purchase(item: KPSPurchaseItem, completion: @escaping PurchaseCompletedBlock) {
         
-        
-        
+        if let product = item.sk1Product {
+            let payment = transactionManager.payment(withProduct: product)
+            transactionManager.add(payment)
+        }
     }
 
 
@@ -240,9 +245,9 @@ public extension KPSPurchases {
      *
      * - Returns: An instantiated `Purchases` object that has been set as a singleton.
      */
-    @discardableResult static func configure(withServerURL endpointURL: String) -> KPSPurchases {
-        let identityManager = IdentityManager(serverURL: endpointURL)
-        let purchases = KPSPurchases(identityManager: identityManager)
+    @discardableResult static func configure(withServerUrl endpointUrl: String) -> KPSPurchases {
+        let identityManager = IdentityManager(serverUrl: endpointUrl)
+        let purchases = KPSPurchases(serverUrl: endpointUrl, identityManager: identityManager)
         setDefaultInstance(purchases)
         return purchases
     }
@@ -281,7 +286,31 @@ extension KPSPurchases: KPSTransactionManagerDelegate {
 private extension KPSPurchases {
 
     func handlePurchasedTransaction(_ transaction: SKPaymentTransaction) {
-        
+
+        if let base64ReceiptData = KPSUtiltiy.getLocalReceiptData() {
+            let base64Receipt = base64ReceiptData.base64EncodedString()
+            transactionManager.finishTransaction(transaction)
+            print(base64Receipt)
+            PurchaseAPIServiceProvider.request(.uploadReceipt(receipt: base64Receipt, version: "1", serverUrl: self.serverUrl)) { result in
+                switch result {
+                case let .success(response):
+                    do {
+                        let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
+                        let _ = String(decoding: filteredResponse.data, as: UTF8.self)
+                        
+                        
+                    } catch _ {
+                        
+                        let errorResponse = String(decoding: response.data, as: UTF8.self)
+                        print("[API Error: \(#function)] \(errorResponse)")
+                        
+                    }
+                case .failure(let error):
+                    print(error.errorDescription ?? "")
+                }
+            }
+            
+        }
     }
 
     func handleFailedTransaction(_ transaction: SKPaymentTransaction) {

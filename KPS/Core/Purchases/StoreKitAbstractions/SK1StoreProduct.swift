@@ -48,9 +48,14 @@ internal struct SK1StoreProduct: StoreProductType {
 
     var priceFormatter: NumberFormatter? {
         let formatter = NumberFormatter()
+        formatter.generatesDecimalNumbers = true
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        /* with currency symbol
         formatter.formatterBehavior = .behavior10_4
         formatter.numberStyle = .currency
         formatter.locale = underlyingProduct.priceLocale
+        */
         return formatter
     }
 

@@ -23,6 +23,7 @@
 		E83310A326B5327C00A6AA59 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109826B50CB700A6AA59 /* articleContent.json */; };
 		E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */; };
 		E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E83310A626B547B300A6AA59 /* previewArticleContent.json */; };
+		E855722B27E0D13F00C9F8C0 /* PurchaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E855722A27E0D13F00C9F8C0 /* PurchaseAPIService.swift */; };
 		E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */ = {isa = PBXBuildFile; fileRef = E85FAB77275A3152006418CD /* KPS-iOS.podspec */; };
 		E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */; };
 		E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C526ECF76800B9C9F7 /* KPSCollection.swift */; };
@@ -97,6 +98,7 @@
 		E833109826B50CB700A6AA59 /* articleContent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
 		E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		E83310A626B547B300A6AA59 /* previewArticleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = previewArticleContent.json; sourceTree = "<group>"; };
+		E855722A27E0D13F00C9F8C0 /* PurchaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseAPIService.swift; sourceTree = "<group>"; };
 		E85FAB77275A3152006418CD /* KPS-iOS.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "KPS-iOS.podspec"; sourceTree = SOURCE_ROOT; };
 		E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSContentMeta.swift; sourceTree = "<group>"; };
 		E88396C526ECF76800B9C9F7 /* KPSCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSCollection.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				E833103B26AAB60800A6AA59 /* CoreAPIService.swift */,
+				E855722A27E0D13F00C9F8C0 /* PurchaseAPIService.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */,
 				E8E14F1A27DB274E007D6875 /* SubscriptionPeriod.swift in Sources */,
 				E8E14F1627DB253E007D6875 /* SK1StoreProduct.swift in Sources */,
+				E855722B27E0D13F00C9F8C0 /* PurchaseAPIService.swift in Sources */,
 				E89BC167277D883D001633C5 /* String+Extension.swift in Sources */,
 				E8A4C8DC26C4B3AE0082B4F7 /* KPSArticle.swift in Sources */,
 				E88396C826ECFACC00B9C9F7 /* KPSImageResource.swift in Sources */,
@@ -751,7 +755,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -779,7 +783,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

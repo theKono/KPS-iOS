@@ -11,9 +11,9 @@ class IdentityManager {
 
 
     internal static let anonymousRegex = #"\$RCAnonymousID:([a-z0-9]{32})$"#
-    private var serverURL: String
-    init(serverURL: String) {
-        self.serverURL = serverURL
+    private var serverUrl: String
+    init(serverUrl: String) {
+        self.serverUrl = serverUrl
     }
 
     static func generateRandomID() -> String {

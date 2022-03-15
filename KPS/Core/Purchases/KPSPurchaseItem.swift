@@ -93,12 +93,19 @@ internal protocol StoreProductType {
     /// - Seealso: `pricePerMonth`.
     var price: Decimal { get }
 
-    
+    /// The currency string
+    /// ex: USD$ 3.99, we will return USD
+    /// Notice: TWD, we will tranform to NT
     var localizedCurrencyString: String { get }
     
+    /// The currency string
+    /// ex: USD$ 3.99, we will return '$'
+    /// Notice: The default value is '$'
     var localizedCurrencySymbol: String { get }
     
     /// The price of this product using ``priceFormatter``.
+    /// We remove the currency string and currency symbol
+    /// ex: USD$ 3.99, we only return 3.99
     var localizedPriceString: String { get }
 
     /// The string that identifies the product to the Apple App Store.

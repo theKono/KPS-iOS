@@ -14,11 +14,4 @@ class KPSUtilityTest: XCTestCase {
         utility = KPSUtiltiy()
     }
 
-    func testAdd() {
-        XCTAssertEqual(utility.add(a: 1, b: 1), 2)
-    }
-
-    func testSub() {
-        XCTAssertEqual(utility.sub(a: 1, b: 1), 0)
-    }
 }
