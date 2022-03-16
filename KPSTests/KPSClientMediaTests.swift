@@ -90,7 +90,9 @@ class KPSClientMediaTests: XCTestCase {
             switch result {
             case .success(let audioContent):
                 XCTAssertEqual(audioContent.error, .needLogin)
-                XCTAssertEqual(audioContent.length, 235.128)
+                XCTAssertEqual(audioContent.length, 228.768)
+                XCTAssertGreaterThan(audioContent.content.count, 0, "No permission response should have preview content")
+                XCTAssertGreaterThan(audioContent.paragraphContents.count, 0, "No permission response should have paragraph")
                 break
             default: break
             }
