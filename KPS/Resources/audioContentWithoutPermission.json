@@ -1,30 +1,28 @@
 {
     "error": "puser not logged in",
     "contentNode": {
-        "id": "613ec497238d20728afdaf96",
+        "id": "61dbf6405d8b3b77ca610813",
         "type": "audio",
         "name": {
-            "zh-TW": "Essential Practice 2"
+            "zh-TW": "rteggeg"
         },
         "description": {
-            "zh-TW": "Essential Practice 2"
+            "zh-TW": "dfhfn"
         },
-        "orderInParent": 30,
+        "orderInParent": 60,
         "customData": null,
         "covers": {
             "list": [
-                "613ec497238d20728afdaf97"
+                "61de484d60590d90bec5dbce"
             ]
         },
         "info": {
             "authors": {
-                "zh-TW": [
-                    "Kono Digital Inc"
-                ]
+                "zh-TW": []
             }
         },
         "resources": {
-            "613ec497238d20728afdaf97": {
+            "61de484d60590d90bec5dbce": {
                 "type": "IMAGE",
                 "width": 533,
                 "height": 900,
@@ -35,24 +33,297 @@
                     533
                 ],
                 "urls": {
-                    "100": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/100.jpeg",
-                    "320": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/320.jpeg",
-                    "480": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/480.jpeg",
-                    "533": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/533.jpeg"
+                    "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbf6405d8b3b77ca610813/resources/61de484d60590d90bec5dbce/100.jpeg",
+                    "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbf6405d8b3b77ca610813/resources/61de484d60590d90bec5dbce/320.jpeg",
+                    "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbf6405d8b3b77ca610813/resources/61de484d60590d90bec5dbce/480.jpeg",
+                    "533": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbf6405d8b3b77ca610813/resources/61de484d60590d90bec5dbce/533.jpeg"
                 },
                 "webpUrls": {
-                    "100": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/100.webp",
-                    "320": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/320.webp",
-                    "480": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/480.webp",
-                    "533": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec497238d20728afdaf97/533.webp"
+                    "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbf6405d8b3b77ca610813/resources/61de484d60590d90bec5dbce/100.webp",
+                    "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbf6405d8b3b77ca610813/resources/61de484d60590d90bec5dbce/320.webp",
+                    "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbf6405d8b3b77ca610813/resources/61de484d60590d90bec5dbce/480.webp",
+                    "533": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbf6405d8b3b77ca610813/resources/61de484d60590d90bec5dbce/533.webp"
                 }
             }
         },
         "public": false,
         "free": true,
         "content": {
-            "duration": 235.128,
-            "audioLanguage": "en-US"
+            "duration": 228.768,
+            "audioLanguage": "en-US",
+            "textSegments": [
+                {
+                    "type": "PREFACE",
+                    "start": 4,
+                    "end": 9
+                },
+                {
+                    "type": "PREFACE",
+                    "start": 10,
+                    "end": 17
+                },
+                {
+                    "type": "SPACE",
+                    "start": 0,
+                    "end": 0
+                },
+                {
+                    "type": "TEXT",
+                    "start": 19,
+                    "end": 27
+                },
+                {
+                    "type": "TEXT",
+                    "start": 28,
+                    "end": 37
+                },
+                {
+                    "type": "SPACE",
+                    "start": 0,
+                    "end": 0
+                },
+                {
+                    "type": "TEXT",
+                    "start": 38,
+                    "end": 42
+                },
+                {
+                    "type": "TEXT",
+                    "start": 43,
+                    "end": 50
+                },
+                {
+                    "type": "TEXT",
+                    "start": 51,
+                    "end": 61
+                },
+                {
+                    "type": "TEXT",
+                    "start": 62,
+                    "end": 68
+                },
+                {
+                    "type": "TEXT",
+                    "start": 68,
+                    "end": 79
+                },
+                {
+                    "type": "TEXT",
+                    "start": 79,
+                    "end": 84
+                },
+                {
+                    "type": "SPACE",
+                    "start": 0,
+                    "end": 0
+                },
+                {
+                    "type": "TEXT",
+                    "start": 85,
+                    "end": 92
+                },
+                {
+                    "type": "TEXT",
+                    "start": 92,
+                    "end": 99
+                },
+                {
+                    "type": "TEXT",
+                    "start": 99,
+                    "end": 107
+                },
+                {
+                    "type": "TEXT",
+                    "start": 108,
+                    "end": 112
+                },
+                {
+                    "type": "TEXT",
+                    "start": 113,
+                    "end": 115
+                },
+                {
+                    "type": "TEXT",
+                    "start": 116,
+                    "end": 123
+                },
+                {
+                    "type": "TEXT",
+                    "start": 123,
+                    "end": 130
+                },
+                {
+                    "type": "SPACE",
+                    "start": 0,
+                    "end": 0
+                },
+                {
+                    "type": "TEXT",
+                    "start": 131,
+                    "end": 136
+                },
+                {
+                    "type": "TEXT",
+                    "start": 137,
+                    "end": 144
+                },
+                {
+                    "type": "TEXT",
+                    "start": 145,
+                    "end": 152
+                }
+            ],
+            "languages": {
+                "zh-TW": [
+                    {
+                        "content": "哈囉，歡迎來到Kono Summit，這裡是知識和學習自然發生的地方。"
+                    },
+                    {
+                        "content": "你現正聆聽的是亞當‧格蘭特的《重新思考：能知你所不知的力量》，第一部分。"
+                    },
+                    {
+                        "content": ""
+                    },
+                    {
+                        "content": "亞當‧格蘭特為華頓商學院的教授，同時也是一名組織心理學家，他教導我們如何讓人生更加豐富和有創造力，"
+                    },
+                    {
+                        "content": "在這邊要傳授運用重新思考是如何重要，我們要能重新思考以保持更開放的心胸並審視我們接收到的資訊。"
+                    },
+                    {
+                        "content": ""
+                    },
+                    {
+                        "content": "迷思和事實一直都在被人們推翻或是更新。"
+                    },
+                    {
+                        "content": "現在我們知道金魚不是真的只有三秒記憶力的金魚腦，變色龍也不會改變顏色。"
+                    },
+                    {
+                        "content": "新的證據也顯示冥王星並非行星、暴龍尾脊上也許有彩色的羽毛。"
+                    },
+                    {
+                        "content": "當我們聽到這些事實，我們會覺得驚奇，這會讓我們想要知道更多，"
+                    },
+                    {
+                        "content": "但若是這些事實完全與我們所相信的相悖，像是我們認知中的環境議題，又或是當這些事實妨礙了我們的生活方式時，"
+                    },
+                    {
+                        "content": "我們就會抗拒並創造出防護罩來阻擋這些事情接觸到我們。"
+                    },
+                    {
+                        "content": ""
+                    },
+                    {
+                        "content": "在過去，聰明才智是根據一個人面對複雜問題做出的反應來判斷，"
+                    },
+                    {
+                        "content": "但當今我們吸收的資訊是二十五年前人們接收資訊的五倍，"
+                    },
+                    {
+                        "content": "另一個認知技能也許更為重要——即是重新思考的這個概念。"
+                    },
+                    {
+                        "content": "重新思考事情能提供新的解決方法來應對新的問題。"
+                    },
+                    {
+                        "content": "你也許認為你了解事情，但其實不然。"
+                    },
+                    {
+                        "content": "假設有人問我們腳踏車是什麼，我們可能可以自信地回答出來，"
+                    },
+                    {
+                        "content": "但若他們問的是腳踏車如何運轉呢？我們也許一時半晌都回答不出這個問題，只能愣在原地。"
+                    },
+                    {
+                        "content": ""
+                    },
+                    {
+                        "content": "重新思考的概念結合理論和點子。"
+                    },
+                    {
+                        "content": "重新思考並不是一個可以立即就完善的具體想法，它跟一個假說一樣需要驗證。"
+                    },
+                    {
+                        "content": "在檢視重新思考這個概念之前，必須先了解一個人的認知思考過程。"
+                    }
+                ],
+                "en-US": [
+                    {
+                        "content": "Hello and welcome to Kono Summit, where knowledge and learning happen naturally."
+                    },
+                    {
+                        "content": "You’re listening to <i> Think Again: The Power of Knowing What You Don’t Know </i> by Adam Grant – Part 1."
+                    },
+                    {
+                        "content": ""
+                    },
+                    {
+                        "content": "Adam Grant is a Wharton professor and organizational psychologist who teaches us how to lead a more generous and creative life,"
+                    },
+                    {
+                        "content": "in this case, the importance of utilizing rethinking in order for us to be more open-minded and question the information we receive."
+                    },
+                    {
+                        "content": ""
+                    },
+                    {
+                        "content": "Myths and facts get debunked or updated all the time."
+                    },
+                    {
+                        "content": "We now know that goldfish don't have a three second memory and chameleons do not change their colors."
+                    },
+                    {
+                        "content": "New evidence also indicates that Pluto is not, in fact, a planet and the T-Rex might have had colorful feathers on the back of its tail."
+                    },
+                    {
+                        "content": "When we hear about these facts, it will amaze us and make us want to learn more,"
+                    },
+                    {
+                        "content": "yet if they question our beliefs entirely, such as what we know about environmental issues or if they are facts that hinder our lifestyle,"
+                    },
+                    {
+                        "content": "we become resistant and create a shield that blocks us from engaging with them."
+                    },
+                    {
+                        "content": ""
+                    },
+                    {
+                        "content": "In the past, intelligence was based on how a person responded to a complex problem,"
+                    },
+                    {
+                        "content": "but nowadays as we absorb information at five times the amount we did a quarter of a century ago, "
+                    },
+                    {
+                        "content": "there might be another cognitive skill which matters more—that is the concept of rethinking."
+                    },
+                    {
+                        "content": "Thinking again provides new solutions to new problems."
+                    },
+                    {
+                        "content": "You might think you know, but you don’t.  "
+                    },
+                    {
+                        "content": "If someone was to ask us what a bicycle was, we could probably confidently give an answer,"
+                    },
+                    {
+                        "content": "but if they were to ask us how a bicycle functions? We might suddenly be stunned by the question."
+                    },
+                    {
+                        "content": ""
+                    },
+                    {
+                        "content": "The concept of rethinking is a combination of theories and ideas."
+                    },
+                    {
+                        "content": "Much like testing a hypothesis, rethinking is not a concrete idea that can be done momentarily."
+                    },
+                    {
+                        "content": "In order to look at rethinking, one must first look at the cognitive thought process of a person."
+                    }
+                ]
+            }
         }
-    }
+    },
+    "puser": null
 }
