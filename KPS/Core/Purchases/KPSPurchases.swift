@@ -80,6 +80,7 @@ public class KPSPurchases: NSObject {
     private let productManager: KPSPurchaseProductManager
     private let transactionManager: KPSTransactionManager
     private let identityManager: IdentityManager
+    private let receiptManager: KPSPurchaseReceiptManager
     private let serverUrl: String
     fileprivate static let initLock = NSLock()
 
@@ -88,17 +89,26 @@ public class KPSPurchases: NSObject {
          productManager: KPSPurchaseProductManager = KPSPurchaseProductManager(),
          transactionManager: KPSTransactionManager = KPSTransactionManager(),
          identityManager: IdentityManager,
+         receiptManager: KPSPurchaseReceiptManager = KPSPurchaseReceiptManager(),
          notificationCenter: NotificationCenter = NotificationCenter.default) {
         
         self.serverUrl = serverUrl
         self.notificationCenter = notificationCenter
         self.productManager = productManager
         self.transactionManager = transactionManager
+        self.receiptManager = receiptManager
         self.identityManager = identityManager
 
         super.init()
         
         self.transactionManager.delegate = self
+        self.receiptManager.fetchReceiptData() {
+            if let base64ReceiptData = KPSUtiltiy.getLocalReceiptData() {
+                print("purchase record:\(base64ReceiptData.base64EncodedString())")
+            } else {
+                print("no purhcase record")
+            }
+        }
     }
 
     /**

@@ -23,6 +23,20 @@
 		E83310A326B5327C00A6AA59 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109826B50CB700A6AA59 /* articleContent.json */; };
 		E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */; };
 		E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E83310A626B547B300A6AA59 /* previewArticleContent.json */; };
+		E845AD7727E4876700A3DC49 /* KPSPurchaseReceiptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD7627E4876700A3DC49 /* KPSPurchaseReceiptManager.swift */; };
+		E845AD7A27E4907300A3DC49 /* AppleReceiptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD7927E4907300A3DC49 /* AppleReceiptBuilder.swift */; };
+		E845AD7C27E490BD00A3DC49 /* ASN1ContainerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD7B27E490BD00A3DC49 /* ASN1ContainerBuilder.swift */; };
+		E845AD7E27E4910700A3DC49 /* InAppPurchaseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD7D27E4910700A3DC49 /* InAppPurchaseBuilder.swift */; };
+		E845AD8127E4917600A3DC49 /* ASN1Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD8027E4917600A3DC49 /* ASN1Container.swift */; };
+		E845AD8327E4919300A3DC49 /* AppleReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD8227E4919300A3DC49 /* AppleReceipt.swift */; };
+		E845AD8527E491EB00A3DC49 /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD8427E491EB00A3DC49 /* InAppPurchase.swift */; };
+		E845AD8827E4923F00A3DC49 /* ASN1ObjectIdentifierBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD8727E4923F00A3DC49 /* ASN1ObjectIdentifierBuilder.swift */; };
+		E845AD8A27E4927700A3DC49 /* ReceiptParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD8927E4927700A3DC49 /* ReceiptParser.swift */; };
+		E845AD8C27E492AE00A3DC49 /* ReceiptParsingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD8B27E492AE00A3DC49 /* ReceiptParsingError.swift */; };
+		E845AD8E27E4930400A3DC49 /* ASN1ObjectIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD8D27E4930400A3DC49 /* ASN1ObjectIdentifier.swift */; };
+		E845AD9127E4938100A3DC49 /* ArraySlice_UInt8+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD9027E4938100A3DC49 /* ArraySlice_UInt8+Extensions.swift */; };
+		E845AD9327E493AB00A3DC49 /* UInt8+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD9227E493AB00A3DC49 /* UInt8+Extensions.swift */; };
+		E845AD9527E4945600A3DC49 /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD9427E4945600A3DC49 /* FoundationExtensions.swift */; };
 		E855722B27E0D13F00C9F8C0 /* PurchaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E855722A27E0D13F00C9F8C0 /* PurchaseAPIService.swift */; };
 		E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */ = {isa = PBXBuildFile; fileRef = E85FAB77275A3152006418CD /* KPS-iOS.podspec */; };
 		E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */; };
@@ -98,6 +112,20 @@
 		E833109826B50CB700A6AA59 /* articleContent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
 		E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		E83310A626B547B300A6AA59 /* previewArticleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = previewArticleContent.json; sourceTree = "<group>"; };
+		E845AD7627E4876700A3DC49 /* KPSPurchaseReceiptManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchaseReceiptManager.swift; sourceTree = "<group>"; };
+		E845AD7927E4907300A3DC49 /* AppleReceiptBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleReceiptBuilder.swift; sourceTree = "<group>"; };
+		E845AD7B27E490BD00A3DC49 /* ASN1ContainerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1ContainerBuilder.swift; sourceTree = "<group>"; };
+		E845AD7D27E4910700A3DC49 /* InAppPurchaseBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchaseBuilder.swift; sourceTree = "<group>"; };
+		E845AD8027E4917600A3DC49 /* ASN1Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1Container.swift; sourceTree = "<group>"; };
+		E845AD8227E4919300A3DC49 /* AppleReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleReceipt.swift; sourceTree = "<group>"; };
+		E845AD8427E491EB00A3DC49 /* InAppPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchase.swift; sourceTree = "<group>"; };
+		E845AD8727E4923F00A3DC49 /* ASN1ObjectIdentifierBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1ObjectIdentifierBuilder.swift; sourceTree = "<group>"; };
+		E845AD8927E4927700A3DC49 /* ReceiptParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptParser.swift; sourceTree = "<group>"; };
+		E845AD8B27E492AE00A3DC49 /* ReceiptParsingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptParsingError.swift; sourceTree = "<group>"; };
+		E845AD8D27E4930400A3DC49 /* ASN1ObjectIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1ObjectIdentifier.swift; sourceTree = "<group>"; };
+		E845AD9027E4938100A3DC49 /* ArraySlice_UInt8+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArraySlice_UInt8+Extensions.swift"; sourceTree = "<group>"; };
+		E845AD9227E493AB00A3DC49 /* UInt8+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt8+Extensions.swift"; sourceTree = "<group>"; };
+		E845AD9427E4945600A3DC49 /* FoundationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
 		E855722A27E0D13F00C9F8C0 /* PurchaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseAPIService.swift; sourceTree = "<group>"; };
 		E85FAB77275A3152006418CD /* KPS-iOS.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "KPS-iOS.podspec"; sourceTree = SOURCE_ROOT; };
 		E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSContentMeta.swift; sourceTree = "<group>"; };
@@ -296,6 +324,50 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		E845AD7827E4905A00A3DC49 /* AppleReceipt */ = {
+			isa = PBXGroup;
+			children = (
+				E845AD8F27E4936200A3DC49 /* Converter */,
+				E845AD8627E4921800A3DC49 /* Builders */,
+				E845AD7F27E4915A00A3DC49 /* BasicTypes */,
+				E845AD8B27E492AE00A3DC49 /* ReceiptParsingError.swift */,
+				E845AD8927E4927700A3DC49 /* ReceiptParser.swift */,
+			);
+			path = AppleReceipt;
+			sourceTree = "<group>";
+		};
+		E845AD7F27E4915A00A3DC49 /* BasicTypes */ = {
+			isa = PBXGroup;
+			children = (
+				E845AD8027E4917600A3DC49 /* ASN1Container.swift */,
+				E845AD8227E4919300A3DC49 /* AppleReceipt.swift */,
+				E845AD8427E491EB00A3DC49 /* InAppPurchase.swift */,
+				E845AD8D27E4930400A3DC49 /* ASN1ObjectIdentifier.swift */,
+			);
+			path = BasicTypes;
+			sourceTree = "<group>";
+		};
+		E845AD8627E4921800A3DC49 /* Builders */ = {
+			isa = PBXGroup;
+			children = (
+				E845AD7927E4907300A3DC49 /* AppleReceiptBuilder.swift */,
+				E845AD7B27E490BD00A3DC49 /* ASN1ContainerBuilder.swift */,
+				E845AD7D27E4910700A3DC49 /* InAppPurchaseBuilder.swift */,
+				E845AD8727E4923F00A3DC49 /* ASN1ObjectIdentifierBuilder.swift */,
+			);
+			path = Builders;
+			sourceTree = "<group>";
+		};
+		E845AD8F27E4936200A3DC49 /* Converter */ = {
+			isa = PBXGroup;
+			children = (
+				E845AD9027E4938100A3DC49 /* ArraySlice_UInt8+Extensions.swift */,
+				E845AD9227E493AB00A3DC49 /* UInt8+Extensions.swift */,
+				E845AD9427E4945600A3DC49 /* FoundationExtensions.swift */,
+			);
+			path = Converter;
+			sourceTree = "<group>";
+		};
 		E8A4C8CC26BFD3FA0082B4F7 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,11 +379,13 @@
 		E8E14EFB27D8932D007D6875 /* Purchases */ = {
 			isa = PBXGroup;
 			children = (
+				E845AD7827E4905A00A3DC49 /* AppleReceipt */,
 				E8E14F1427DB2516007D6875 /* StoreKitAbstractions */,
 				E8E14EFD27D893CE007D6875 /* KPSPurchases.swift */,
 				E8E14EFF27D8949D007D6875 /* KPSPurchaseDelegate.swift */,
 				E8E14F0A27DB1EAC007D6875 /* KPSPurchaseProductManager.swift */,
 				E8E14F1027DB1EFE007D6875 /* KPSTransactionManager.swift */,
+				E845AD7627E4876700A3DC49 /* KPSPurchaseReceiptManager.swift */,
 				E8E14F1227DB22EB007D6875 /* KPSPurchaseItem.swift */,
 			);
 			path = Purchases;
@@ -551,30 +625,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E845AD8827E4923F00A3DC49 /* ASN1ObjectIdentifierBuilder.swift in Sources */,
 				E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */,
 				E89BC16B277DA60C001633C5 /* KPSPlayRecord.swift in Sources */,
 				E833108B26B3B0F100A6AA59 /* Codable+Extension.swift in Sources */,
 				E8E14F0B27DB1EAC007D6875 /* KPSPurchaseProductManager.swift in Sources */,
 				E8E14F1C27DB28BB007D6875 /* StoreProductDiscount.swift in Sources */,
 				E8E14EFE27D893CE007D6875 /* KPSPurchases.swift in Sources */,
+				E845AD9127E4938100A3DC49 /* ArraySlice_UInt8+Extensions.swift in Sources */,
 				E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */,
+				E845AD7E27E4910700A3DC49 /* InAppPurchaseBuilder.swift in Sources */,
+				E845AD7A27E4907300A3DC49 /* AppleReceiptBuilder.swift in Sources */,
+				E845AD8327E4919300A3DC49 /* AppleReceipt.swift in Sources */,
+				E845AD8E27E4930400A3DC49 /* ASN1ObjectIdentifier.swift in Sources */,
+				E845AD9327E493AB00A3DC49 /* UInt8+Extensions.swift in Sources */,
 				E8E14F0427D895AD007D6875 /* Strings.swift in Sources */,
+				E845AD8527E491EB00A3DC49 /* InAppPurchase.swift in Sources */,
+				E845AD7C27E490BD00A3DC49 /* ASN1ContainerBuilder.swift in Sources */,
 				E8E14F0027D8949D007D6875 /* KPSPurchaseDelegate.swift in Sources */,
 				E8E14F1827DB264B007D6875 /* SK2StoreProduct.swift in Sources */,
 				E8E14F2227DF1B77007D6875 /* CustomerInfo.swift in Sources */,
+				E845AD9527E4945600A3DC49 /* FoundationExtensions.swift in Sources */,
 				E8E14F2027DB29EA007D6875 /* SK1StoreProductDiscount.swift in Sources */,
+				E845AD8C27E492AE00A3DC49 /* ReceiptParsingError.swift in Sources */,
 				E8E14F1327DB22EB007D6875 /* KPSPurchaseItem.swift in Sources */,
 				E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */,
 				E8E14F1127DB1EFE007D6875 /* KPSTransactionManager.swift in Sources */,
 				E833103826AAAE1D00A6AA59 /* KPSClient.swift in Sources */,
 				E8E14F0627D895FB007D6875 /* PurchaseStrings.swift in Sources */,
 				E88C466826CCB034001243F5 /* KPSAudio.swift in Sources */,
+				E845AD8127E4917600A3DC49 /* ASN1Container.swift in Sources */,
 				E89BC169277DA5FA001633C5 /* KPSClient+Analytic.swift in Sources */,
 				E8E14F1E27DB2996007D6875 /* SK2StoreProductDiscount.swift in Sources */,
 				E8E14F0927DB166E007D6875 /* IdentityManager.swift in Sources */,
 				E88C466A26CD260C001243F5 /* ThreadSafeArray.swift in Sources */,
 				E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */,
 				E8E14F1A27DB274E007D6875 /* SubscriptionPeriod.swift in Sources */,
+				E845AD7727E4876700A3DC49 /* KPSPurchaseReceiptManager.swift in Sources */,
+				E845AD8A27E4927700A3DC49 /* ReceiptParser.swift in Sources */,
 				E8E14F1627DB253E007D6875 /* SK1StoreProduct.swift in Sources */,
 				E855722B27E0D13F00C9F8C0 /* PurchaseAPIService.swift in Sources */,
 				E89BC167277D883D001633C5 /* String+Extension.swift in Sources */,
