@@ -23,7 +23,7 @@ class KPSPurchaseProductManager: NSObject {
     
     private let productsRequestFactory: ProductsRequestFactory
     private var completionHandlers: [Set<String>: [Callback]] = [:]
-    
+    private var purchaseItems: [Set<String>: Set<KPSPurchaseItem>] = [:]
     init(productsRequestFactory: ProductsRequestFactory = ProductsRequestFactory()) {
         self.productsRequestFactory = productsRequestFactory
     }
@@ -49,16 +49,25 @@ class KPSPurchaseProductManager: NSObject {
     }
     
     public func products(withIdentifiers identifiers: [String],
+                         useCache: Bool = true,
                   completion: @escaping (Result<Set<KPSPurchaseItem>, Error>) -> Void) {
         
         let uniqueIdentifier = Set(identifiers)
+        
+        if useCache && purchaseItems[uniqueIdentifier] != nil {
+            completion(.success(purchaseItems[uniqueIdentifier] ?? []))
+            return
+        }
         
         // Use the store kit 1 only for now
         self.sk1Products(withIdentifiers: uniqueIdentifier) { skProducts in
             let result = skProducts
                 .map { Set($0.map(SK1StoreProduct.init).map(KPSPurchaseItem.from(product:))) }
-
+            
             completion(result)
+            if let items = try? result.get() {
+                self.purchaseItems[uniqueIdentifier] = items
+            }
         }
     }
 }
