@@ -18,11 +18,25 @@ class ReceiptRefreshRequestFactory {
 class KPSPurchaseReceiptManager: NSObject {
     
     private let requestFactory: ReceiptRefreshRequestFactory
+    private let receiptParser: ReceiptParser
     private var receiptRefreshRequest: SKRequest?
     private var receiptRefreshCompletionHandlers: [() -> Void]
 
-    init(requestFactory: ReceiptRefreshRequestFactory = ReceiptRefreshRequestFactory()) {
+    public var localReceipt: AppleReceipt? {
+        guard let receiptData = KPSUtiltiy.getLocalReceiptData() else { return nil }
+        do {
+            let receipt = try receiptParser.parse(from: receiptData)
+            return receipt
+        } catch {
+            print("local receipt parse error")
+            return nil
+        }
+    }
+    
+    init(requestFactory: ReceiptRefreshRequestFactory = ReceiptRefreshRequestFactory(),
+         receiptParser: ReceiptParser = ReceiptParser()) {
         self.requestFactory = requestFactory
+        self.receiptParser = receiptParser
         receiptRefreshRequest = nil
         receiptRefreshCompletionHandlers = []
     }

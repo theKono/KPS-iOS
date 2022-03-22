@@ -69,11 +69,19 @@ public class KPSPurchases: NSObject {
 
     private weak var privateDelegate: KPSPurchasesDelegate?
     
+    /**
+     * Indicates whether the user is allowed to get trial period.
+     */
+    public var trailEligible: Bool {
+        guard let receipt = self.receiptManager.localReceipt else {return true}
+        
+        return receipt.inAppPurchases.count == 0
+    }
 
     /**
      * Indicates whether the user is allowed to make payments.
      */
-    @objc public static func canMakePayments() -> Bool { SKPaymentQueue.canMakePayments() }
+    public static func canMakePayments() -> Bool { SKPaymentQueue.canMakePayments() }
 
     
     private let notificationCenter: NotificationCenter
