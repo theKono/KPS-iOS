@@ -12,12 +12,50 @@ import StoreKit
 /**
  Completion block for ``Purchases/purchase(product:completion:)``
  */
-public typealias PurchaseCompletedBlock = (KPSPurchaseItem?, CustomerInfo?, Error?, Bool) -> Void
+public typealias PurchaseCompletedBlock = (KPSPurchaseItem?, CustomerInfo?, KPSPurchaseError?) -> Void
 
 /**
  Deferred block for ``Purchases/shouldPurchasePromoProduct(_:defermentBlock:)``
  */
 public typealias DeferredPromotionalPurchaseBlock = (@escaping PurchaseCompletedBlock) -> Void
+
+// MARK: Error definitions
+public enum KPSPurchaseError: Swift.Error {
+    case duplicateRequest
+    case clientInvalid
+    case paymentCancel
+    case paymentInvalid
+    case paymentNotAllowed
+    case productNotAvailable
+    case ownServer
+    case network
+    case unknown
+    
+    public var errorDescription: String {
+        switch self {
+        case .duplicateRequest:
+            return "購買程序正在進行中"
+        case .clientInvalid:
+            return "當前蘋果帳戶無法購買商品"
+        case .paymentCancel:
+            return "訂單已取消"
+        case .paymentInvalid:
+            return "訂單無效"
+        case .paymentNotAllowed:
+            return "當前蘋果設備無法購買商品(如有疑問，可以詢問蘋果客服)"
+        case .productNotAvailable:
+            return "當前購買選項不可用"
+        case .ownServer:
+            return "伺服器連接錯誤"
+        case .network:
+            return "網路無法正常連接"
+        case .unknown:
+            return "未知的錯誤，您可能正在使用越獄手機"
+        }
+    }
+}
+
+
 
 /**
  * `Purchases` is the entry point. It should be instantiated as soon as your app has a unique
@@ -68,7 +106,8 @@ public class KPSPurchases: NSObject {
     }
 
     private weak var privateDelegate: KPSPurchasesDelegate?
-    
+    private var purchaseItem: KPSPurchaseItem?
+    private var verifyCompleteBlock: PurchaseCompletedBlock?
     /**
      * Indicates whether the user is allowed to get trial period.
      */
@@ -111,11 +150,7 @@ public class KPSPurchases: NSObject {
         
         self.transactionManager.delegate = self
         self.receiptManager.fetchReceiptData() {
-            if let base64ReceiptData = KPSUtiltiy.getLocalReceiptData() {
-                print("purchase record:\(base64ReceiptData.base64EncodedString())")
-            } else {
-                print("no purhcase record")
-            }
+            
         }
     }
 
@@ -166,7 +201,7 @@ public extension KPSPurchases {
      * - Parameter completion: An @escaping callback that is called with the loaded products.
      * If the fetch fails for any reason it will return an empty array.
      */
-    func getProducts(_ productIdentifiers: [String], completion: @escaping (Result<Set<KPSPurchaseItem>, Error>) -> Void) {
+    func getProducts(_ productIdentifiers: [String], useCache: Bool = true, completion: @escaping (Result<Set<KPSPurchaseItem>, Error>) -> Void) {
         productManager.products(withIdentifiers: productIdentifiers, completion: completion)
     }
 
@@ -187,14 +222,19 @@ public extension KPSPurchases {
      * If the purchase was successful there will be a `KPSPurchaseItem` and a ``CustomerInfo``.
      *
      * If the purchase was not successful, there will be an `Error`.
-     *
-     * If the user cancelled, `userCancelled` will be `true`.
      */
     func purchase(item: KPSPurchaseItem, completion: @escaping PurchaseCompletedBlock) {
+        
+        if verifyCompleteBlock != nil {
+            completion(nil, nil, .duplicateRequest)
+            return
+        }
         
         if let product = item.sk1Product {
             let payment = transactionManager.payment(withProduct: product)
             transactionManager.add(payment)
+            self.purchaseItem = item
+            self.verifyCompleteBlock =  completion
         }
     }
 
@@ -214,19 +254,26 @@ public extension KPSPurchases {
      *
      * If the purchase was successful there will be a `StoreTransaction` and a ``CustomerInfo``.
      * If the purchase was not successful, there will be an `Error`.
-     * If the user cancelled, `userCancelled` will be `true`.
-     */
+     
     func purchase(item: KPSPurchaseItem, discount: StoreProductDiscount, completion: @escaping PurchaseCompletedBlock) {
         
     }
-
+     */
 
     /**
      * This method will post all purchases associated with the current App Store account to Server
      * 
      */
-    func restorePurchases(completion: ((CustomerInfo?, Error?) -> Void)? = nil) {
+    func restorePurchases(completion: PurchaseCompletedBlock? = nil) {
+        if verifyCompleteBlock != nil {
+            completion?(nil, nil, .duplicateRequest)
+            return
+        }
         
+        verifyCompleteBlock = completion
+        receiptManager.fetchReceiptData { 
+            self.uploadLocalReceipt()
+        }
     }
 
 
@@ -278,6 +325,7 @@ extension KPSPurchases: KPSTransactionManagerDelegate {
         switch transaction.transactionState {
         case .restored, // for observer mode
              .purchased:
+            print(transaction)
             handlePurchasedTransaction(transaction)
         case .purchasing:
             break
@@ -305,34 +353,34 @@ private extension KPSPurchases {
 
     func handlePurchasedTransaction(_ transaction: SKPaymentTransaction) {
 
-        if let base64ReceiptData = KPSUtiltiy.getLocalReceiptData() {
-            let base64Receipt = base64ReceiptData.base64EncodedString()
-            transactionManager.finishTransaction(transaction)
-            print(base64Receipt)
-            PurchaseAPIServiceProvider.request(.uploadReceipt(receipt: base64Receipt, version: "1", serverUrl: self.serverUrl)) { result in
-                switch result {
-                case let .success(response):
-                    do {
-                        let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
-                        let _ = String(decoding: filteredResponse.data, as: UTF8.self)
-                        
-                        
-                    } catch _ {
-                        
-                        let errorResponse = String(decoding: response.data, as: UTF8.self)
-                        print("[API Error: \(#function)] \(errorResponse)")
-                        
-                    }
-                case .failure(let error):
-                    print(error.errorDescription ?? "")
-                }
-            }
-            
-        }
+        uploadLocalReceipt()
     }
 
     func handleFailedTransaction(_ transaction: SKPaymentTransaction) {
         
+        if let error = transaction.error {
+            let nsError = error as NSError
+            switch nsError.code {
+            case SKError.unknown.rawValue:
+                self.verifyCompleteBlock?(purchaseItem, nil, .unknown)
+            case SKError.clientInvalid.rawValue:
+                self.verifyCompleteBlock?(purchaseItem, nil, .clientInvalid)
+            case SKError.paymentCancelled.rawValue:
+                self.verifyCompleteBlock?(purchaseItem, nil, .paymentCancel)
+            case SKError.paymentInvalid.rawValue:
+                self.verifyCompleteBlock?(purchaseItem, nil, .paymentInvalid)
+            case SKError.paymentNotAllowed.rawValue:
+                self.verifyCompleteBlock?(purchaseItem, nil, .paymentNotAllowed)
+            case SKError.storeProductNotAvailable.rawValue:
+                self.verifyCompleteBlock?(purchaseItem, nil, .productNotAvailable)
+            default:
+                self.verifyCompleteBlock?(purchaseItem, nil, .network)
+            }
+            
+        }
+        self.verifyCompleteBlock = nil
+        self.purchaseItem = nil
+
     }
 
     func handleDeferredTransaction(_ transaction: SKPaymentTransaction) {
@@ -340,6 +388,53 @@ private extension KPSPurchases {
     }
 
 }
+
+// MARK: Private communicate with our own server
+private extension KPSPurchases {
+    
+    func uploadLocalReceipt() {
+        
+        if let base64ReceiptData = KPSUtiltiy.getLocalReceiptData() {
+            let base64Receipt = base64ReceiptData.base64EncodedString()
+            
+            print(base64Receipt)
+            PurchaseAPIServiceProvider.request(.uploadReceipt(receipt: base64Receipt, version: "1", serverUrl: self.serverUrl)) { [weak self] result in
+                
+                defer {
+                    self?.verifyCompleteBlock = nil
+                    self?.purchaseItem = nil
+                }
+                switch result {
+                case let .success(response):
+                    do {
+                        let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
+                        let _ = String(decoding: filteredResponse.data, as: UTF8.self)
+                        let userIdentity: CustomerInfo? = nil
+                        
+                        if let verifyCompleteBlock = self?.verifyCompleteBlock {
+                            verifyCompleteBlock(self?.purchaseItem, userIdentity, nil)
+                        }
+                        
+                    } catch _ {
+                        
+                        let errorResponse = String(decoding: response.data, as: UTF8.self)
+                        print("[API Error: \(#function)] \(errorResponse)")
+                        self?.verifyCompleteBlock?(self?.purchaseItem, nil, .ownServer)
+                    }
+                case .failure(let error):
+                    print(error.errorDescription ?? "")
+                    self?.verifyCompleteBlock?(self?.purchaseItem, nil, .ownServer)
+                }
+            }
+        }
+        else {
+            verifyCompleteBlock?(purchaseItem, nil, .unknown)
+            verifyCompleteBlock = nil
+            purchaseItem = nil
+        }
+    }
+}
+
 
 // MARK: Private
 private extension KPSPurchases {
