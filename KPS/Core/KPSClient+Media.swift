@@ -43,6 +43,123 @@ public extension KPSClientMediaContentDelegate {
 
 extension KPSClient {
     
+    
+    internal func createDefaultAVPlayer() -> AVQueuePlayer {
+        
+        let player = AVQueuePlayer()
+        let monitorTime = CMTime(seconds: 0.1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        player.addPeriodicTimeObserver(forInterval: monitorTime, queue: .main) { [weak self] time in
+          guard let self = self else { return }
+            
+            if let currentItem = self.mediaPlayer.currentItem {
+                let duration = currentItem.duration
+                let currentTime = CMTimeGetSeconds(currentItem.currentTime())
+                
+                guard duration.value > 0 && duration.timescale > 0 else {return}
+                let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
+                self.currentTime = currentTime
+
+                guard let timeFrames = self.currentPlayAudioContent?.timeFrames,
+                      let paragraphContent = self.currentPlayAudioContent?.paragraphContents else { return }
+                
+                var highlightSegment: Int = -1
+                var left: Int = 0, right: Int = timeFrames.count - 1
+                while left <= right {
+                    let mid = left + (right-left) / 2
+                    if timeFrames[mid].endTime > currentTime {
+                        right = mid - 1
+                    } else {
+                        left = mid + 1
+                    }
+                }
+                if left < timeFrames.count && timeFrames[left].startTime < currentTime {
+                    
+                    self.currentSegment = timeFrames[left].mappingIdx
+                    left = 0
+                    right = paragraphContent.count - 1
+                    while left <= right {
+                        let mid = left + (right - left) / 2
+                        if paragraphContent[mid].segmentIdx >= self.currentSegment {
+                            right = mid - 1
+                        } else {
+                            left = mid + 1
+                        }
+                    }
+                    if left < paragraphContent.count  {
+                        self.currentParagraph = left
+                        var hasFindMatchedRange: Bool = false
+                        for rangeInfo in paragraphContent[left].partitionInfos {
+                            if rangeInfo.startTime <= currentTime && rangeInfo.endTime > currentTime {
+                                self.currentHighlightRange = rangeInfo.paragraphLocation
+                                //print("current:\(currentTime) text:\(rangeInfo.text)")
+                                hasFindMatchedRange = true
+                                break
+                            }
+                        }
+                        if !hasFindMatchedRange {
+                            self.currentHighlightRange = nil
+                        }
+                                            
+                    } else {
+                        
+                        self.currentParagraph = -1
+                        self.currentHighlightRange = nil
+                    }
+
+                } else {
+                    self.currentSegment = -1
+                    self.currentParagraph = -1
+                    self.currentHighlightRange = nil
+                }
+            }
+        }
+        player.addObserver(self, forKeyPath: "currentItem", options: [.initial, .new, .old], context: nil)
+        player.actionAtItemEnd = .advance
+        
+        enableRemoteCommand()
+        registerAudioPlayerNotification()
+        setupRemoteCommandHandler()
+        return player
+    }
+    
+    internal func registerAudioPlayerNotification() {
+        
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.routeChangeNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(audioRouteChanged), name: AVAudioSession.routeChangeNotification, object: nil)
+    }
+    
+    internal func setupRemoteCommandHandler() {
+        commandCenter.playCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            self?.mediaPlayerPlayAction()
+            return .success
+        }
+        commandCenter.pauseCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            self?.mediaPlayerPause()
+            return .success
+        }
+        commandCenter.previousTrackCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            self?.mediaPlayerPlayPrev()
+            return .success
+        }
+        commandCenter.nextTrackCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            self?.mediaPlayerPlayNext()
+            return .success
+        }
+        commandCenter.changePlaybackPositionCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            guard let positionEvent = event as? MPChangePlaybackPositionCommandEvent else { return .commandFailed }
+            self?.mediaPlayerSeekTime(positionEvent.positionTime) { res  in
+                
+            }
+            return .success
+        }
+    }
+    
+    
     /// Play all audio contents within given KPSCollection
     /// - Parameter collection: KPS content folder type node
     public func playAudioContents(from collection: KPSCollection) {
@@ -146,31 +263,7 @@ extension KPSClient {
         }
     }
 
-    internal func setupRemoteCommandHandler() {
-        commandCenter.playCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
-            self?.mediaPlayerPlayAction()
-            return .success
-        }
-        commandCenter.pauseCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
-            self?.mediaPlayerPause()
-            return .success
-        }
-        commandCenter.previousTrackCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
-            self?.mediaPlayerPlayPrev()
-            return .success
-        }
-        commandCenter.nextTrackCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
-            self?.mediaPlayerPlayNext()
-            return .success
-        }
-        commandCenter.changePlaybackPositionCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
-            guard let positionEvent = event as? MPChangePlaybackPositionCommandEvent else { return .commandFailed }
-            self?.mediaPlayerSeekTime(positionEvent.positionTime) { res  in
-                
-            }
-            return .success
-        }
-    }
+    
     
     internal func mediaPlayerPlayAction() {
         mediaPlayer.play()
@@ -248,6 +341,7 @@ extension KPSClient {
             }
             currentParagraph = paragraphIndex
             currentHighlightRange = range
+            print("currentParagraph: \(currentParagraph)  currentHighlightRange: \(currentHighlightRange)")
         }
     }
     
@@ -416,7 +510,10 @@ extension KPSClient {
                 
                 switch keyPath {
                 case "status":
-                    if item.status == .failed || mediaPlayer.status == AVPlayer.Status.failed {
+                    if item.status == .failed {
+                        mediaPlayerState = .error
+                    } else if mediaPlayer.status == AVPlayer.Status.failed {
+                        mediaPlayer = createDefaultAVPlayer()
                         mediaPlayerState = .error
                     } else if mediaPlayer.status == AVPlayer.Status.readyToPlay {
                         mediaPlayerState = .bufferFetched
