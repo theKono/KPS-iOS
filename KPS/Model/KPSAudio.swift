@@ -267,16 +267,14 @@ extension KPSAudioContent: Decodable {
                                         //currentLocation = currentLocation + displayLength + 1
                                     }
                                     
-                                    if let currentSentenceMaxTimeFrame = paragraphContents[paragraphIdx].partitionInfos.last {
-                                        if timeFrames[mappingTimeFrameIdx].mappingIdx == i {
+                                    
+                                    if timeFrames[mappingTimeFrameIdx].mappingIdx == i {
+                                        if let currentSentenceMaxTimeFrame = paragraphContents[paragraphIdx].partitionInfos.last {
                                             timeFrames[mappingTimeFrameIdx].endTime = max(timeFrames[mappingTimeFrameIdx].endTime, currentSentenceMaxTimeFrame.endTime)
                                             timeFrames[mappingTimeFrameIdx].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, googleParsedStartTime)
-                                            
-                                            mappingTimeFrameIdx += 1
-                                        } else {
-                                            print("current sentence is without time frame")
                                         }
-                                        
+
+                                        mappingTimeFrameIdx += 1
                                     }
                                 }
                             } else {
