@@ -89,8 +89,16 @@ extension KPSAudioContent: Decodable {
         let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .content)
         let defaultLang = try contentDataContainer.decode(String.self, forKey: .audioLanguage)
         
-        let textTypeInfos: [KPSAudioTextInfo] = try contentDataContainer.decode([KPSAudioTextInfo].self, forKey: .textSegments)
-        let textLangInfos: [String: Any] = try contentDataContainer.decode([String : Any].self, forKey: .languages)
+        var textTypeInfos: [KPSAudioTextInfo] = []
+        var textLangInfos: [String: Any] = [:]
+        
+        if let textSegments =  try contentDataContainer.decodeIfPresent([KPSAudioTextInfo].self, forKey: .textSegments) {
+            textTypeInfos = textSegments
+        }
+        if let textLanguages = try contentDataContainer.decodeIfPresent([String : Any].self, forKey: .languages) {
+            textLangInfos = textLanguages
+        }
+        
         var parsedText = [KPSAudioText]()
 
         // MARK: Handle audio resource info (premium content)
