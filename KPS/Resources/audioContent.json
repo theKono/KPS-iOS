@@ -1,7 +1,7 @@
 {
     "error": null,
     "contentNode": {
-        "id": "613ec199238d20728afdaf84",
+        "id": "61c96b9de5d8c397e48dfa75",
         "type": "audio",
         "name": {
             "zh-TW": "Introduction"
@@ -13,13 +13,20 @@
         "customData": null,
         "covers": {
             "list": [
-                "613ec199238d20728afdaf85"
+                "61c96bd1e5d8c397e48dfa76"
             ]
+        },
+        "info": {
+            "authors": {
+                "zh-TW": [
+                    "Kono"
+                ]
+            }
         },
         "public": true,
         "free": true,
         "resources": {
-            "613ec199238d20728afdaf85": {
+            "61c96bd1e5d8c397e48dfa76": {
                 "type": "IMAGE",
                 "width": 533,
                 "height": 900,
@@ -30,26 +37,26 @@
                     533
                 ],
                 "urls": {
-                    "100": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec199238d20728afdaf85/100.jpeg",
-                    "320": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec199238d20728afdaf85/320.jpeg",
-                    "480": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec199238d20728afdaf85/480.jpeg",
-                    "533": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec199238d20728afdaf85/533.jpeg"
+                    "100": "https://storage.googleapis.com/kps_prd_public/projects/61398d3c62cbe46b8b9e58af/users/6194a2aec06f73d38a0c0cc9/contents/61c96b9de5d8c397e48dfa75/resources/61c96bd1e5d8c397e48dfa76/100.jpeg",
+                    "320": "https://storage.googleapis.com/kps_prd_public/projects/61398d3c62cbe46b8b9e58af/users/6194a2aec06f73d38a0c0cc9/contents/61c96b9de5d8c397e48dfa75/resources/61c96bd1e5d8c397e48dfa76/320.jpeg",
+                    "480": "https://storage.googleapis.com/kps_prd_public/projects/61398d3c62cbe46b8b9e58af/users/6194a2aec06f73d38a0c0cc9/contents/61c96b9de5d8c397e48dfa75/resources/61c96bd1e5d8c397e48dfa76/480.jpeg",
+                    "533": "https://storage.googleapis.com/kps_prd_public/projects/61398d3c62cbe46b8b9e58af/users/6194a2aec06f73d38a0c0cc9/contents/61c96b9de5d8c397e48dfa75/resources/61c96bd1e5d8c397e48dfa76/533.jpeg"
                 },
                 "webpUrls": {
-                    "100": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec199238d20728afdaf85/100.webp",
-                    "320": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec199238d20728afdaf85/320.webp",
-                    "480": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec199238d20728afdaf85/480.webp",
-                    "533": "https://storage.googleapis.com/kps_stg_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/resources/613ec199238d20728afdaf85/533.webp"
+                    "100": "https://storage.googleapis.com/kps_prd_public/projects/61398d3c62cbe46b8b9e58af/users/6194a2aec06f73d38a0c0cc9/contents/61c96b9de5d8c397e48dfa75/resources/61c96bd1e5d8c397e48dfa76/100.webp",
+                    "320": "https://storage.googleapis.com/kps_prd_public/projects/61398d3c62cbe46b8b9e58af/users/6194a2aec06f73d38a0c0cc9/contents/61c96b9de5d8c397e48dfa75/resources/61c96bd1e5d8c397e48dfa76/320.webp",
+                    "480": "https://storage.googleapis.com/kps_prd_public/projects/61398d3c62cbe46b8b9e58af/users/6194a2aec06f73d38a0c0cc9/contents/61c96b9de5d8c397e48dfa75/resources/61c96bd1e5d8c397e48dfa76/480.webp",
+                    "533": "https://storage.googleapis.com/kps_prd_public/projects/61398d3c62cbe46b8b9e58af/users/6194a2aec06f73d38a0c0cc9/contents/61c96b9de5d8c397e48dfa75/resources/61c96bd1e5d8c397e48dfa76/533.webp"
                 }
             },
-            "613ec199238d20728afdaf86": {
+            "61c96bd6e5d8c397e48dfa77": {
                 "type": "AUDIO",
                 "duration": 209.712,
-                "streamingUrl": "https://kps-stg.thekono.com/api/v1/projects/61398d3c62cbe46b8b9e58af/streams/61b87cb78eca46000e7b1593/playlist.m3u8"
+                "streamingUrl": "https://kps.thekono.com/api/v1/projects/61398d3c62cbe46b8b9e58af/streams/61e4f49b4a1b7e000ea75f1e/playlist.m3u8"
             }
         },
         "content": {
-            "resource": "613ec199238d20728afdaf86",
+            "resource": "61c96bd6e5d8c397e48dfa77",
             "audioLanguage": "en-US",
             "textSegments": [
                 {
@@ -194,7 +201,7 @@
                         "content": "哈囉，歡迎來到Kono Summit，這裡是知識和學習自然發生的地方。"
                     },
                     {
-                        "content": "您聽到的是賽門．西奈克所著之《無限賽局》，第一部分。"
+                        "content": "您正在聽賽門．西奈克的《無限賽局》，第一部分。"
                     },
                     {
                         "content": ""

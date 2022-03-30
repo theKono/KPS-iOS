@@ -14,6 +14,7 @@ public enum MediaPlayerState {
     case fetchingSource
     case sourceFetched
     case buffering
+    case bufferFetched
     case playedToTheEnd
     case error
     
@@ -27,48 +28,138 @@ public protocol KPSClientMediaContentDelegate: class {
     func kpsClient(client: KPSClient, playerIsPlaying playing: Bool)
     func kpsClient(client: KPSClient, playerCurrentContent content: KPSAudioContent?)
     func kpsClient(client: KPSClient, playerCurrentTrack trackIndex: Int)
-    func kpsClient(client: KPSClient, playerCurrentSegment segmentIndex: Int)
-    func kpsClient(client: KPSClient, playerCurrentParagraph paragraphIndex: Int, highlightRange range: NSRange?)
+    func kpsClient(client: KPSClient, playerCurrentSegmentDidChange segmentIndex: Int, paragraph paragraphIndex: Int, highlightRange range: NSRange?)
+    func kpsClient(client: KPSClient, playerCurrentParagraphDidChange paragraphIndex: Int, segment segmentIndex: Int, highlightRange range: NSRange?)
+    func kpsClient(client: KPSClient, playerHighlightRangeDidChange range: NSRange?, paragraph paragraphIndex: Int, segment segmentIndex: Int)
 }
 
 public extension KPSClientMediaContentDelegate {
     func kpsClient(client: KPSClient, playerCurrentTrack trackIndex: Int) {}
-    func kpsClient(client: KPSClient, playerCurrentSegment segmentIndex: Int) {}
-    func kpsClient(client: KPSClient, playerCurrentParagraph paragraphIndex: Int, highlightRange range: NSRange?) {}
+    func kpsClient(client: KPSClient, playerCurrentSegmentDidChange segmentIndex: Int, paragraph paragraphIndex: Int, highlightRange range: NSRange?) {}
+    func kpsClient(client: KPSClient, playerCurrentParagraphDidChange paragraphIndex: Int, segment segmentIndex: Int, highlightRange range: NSRange?) {}
+    func kpsClient(client: KPSClient, playerHighlightRangeDidChange range: NSRange?, paragraph paragraphIndex: Int, segment segmentIndex: Int) {}
 
 }
 
 extension KPSClient {
     
-    public func setupTestAudioFile() {
+    
+    internal func createDefaultAVPlayer() -> AVQueuePlayer {
         
-        let frameworkBundle = Bundle(for: KPSClient.self)
-        
-        /*
-        if let url = frameworkBundle.resourceURL?.appendingPathComponent("KPS_iOS.bundle/IronBacon.mp3"),
-           let url2 = frameworkBundle.resourceURL?.appendingPathComponent("KPS_iOS.bundle/WhatYouWant.mp3"){
-            mediaPlayList = getPlayerItem(urls: [url, url2])
+        let player = AVQueuePlayer()
+        let monitorTime = CMTime(seconds: 0.1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        player.addPeriodicTimeObserver(forInterval: monitorTime, queue: .main) { [weak self] time in
+          guard let self = self else { return }
             
-        } else {
-            print("can't find the file")
+            if let currentItem = self.mediaPlayer.currentItem {
+                let duration = currentItem.duration
+                let currentTime = CMTimeGetSeconds(currentItem.currentTime())
+                
+                guard duration.value > 0 && duration.timescale > 0 else {return}
+                let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
+                self.currentTime = currentTime
+
+                guard let timeFrames = self.currentPlayAudioContent?.timeFrames,
+                      let paragraphContent = self.currentPlayAudioContent?.paragraphContents else { return }
+                
+                var highlightSegment: Int = -1
+                var left: Int = 0, right: Int = timeFrames.count - 1
+                while left <= right {
+                    let mid = left + (right-left) / 2
+                    if timeFrames[mid].endTime > currentTime {
+                        right = mid - 1
+                    } else {
+                        left = mid + 1
+                    }
+                }
+                if left < timeFrames.count && timeFrames[left].startTime < currentTime {
+                    
+                    self.currentSegment = timeFrames[left].mappingIdx
+                    left = 0
+                    right = paragraphContent.count - 1
+                    while left <= right {
+                        let mid = left + (right - left) / 2
+                        if paragraphContent[mid].segmentIdx >= self.currentSegment {
+                            right = mid - 1
+                        } else {
+                            left = mid + 1
+                        }
+                    }
+                    if left < paragraphContent.count  {
+                        self.currentParagraph = left
+                        var hasFindMatchedRange: Bool = false
+                        for rangeInfo in paragraphContent[left].partitionInfos {
+                            if rangeInfo.startTime <= currentTime && rangeInfo.endTime > currentTime {
+                                self.currentHighlightRange = rangeInfo.paragraphLocation
+                                //print("current:\(currentTime) text:\(rangeInfo.text)")
+                                hasFindMatchedRange = true
+                                break
+                            }
+                        }
+                        if !hasFindMatchedRange {
+                            self.currentHighlightRange = nil
+                        }
+                                            
+                    } else {
+                        
+                        self.currentParagraph = -1
+                        self.currentHighlightRange = nil
+                    }
+
+                } else {
+                    self.currentSegment = -1
+                    self.currentParagraph = -1
+                    self.currentHighlightRange = nil
+                }
+            }
         }
-        */
+        player.addObserver(self, forKeyPath: "currentItem", options: [.initial, .new, .old], context: nil)
+        player.actionAtItemEnd = .advance
+        
+        enableRemoteCommand()
+        registerAudioPlayerNotification()
+        setupRemoteCommandHandler()
+        return player
     }
     
-    internal func getPlayerItem(urls: [URL]) -> [KPSAudioContent] {
-        var playerList = [KPSAudioContent]()
-        for url in urls {
-            playerList.append(KPSAudioContent(url: url))
-        }
-        return playerList
-    }
-    /*
-    public func playAudioContents(_ contents: [KPSAudioContent]) {
-
-        mediaPlayList = contents
+    internal func registerAudioPlayerNotification() {
         
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.routeChangeNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(audioRouteChanged), name: AVAudioSession.routeChangeNotification, object: nil)
     }
-     */
+    
+    internal func setupRemoteCommandHandler() {
+        commandCenter.playCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            self?.mediaPlayerPlayAction()
+            return .success
+        }
+        commandCenter.pauseCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            self?.mediaPlayerPause()
+            return .success
+        }
+        commandCenter.previousTrackCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            self?.mediaPlayerPlayPrev()
+            return .success
+        }
+        commandCenter.nextTrackCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            self?.mediaPlayerPlayNext()
+            return .success
+        }
+        commandCenter.changePlaybackPositionCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
+            guard let positionEvent = event as? MPChangePlaybackPositionCommandEvent else { return .commandFailed }
+            self?.mediaPlayerSeekTime(positionEvent.positionTime) { res  in
+                
+            }
+            return .success
+        }
+    }
+    
+    
     /// Play all audio contents within given KPSCollection
     /// - Parameter collection: KPS content folder type node
     public func playAudioContents(from collection: KPSCollection) {
@@ -123,6 +214,7 @@ extension KPSClient {
                 guard let weakSelf = self else { return }
                 if let track = try? result.get() {
                     weakSelf.currentTrack = targetTrack
+                    weakSelf.currentTime = 0.0
                     weakSelf.currentPlayAudioContent = track
                     weakSelf.mediaPlayerState = .sourceFetched
                     weakSelf.mediaPlayer.removeAllItems()
@@ -171,33 +263,9 @@ extension KPSClient {
         }
     }
 
-    internal func setupRemoteCommandHandler() {
-        commandCenter.playCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
-            self?.mediaPlayerPlayAction()
-            return .success
-        }
-        commandCenter.pauseCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
-            self?.mediaPlayerPause()
-            return .success
-        }
-        commandCenter.previousTrackCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
-            self?.mediaPlayerPlayPrev()
-            return .success
-        }
-        commandCenter.nextTrackCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
-            self?.mediaPlayerPlayNext()
-            return .success
-        }
-        commandCenter.changePlaybackPositionCommand.addTarget{ [weak self] (event) -> MPRemoteCommandHandlerStatus in
-            guard let positionEvent = event as? MPChangePlaybackPositionCommandEvent else { return .commandFailed }
-            self?.mediaPlayerSeekTime(positionEvent.positionTime) { res  in
-                
-            }
-            return .success
-        }
-    }
     
-    private func mediaPlayerPlayAction() {
+    
+    internal func mediaPlayerPlayAction() {
         mediaPlayer.play()
         mediaPlayer.rate = mediaPlayerRate
         isMediaPlaying = true
@@ -273,6 +341,7 @@ extension KPSClient {
             }
             currentParagraph = paragraphIndex
             currentHighlightRange = range
+            print("currentParagraph: \(currentParagraph)  currentHighlightRange: \(currentHighlightRange)")
         }
     }
     
@@ -283,7 +352,6 @@ extension KPSClient {
         if content.count > segmentIndex {
             let targetPlayTime = content[segmentIndex].startTime
             currentSegment = segmentIndex
-            seekSegment = segmentIndex
             mediaPlayerSeekTime(targetPlayTime, completion: completion)
         }
     }
@@ -293,9 +361,8 @@ extension KPSClient {
         guard let duration = mediaPlayer.currentItem?.duration else { return }
 
         let newTime = min( max(0, time), CMTimeGetSeconds(duration) )
-        let frameRate : Int32 = (mediaPlayer.currentItem?.currentTime().timescale)!
 
-        let targetTime = CMTimeMakeWithSeconds(newTime, preferredTimescale: frameRate)
+        let targetTime = CMTimeMakeWithSeconds(newTime, preferredTimescale: 1000)
         mediaPlayer.seek(to: targetTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] res in
             if var currentInfo = self?.nowPlayingCenter.nowPlayingInfo,
                let currentTime = self?.mediaPlayer.currentItem?.currentTime(){
@@ -306,20 +373,20 @@ extension KPSClient {
         }
     }
     
-    public func mediaPlayerSeekTrack(_ targetID: String) -> Int {
+    public func mediaPlayerGetTrackOrder(_ targetID: String) -> Int {
         
         guard mediaPlayList.count > 0 else { return -1 }
         
-        var targetTrackIndex = -1
+        var targetTrackOrder = -1
         for (idx, item) in mediaPlayList.enumerated() {
             
             if targetID == item.id {
-                targetTrackIndex = idx
+                targetTrackOrder = idx
                 break
             }
         }
 
-        return targetTrackIndex
+        return targetTrackOrder
     }
     
     public func mediaPlayerPause() {
@@ -331,20 +398,24 @@ extension KPSClient {
     
     public func mediaPlayerStop() {
     
-        mediaPlayerReset()
-        currentTrack = 0
+        // Define the stop action is reset to the first item within the play list
+        mediaPlayer.pause()
+        mediaPlayerPlay(targetTrack: 0) { _ in
+            self.mediaPlayerPause()
+        }
     }
     
     public func mediaPlayerReset(isNeedClearPlayList: Bool = false) {
+        if isNeedClearPlayList {
+            mediaPlayList.removeAll()
+        }
+        
         mediaPlayer.pause()
         mediaPlayer.removeAllItems()
         isMediaPlaying = false
         currentTrack = -1
         currentSegment = -1
         currentPlayAudioContent = nil
-        if isNeedClearPlayList {
-            mediaPlayList.removeAll()
-        }
     }
     
     public func mediaPlayerChangeSpeed(rate: Double) {
@@ -360,9 +431,7 @@ extension KPSClient {
         return item
     }
     
-    
-    
-    @objc func playerDidFinishPlaying(notification: NSNotification) {
+    @objc internal func playerDidFinishPlaying(notification: NSNotification) {
     
         if (currentTrack + 1) == mediaPlayList.count {
             mediaPlayerStop()
@@ -371,6 +440,50 @@ extension KPSClient {
         }
     }
     
+    @objc internal func handleInterruption(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+            let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
+                return
+        }
+        
+        switch type {
+        case .began:
+            mediaPlayerPause()
+            
+        case .ended:
+            guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else {
+                return
+            }
+
+            let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+            if options.contains(.shouldResume) {
+                mediaPlayerPlayAction()
+            }
+            
+        default: break
+        }
+    }
+    
+    @objc func audioRouteChanged(_ notification:Notification) {
+        guard let userInfo = notification.userInfo,
+            let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+            let reason = AVAudioSession.RouteChangeReason(rawValue:reasonValue) else {
+                return
+        }
+        switch reason {
+        case .oldDeviceUnavailable:
+            if let previousRoute =
+                userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription {
+                
+                for output in previousRoute.outputs where (output.portType == AVAudioSession.Port.headphones || output.portType == AVAudioSession.Port.bluetoothA2DP) {
+                    mediaPlayerPause()
+                    break
+                }
+            }
+        default: ()
+        }
+    }
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         if keyPath == "currentItem"{
@@ -397,19 +510,18 @@ extension KPSClient {
                 
                 switch keyPath {
                 case "status":
-                    if item.status == .failed || mediaPlayer.status == AVPlayer.Status.failed {
+                    if item.status == .failed {
+                        mediaPlayerState = .error
+                    } else if mediaPlayer.status == AVPlayer.Status.failed {
+                        mediaPlayer = createDefaultAVPlayer()
                         mediaPlayerState = .error
                     } else if mediaPlayer.status == AVPlayer.Status.readyToPlay {
-                        mediaPlayerState = .sourceFetched
+                        mediaPlayerState = .bufferFetched
                     }
                 case "playbackBufferEmpty":
-                    if let isBufferEmpty = mediaPlayer.currentItem?.isPlaybackBufferEmpty {
-                        if isBufferEmpty {
-                            mediaPlayerState = .buffering
-                        }
-                    }
+                    mediaPlayerState = .buffering
                 case "playbackLikelyToKeepUp":
-                    mediaPlayerState = .sourceFetched
+                    mediaPlayerState = .bufferFetched
                 default:
                     break;
                 }

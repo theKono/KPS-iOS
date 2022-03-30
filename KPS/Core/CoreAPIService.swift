@@ -7,7 +7,7 @@ import Moya
 enum CoreAPIService {
     case login(keyId: String, token: String, server: Server)
     case logout(server: Server)
-    case fetchArticle(articleId: String, server: Server)
+    
     case fetchAudio(audioId: String, server: Server)
     
     case fetchRootCollection(server: Server)
@@ -19,7 +19,7 @@ extension CoreAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .login(_, _, let server), .logout(let server), .fetchArticle(_, let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server):
+        case .login(_, _, let server), .logout(let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server):
           return server.projectUrl
         }
     }
@@ -27,8 +27,6 @@ extension CoreAPIService: TargetType {
         switch self {
         case .login(_, _, _), .logout(_):
             return "/sessions"
-        case .fetchArticle(let articleId, _):
-            return "/articles/\(articleId)"
         case .fetchAudio(let audioId, _):
             return "/content/\(audioId)"
         case .fetchRootCollection(_):
@@ -43,13 +41,13 @@ extension CoreAPIService: TargetType {
             return .put
         case .logout(_):
             return .delete
-        case .fetchArticle(_, _), .fetchAudio(_, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _):
+        case .fetchAudio(_, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _):
             return .get
         }
     }
     var task: Task {
         switch self {
-        case .logout(_), .fetchArticle(_, _), .fetchAudio(_, _), .fetchRootCollection(_): // Send no parameters
+        case .logout(_), .fetchAudio(_, _), .fetchRootCollection(_): // Send no parameters
             return .requestPlain
         case .fetchCollection(_, let isNeedParent, let isNeedSibling, _):
             return .requestParameters(parameters: ["parent": isNeedParent, "siblings": isNeedSibling], encoding: URLEncoding.queryString)
@@ -60,23 +58,35 @@ extension CoreAPIService: TargetType {
     var sampleData: Data {
         switch self {
         case .login(_, _, _):
-            return "{\"error\": \"null\", \"isNew\": false,\"kps_session\":\"testSessionToken\",\"puser\": {\"puid\": \"testUser\"}}".utf8Encoded
+            return "{\"error\": \"null\", \"isNew\": false,\"kps_session\":\"testSessionToken\",\"puser\": {\"puid\": \"testUser\", \"status\": 1}}".utf8Encoded
         case .logout(_):
             return "{\"first_name\": \"Harry\", \"last_name\": \"Potter\"}".utf8Encoded
-        case .fetchArticle(_, _):
-            guard let url = Bundle.current.url(forResource: "articleContent", withExtension: "json"),
+        case .fetchRootCollection(_):
+            guard let url = Bundle.current.url(forResource: "rootCollection", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
             return data
-        case .fetchAudio(_, _):
-            guard let url = Bundle.current.url(forResource: "audioContent", withExtension: "json"),
+        case .fetchCollection(_, _, _, _):
+            guard let url = Bundle.current.url(forResource: "folderContent", withExtension: "json"),
+                  let data = try? Data(contentsOf: url) else {
+                        return Data()
+                    }
+            return data
+        case .fetchAudio(let audioId, _):
+            var resFileName: String
+            if audioId == "testTrack3" {
+                resFileName = "audioContentWithWordTime"
+            } else if audioId == "audioContentWithoutPermission" {
+                resFileName = "audioContentWithoutPermission"
+            } else {
+                resFileName = "audioContent"
+            }
+            guard let url = Bundle.current.url(forResource: resFileName, withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
                     return Data()
                 }
             return data
-        default:
-            return "{\"error\": \"null\", \"isNew\": false,\"kps_session\":\"testSessionToken\",\"puser\": {\"puid\": \"testUser\"}}".utf8Encoded
         }
         
     }

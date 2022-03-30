@@ -11,6 +11,7 @@ public class KPSPlayRecord {
     public let collectionId: String?
     public let collectionName: [String: String]?
     public let trackName: [String: String]
+    public let trackId: String
     public var playSpeed: Float
     public var startTime, endTime, length: Double
     private var playedTime: Set<Int>
@@ -19,6 +20,7 @@ public class KPSPlayRecord {
         collectionId = info.collectionId
         collectionName = info.collectionName
         trackName = info.name
+        trackId = info.id
         playSpeed = rate
         startTime = 0.0
         endTime = 0.0

@@ -19,7 +19,7 @@
 		E833105B26AC634B00A6AA59 /* Pods_KPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3AEEF5E789FDC4CF50D8D15 /* Pods_KPS.framework */; };
 		E833108B26B3B0F100A6AA59 /* Codable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833108A26B3B0F100A6AA59 /* Codable+Extension.swift */; };
 		E833109326B44C1B00A6AA59 /* KPSClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833109226B44C1B00A6AA59 /* KPSClientTests.swift */; };
-		E83310A226B5327800A6AA59 /* folderList.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109726B50CB700A6AA59 /* folderList.json */; };
+		E83310A226B5327800A6AA59 /* rootCollection.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109726B50CB700A6AA59 /* rootCollection.json */; };
 		E83310A326B5327C00A6AA59 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E833109826B50CB700A6AA59 /* articleContent.json */; };
 		E83310A526B53EB400A6AA59 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */; };
 		E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E83310A626B547B300A6AA59 /* previewArticleContent.json */; };
@@ -27,12 +27,14 @@
 		E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */; };
 		E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C526ECF76800B9C9F7 /* KPSCollection.swift */; };
 		E88396C826ECFACC00B9C9F7 /* KPSImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */; };
+		E88C240E278EA0DF00AA72E0 /* audioContentWithoutPermission.json in Resources */ = {isa = PBXBuildFile; fileRef = E88C240D278EA0DF00AA72E0 /* audioContentWithoutPermission.json */; };
 		E88C466626CCAE0C001243F5 /* audioContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E88C466526CCAE0C001243F5 /* audioContent.json */; };
 		E88C466826CCB034001243F5 /* KPSAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88C466726CCB034001243F5 /* KPSAudio.swift */; };
 		E88C466A26CD260C001243F5 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88C466926CD260C001243F5 /* ThreadSafeArray.swift */; };
 		E89BC167277D883D001633C5 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89BC166277D883D001633C5 /* String+Extension.swift */; };
 		E89BC169277DA5FA001633C5 /* KPSClient+Analytic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89BC168277DA5FA001633C5 /* KPSClient+Analytic.swift */; };
 		E89BC16B277DA60C001633C5 /* KPSPlayRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89BC16A277DA60B001633C5 /* KPSPlayRecord.swift */; };
+		E89EE165278E9C12002D6EA6 /* audioContentWithWordTime.json in Resources */ = {isa = PBXBuildFile; fileRef = E89EE164278E9C12002D6EA6 /* audioContentWithWordTime.json */; };
 		E8A4C8C026BB869A0082B4F7 /* KPSClient+Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */; };
 		E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */; };
 		E8A4C8CB26BFD2590082B4F7 /* KPSClientMediaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8CA26BFD2590082B4F7 /* KPSClientMediaTests.swift */; };
@@ -76,7 +78,7 @@
 		E833106426AC65FA00A6AA59 /* KPS_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KPS_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E833108A26B3B0F100A6AA59 /* Codable+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+Extension.swift"; sourceTree = "<group>"; };
 		E833109226B44C1B00A6AA59 /* KPSClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientTests.swift; sourceTree = "<group>"; };
-		E833109726B50CB700A6AA59 /* folderList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = folderList.json; sourceTree = "<group>"; };
+		E833109726B50CB700A6AA59 /* rootCollection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rootCollection.json; sourceTree = "<group>"; };
 		E833109826B50CB700A6AA59 /* articleContent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
 		E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		E83310A626B547B300A6AA59 /* previewArticleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = previewArticleContent.json; sourceTree = "<group>"; };
@@ -84,12 +86,14 @@
 		E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSContentMeta.swift; sourceTree = "<group>"; };
 		E88396C526ECF76800B9C9F7 /* KPSCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSCollection.swift; sourceTree = "<group>"; };
 		E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSImageResource.swift; sourceTree = "<group>"; };
+		E88C240D278EA0DF00AA72E0 /* audioContentWithoutPermission.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = audioContentWithoutPermission.json; sourceTree = "<group>"; };
 		E88C466526CCAE0C001243F5 /* audioContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = audioContent.json; sourceTree = "<group>"; };
 		E88C466726CCB034001243F5 /* KPSAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSAudio.swift; sourceTree = "<group>"; };
 		E88C466926CD260C001243F5 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
 		E89BC166277D883D001633C5 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		E89BC168277DA5FA001633C5 /* KPSClient+Analytic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KPSClient+Analytic.swift"; sourceTree = "<group>"; };
 		E89BC16A277DA60B001633C5 /* KPSPlayRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSPlayRecord.swift; sourceTree = "<group>"; };
+		E89EE164278E9C12002D6EA6 /* audioContentWithWordTime.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = audioContentWithWordTime.json; sourceTree = "<group>"; };
 		E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KPSClient+Media.swift"; sourceTree = "<group>"; };
 		E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = IronBacon.mp3; sourceTree = "<group>"; };
 		E8A4C8CA26BFD2590082B4F7 /* KPSClientMediaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientMediaTests.swift; sourceTree = "<group>"; };
@@ -246,9 +250,11 @@
 			children = (
 				E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */,
 				E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */,
-				E833109726B50CB700A6AA59 /* folderList.json */,
+				E833109726B50CB700A6AA59 /* rootCollection.json */,
 				E833109826B50CB700A6AA59 /* articleContent.json */,
 				E88C466526CCAE0C001243F5 /* audioContent.json */,
+				E89EE164278E9C12002D6EA6 /* audioContentWithWordTime.json */,
+				E88C240D278EA0DF00AA72E0 /* audioContentWithoutPermission.json */,
 				E83310A626B547B300A6AA59 /* previewArticleContent.json */,
 				E8A4C8D926C3FC0B0082B4F7 /* folderContent.json */,
 			);
@@ -362,7 +368,9 @@
 				E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */,
 				E83310A326B5327C00A6AA59 /* articleContent.json in Resources */,
 				E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */,
-				E83310A226B5327800A6AA59 /* folderList.json in Resources */,
+				E88C240E278EA0DF00AA72E0 /* audioContentWithoutPermission.json in Resources */,
+				E89EE165278E9C12002D6EA6 /* audioContentWithWordTime.json in Resources */,
+				E83310A226B5327800A6AA59 /* rootCollection.json in Resources */,
 				E8A4C8D026C11EAC0082B4F7 /* WhatYouWant.mp3 in Resources */,
 				E88C466626CCAE0C001243F5 /* audioContent.json in Resources */,
 				E8A4C8DA26C3FC0B0082B4F7 /* folderContent.json in Resources */,

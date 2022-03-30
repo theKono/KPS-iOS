@@ -1,1 +1,282 @@
-{"error":null,"folder":{"id":"6113905fd9774a000e69ad9a","base":"career","pcid":"/f-career","type":"category","name":"職場管理","description":"我是職場管理描述","keywords":["職場","管理"],"parent":"","orderInParent":0,"orderChildrenIncreaseRight":true,"customData":null,"res":{"image":{"list":[{"hash":"Y3lQTQ==","uri":"projects/6113484cc41d22227e8e9cef/pcontents/6113905fd9774a000e69ad9a/image/6113905fd9774a000e69ad9b.jpg","id":"6113905fd9774a000e69ad9b","uploadedHash":"Y3lQTQ==","height":427,"thumbnails":[100,320,480,640],"width":640}]}}},"children":[{"id":"61139253d9774a000e69ad9e","base":"infiniteGame","pcid":"/f-career/f-infiniteGame","type":"book","name":"無限賽局","description":"我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述我是無限賽局描述","keywords":["職場","管理","賽局"],"parent":"/f-career","orderInParent":0,"customData":null,"res":{"image":{"list":[{"hash":"1gG0WA==","uri":"projects/6113484cc41d22227e8e9cef/pcontents/61139253d9774a000e69ad9e/image/61139253d9774a000e69ad9f.jpg","id":"61139253d9774a000e69ad9f","uploadedHash":"1gG0WA==","height":1160,"thumbnails":[100,320,480,640,800,854],"width":854}]}},"orderChildrenIncreaseRight":true}],"orderChildrenIncreaseRight":true}
+
+{
+    "error": null,
+    "childNodes": [
+        {
+            "id": "testTrack1",
+            "type": "audio",
+            "name": {
+                "zh-TW": "1"
+            },
+            "description": {
+                "zh-TW": "1"
+            },
+            "orderInParent": 1,
+            "customData": {
+                "hashtags": [
+                    "心理學",
+                    "科學",
+                    "知識",
+                    "成功"
+                ]
+            },
+            "covers": {
+                "list": [
+                    "61dbb4052422e40a2cd63e99"
+                ]
+            },
+            "info": {
+                "authors": {
+                    "zh-TW": ""
+                }
+            },
+            "resources": {
+                "61dbb4052422e40a2cd63e99": {
+                    "type": "IMAGE",
+                    "width": 1695,
+                    "height": 2560,
+                    "thumbnails": [
+                        100,
+                        320,
+                        480,
+                        640,
+                        800,
+                        1024,
+                        1280,
+                        1600,
+                        1695
+                    ],
+                    "urls": {
+                        "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/100.jpeg",
+                        "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/320.jpeg",
+                        "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/480.jpeg",
+                        "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/640.jpeg",
+                        "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/800.jpeg",
+                        "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/1024.jpeg",
+                        "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/1280.jpeg",
+                        "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/1600.jpeg",
+                        "1695": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/1695.jpeg"
+                    },
+                    "webpUrls": {
+                        "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/100.webp",
+                        "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/320.webp",
+                        "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/480.webp",
+                        "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/640.webp",
+                        "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/800.webp",
+                        "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/1024.webp",
+                        "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/1280.webp",
+                        "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/1600.webp",
+                        "1695": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f12422e40a2cd63e8e/resources/61dbb4052422e40a2cd63e99/1695.webp"
+                    }
+                }
+            },
+            "public": true,
+            "free": true,
+            "content": {
+                "duration": 159.696,
+                "audioLanguage": "en-US"
+            }
+        },
+        {
+            "id": "testTrack2",
+            "type": "audio",
+            "name": {
+                "zh-TW": "2"
+            },
+            "description": {
+                "zh-TW": "2"
+            },
+            "orderInParent": 2,
+            "customData": null,
+            "covers": {
+                "list": [
+                    "61dbb4822422e40a2cd63e9f"
+                ]
+            },
+            "info": {
+                "authors": {
+                    "zh-TW": ""
+                }
+            },
+            "resources": {
+                "61dbb4822422e40a2cd63e9f": {
+                    "type": "IMAGE",
+                    "width": 1695,
+                    "height": 2560,
+                    "thumbnails": [
+                        100,
+                        320,
+                        480,
+                        640,
+                        800,
+                        1024,
+                        1280,
+                        1600,
+                        1695
+                    ],
+                    "urls": {
+                        "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/100.jpeg",
+                        "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/320.jpeg",
+                        "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/480.jpeg",
+                        "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/640.jpeg",
+                        "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/800.jpeg",
+                        "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/1024.jpeg",
+                        "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/1280.jpeg",
+                        "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/1600.jpeg",
+                        "1695": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/1695.jpeg"
+                    },
+                    "webpUrls": {
+                        "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/100.webp",
+                        "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/320.webp",
+                        "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/480.webp",
+                        "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/640.webp",
+                        "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/800.webp",
+                        "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/1024.webp",
+                        "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/1280.webp",
+                        "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/1600.webp",
+                        "1695": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f32422e40a2cd63e90/resources/61dbb4822422e40a2cd63e9f/1695.webp"
+                    }
+                }
+            },
+            "public": true,
+            "free": true,
+            "content": {
+                "duration": 266.376,
+                "audioLanguage": "en-US"
+            }
+        },
+        {
+            "id": "testTrack3",
+            "type": "audio",
+            "name": {
+                "zh-TW": "3"
+            },
+            "description": {
+                "zh-TW": "3"
+            },
+            "orderInParent": 3,
+            "customData": null,
+            "covers": {
+                "list": [
+                    "61dbb4aa2422e40a2cd63ea2"
+                ]
+            },
+            "info": {
+                "authors": {
+                    "zh-TW": ""
+                }
+            },
+            "resources": {
+                "61dbb4aa2422e40a2cd63ea2": {
+                    "type": "IMAGE",
+                    "width": 1695,
+                    "height": 2560,
+                    "thumbnails": [
+                        100,
+                        320,
+                        480,
+                        640,
+                        800,
+                        1024,
+                        1280,
+                        1600,
+                        1695
+                    ],
+                    "urls": {
+                        "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/100.jpeg",
+                        "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/320.jpeg",
+                        "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/480.jpeg",
+                        "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/640.jpeg",
+                        "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/800.jpeg",
+                        "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/1024.jpeg",
+                        "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/1280.jpeg",
+                        "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/1600.jpeg",
+                        "1695": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/1695.jpeg"
+                    },
+                    "webpUrls": {
+                        "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/100.webp",
+                        "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/320.webp",
+                        "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/480.webp",
+                        "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/640.webp",
+                        "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/800.webp",
+                        "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/1024.webp",
+                        "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/1280.webp",
+                        "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/1600.webp",
+                        "1695": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2f42422e40a2cd63e92/resources/61dbb4aa2422e40a2cd63ea2/1695.webp"
+                    }
+                }
+            },
+            "public": true,
+            "free": true,
+            "content": {
+                "duration": 208.992,
+                "audioLanguage": "en-US"
+            }
+        }
+    ],
+    "contentNode": {
+        "id": "61dbb2cc2422e40a2cd63e8a",
+        "type": "folder",
+        "name": {
+            "zh-TW": "think_again2"
+        },
+        "description": {
+            "zh-TW": "think_again2"
+        },
+        "orderInParent": 0,
+        "customData": null,
+        "covers": {
+            "list": [
+                "61dbb3842422e40a2cd63e93"
+            ]
+        },
+        "info": {
+            "authors": {
+                "zh-TW": ""
+            }
+        },
+        "resources": {
+            "61dbb3842422e40a2cd63e93": {
+                "type": "IMAGE",
+                "width": 1695,
+                "height": 2560,
+                "thumbnails": [
+                    100,
+                    320,
+                    480,
+                    640,
+                    800,
+                    1024,
+                    1280,
+                    1600,
+                    1695
+                ],
+                "urls": {
+                    "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/100.jpeg",
+                    "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/320.jpeg",
+                    "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/480.jpeg",
+                    "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/640.jpeg",
+                    "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/800.jpeg",
+                    "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/1024.jpeg",
+                    "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/1280.jpeg",
+                    "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/1600.jpeg",
+                    "1695": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/1695.jpeg"
+                },
+                "webpUrls": {
+                    "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/100.webp",
+                    "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/320.webp",
+                    "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/480.webp",
+                    "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/640.webp",
+                    "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/800.webp",
+                    "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/1024.webp",
+                    "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/1280.webp",
+                    "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/1600.webp",
+                    "1695": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61dbb2cc2422e40a2cd63e8a/resources/61dbb3842422e40a2cd63e93/1695.webp"
+                }
+            }
+        },
+        "content": {
+            "orderChildrenIncreaseRight": true
+        }
+    }
+}

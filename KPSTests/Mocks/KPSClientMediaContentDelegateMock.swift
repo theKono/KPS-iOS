@@ -17,7 +17,8 @@ class KPSClientMediaContentDelegateMock: KPSClientMediaContentDelegate {
     private(set) var currentContent: KPSAudioContent?
     private(set) var mediaTrackIndex: Int?
     private(set) var mediaSegmentIndex: Int?
-    
+    private(set) var mediaParagraphIndex: Int?
+    private(set) var mediaHighlightRange: NSRange?
     
     func kpsClient(client: KPSClient, playerStateDidChange state: MediaPlayerState) {
         mediaState = state
@@ -44,5 +45,8 @@ class KPSClientMediaContentDelegateMock: KPSClientMediaContentDelegate {
         mediaSegmentIndex = segmentIndex
     }
     
-    
+    func kpsClient(client: KPSClient, playerCurrentParagraph paragraphIndex: Int, highlightRange range: NSRange?) {
+        mediaParagraphIndex = paragraphIndex
+        mediaHighlightRange = range
+    }
 }
