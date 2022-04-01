@@ -121,7 +121,8 @@ class KPSClientTests: XCTestCase {
                     
                 }
                 break
-            default: break
+            default:
+                break
             }
         }
     }
@@ -131,7 +132,34 @@ class KPSClientTests: XCTestCase {
         stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
         stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         
+        stubClient.fetchCollection { result in
+            switch result {
+            case .success(let collection):
+                XCTAssertNotNil(collection.id)
+                XCTAssertGreaterThan(collection.children.count, 0)
+            case .failure(_):
+                XCTAssert(false)
+            }
+        }
+    }
+    
+    func testFetchFolderSucceed() {
         
+        stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
+        
+        let mockFolderId = "61dbb2cc2422e40a2cd63e8a"
+        stubClient.fetchCollection(Id: mockFolderId) { result in
+            switch result {
+            case .success(let collection):
+                XCTAssertNotNil(collection.id)
+                XCTAssertEqual(collection.type, "folder")
+                XCTAssertEqual(collection.metaData.order, 10)
+                XCTAssertGreaterThan(collection.children.count, 0)
+            case .failure(_):
+                XCTAssert(false)
+            }
+        }
     }
     
     

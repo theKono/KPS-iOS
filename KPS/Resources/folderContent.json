@@ -223,7 +223,7 @@
         "description": {
             "zh-TW": "think_again2"
         },
-        "orderInParent": 0,
+        "orderInParent": 10,
         "customData": null,
         "covers": {
             "list": [
