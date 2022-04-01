@@ -121,7 +121,8 @@ class KPSClientTests: XCTestCase {
                     
                 }
                 break
-            default: break
+            default:
+                break
             }
         }
     }
@@ -131,7 +132,15 @@ class KPSClientTests: XCTestCase {
         stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
         stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         
-        
+        stubClient.fetchCollection { result in
+            switch result {
+            case .success(let collection):
+                XCTAssertNotNil(collection.id)
+                XCTAssertGreaterThan(collection.children.count, 0)
+            default:
+                break
+            }
+        }
     }
     
     
