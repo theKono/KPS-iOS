@@ -473,11 +473,8 @@ class KPSClientMediaTests: XCTestCase {
         
         let playerRate = 1.5
         let mockCollection = getMockKPSCollection()
-        guard let mockCollection = mockCollection else {
-            XCTAssert(false)
-            return
-        }
-        sut.playAudioContents(from: mockCollection)
+        XCTAssertNotNil(mockCollection)
+        sut.playAudioContents(from: mockCollection!)
         sut.mediaPlayerChangeSpeed(rate: playerRate)
         
         XCTAssertEqual(sut.mediaPlayer.rate, Float(playerRate))
