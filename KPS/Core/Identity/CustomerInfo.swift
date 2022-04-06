@@ -7,15 +7,6 @@
 
 import Foundation
 
-public enum CustomerSubscriptionStatus {
-    
-    case Active
-    case Trial
-    case TrialExpired
-    case New
-    case Unknown
-    
-}
 
 
 public class CustomerInfo: NSObject {

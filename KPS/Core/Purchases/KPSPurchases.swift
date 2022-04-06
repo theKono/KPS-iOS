@@ -12,7 +12,7 @@ import StoreKit
 /**
  Completion block for ``Purchases/purchase(product:completion:)``
  */
-public typealias PurchaseCompletedBlock = (KPSPurchaseItem?, CustomerInfo?, KPSPurchaseError?) -> Void
+public typealias PurchaseCompletedBlock = (KPSPurchaseItem?, KPSPurchaseError?) -> Void
 
 /**
  Deferred block for ``Purchases/shouldPurchasePromoProduct(_:defermentBlock:)``
@@ -27,6 +27,7 @@ public enum KPSPurchaseError: Swift.Error {
     case paymentInvalid
     case paymentNotAllowed
     case productNotAvailable
+    case productAlreadyPurchased
     case ownServer
     case network
     case unknown
@@ -45,6 +46,8 @@ public enum KPSPurchaseError: Swift.Error {
             return "當前蘋果設備無法購買商品(如有疑問，可以詢問蘋果客服)"
         case .productNotAvailable:
             return "當前購買選項不可用"
+        case .productAlreadyPurchased:
+            return "您目前正在訂閱期間"
         case .ownServer:
             return "伺服器連接錯誤"
         case .network:
@@ -83,7 +86,7 @@ public class KPSPurchases: NSObject {
     private static var purchases: KPSPurchases?
 
     /// Returns `true` if it has already been intialized through `configure()`.
-    @objc public static var isConfigured: Bool { purchases != nil }
+    public static var isConfigured: Bool { purchases != nil }
 
     /**
      * Delegate for `Purchases` instance. The delegate is responsible for handling promotional product purchases and
@@ -229,7 +232,7 @@ public extension KPSPurchases {
         self.isUserPurchasing = true
         
         if verifyCompleteBlock != nil {
-            completion(nil, nil, .duplicateRequest)
+            completion(nil, .duplicateRequest)
             return
         }
         
@@ -269,12 +272,13 @@ public extension KPSPurchases {
      */
     func restorePurchases(completion: PurchaseCompletedBlock? = nil) {
         if verifyCompleteBlock != nil {
-            completion?(nil, nil, .duplicateRequest)
+            completion?(nil, .duplicateRequest)
             return
         }
         
         verifyCompleteBlock = completion
-        receiptManager.fetchReceiptData { 
+        receiptManager.fetchReceiptData {
+            print(self.receiptManager.localReceipt)
             self.uploadLocalReceipt()
         }
     }
@@ -296,9 +300,25 @@ public extension KPSPurchases {
         UIApplication.shared.open(subscriptionURL)
         
     }
-
 }
 
+// MARK: Purchase status and record
+public extension KPSPurchases {
+
+    /**
+     * Fetches the `KPSPurchaseRecord`
+     *
+     */
+    func getPurchaseRecords() {
+        
+    }
+    
+    func getPurchaseStatus() -> CustomerSubscriptionStatus {
+        return identityManager.subscriptionStatus
+    }
+
+
+}
 // MARK: Configuring Purchases
 public extension KPSPurchases {
 
@@ -328,7 +348,6 @@ extension KPSPurchases: KPSTransactionManagerDelegate {
         switch transaction.transactionState {
         case .restored, // for observer mode
              .purchased:
-            print(transaction)
             handlePurchasedTransaction(transaction)
         case .purchasing:
             break
