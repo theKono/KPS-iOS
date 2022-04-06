@@ -129,6 +129,7 @@ public class KPSPurchases: NSObject {
     private let identityManager: IdentityManager
     private let receiptManager: KPSPurchaseReceiptManager
     private let serverUrl: String
+    private var isUserPurchasing: Bool
     fileprivate static let initLock = NSLock()
 
 
@@ -145,7 +146,7 @@ public class KPSPurchases: NSObject {
         self.transactionManager = transactionManager
         self.receiptManager = receiptManager
         self.identityManager = identityManager
-
+        self.isUserPurchasing = false
         super.init()
         
         self.transactionManager.delegate = self
@@ -224,6 +225,8 @@ public extension KPSPurchases {
      * If the purchase was not successful, there will be an `Error`.
      */
     func purchase(item: KPSPurchaseItem, completion: @escaping PurchaseCompletedBlock) {
+        
+        self.isUserPurchasing = true
         
         if verifyCompleteBlock != nil {
             completion(nil, nil, .duplicateRequest)
@@ -352,8 +355,10 @@ extension KPSPurchases: KPSTransactionManagerDelegate {
 private extension KPSPurchases {
 
     func handlePurchasedTransaction(_ transaction: SKPaymentTransaction) {
-
-        uploadLocalReceipt()
+        print(self.receiptManager.localReceipt)
+        if isUserPurchasing {
+            uploadLocalReceipt()
+        }
     }
 
     func handleFailedTransaction(_ transaction: SKPaymentTransaction) {
@@ -362,25 +367,35 @@ private extension KPSPurchases {
             let nsError = error as NSError
             switch nsError.code {
             case SKError.unknown.rawValue:
-                self.verifyCompleteBlock?(purchaseItem, nil, .unknown)
+                if let errorInfo = nsError.userInfo[NSUnderlyingErrorKey] as? NSError {
+                    switch (errorInfo.domain, errorInfo.code) {
+                    case ("ASDServerErrorDomain", 3532):
+                        uploadLocalReceipt()
+                        return
+                    default:
+                        self.verifyCompleteBlock?(purchaseItem, .unknown)
+                        break
+                    }
+                }
+                
             case SKError.clientInvalid.rawValue:
-                self.verifyCompleteBlock?(purchaseItem, nil, .clientInvalid)
+                self.verifyCompleteBlock?(purchaseItem, .clientInvalid)
             case SKError.paymentCancelled.rawValue:
-                self.verifyCompleteBlock?(purchaseItem, nil, .paymentCancel)
+                self.verifyCompleteBlock?(purchaseItem, .paymentCancel)
             case SKError.paymentInvalid.rawValue:
-                self.verifyCompleteBlock?(purchaseItem, nil, .paymentInvalid)
+                self.verifyCompleteBlock?(purchaseItem, .paymentInvalid)
             case SKError.paymentNotAllowed.rawValue:
-                self.verifyCompleteBlock?(purchaseItem, nil, .paymentNotAllowed)
+                self.verifyCompleteBlock?(purchaseItem, .paymentNotAllowed)
             case SKError.storeProductNotAvailable.rawValue:
-                self.verifyCompleteBlock?(purchaseItem, nil, .productNotAvailable)
+                self.verifyCompleteBlock?(purchaseItem, .productNotAvailable)
             default:
-                self.verifyCompleteBlock?(purchaseItem, nil, .network)
+                self.verifyCompleteBlock?(purchaseItem, .network)
             }
             
         }
         self.verifyCompleteBlock = nil
         self.purchaseItem = nil
-
+        self.isUserPurchasing = false
     }
 
     func handleDeferredTransaction(_ transaction: SKPaymentTransaction) {
@@ -393,42 +408,43 @@ private extension KPSPurchases {
 private extension KPSPurchases {
     
     func uploadLocalReceipt() {
-        
+
         if let base64ReceiptData = KPSUtiltiy.getLocalReceiptData() {
             let base64Receipt = base64ReceiptData.base64EncodedString()
-            
-            print(base64Receipt)
-            PurchaseAPIServiceProvider.request(.uploadReceipt(receipt: base64Receipt, version: "1", serverUrl: self.serverUrl)) { [weak self] result in
+
+            PurchaseAPIServiceProvider.request(.uploadReceipt(receipt: base64Receipt, version: 1, serverUrl: self.serverUrl)) { [weak self] result in
                 
                 defer {
                     self?.verifyCompleteBlock = nil
                     self?.purchaseItem = nil
+                    self?.isUserPurchasing = false
                 }
                 switch result {
                 case let .success(response):
                     do {
                         let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
                         let _ = String(decoding: filteredResponse.data, as: UTF8.self)
-                        let userIdentity: CustomerInfo? = nil
+                        
+                        self?.identityManager.updatePaymentStatus()
                         
                         if let verifyCompleteBlock = self?.verifyCompleteBlock {
-                            verifyCompleteBlock(self?.purchaseItem, userIdentity, nil)
+                            verifyCompleteBlock(self?.purchaseItem, nil)
                         }
                         
                     } catch _ {
                         
                         let errorResponse = String(decoding: response.data, as: UTF8.self)
                         print("[API Error: \(#function)] \(errorResponse)")
-                        self?.verifyCompleteBlock?(self?.purchaseItem, nil, .ownServer)
+                        self?.verifyCompleteBlock?(self?.purchaseItem, .ownServer)
                     }
                 case .failure(let error):
                     print(error.errorDescription ?? "")
-                    self?.verifyCompleteBlock?(self?.purchaseItem, nil, .ownServer)
+                    self?.verifyCompleteBlock?(self?.purchaseItem, .ownServer)
                 }
             }
         }
         else {
-            verifyCompleteBlock?(purchaseItem, nil, .unknown)
+            verifyCompleteBlock?(purchaseItem, .unknown)
             verifyCompleteBlock = nil
             purchaseItem = nil
         }

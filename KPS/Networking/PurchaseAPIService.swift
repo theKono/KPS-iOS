@@ -11,7 +11,7 @@ let PurchaseAPIServiceProvider = MoyaProvider<PurchaseAPIService>()
                                                                                    
 enum PurchaseAPIService {
     
-    case uploadReceipt(receipt: String, version: String, serverUrl: String)
+    case uploadReceipt(receipt: String, version: Int, serverUrl: String)
     case fetchPaymentStatus(serverUrl: String)
     case fetchTransactions(serverUrl: String)
 

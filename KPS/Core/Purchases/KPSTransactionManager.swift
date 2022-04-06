@@ -55,7 +55,7 @@ class KPSTransactionManager: NSObject, SKPaymentTransactionObserver {
     func finishTransaction(_ transaction: SKPaymentTransaction) {
         paymentQueue.finishTransaction(transaction)
     }
-
+    
     @available(iOS 14.0, *)
     func presentCodeRedemptionSheet() {
         paymentQueue.presentCodeRedemptionSheet()
@@ -81,10 +81,8 @@ class KPSTransactionManager: NSObject, SKPaymentTransactionObserver {
 extension KPSTransactionManager: SKPaymentQueueDelegate {
 
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        let latestTransaction = transactions.filter{
-            $0.transactionDate != nil
-        }.sorted {
-            $0.transactionDate! > $1.transactionDate!
+        let latestTransaction = transactions.sorted {
+            $0.transactionDate ?? Date() > $1.transactionDate ?? Date()
         }.first
         
         
@@ -92,8 +90,11 @@ extension KPSTransactionManager: SKPaymentQueueDelegate {
         delegate?.transactionManager(self, updatedTransaction: updatedTransaction)
         
         for transaction in transactions {
-            finishTransaction(transaction)
+            if transaction.transactionState != .purchasing {
+                finishTransaction(transaction)
+            }
         }
+        
     }
 
     // Sent when transactions are removed from the queue (via finishTransaction:).
