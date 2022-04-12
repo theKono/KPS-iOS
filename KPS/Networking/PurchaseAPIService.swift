@@ -8,6 +8,7 @@
 import Moya
 
 let PurchaseAPIServiceProvider = MoyaProvider<PurchaseAPIService>()
+//let PurchaseAPIServiceProvider = MoyaProvider<PurchaseAPIService>(stubClosure: MoyaProvider.delayedStub(0.2))
                                                                                    
 enum PurchaseAPIService {
     
@@ -31,7 +32,7 @@ extension PurchaseAPIService: TargetType {
         case .uploadReceipt(_, _, _):
             return "appleOrders"
         case .fetchPaymentStatus(_):
-            return "paymentStatus"
+            return "activeOrders"
         case .fetchTransactions(_):
             return "transactions"
         }
@@ -47,7 +48,22 @@ extension PurchaseAPIService: TargetType {
     }
     
     var sampleData: Data {
-        return Data()
+        switch self {
+        case .uploadReceipt(_, _, _):
+            return Data()
+        case .fetchPaymentStatus(_):
+            guard let url = Bundle.current.url(forResource: "activeOrders", withExtension: "json"),
+                  let data = try? Data(contentsOf: url) else {
+                        return Data()
+                    }
+            return data
+        case .fetchTransactions(_):
+            guard let url = Bundle.current.url(forResource: "transactions", withExtension: "json"),
+                  let data = try? Data(contentsOf: url) else {
+                        return Data()
+                    }
+            return data
+        }
     }
     
     var task: Task {

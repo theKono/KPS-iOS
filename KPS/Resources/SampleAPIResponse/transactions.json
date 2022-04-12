@@ -1,0 +1,28 @@
+{
+    "transactions": [
+        {
+            "transactionId": "12345678",
+            "appleEnv": "production",
+            "createTime": 1648716351000,
+            "expireTime": 1648716352000,
+            "type": "ios",
+            "orderId": "11111111",
+            "plan": "com.thekono.summitTest.aycr_monthly",
+            "status": {
+                "entitled": true,
+                "state": "paid"
+        },
+        {
+            "transactionId": "12345677",
+            "appleEnv": "production",
+            "createTime": 1648716350000,
+            "expireTime": 1648716351000,
+            "type": "ios",
+            "orderId": "11111111",
+            "plan": "com.thekono.summitTest.aycr_monthly",
+            "status": {
+                "entitled": true,
+                "state": "promotion"
+        }
+    ]
+}

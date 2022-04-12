@@ -42,6 +42,8 @@
 		E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */; };
 		E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C526ECF76800B9C9F7 /* KPSCollection.swift */; };
 		E88396C826ECFACC00B9C9F7 /* KPSImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */; };
+		E889A98928042F8A00E3718C /* activeOrders.json in Resources */ = {isa = PBXBuildFile; fileRef = E889A98828042F8A00E3718C /* activeOrders.json */; };
+		E889A98B28042F9B00E3718C /* transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = E889A98A28042F9B00E3718C /* transactions.json */; };
 		E88C240E278EA0DF00AA72E0 /* audioContentWithoutPermission.json in Resources */ = {isa = PBXBuildFile; fileRef = E88C240D278EA0DF00AA72E0 /* audioContentWithoutPermission.json */; };
 		E88C466626CCAE0C001243F5 /* audioContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E88C466526CCAE0C001243F5 /* audioContent.json */; };
 		E88C466826CCB034001243F5 /* KPSAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88C466726CCB034001243F5 /* KPSAudio.swift */; };
@@ -58,6 +60,7 @@
 		E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */; };
 		E8A4C8DA26C3FC0B0082B4F7 /* folderContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8D926C3FC0B0082B4F7 /* folderContent.json */; };
 		E8A4C8DC26C4B3AE0082B4F7 /* KPSArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */; };
+		E8C44FCB28003B2B00329093 /* userPermission.json in Resources */ = {isa = PBXBuildFile; fileRef = E8C44FCA28003B2B00329093 /* userPermission.json */; };
 		E8E14EFE27D893CE007D6875 /* KPSPurchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14EFD27D893CE007D6875 /* KPSPurchases.swift */; };
 		E8E14F0027D8949D007D6875 /* KPSPurchaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14EFF27D8949D007D6875 /* KPSPurchaseDelegate.swift */; };
 		E8E14F0427D895AD007D6875 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F0327D895AD007D6875 /* Strings.swift */; };
@@ -131,6 +134,8 @@
 		E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSContentMeta.swift; sourceTree = "<group>"; };
 		E88396C526ECF76800B9C9F7 /* KPSCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSCollection.swift; sourceTree = "<group>"; };
 		E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSImageResource.swift; sourceTree = "<group>"; };
+		E889A98828042F8A00E3718C /* activeOrders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = activeOrders.json; sourceTree = "<group>"; };
+		E889A98A28042F9B00E3718C /* transactions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
 		E88C240D278EA0DF00AA72E0 /* audioContentWithoutPermission.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = audioContentWithoutPermission.json; sourceTree = "<group>"; };
 		E88C466526CCAE0C001243F5 /* audioContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = audioContent.json; sourceTree = "<group>"; };
 		E88C466726CCB034001243F5 /* KPSAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSAudio.swift; sourceTree = "<group>"; };
@@ -147,6 +152,7 @@
 		E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Eventually.swift"; sourceTree = "<group>"; };
 		E8A4C8D926C3FC0B0082B4F7 /* folderContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = folderContent.json; sourceTree = "<group>"; };
 		E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSArticle.swift; sourceTree = "<group>"; };
+		E8C44FCA28003B2B00329093 /* userPermission.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = userPermission.json; sourceTree = "<group>"; };
 		E8E14EFD27D893CE007D6875 /* KPSPurchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchases.swift; sourceTree = "<group>"; };
 		E8E14EFF27D8949D007D6875 /* KPSPurchaseDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchaseDelegate.swift; sourceTree = "<group>"; };
 		E8E14F0327D895AD007D6875 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -311,15 +317,9 @@
 		E833108D26B43CDE00A6AA59 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E889A98728042F4F00E3718C /* SampleAPIResponse */,
 				E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */,
 				E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */,
-				E833109726B50CB700A6AA59 /* rootCollection.json */,
-				E833109826B50CB700A6AA59 /* articleContent.json */,
-				E88C466526CCAE0C001243F5 /* audioContent.json */,
-				E89EE164278E9C12002D6EA6 /* audioContentWithWordTime.json */,
-				E88C240D278EA0DF00AA72E0 /* audioContentWithoutPermission.json */,
-				E83310A626B547B300A6AA59 /* previewArticleContent.json */,
-				E8A4C8D926C3FC0B0082B4F7 /* folderContent.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -366,6 +366,23 @@
 				E845AD9427E4945600A3DC49 /* FoundationExtensions.swift */,
 			);
 			path = Converter;
+			sourceTree = "<group>";
+		};
+		E889A98728042F4F00E3718C /* SampleAPIResponse */ = {
+			isa = PBXGroup;
+			children = (
+				E833109726B50CB700A6AA59 /* rootCollection.json */,
+				E833109826B50CB700A6AA59 /* articleContent.json */,
+				E88C466526CCAE0C001243F5 /* audioContent.json */,
+				E89EE164278E9C12002D6EA6 /* audioContentWithWordTime.json */,
+				E88C240D278EA0DF00AA72E0 /* audioContentWithoutPermission.json */,
+				E83310A626B547B300A6AA59 /* previewArticleContent.json */,
+				E8A4C8D926C3FC0B0082B4F7 /* folderContent.json */,
+				E8C44FCA28003B2B00329093 /* userPermission.json */,
+				E889A98828042F8A00E3718C /* activeOrders.json */,
+				E889A98A28042F9B00E3718C /* transactions.json */,
+			);
+			path = SampleAPIResponse;
 			sourceTree = "<group>";
 		};
 		E8A4C8CC26BFD3FA0082B4F7 /* Mocks */ = {
@@ -534,16 +551,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E889A98928042F8A00E3718C /* activeOrders.json in Resources */,
 				E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */,
 				E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */,
 				E83310A326B5327C00A6AA59 /* articleContent.json in Resources */,
 				E83310A726B547B300A6AA59 /* previewArticleContent.json in Resources */,
+				E8C44FCB28003B2B00329093 /* userPermission.json in Resources */,
 				E88C240E278EA0DF00AA72E0 /* audioContentWithoutPermission.json in Resources */,
 				E89EE165278E9C12002D6EA6 /* audioContentWithWordTime.json in Resources */,
 				E83310A226B5327800A6AA59 /* rootCollection.json in Resources */,
 				E8A4C8D026C11EAC0082B4F7 /* WhatYouWant.mp3 in Resources */,
 				E88C466626CCAE0C001243F5 /* audioContent.json in Resources */,
 				E8A4C8DA26C3FC0B0082B4F7 /* folderContent.json in Resources */,
+				E889A98B28042F9B00E3718C /* transactions.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
