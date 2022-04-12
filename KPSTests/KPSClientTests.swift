@@ -58,6 +58,7 @@ class KPSClientTests: XCTestCase {
         stubClient.login(keyID: access_id, token: access_token, completion: {result in })
         XCTAssertEqual(stubClient.currentUserId, "testUser")
         XCTAssertTrue(stubClient.isUserLoggedIn)
+        XCTAssertEqual(stubClient.userPermissions.count, 2)
     }
     
     func testLoginFailedInvalidUser() {

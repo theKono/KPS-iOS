@@ -341,7 +341,6 @@ extension KPSClient {
             }
             currentParagraph = paragraphIndex
             currentHighlightRange = range
-            print("currentParagraph: \(currentParagraph)  currentHighlightRange: \(currentHighlightRange)")
         }
     }
     

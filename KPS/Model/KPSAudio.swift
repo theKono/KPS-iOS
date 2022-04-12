@@ -69,6 +69,10 @@ extension KPSAudioContent: Decodable {
         let errorDescription = try baseContainer.decodeIfPresent(String.self, forKey: .error)
         
         let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .contentNode)
+        let user = try baseContainer.decodeIfPresent(KPSUser.self, forKey: .puser)
+        if let user = user {
+            KPSClient.shared.isUserLBlocked = user.status == 0
+        }
         
         id = try container.decode(String.self, forKey: .id)
         type = try container.decode(String.self, forKey: .type)
@@ -86,6 +90,7 @@ extension KPSAudioContent: Decodable {
             authors = [:]
         }
         let resources = try container.decode([String: Any].self, forKey: .resources)
+        
         let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .content)
         let defaultLang = try contentDataContainer.decode(String.self, forKey: .audioLanguage)
         
@@ -114,10 +119,8 @@ extension KPSAudioContent: Decodable {
         
         } else {
             if !isPublic && isFree {
-                if let user = try baseContainer.decodeIfPresent(KPSUser.self, forKey: .puser) {
-                    if user.status == 0 {
-                        error = .userBlocked
-                    }
+                if KPSClient.shared.isUserLBlocked {
+                   error = .userBlocked
                 } else {
                     error = .needLogin
                 }

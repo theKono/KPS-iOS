@@ -47,6 +47,29 @@ public final class KPSClient: NSObject {
         }
     }
     
+    public var userPermissions: Set<String> {
+        
+        get {
+            let permissionArray = UserDefaults.standard.object(forKey: "kps_user_permission") as? [String] ?? []
+            return Set(permissionArray)
+        }
+        set(newPermissions) {
+            let permissionArray = Array(newPermissions)
+            UserDefaults.standard.set(permissionArray, forKey: "kps_user_permission")
+        }
+        
+    }
+    
+    public var isUserLBlocked: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "kps_user_blocked")
+        }
+        
+        set (newValue) {
+            UserDefaults.standard.set(newValue, forKey: "kps_user_blocked")
+        }
+    }
+    
     public var isUserLoggedIn: Bool {
         get {
             return UserDefaults.standard.bool(forKey: "isUserLoggedIn")
@@ -238,54 +261,6 @@ public final class KPSClient: NSObject {
     }
     
     
-    public func login(keyID: String, token: String, completion: @escaping (Result<LoginResponse, MoyaError>) -> ()) {
-        
-        let resultClosure: ((Result<LoginResponse, MoyaError>) -> Void) = { result in
-            
-            switch result {
-            case let .success(response):
-                self.currentUserId = response.user.id
-                KPSClient.sessionToken = response.kpsSession
-                self.isUserLoggedIn = true
-                completion(.success(response))
-            case let .failure(error):
-                self.isUserLoggedIn = false
-                do {
-                    let errorDescription = try error.response?.mapJSON()
-                    print(errorDescription ?? "")
-                    completion(.failure(error))
-                } catch _ {
-                    print("decode error")
-                }
-            }
-        }
-        request(target: .login(keyId: keyID, token: token, server: KPSClient.config.baseServer), completion: resultClosure)
-    }
-    
-    public func logout(completion: ((Result<Moya.Response, MoyaError>) -> ())? = nil) {
-        networkProvider.request(.logout(server: KPSClient.config.baseServer)) { result in
-            switch result {
-            case let .success(response):
-                do {
-                    let _ = try response.filterSuccessfulStatusCodes()
-                    self.isUserLoggedIn = false
-                    self.mediaPlayerReset(isNeedClearPlayList: true)
-                    KPSClient.sessionToken = nil
-                    completion?(.success(response))
-                } catch let error {
-                    if let customError = error as? MoyaError {
-                        completion?(.failure(customError))
-                    } else {
-                        completion?(.failure(.jsonMapping(response)))
-                    }
-                }
-                
-            case let .failure(error):
-                completion?(.failure(error))
-            }
-        }
-    }
-    
     internal func setNowPlayingInfo() {
         
         guard let content = currentPlayAudioContent,
@@ -331,6 +306,91 @@ public final class KPSClient: NSObject {
     }
 }
 
+// MARK: User Session Related API
+extension KPSClient {
+    
+    public func login(keyID: String, token: String, completion: @escaping (Result<LoginResponse, MoyaError>) -> ()) {
+        
+        let resultClosure: ((Result<LoginResponse, MoyaError>) -> Void) = { result in
+            
+            switch result {
+            case let .success(response):
+                self.currentUserId = response.user.id
+                KPSClient.sessionToken = response.kpsSession
+                self.isUserLoggedIn = true
+                self.fetchPermissions { permissionResult in
+                    switch permissionResult {
+                    case .success(let permissions):
+                        self.userPermissions = permissions
+                        completion(.success(response))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+                
+            case let .failure(error):
+                self.isUserLoggedIn = false
+                do {
+                    let errorDescription = try error.response?.mapJSON()
+                    print(errorDescription ?? "")
+                    completion(.failure(error))
+                } catch _ {
+                    print("decode error")
+                }
+            }
+        }
+        request(target: .login(keyId: keyID, token: token, server: KPSClient.config.baseServer), completion: resultClosure)
+    }
+    
+    public func logout(completion: ((Result<Moya.Response, MoyaError>) -> ())? = nil) {
+        networkProvider.request(.logout(server: KPSClient.config.baseServer)) { result in
+            switch result {
+            case let .success(response):
+                do {
+                    let _ = try response.filterSuccessfulStatusCodes()
+                    self.isUserLoggedIn = false
+                    self.mediaPlayerReset(isNeedClearPlayList: true)
+                    self.userPermissions = []
+                    KPSClient.sessionToken = nil
+                    completion?(.success(response))
+                } catch let error {
+                    if let customError = error as? MoyaError {
+                        completion?(.failure(customError))
+                    } else {
+                        completion?(.failure(.jsonMapping(response)))
+                    }
+                }
+                
+            case let .failure(error):
+                completion?(.failure(error))
+            }
+        }
+    }
+    
+    public func fetchPermissions(completion: @escaping (Result<Set<String>, MoyaError>) -> ()) {
+        let resultClosure: ((Result<PermissionResponse, MoyaError>) -> Void) = { result in
+            
+            switch result {
+            case let .success(response):
+                let permissionArray: [String] = response.permissions?.keys.map{ $0 } ?? []
+                let permissions = Set(permissionArray)
+                completion(.success(permissions))
+            case let .failure(error):
+                do {
+                    let errorDescription = try error.response?.mapJSON()
+                    print(errorDescription ?? "")
+                    completion(.failure(error))
+                } catch _ {
+                    print("decode error")
+                }
+            }
+        }
+        print("start to fetch permission")
+        request(target: .fetchUserPermission(server: KPSClient.config.baseServer), completion: resultClosure)
+    }
+    
+}
+
 // MARK: Data Related API
 extension KPSClient {
     
@@ -345,8 +405,6 @@ extension KPSClient {
         }
         
     }
-
-    
 }
 
 
