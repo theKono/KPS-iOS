@@ -120,6 +120,17 @@ public class KPSPurchases: NSObject {
         return receipt.inAppPurchases.count == 0
     }
 
+    public var customerType: CustomerType = .Unknown {
+        didSet {
+            
+            if oldValue != customerType {
+
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSPurchaseCustomerTypeChanged"), object: nil, userInfo: ["customerType": customerType])
+            }
+            privateDelegate?.kpsPurchase(purchase: self, customerTypeDidChange: customerType)
+        }
+    }
+    
     /**
      * Indicates whether the user is allowed to make payments.
      */
@@ -129,7 +140,7 @@ public class KPSPurchases: NSObject {
     private let notificationCenter: NotificationCenter
     private let productManager: KPSPurchaseProductManager
     private let transactionManager: KPSTransactionManager
-    private let identityManager: IdentityManager
+    private let subscriptionManager: SubscriptionManager
     private let receiptManager: KPSPurchaseReceiptManager
     private let serverUrl: String
     private var isUserPurchasing: Bool
@@ -139,7 +150,7 @@ public class KPSPurchases: NSObject {
     init(serverUrl: String,
          productManager: KPSPurchaseProductManager = KPSPurchaseProductManager(),
          transactionManager: KPSTransactionManager = KPSTransactionManager(),
-         identityManager: IdentityManager,
+         subscriptionManager: SubscriptionManager,
          receiptManager: KPSPurchaseReceiptManager = KPSPurchaseReceiptManager(),
          notificationCenter: NotificationCenter = NotificationCenter.default) {
         
@@ -148,14 +159,12 @@ public class KPSPurchases: NSObject {
         self.productManager = productManager
         self.transactionManager = transactionManager
         self.receiptManager = receiptManager
-        self.identityManager = identityManager
+        self.subscriptionManager = subscriptionManager
         self.isUserPurchasing = false
         super.init()
         
         self.transactionManager.delegate = self
-        self.receiptManager.fetchReceiptData() {
-            
-        }
+        syncPaymentStatus()
     }
 
     /**
@@ -183,7 +192,24 @@ public class KPSPurchases: NSObject {
         self.purchases = purchases
         initLock.unlock()
     }
-
+    
+    private func syncPaymentStatus(_ completion: (()->Void)? = nil) {
+        let group = DispatchGroup()
+        group.enter()
+        self.receiptManager.fetchReceiptData() {
+            group.leave()
+        }
+        
+        group.enter()
+        self.subscriptionManager.updatePaymentStatus {
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            self.updateCurrentCustomerType()
+            completion?()
+        }
+    }
 }
 
 
@@ -223,7 +249,7 @@ public extension KPSPurchases {
      * - Parameter item: The ``KPSPurchaseItem`` the user intends to purchase
      * - Parameter completion: A completion block that is called when the purchase completes.
      *
-     * If the purchase was successful there will be a `KPSPurchaseItem` and a ``CustomerInfo``.
+     * If the purchase was successful there will be a ``KPSPurchaseItem``.
      *
      * If the purchase was not successful, there will be an `Error`.
      */
@@ -258,7 +284,7 @@ public extension KPSPurchases {
      * - Parameter discount: The `StoreProductDiscount` to apply to the purchase
      * - Parameter completion: A completion block that is called when the purchase completes.
      *
-     * If the purchase was successful there will be a `StoreTransaction` and a ``CustomerInfo``.
+     * If the purchase was successful there will be a `StoreTransaction`.
      * If the purchase was not successful, there will be an `Error`.
      
     func purchase(item: KPSPurchaseItem, discount: StoreProductDiscount, completion: @escaping PurchaseCompletedBlock) {
@@ -309,14 +335,47 @@ public extension KPSPurchases {
      * Fetches the `KPSPurchaseRecord`
      *
      */
-    func getPurchaseRecords() {
-        
+    func getPurchaseRecords(_ completion: ((Result<[KPSPurchaseTransaction], Error>) -> Void)?)  {
+        subscriptionManager.fetchTransactions { result in
+            completion?(result)
+        }
     }
     
-    func getPurchaseStatus() -> CustomerSubscriptionStatus {
-        return identityManager.subscriptionStatus
+    func getCurrentCustomerType(_ completion: ((CustomerType)->Void)?) {
+        syncPaymentStatus {
+            completion?(self.customerType)
+        }
     }
-
+    
+    private func updateCurrentCustomerType() {
+        
+        if subscriptionManager.subscriptionStatus == .None {
+            customerType = trailEligible ? .New : .Free
+        } else if subscriptionManager.subscriptionStatus == .Trial {
+            guard let currentPlan = subscriptionManager.latestOrder?.latestTransaction.plan,
+                  let expireTime = subscriptionManager.latestOrder?.latestTransaction.end else {
+                customerType = .New
+                return
+            }
+            customerType = .Trial_VIP(
+                currentPlan: currentPlan,
+                nextPlan: subscriptionManager.latestOrder?.nextPlan,
+                expireTime: expireTime
+            )
+        } else if subscriptionManager.subscriptionStatus == .Active {
+            guard let currentPlan = subscriptionManager.latestOrder?.latestTransaction.plan,
+                  let expireTime = subscriptionManager.latestOrder?.latestTransaction.end else {
+                customerType = .New
+                return
+                
+            }
+            customerType = .VIP(
+                currentPlan: currentPlan,
+                nextPlan: subscriptionManager.latestOrder?.nextPlan,
+                expireTime: expireTime
+            )
+        }
+    }
 
 }
 // MARK: Configuring Purchases
@@ -334,8 +393,8 @@ public extension KPSPurchases {
      * - Returns: An instantiated `Purchases` object that has been set as a singleton.
      */
     @discardableResult static func configure(withServerUrl endpointUrl: String) -> KPSPurchases {
-        let identityManager = IdentityManager(serverUrl: endpointUrl)
-        let purchases = KPSPurchases(serverUrl: endpointUrl, identityManager: identityManager)
+        let subscriptionManager = SubscriptionManager(serverUrl: endpointUrl)
+        let purchases = KPSPurchases(serverUrl: endpointUrl, subscriptionManager: subscriptionManager)
         setDefaultInstance(purchases)
         return purchases
     }
@@ -434,31 +493,36 @@ private extension KPSPurchases {
             PurchaseAPIServiceProvider.request(.uploadReceipt(receipt: base64Receipt, version: 1, serverUrl: self.serverUrl)) { [weak self] result in
                 
                 defer {
-                    self?.verifyCompleteBlock = nil
-                    self?.purchaseItem = nil
-                    self?.isUserPurchasing = false
+                    //TODO: Think the dependency!
+                    KPSClient.shared.fetchPermissions(completion: nil)
                 }
                 switch result {
                 case let .success(response):
                     do {
                         let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
                         let _ = String(decoding: filteredResponse.data, as: UTF8.self)
-                        
-                        self?.identityManager.updatePaymentStatus()
-                        
-                        if let verifyCompleteBlock = self?.verifyCompleteBlock {
-                            verifyCompleteBlock(self?.purchaseItem, nil)
+                        self?.syncPaymentStatus() {
+                            self?.verifyCompleteBlock?(self?.purchaseItem, nil)
+                            
+                            self?.verifyCompleteBlock = nil
+                            self?.purchaseItem = nil
+                            self?.isUserPurchasing = false
                         }
-                        
                     } catch _ {
                         
                         let errorResponse = String(decoding: response.data, as: UTF8.self)
                         print("[API Error: \(#function)] \(errorResponse)")
                         self?.verifyCompleteBlock?(self?.purchaseItem, .ownServer)
+                        self?.verifyCompleteBlock = nil
+                        self?.purchaseItem = nil
+                        self?.isUserPurchasing = false
                     }
                 case .failure(let error):
                     print(error.errorDescription ?? "")
                     self?.verifyCompleteBlock?(self?.purchaseItem, .ownServer)
+                    self?.verifyCompleteBlock = nil
+                    self?.purchaseItem = nil
+                    self?.isUserPurchasing = false
                 }
             }
         }

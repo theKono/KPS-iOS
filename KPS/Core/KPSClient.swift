@@ -320,8 +320,7 @@ extension KPSClient {
                 self.isUserLoggedIn = true
                 self.fetchPermissions { permissionResult in
                     switch permissionResult {
-                    case .success(let permissions):
-                        self.userPermissions = permissions
+                    case .success(_):
                         completion(.success(response))
                     case .failure(let error):
                         completion(.failure(error))
@@ -367,19 +366,20 @@ extension KPSClient {
         }
     }
     
-    public func fetchPermissions(completion: @escaping (Result<Set<String>, MoyaError>) -> ()) {
-        let resultClosure: ((Result<PermissionResponse, MoyaError>) -> Void) = { result in
+    public func fetchPermissions(completion: ((Result<Set<String>, MoyaError>) -> ())?) {
+        let resultClosure: ((Result<PermissionResponse, MoyaError>) -> Void) = { [weak self] result in
             
             switch result {
             case let .success(response):
                 let permissionArray: [String] = response.permissions?.keys.map{ $0 } ?? []
                 let permissions = Set(permissionArray)
-                completion(.success(permissions))
+                self?.userPermissions = permissions
+                completion?(.success(permissions))
             case let .failure(error):
                 do {
                     let errorDescription = try error.response?.mapJSON()
                     print(errorDescription ?? "")
-                    completion(.failure(error))
+                    completion?(.failure(error))
                 } catch _ {
                     print("decode error")
                 }

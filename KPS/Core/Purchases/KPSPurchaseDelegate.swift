@@ -9,4 +9,6 @@ import Foundation
 
 public protocol KPSPurchasesDelegate: AnyObject {
     
+    func kpsPurchase(purchase: KPSPurchases, customerTypeDidChange customerType: CustomerType)
+        
 }

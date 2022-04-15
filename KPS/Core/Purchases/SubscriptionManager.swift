@@ -11,83 +11,86 @@ public enum CustomerSubscriptionStatus {
     
     case Active
     case Trial
-    case TrialExpired
-    case New
-    case Unknown
-    
+    case None
 }
 
 
-class IdentityManager {
+class SubscriptionManager {
 
     internal static let anonymousRegex = #"\$RCAnonymousID:([a-z0-9]{32})$"#
     private var serverUrl: String
-    public var subscriptionStatus: CustomerSubscriptionStatus {
-        didSet {
-            if oldValue != subscriptionStatus {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSPurchaseStatusUpdated"), object: nil, userInfo: nil)
-            } else {
-                print(subscriptionStatus)
-            }
-        }
-    }
+    public var subscriptionStatus: CustomerSubscriptionStatus
+    public var latestOrder: KPSPurchaseOrder?
     public var syncDate: Date?
     init(serverUrl: String) {
         self.serverUrl = serverUrl
-        self.subscriptionStatus = .Unknown
-        //updatePaymentStatus()
+        self.subscriptionStatus = .None
     }
 
     static func generateRandomID() -> String {
         "$KPSAnonymousID:\(UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased())"
     }
     
-    public func updatePaymentStatus() {
+    private func updateSubscriptionStatus() {
+        if let order = latestOrder {
+            subscriptionStatus = order.latestTransaction.isTrial ? .Trial : .Active
+        } else {
+            subscriptionStatus = .None
+        }
+    }
+    
+    public func updatePaymentStatus(_ completion: (() -> Void)? = nil) {
         
-        subscriptionStatus = .Active
-        
-        /*
         PurchaseAPIServiceProvider.request(.fetchPaymentStatus(serverUrl: self.serverUrl)) { [weak self] result in
             
             self?.syncDate = Date()
+            defer {
+                completion?()
+            }
             switch result {
             case let .success(response):
                 do {
                     let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
-                    let _ = String(decoding: filteredResponse.data, as: UTF8.self)
+                    let orderResponse = try JSONDecoder().decode(ActiveOrderResponse.self, from: filteredResponse.data)
+
+                    self?.latestOrder = orderResponse.activeOrders.sorted {
+                        $0.createTime > $1.createTime
+                    }.first
                     
-                    
+                    self?.updateSubscriptionStatus()
                 } catch _ {
                     
                     let errorResponse = String(decoding: response.data, as: UTF8.self)
-                    
+                    print("[API Error: \(#function)] \(errorResponse)")
                 }
             case .failure(let error):
                 print(error.errorDescription ?? "")
                 
             }
         }
-        */
+        
     }
     
-    public func fetchTransactions() {
+    public func fetchTransactions(_ completion: ((Result<[KPSPurchaseTransaction], Error>) -> Void)?) {
         
-        PurchaseAPIServiceProvider.request(.fetchTransactions(serverUrl: self.serverUrl)) { [weak self] result in
+        PurchaseAPIServiceProvider.request(.fetchTransactions(serverUrl: self.serverUrl)) { result in
             
             switch result {
             case let .success(response):
                 do {
                     let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
-                    let _ = String(decoding: filteredResponse.data, as: UTF8.self)
-                    
+                    let transactionResponse = try JSONDecoder().decode(TransactionResponse.self, from: filteredResponse.data)
+                    completion?(.success(transactionResponse.transactions))
                     
                 } catch _ {
                     
                     let errorResponse = String(decoding: response.data, as: UTF8.self)
+                    print("[API Error: \(#function)] \(errorResponse)")
                     
                 }
             case .failure(let error):
                 print(error.errorDescription ?? "")
+                completion?(.failure(error))
                 
             }
         }

@@ -14,7 +14,7 @@ public struct KPSContentMeta {
     }
     
     public var id: String
-    public var type: String
+    public var type: String?
     public var order: Int?
     public var isPublic, isFree: Bool?
     public var name, description: [String: String]?
@@ -34,7 +34,7 @@ extension KPSContentMeta: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         id = try container.decode(String.self, forKey: .id)
-        type = try container.decode(String.self, forKey: .type)
+        type = try container.decodeIfPresent(String.self, forKey: .type)
         order = try container.decodeIfPresent(Int.self, forKey: .orderInParent)
         name = try container.decodeIfPresent([String: String].self, forKey: .name)
         description = try container.decodeIfPresent([String: String].self, forKey: .description)
