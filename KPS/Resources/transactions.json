@@ -11,6 +11,7 @@
             "status": {
                 "entitled": true,
                 "state": "paid"
+            }
         },
         {
             "transactionId": "12345677",
@@ -23,6 +24,7 @@
             "status": {
                 "entitled": true,
                 "state": "promotion"
+            }
         }
     ]
 }

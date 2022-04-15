@@ -65,7 +65,7 @@ extension CoreAPIService: TargetType {
         case .logout(_):
             return "{\"first_name\": \"Harry\", \"last_name\": \"Potter\"}".utf8Encoded
         case .fetchUserPermission(_):
-            guard let url = Bundle.current.url(forResource: "userPermission", withExtension: "json"),
+            guard let url = Bundle.resourceBundle.url(forResource: "userPermission", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
@@ -77,7 +77,7 @@ extension CoreAPIService: TargetType {
                     }
             return data
         case .fetchCollection(_, _, _, _):
-            guard let url = Bundle.current.url(forResource: "folderContent", withExtension: "json"),
+            guard let url = Bundle.resourceBundle.url(forResource: "folderContent", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
@@ -91,7 +91,7 @@ extension CoreAPIService: TargetType {
             } else {
                 resFileName = "audioContent"
             }
-            guard let url = Bundle.current.url(forResource: resFileName, withExtension: "json"),
+            guard let url = Bundle.resourceBundle.url(forResource: resFileName, withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
                     return Data()
                 }
