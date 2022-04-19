@@ -20,6 +20,7 @@ public struct KPSAudioContent {
         case free
         case covers
         case resources, content
+        case permissions
     }
     
     enum InfoKeys: String, CodingKey {
@@ -41,6 +42,7 @@ public struct KPSAudioContent {
     public let isPublic, isFree: Bool
     public var length: Double?
     public var customData: [String: Any]?
+    public var permissions: [String: Bool]?
     public var content: [KPSAudioText] = []
     public var paragraphContents: [KPSAudioText] = []
     internal var timeFrames: [TimeFrameInfo] = []
@@ -82,6 +84,7 @@ extension KPSAudioContent: Decodable {
         isPublic = try container.decode(Bool.self, forKey: .publicData)
         isFree = try container.decode(Bool.self, forKey: .free)
         customData = try container.decodeIfPresent([String: Any].self, forKey: .customData)
+        permissions = try container.decodeIfPresent([String: Bool].self, forKey: .permissions)
         
         if let _ = try container.decodeIfPresent([String: Any].self, forKey: .info) {
             let infoDataContainer = try container.nestedContainer(keyedBy: InfoKeys.self, forKey: .info)
@@ -118,14 +121,28 @@ extension KPSAudioContent: Decodable {
             byWordTimeFrames = parsedWordTimeFrames(info: audioResourceInfoRaw)
         
         } else {
-            if !isPublic && isFree {
-                if KPSClient.shared.isUserLBlocked {
-                   error = .userBlocked
+            if !isPublic {
+                if !isFree {
+                    var userHasPermission = false
+                    let userPurcahsedPermission = KPSClient.shared.userPermissions
+                    if let requirePermissions = permissions {
+                        for (permission, _) in requirePermissions {
+                            if userPurcahsedPermission.contains(permission) {
+                                userHasPermission = true
+                                break
+                            }
+                        }
+                        error = userHasPermission ? .userBlocked : .needPurchase
+                    } else {
+                        error = .userBlocked
+                    }
                 } else {
-                    error = .needLogin
+                    if KPSClient.shared.isUserLBlocked {
+                       error = .userBlocked
+                    } else {
+                        error = .needLogin
+                    }
                 }
-            } else if !isPublic && !isFree {
-                error = .needPurchase
             }
             length = try contentDataContainer.decode(Double.self, forKey: .duration)
         }
