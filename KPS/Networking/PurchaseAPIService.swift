@@ -15,7 +15,7 @@ enum PurchaseAPIService {
     
     case uploadReceipt(receipt: String, version: Int, serverUrl: String)
     case fetchPaymentStatus(serverUrl: String)
-    case fetchTransactions(serverUrl: String)
+    case fetchTransactions(order: String, serverUrl: String)
 
 }
 
@@ -23,7 +23,7 @@ extension PurchaseAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .uploadReceipt(_, _, let serverUrl), .fetchPaymentStatus(let serverUrl), .fetchTransactions(let serverUrl):
+        case .uploadReceipt(_, _, let serverUrl), .fetchPaymentStatus(let serverUrl), .fetchTransactions(_, let serverUrl):
             return URL(string: serverUrl)!
         }
     }
@@ -34,7 +34,7 @@ extension PurchaseAPIService: TargetType {
             return "appleOrders"
         case .fetchPaymentStatus(_):
             return "activeOrders"
-        case .fetchTransactions(_):
+        case .fetchTransactions(_, _):
             return "transactions"
         }
     }
@@ -43,7 +43,7 @@ extension PurchaseAPIService: TargetType {
         switch self {
         case .uploadReceipt(_, _, _):
             return .post
-        case .fetchPaymentStatus(_), .fetchTransactions(_):
+        case .fetchPaymentStatus(_), .fetchTransactions(_, _):
             return .get
         }
     }
@@ -58,7 +58,7 @@ extension PurchaseAPIService: TargetType {
                         return Data()
                     }
             return data
-        case .fetchTransactions(_):
+        case .fetchTransactions(_, _):
             guard let url = Bundle.resourceBundle.url(forResource: "transactions", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
@@ -71,8 +71,10 @@ extension PurchaseAPIService: TargetType {
         switch self {
         case .uploadReceipt(let receipt, let version, _):
             return .requestParameters(parameters: ["receipt": receipt, "storeKitVersion": version], encoding: JSONEncoding.default)
-        case .fetchPaymentStatus(_), .fetchTransactions(_):
+        case .fetchPaymentStatus(_):
             return .requestPlain
+        case .fetchTransactions(let order, _):
+            return .requestParameters(parameters: ["orderId": order], encoding: URLEncoding.queryString)
         }
     }
     

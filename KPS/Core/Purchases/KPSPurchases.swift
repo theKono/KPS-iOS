@@ -141,6 +141,7 @@ public class KPSPurchases: NSObject {
 
     
     private let notificationCenter: NotificationCenter
+    private let contentServer: KPSClient
     private let productManager: KPSPurchaseProductManager
     private let transactionManager: KPSTransactionManager
     private let subscriptionManager: SubscriptionManager
@@ -151,6 +152,7 @@ public class KPSPurchases: NSObject {
 
 
     init(serverUrl: String,
+         contentServer: KPSClient = KPSClient.shared,
          productManager: KPSPurchaseProductManager = KPSPurchaseProductManager(),
          transactionManager: KPSTransactionManager = KPSTransactionManager(),
          subscriptionManager: SubscriptionManager,
@@ -158,6 +160,7 @@ public class KPSPurchases: NSObject {
          notificationCenter: NotificationCenter = NotificationCenter.default) {
         
         self.serverUrl = serverUrl
+        self.contentServer = contentServer
         self.notificationCenter = notificationCenter
         self.productManager = productManager
         self.transactionManager = transactionManager

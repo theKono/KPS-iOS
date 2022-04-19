@@ -9,7 +9,7 @@ import Foundation
 public struct KPSPurchaseOrder {
     
     enum CodingKeys: String, CodingKey {
-        case orderId, appleEnv, plan, ownerId, createTime, type, tentativeNextRenewalPlan, latestTransaction
+        case orderId, appleEnv, plan, ownerId, createTime, type, tentativeNextRenewalPlan, nextRenewalGracePeriod, latestTransaction
     }
     
     public var id: String
@@ -18,6 +18,7 @@ public struct KPSPurchaseOrder {
     public var createTime: TimeInterval
     public var type: String
     public var nextPlan: String?
+    public var gracePeriodEnd: TimeInterval?
     public var latestTransaction: KPSPurchaseTransaction
 }
 
@@ -31,6 +32,7 @@ extension KPSPurchaseOrder: Decodable {
         createTime = try container.decode(TimeInterval.self, forKey: .createTime)
         type = try container.decode(String.self, forKey: .type)
         nextPlan = try container.decodeIfPresent(String.self, forKey: .tentativeNextRenewalPlan)
+        gracePeriodEnd = try container.decodeIfPresent(TimeInterval.self, forKey: .nextRenewalGracePeriod)
         latestTransaction = try container.decode(KPSPurchaseTransaction.self, forKey: .latestTransaction)
     }
 }

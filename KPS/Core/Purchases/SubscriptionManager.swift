@@ -14,17 +14,47 @@ public enum CustomerSubscriptionStatus {
     case None
 }
 
+public enum CustomerPaymentStatus {
+    static let interruptedByPause: String = "paused"
+    static let interruptedByKill: String = "killed"
+    static let interruptedByPlanChanged: String = "UPDOWNGRADED"
+    
+    case Paused
+    case Killed
+    case Promotion
+    case Paid
+    case GracePeriod
+    case OnHold
+    case PlanChanged
+    case None
+    
+    var subscriptionStatus: CustomerSubscriptionStatus {
+        switch self {
+        case .GracePeriod, .Paid, .PlanChanged:
+            return .Active
+        case .Promotion:
+            return .Trial
+        case .Paused, .OnHold, .Killed, .None:
+            return .None
+        }
+    }
+}
+
 
 class SubscriptionManager {
 
     internal static let anonymousRegex = #"\$RCAnonymousID:([a-z0-9]{32})$"#
     private var serverUrl: String
-    public var subscriptionStatus: CustomerSubscriptionStatus
+    public var paymentStatus: CustomerPaymentStatus
+    public var subscriptionStatus: CustomerSubscriptionStatus {
+        return paymentStatus.subscriptionStatus
+    }
     public var latestOrder: KPSPurchaseOrder?
+    public var ownOrderIds: [String] = []
     public var syncDate: Date?
     init(serverUrl: String) {
         self.serverUrl = serverUrl
-        self.subscriptionStatus = .None
+        self.paymentStatus = .None
     }
 
     static func generateRandomID() -> String {
@@ -33,9 +63,31 @@ class SubscriptionManager {
     
     private func updateSubscriptionStatus() {
         if let order = latestOrder {
-            subscriptionStatus = order.latestTransaction.isTrial ? .Trial : .Active
+            let currentTimeStamp_ms = Date().timeIntervalSince1970 * 1000.0
+            
+            if let interruptedType = order.latestTransaction.interruptedType {
+                if interruptedType == CustomerPaymentStatus.interruptedByKill {
+                    paymentStatus = .Killed
+                } else if interruptedType == CustomerPaymentStatus.interruptedByPause {
+                    paymentStatus = .Paused
+                } else if interruptedType == CustomerPaymentStatus.interruptedByPlanChanged {
+                    paymentStatus = .PlanChanged
+                }
+            } else {
+                if order.latestTransaction.end >= currentTimeStamp_ms {
+                    paymentStatus = order.latestTransaction.isTrial ? .Promotion : .Paid
+                } else {
+                    if order.gracePeriodEnd != nil && order.gracePeriodEnd! > currentTimeStamp_ms {
+                        paymentStatus = .GracePeriod
+                    } else if order.nextPlan != nil {
+                        paymentStatus = .OnHold
+                    } else {
+                        paymentStatus = .Killed
+                    }
+                }
+            }
         } else {
-            subscriptionStatus = .None
+            paymentStatus = .None
         }
     }
     
@@ -56,7 +108,7 @@ class SubscriptionManager {
                     self?.latestOrder = orderResponse.activeOrders.sorted {
                         $0.createTime > $1.createTime
                     }.first
-                    
+                    self?.ownOrderIds = orderResponse.activeOrders.map{ return $0.id}
                     self?.updateSubscriptionStatus()
                 } catch _ {
                     
@@ -72,21 +124,26 @@ class SubscriptionManager {
     }
     
     public func fetchTransactions(_ completion: ((Result<[KPSPurchaseTransaction], Error>) -> Void)?) {
-        
-        PurchaseAPIServiceProvider.request(.fetchTransactions(serverUrl: self.serverUrl)) { result in
+        guard let latestOrder = latestOrder else {
+            return
+        }
+
+        PurchaseAPIServiceProvider.request(.fetchTransactions(order: latestOrder.id, serverUrl: self.serverUrl)) { result in
             
             switch result {
             case let .success(response):
                 do {
                     let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
                     let transactionResponse = try JSONDecoder().decode(TransactionResponse.self, from: filteredResponse.data)
+                    let response = String(decoding: response.data, as: UTF8.self)
+                    print(response)
                     completion?(.success(transactionResponse.transactions))
                     
-                } catch _ {
+                } catch {
                     
                     let errorResponse = String(decoding: response.data, as: UTF8.self)
                     print("[API Error: \(#function)] \(errorResponse)")
-                    
+                    completion?(.success([]))
                 }
             case .failure(let error):
                 print(error.errorDescription ?? "")

@@ -20,6 +20,8 @@ public struct KPSPurchaseTransaction {
     public var end: TimeInterval
     public var type: String
     public var promotionId: String?
+    public var interruptedType: String?
+    public var interruptedTime: TimeInterval?
     public var isTrial: Bool {
         if let promotionId = promotionId {
             if promotionId == "intro_offer" {
@@ -45,5 +47,7 @@ extension KPSPurchaseTransaction: Decodable {
         }
         type = try container.decode(String.self, forKey: .type)
         promotionId = try container.decodeIfPresent(String.self, forKey: .promotionId)
+        interruptedType = try container.decodeIfPresent(String.self, forKey: .interupted)
+        interruptedTime = try container.decodeIfPresent(TimeInterval.self, forKey: .interuptedTime)
     }
 }

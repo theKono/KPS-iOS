@@ -21,7 +21,10 @@ protocol KPSTransactionManagerDelegate: AnyObject {
 
 class KPSTransactionManager: NSObject, SKPaymentTransactionObserver {
 
-    
+    /**
+     * Set this property to true *only* when testing the ask-to-buy / SCA purchases flow. More information:
+     * - Seealso: https://support.apple.com/en-us/HT201089
+     */
     static var simulatesAskToBuyInSandbox = false
 
     weak var delegate: KPSTransactionManagerDelegate? {
