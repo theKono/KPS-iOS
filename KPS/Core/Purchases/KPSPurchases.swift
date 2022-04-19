@@ -29,6 +29,7 @@ public enum KPSPurchaseError: Swift.Error {
     case productNotAvailable
     case productAlreadyPurchased
     case ownServer
+    case receiptExpire
     case network
     case unknown
     
@@ -52,6 +53,8 @@ public enum KPSPurchaseError: Swift.Error {
             return "伺服器連接錯誤"
         case .network:
             return "網路無法正常連接"
+        case .receiptExpire:
+            return "有效期限已過期"
         case .unknown:
             return "未知的錯誤，您可能正在使用越獄手機"
         }
@@ -193,7 +196,8 @@ public class KPSPurchases: NSObject {
         initLock.unlock()
     }
     
-    private func syncPaymentStatus(_ completion: (()->Void)? = nil) {
+    public func syncPaymentStatus(_ completion: (()->Void)? = nil) {
+        
         let group = DispatchGroup()
         group.enter()
         self.receiptManager.fetchReceiptData() {
@@ -202,6 +206,11 @@ public class KPSPurchases: NSObject {
         
         group.enter()
         self.subscriptionManager.updatePaymentStatus {
+            group.leave()
+        }
+        
+        group.enter()
+        contentServer.fetchPermissions { _ in
             group.leave()
         }
         
@@ -433,8 +442,9 @@ extension KPSPurchases: KPSTransactionManagerDelegate {
 private extension KPSPurchases {
 
     func handlePurchasedTransaction(_ transaction: SKPaymentTransaction) {
-        print(self.receiptManager.localReceipt)
+        //print(self.receiptManager.localReceipt)
         if isUserPurchasing {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSPurchasedTransactionComplete"), object: nil, userInfo: nil)
             uploadLocalReceipt()
         }
     }
@@ -492,17 +502,17 @@ private extension KPSPurchases {
 
             PurchaseAPIServiceProvider.request(.uploadReceipt(receipt: base64Receipt, version: 1, serverUrl: self.serverUrl)) { [weak self] result in
                 
-                defer {
-                    //TODO: Think the dependency!
-                    KPSClient.shared.fetchPermissions(completion: nil)
-                }
                 switch result {
                 case let .success(response):
                     do {
                         let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
                         let _ = String(decoding: filteredResponse.data, as: UTF8.self)
                         self?.syncPaymentStatus() {
-                            self?.verifyCompleteBlock?(self?.purchaseItem, nil)
+                            if self?.subscriptionManager.subscriptionStatus == .None {
+                                self?.verifyCompleteBlock?(self?.purchaseItem, .receiptExpire)
+                            } else {
+                                self?.verifyCompleteBlock?(self?.purchaseItem, nil)
+                            }
                             
                             self?.verifyCompleteBlock = nil
                             self?.purchaseItem = nil
@@ -512,7 +522,13 @@ private extension KPSPurchases {
                         
                         let errorResponse = String(decoding: response.data, as: UTF8.self)
                         print("[API Error: \(#function)] \(errorResponse)")
-                        self?.verifyCompleteBlock?(self?.purchaseItem, .ownServer)
+                        
+                        switch response.statusCode{
+                        case 403:
+                            self?.verifyCompleteBlock?(self?.purchaseItem, .receiptExpire)
+                        default:
+                            self?.verifyCompleteBlock?(self?.purchaseItem, .ownServer)
+                        }
                         self?.verifyCompleteBlock = nil
                         self?.purchaseItem = nil
                         self?.isUserPurchasing = false

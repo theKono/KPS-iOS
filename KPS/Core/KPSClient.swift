@@ -318,13 +318,17 @@ extension KPSClient {
                 self.currentUserId = response.user.id
                 KPSClient.sessionToken = response.kpsSession
                 self.isUserLoggedIn = true
-                self.fetchPermissions { permissionResult in
-                    switch permissionResult {
-                    case .success(_):
-                        completion(.success(response))
-                    case .failure(let error):
-                        completion(.failure(error))
+                if !KPSPurchases.isConfigured {
+                    self.fetchPermissions { permissionResult in
+                        switch permissionResult {
+                        case .success(_):
+                            completion(.success(response))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
                     }
+                } else {
+                    completion(.success(response))
                 }
                 
             case let .failure(error):
