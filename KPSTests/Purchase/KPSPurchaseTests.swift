@@ -14,6 +14,18 @@ class KPSPurchaseTests: XCTestCase {
     var stubbingProvider: MoyaProvider<PurchaseAPIService>!
     var sut: KPSPurchases!
     
+    let mockDelegate: KPSPurchasesDelegate = KPSPurchaseDelegateMock()
+    let mockEndpointURL: String = "https://purchase.thekono.com"
+    
+    override func setUp() {
+        
+    }
+
+    func testPurchaseConfigSuccess() {
+        
+        KPSPurchases.configure(withServerUrl: mockEndpointURL)
+        XCTAssertTrue(KPSPurchases.isConfigured)
+    }
     
     func testGetCurrentCustomerTypeSuccess() {
         
