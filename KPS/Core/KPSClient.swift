@@ -389,7 +389,6 @@ extension KPSClient {
                 }
             }
         }
-        print("start to fetch permission")
         request(target: .fetchUserPermission(server: KPSClient.config.baseServer), completion: resultClosure)
     }
     

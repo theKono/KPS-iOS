@@ -24,7 +24,7 @@ public struct KPSPurchaseTransaction {
     public var interruptedTime: TimeInterval?
     public var isTrial: Bool {
         if let promotionId = promotionId {
-            if promotionId == "intro_offer" {
+            if promotionId == "trial_offer" {
                 return true
             }
         }

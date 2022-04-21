@@ -12,7 +12,7 @@ import StoreKit
 /**
  Completion block for ``Purchases/purchase(product:completion:)``
  */
-public typealias PurchaseCompletedBlock = (KPSPurchaseItem?, KPSPurchaseError?) -> Void
+public typealias PurchaseCompletedBlock = (KPSPurchaseItem?, Bool, KPSPurchaseError?) -> Void
 
 /**
  Deferred block for ``Purchases/shouldPurchasePromoProduct(_:defermentBlock:)``
@@ -270,7 +270,7 @@ public extension KPSPurchases {
         self.isUserPurchasing = true
         
         if verifyCompleteBlock != nil {
-            completion(nil, .duplicateRequest)
+            completion(nil, false, .duplicateRequest)
             return
         }
         
@@ -278,7 +278,7 @@ public extension KPSPurchases {
             let payment = transactionManager.payment(withProduct: product)
             transactionManager.add(payment)
             self.purchaseItem = item
-            self.verifyCompleteBlock =  completion
+            self.verifyCompleteBlock = completion
         }
     }
 
@@ -310,13 +310,13 @@ public extension KPSPurchases {
      */
     func restorePurchases(completion: PurchaseCompletedBlock? = nil) {
         if verifyCompleteBlock != nil {
-            completion?(nil, .duplicateRequest)
+            completion?(nil, false, .duplicateRequest)
             return
         }
         
         verifyCompleteBlock = completion
         receiptManager.fetchReceiptData {
-            print(self.receiptManager.localReceipt)
+            //print(self.receiptManager.localReceipt)
             self.uploadLocalReceipt()
         }
     }
@@ -464,23 +464,23 @@ private extension KPSPurchases {
                         uploadLocalReceipt()
                         return
                     default:
-                        self.verifyCompleteBlock?(purchaseItem, .unknown)
+                        self.verifyCompleteBlock?(purchaseItem, false, .unknown)
                         break
                     }
                 }
                 
             case SKError.clientInvalid.rawValue:
-                self.verifyCompleteBlock?(purchaseItem, .clientInvalid)
+                self.verifyCompleteBlock?(purchaseItem, false, .clientInvalid)
             case SKError.paymentCancelled.rawValue:
-                self.verifyCompleteBlock?(purchaseItem, .paymentCancel)
+                self.verifyCompleteBlock?(purchaseItem, false, .paymentCancel)
             case SKError.paymentInvalid.rawValue:
-                self.verifyCompleteBlock?(purchaseItem, .paymentInvalid)
+                self.verifyCompleteBlock?(purchaseItem, false, .paymentInvalid)
             case SKError.paymentNotAllowed.rawValue:
-                self.verifyCompleteBlock?(purchaseItem, .paymentNotAllowed)
+                self.verifyCompleteBlock?(purchaseItem, false, .paymentNotAllowed)
             case SKError.storeProductNotAvailable.rawValue:
-                self.verifyCompleteBlock?(purchaseItem, .productNotAvailable)
+                self.verifyCompleteBlock?(purchaseItem, false, .productNotAvailable)
             default:
-                self.verifyCompleteBlock?(purchaseItem, .network)
+                self.verifyCompleteBlock?(purchaseItem, false, .network)
             }
             
         }
@@ -502,7 +502,13 @@ private extension KPSPurchases {
 
         if let base64ReceiptData = KPSUtiltiy.getLocalReceiptData() {
             let base64Receipt = base64ReceiptData.base64EncodedString()
-
+            var isPurchaseInTrial: Bool = false
+            if let latestTransaction = self.receiptManager.localReceipt!.inAppPurchases.sorted(by: { $0.purchaseDate > $1.purchaseDate }).first {
+                isPurchaseInTrial = latestTransaction.isInTrialPeriod ?? false
+            }
+            
+            
+            
             PurchaseAPIServiceProvider.request(.uploadReceipt(receipt: base64Receipt, version: 1, serverUrl: self.serverUrl)) { [weak self] result in
                 
                 switch result {
@@ -512,9 +518,9 @@ private extension KPSPurchases {
                         let _ = String(decoding: filteredResponse.data, as: UTF8.self)
                         self?.syncPaymentStatus() {
                             if self?.subscriptionManager.subscriptionStatus == .None {
-                                self?.verifyCompleteBlock?(self?.purchaseItem, .receiptExpire)
+                                self?.verifyCompleteBlock?(self?.purchaseItem, false, .receiptExpire)
                             } else {
-                                self?.verifyCompleteBlock?(self?.purchaseItem, nil)
+                                self?.verifyCompleteBlock?(self?.purchaseItem, isPurchaseInTrial, nil)
                             }
                             
                             self?.verifyCompleteBlock = nil
@@ -528,9 +534,9 @@ private extension KPSPurchases {
                         
                         switch response.statusCode{
                         case 403:
-                            self?.verifyCompleteBlock?(self?.purchaseItem, .receiptExpire)
+                            self?.verifyCompleteBlock?(self?.purchaseItem, false, .receiptExpire)
                         default:
-                            self?.verifyCompleteBlock?(self?.purchaseItem, .ownServer)
+                            self?.verifyCompleteBlock?(self?.purchaseItem, false, .ownServer)
                         }
                         self?.verifyCompleteBlock = nil
                         self?.purchaseItem = nil
@@ -538,7 +544,7 @@ private extension KPSPurchases {
                     }
                 case .failure(let error):
                     print(error.errorDescription ?? "")
-                    self?.verifyCompleteBlock?(self?.purchaseItem, .ownServer)
+                    self?.verifyCompleteBlock?(self?.purchaseItem, false, .ownServer)
                     self?.verifyCompleteBlock = nil
                     self?.purchaseItem = nil
                     self?.isUserPurchasing = false
@@ -546,7 +552,7 @@ private extension KPSPurchases {
             }
         }
         else {
-            verifyCompleteBlock?(purchaseItem, .unknown)
+            verifyCompleteBlock?(purchaseItem, false, .unknown)
             verifyCompleteBlock = nil
             purchaseItem = nil
         }

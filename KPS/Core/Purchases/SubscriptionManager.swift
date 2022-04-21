@@ -125,6 +125,7 @@ class SubscriptionManager {
     
     public func fetchTransactions(_ completion: ((Result<[KPSPurchaseTransaction], Error>) -> Void)?) {
         guard let latestOrder = latestOrder else {
+            completion?(.success([]))
             return
         }
 
@@ -135,8 +136,10 @@ class SubscriptionManager {
                 do {
                     let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
                     let transactionResponse = try JSONDecoder().decode(TransactionResponse.self, from: filteredResponse.data)
-                    let response = String(decoding: response.data, as: UTF8.self)
-                    print(response)
+                    
+                    //DEBUG
+                    //let response = String(decoding: response.data, as: UTF8.self)
+                    //print(response)
                     completion?(.success(transactionResponse.transactions))
                     
                 } catch {
