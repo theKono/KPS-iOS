@@ -10,11 +10,11 @@ import Foundation
 public struct KPSPurchaseTransaction {
     
     enum CodingKeys: String, CodingKey {
-        case transactionId, appleEnv, plan, createTime, expireTime, type, interupted, interuptedTime, promotionId
+        case transactionId, appEnv, plan, createTime, expireTime, type, interupted, interuptedTime, promotionId
     }
     
     public var id: String
-    public var appleEnv: String?
+    public var appEnv: String?
     public var plan: String
     public var begin: TimeInterval
     public var end: TimeInterval
@@ -38,7 +38,7 @@ extension KPSPurchaseTransaction: Decodable {
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .transactionId)
-        appleEnv = try container.decodeIfPresent(String.self, forKey: .appleEnv)
+        appEnv = try container.decodeIfPresent(String.self, forKey: .appEnv)
         plan = try container.decode(String.self, forKey: .plan)
         begin = try container.decode(TimeInterval.self, forKey: .createTime)
         end = try container.decode(TimeInterval.self, forKey: .expireTime)
