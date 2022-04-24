@@ -8,7 +8,7 @@
 public struct KPSContentMeta {
     
     enum CodingKeys: String, CodingKey {
-        case id, type, name, description, covers, resources, content, info, customData, orderInParent
+        case id, type, name, description, covers, resources, content, info, customData, orderInParent, permissions
         case publicData = "public"
         case free
     }
@@ -18,6 +18,7 @@ public struct KPSContentMeta {
     public var order: Int?
     public var isPublic, isFree: Bool?
     public var name, description: [String: String]?
+    public var permissions: [String: Bool]?
     public var authors: [String:[String]]?
     public let publicContentInfo: [String: Any]?
     public var images: [KPSImageResource] = []
@@ -33,8 +34,8 @@ extension KPSContentMeta: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         id = try container.decode(String.self, forKey: .id)
-        order = try container.decodeIfPresent(Int.self, forKey: .orderInParent)
         type = try container.decodeIfPresent(String.self, forKey: .type)
+        order = try container.decodeIfPresent(Int.self, forKey: .orderInParent)
         name = try container.decodeIfPresent([String: String].self, forKey: .name)
         description = try container.decodeIfPresent([String: String].self, forKey: .description)
         publicContentInfo = try container.decodeIfPresent([String: Any].self, forKey: .content)
@@ -42,6 +43,10 @@ extension KPSContentMeta: Decodable {
         isPublic = try container.decodeIfPresent(Bool.self, forKey: .publicData)
         isFree = try container.decodeIfPresent(Bool.self, forKey: .free)
         customData = try container.decodeIfPresent([String: Any].self, forKey: .customData)
+        
+        if !isCollectionType {
+            permissions = try container.decodeIfPresent([String: Bool].self, forKey: .permissions)
+        }
         
         if let contentInfo = try container.decodeIfPresent([String: Any].self, forKey: .info) {
             if contentInfo["authors"] != nil {

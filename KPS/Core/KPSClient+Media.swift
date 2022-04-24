@@ -341,7 +341,6 @@ extension KPSClient {
             }
             currentParagraph = paragraphIndex
             currentHighlightRange = range
-            print("currentParagraph: \(currentParagraph)  currentHighlightRange: \(currentHighlightRange)")
         }
     }
     
@@ -427,7 +426,7 @@ extension KPSClient {
     
     internal func getAVPlayerItem(source: KPSAudioContent) -> AVPlayerItem {
         let item = AVPlayerItem(url: source.streamingUrl!)
-        item.audioTimePitchAlgorithm = .spectral
+        item.audioTimePitchAlgorithm = .timeDomain
         return item
     }
     

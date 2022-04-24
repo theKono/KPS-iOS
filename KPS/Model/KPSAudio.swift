@@ -20,6 +20,7 @@ public struct KPSAudioContent {
         case free
         case covers
         case resources, content
+        case permissions
     }
     
     enum InfoKeys: String, CodingKey {
@@ -41,6 +42,7 @@ public struct KPSAudioContent {
     public let isPublic, isFree: Bool
     public var length: Double?
     public var customData: [String: Any]?
+    public var permissions: [String: Bool]?
     public var content: [KPSAudioText] = []
     public var paragraphContents: [KPSAudioText] = []
     internal var timeFrames: [TimeFrameInfo] = []
@@ -69,6 +71,10 @@ extension KPSAudioContent: Decodable {
         let errorDescription = try baseContainer.decodeIfPresent(String.self, forKey: .error)
         
         let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .contentNode)
+        let user = try baseContainer.decodeIfPresent(KPSUser.self, forKey: .puser)
+        if let user = user {
+            KPSClient.shared.isUserLBlocked = user.status == 0
+        }
         
         id = try container.decode(String.self, forKey: .id)
         type = try container.decode(String.self, forKey: .type)
@@ -78,6 +84,7 @@ extension KPSAudioContent: Decodable {
         isPublic = try container.decode(Bool.self, forKey: .publicData)
         isFree = try container.decode(Bool.self, forKey: .free)
         customData = try container.decodeIfPresent([String: Any].self, forKey: .customData)
+        permissions = try container.decodeIfPresent([String: Bool].self, forKey: .permissions)
         
         if let _ = try container.decodeIfPresent([String: Any].self, forKey: .info) {
             let infoDataContainer = try container.nestedContainer(keyedBy: InfoKeys.self, forKey: .info)
@@ -86,6 +93,7 @@ extension KPSAudioContent: Decodable {
             authors = [:]
         }
         let resources = try container.decode([String: Any].self, forKey: .resources)
+        
         let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .content)
         let defaultLang = try contentDataContainer.decode(String.self, forKey: .audioLanguage)
         
@@ -113,16 +121,28 @@ extension KPSAudioContent: Decodable {
             byWordTimeFrames = parsedWordTimeFrames(info: audioResourceInfoRaw)
         
         } else {
-            if !isPublic && isFree {
-                if let user = try baseContainer.decodeIfPresent(KPSUser.self, forKey: .puser) {
-                    if user.status == 0 {
+            if !isPublic {
+                if !isFree {
+                    var userHasPermission = false
+                    let userPurcahsedPermission = KPSClient.shared.userPermissions
+                    if let requirePermissions = permissions {
+                        for (permission, _) in requirePermissions {
+                            if userPurcahsedPermission.contains(permission) {
+                                userHasPermission = true
+                                break
+                            }
+                        }
+                        error = userHasPermission ? .userBlocked : .needPurchase
+                    } else {
                         error = .userBlocked
                     }
                 } else {
-                    error = .needLogin
+                    if KPSClient.shared.isUserLBlocked {
+                       error = .userBlocked
+                    } else {
+                        error = .needLogin
+                    }
                 }
-            } else if !isPublic && !isFree {
-                error = .needPurchase
             }
             length = try contentDataContainer.decode(Double.self, forKey: .duration)
         }

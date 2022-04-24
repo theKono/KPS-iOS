@@ -1,0 +1,22 @@
+{
+    "transactions": [
+        {
+            "transactionId": "2000000031008308",
+            "plan": "com.thekono.summitTest.aycr_monthly",
+            "appleEnv": "production",
+            "createTime": 1649811183000,
+            "expireTime": 1649811283000,
+            "type": "ios",
+            
+        },
+        {
+            "transactionId": "2000000031008307",
+            "plan": "com.thekono.summitTest.aycr_monthly",
+            "appleEnv": "production",
+            "createTime": 1648716350000,
+            "expireTime": 1649811183000,
+            "type": "ios",
+            "promotionId": "intro_offer"
+        }
+    ]
+}

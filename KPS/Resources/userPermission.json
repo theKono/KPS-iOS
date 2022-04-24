@@ -1,0 +1,49 @@
+{
+    "error": null,
+    "permissions": {
+        "prid_asdf": [
+            {
+                "_id": "624fdfff3a5f99da1b7ffc63",
+                "prid": "prid_ghji",
+                "puid": "82919",
+                "permission": "prid_asdf",
+                "start": 1640501894461,
+                "end": 1660999555975,
+                "quota": 12,
+                "pid": "61398d3c62cbe46b8b9e58af"
+            },
+            {
+                "_id": "624fe01a3a5f99da1b7ffc64",
+                "prid": "prid_ghji",
+                "puid": "82919",
+                "permission": "prid_asdf",
+                "start": 1640901894461,
+                "end": 1661999555975,
+                "quota": 10,
+                "pid": "61398d3c62cbe46b8b9e58af"
+            }
+        ],
+        "perm_zxcv": [
+            {
+                "_id": "624fe0373a5f99da1b7ffc65",
+                "prid": "prid_ghji",
+                "puid": "82919",
+                "permission": "perm_zxcv",
+                "start": 1640901894461,
+                "end": 1661999555975,
+                "quota": 1,
+                "pid": "61398d3c62cbe46b8b9e58af"
+            },
+            {
+                "_id": "624fe04b3a5f99da1b7ffc66",
+                "prid": "prid_poiiu",
+                "puid": "82919",
+                "permission": "perm_zxcv",
+                "start": 1640901894461,
+                "end": 1661999555975,
+                "quota": 5,
+                "pid": "61398d3c62cbe46b8b9e58af"
+            }
+        ]
+    }
+}

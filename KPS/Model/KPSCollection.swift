@@ -8,7 +8,7 @@
 public struct KPSCollection {
     
     enum CodingKeys: String, CodingKey {
-        case error, childNodes, contentNode, parentNode, siblingNodes
+        case error, childNodes, contentNode, parentNode, siblingNodes, puser
     }
     enum RootKeys: String, CodingKey {
         case id,type,name,covers,resources
@@ -30,6 +30,11 @@ extension KPSCollection: Decodable {
         let baseContainer = try decoder.container(keyedBy: CodingKeys.self)
         children = try baseContainer.decode([KPSContentMeta].self, forKey: .childNodes)
         metaData = try baseContainer.decode(KPSContentMeta.self, forKey: .contentNode)
+        
+        let user = try baseContainer.decodeIfPresent(KPSUser.self, forKey: .puser)
+        if let user = user {
+            KPSClient.shared.isUserLBlocked = user.status == 0
+        }
         
         let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .contentNode)
         id = try container.decode(String.self, forKey: .id)
