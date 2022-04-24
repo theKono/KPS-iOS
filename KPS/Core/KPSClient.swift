@@ -233,9 +233,13 @@ public final class KPSClient: NSObject {
     
     internal var mediaPlayCollectionImage: KPSImageResource?
     
-    public static var config = Config(apiKey: "", appId: "")
+    public static var config = Config(apiKey: "", appId: "") {
+        didSet {
+            shared = KPSClient(apiKey: KPSClient.config.apiKey, server: KPSClient.config.baseServer)
+        }
+    }
 
-    public static let shared = KPSClient(apiKey: KPSClient.config.apiKey, server: KPSClient.config.baseServer)
+    public static var shared = KPSClient(apiKey: KPSClient.config.apiKey, server: KPSClient.config.baseServer)
     
     
     init(apiKey: String, appId: String, networkProvider: NetworkProvider? = nil) {
