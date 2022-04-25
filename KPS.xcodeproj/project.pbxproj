@@ -42,6 +42,8 @@
 		E8855FA3280D69000067CA09 /* KPSPurchaseDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8855FA2280D69000067CA09 /* KPSPurchaseDelegateMock.swift */; };
 		E8855FA8281599960067CA09 /* AuthAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8855FA7281599960067CA09 /* AuthAPIService.swift */; };
 		E8855FAA28159C180067CA09 /* KPSAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8855FA928159C180067CA09 /* KPSAuth.swift */; };
+		E8855FAF281679320067CA09 /* KPSAuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8855FAE281679320067CA09 /* KPSAuthResponse.swift */; };
+		E8855FB12816795B0067CA09 /* KPSAuthCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8855FB02816795B0067CA09 /* KPSAuthCredential.swift */; };
 		E889A98E28055C1F00E3718C /* KPSPurchaseTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E889A98D28055C1F00E3718C /* KPSPurchaseTransaction.swift */; };
 		E889A990280561FE00E3718C /* KPSPurchaseOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E889A98F280561FE00E3718C /* KPSPurchaseOrder.swift */; };
 		E889A992280563AE00E3718C /* ActiveOrderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E889A991280563AE00E3718C /* ActiveOrderResponse.swift */; };
@@ -142,6 +144,8 @@
 		E8855FA2280D69000067CA09 /* KPSPurchaseDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchaseDelegateMock.swift; sourceTree = "<group>"; };
 		E8855FA7281599960067CA09 /* AuthAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPIService.swift; sourceTree = "<group>"; };
 		E8855FA928159C180067CA09 /* KPSAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSAuth.swift; sourceTree = "<group>"; };
+		E8855FAE281679320067CA09 /* KPSAuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSAuthResponse.swift; sourceTree = "<group>"; };
+		E8855FB02816795B0067CA09 /* KPSAuthCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSAuthCredential.swift; sourceTree = "<group>"; };
 		E889A98D28055C1F00E3718C /* KPSPurchaseTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchaseTransaction.swift; sourceTree = "<group>"; };
 		E889A98F280561FE00E3718C /* KPSPurchaseOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchaseOrder.swift; sourceTree = "<group>"; };
 		E889A991280563AE00E3718C /* ActiveOrderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveOrderResponse.swift; sourceTree = "<group>"; };
@@ -308,6 +312,7 @@
 		E833105026AB077600A6AA59 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E8855FAD2816791F0067CA09 /* Auth */,
 				E889A98C28055BEA00E3718C /* Purchases */,
 				E89BC16A277DA60B001633C5 /* KPSPlayRecord.swift */,
 				E833105126AB0A4500A6AA59 /* LoginResponse.swift */,
@@ -424,6 +429,15 @@
 			isa = PBXGroup;
 			children = (
 				E8855FA928159C180067CA09 /* KPSAuth.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		E8855FAD2816791F0067CA09 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				E8855FAE281679320067CA09 /* KPSAuthResponse.swift */,
+				E8855FB02816795B0067CA09 /* KPSAuthCredential.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -728,6 +742,7 @@
 				E845AD8C27E492AE00A3DC49 /* ReceiptParsingError.swift in Sources */,
 				E8E14F1327DB22EB007D6875 /* KPSPurchaseItem.swift in Sources */,
 				E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */,
+				E8855FB12816795B0067CA09 /* KPSAuthCredential.swift in Sources */,
 				E8E14F1127DB1EFE007D6875 /* KPSTransactionManager.swift in Sources */,
 				E833103826AAAE1D00A6AA59 /* KPSClient.swift in Sources */,
 				E8E14F0627D895FB007D6875 /* PurchaseStrings.swift in Sources */,
@@ -737,6 +752,7 @@
 				E845AD8127E4917600A3DC49 /* ASN1Container.swift in Sources */,
 				E89BC169277DA5FA001633C5 /* KPSClient+Analytic.swift in Sources */,
 				E8E14F1E27DB2996007D6875 /* SK2StoreProductDiscount.swift in Sources */,
+				E8855FAF281679320067CA09 /* KPSAuthResponse.swift in Sources */,
 				E8E14F0927DB166E007D6875 /* SubscriptionManager.swift in Sources */,
 				E88C466A26CD260C001243F5 /* ThreadSafeArray.swift in Sources */,
 				E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */,

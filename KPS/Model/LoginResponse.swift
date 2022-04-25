@@ -6,7 +6,7 @@
 // MARK: - LoginResponse
 public struct LoginResponse: Codable {
     let isNew: Bool
-    let kpsSession: String
+    public let kpsSession: String
     let user: KPSUser
 
     enum CodingKeys: String, CodingKey {
