@@ -62,6 +62,25 @@ public enum KPSPurchaseError: Swift.Error {
 }
 
 
+// MARK: KPS Purchase Service Env
+public enum KPSPurchaseEnv {
+    
+    case dev
+    case stg
+    case prd
+    
+    var baseUrl: String{
+        switch self{
+        case .dev:
+            return "https://kps-dev.thekono.com/api/v1/projects/"
+        case .stg:
+            return "https://kps-stg.thekono.com/api/v1/projects/"
+        case .prd:
+            return " https://kps.thekono.com/api/v1/projects/"
+        }
+    }
+}
+
 
 /**
  * `Purchases` is the entry point. It should be instantiated as soon as your app has a unique
@@ -394,8 +413,7 @@ public extension KPSPurchases {
 public extension KPSPurchases {
 
     /**
-     * Configures an instance of the Purchases SDK with a custom userDefaults. Use this constructor if you want to
-     * sync status across a shared container, such as between a host app and an extension. The instance of the
+     * Configures an instance of the Purchases SDK with a custom userDefaults.
      * Purchases SDK will be set as a singleton.
      * You should access the singleton instance using ``Purchases.shared``
      *
@@ -410,6 +428,25 @@ public extension KPSPurchases {
         setDefaultInstance(purchases)
         return purchases
     }
+    
+    /**
+     * Config KPS Purchase module with KPS Content Server service
+     * Purchases SDK will be set as a singleton.
+     * You should access the singleton instance using ``Purchases.shared``
+     *
+     * - Parameter project: The project Id we use in KPS Content Server
+     * - Parameter env: The server environment setting we want to use
+     
+     * - Returns: An instantiated `Purchases` object that has been set as a singleton.
+     */
+    @discardableResult static func configure(withProjectId projectId: String, env: KPSPurchaseEnv) -> KPSPurchases {
+        let endpointUrl = env.baseUrl+projectId
+        let subscriptionManager = SubscriptionManager(serverUrl: endpointUrl)
+        let purchases = KPSPurchases(serverUrl: endpointUrl, subscriptionManager: subscriptionManager)
+        setDefaultInstance(purchases)
+        return purchases
+    }
+    
 }
 
 // MARK: Transaction
