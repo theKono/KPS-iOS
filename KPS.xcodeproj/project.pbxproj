@@ -71,6 +71,8 @@
 		E8A4C8D026C11EAC0082B4F7 /* WhatYouWant.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */; };
 		E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */; };
 		E8A4C8DC26C4B3AE0082B4F7 /* KPSArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */; };
+		E8CD623E281A690500F65C85 /* ProductIdsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD623D281A690500F65C85 /* ProductIdsResponse.swift */; };
+		E8CD6240281A6A5100F65C85 /* productIds.json in Resources */ = {isa = PBXBuildFile; fileRef = E8CD623F281A6A5100F65C85 /* productIds.json */; };
 		E8E14EFE27D893CE007D6875 /* KPSPurchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14EFD27D893CE007D6875 /* KPSPurchases.swift */; };
 		E8E14F0027D8949D007D6875 /* KPSPurchaseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14EFF27D8949D007D6875 /* KPSPurchaseDelegate.swift */; };
 		E8E14F0427D895AD007D6875 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F0327D895AD007D6875 /* Strings.swift */; };
@@ -173,6 +175,8 @@
 		E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = WhatYouWant.mp3; sourceTree = "<group>"; };
 		E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Eventually.swift"; sourceTree = "<group>"; };
 		E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSArticle.swift; sourceTree = "<group>"; };
+		E8CD623D281A690500F65C85 /* ProductIdsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductIdsResponse.swift; sourceTree = "<group>"; };
+		E8CD623F281A6A5100F65C85 /* productIds.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = productIds.json; sourceTree = "<group>"; };
 		E8E14EFD27D893CE007D6875 /* KPSPurchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchases.swift; sourceTree = "<group>"; };
 		E8E14EFF27D8949D007D6875 /* KPSPurchaseDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPurchaseDelegate.swift; sourceTree = "<group>"; };
 		E8E14F0327D895AD007D6875 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -349,6 +353,7 @@
 				E889A99C280670A900E3718C /* rootCollection.json */,
 				E889A9A0280670A900E3718C /* transactions.json */,
 				E889A99E280670A900E3718C /* userPermission.json */,
+				E8CD623F281A6A5100F65C85 /* productIds.json */,
 				E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */,
 				E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */,
 			);
@@ -449,6 +454,7 @@
 				E889A98F280561FE00E3718C /* KPSPurchaseOrder.swift */,
 				E889A991280563AE00E3718C /* ActiveOrderResponse.swift */,
 				E889A9932805657600E3718C /* TransactionResponse.swift */,
+				E8CD623D281A690500F65C85 /* ProductIdsResponse.swift */,
 			);
 			path = Purchases;
 			sourceTree = "<group>";
@@ -627,6 +633,7 @@
 				E889A9A7280670A900E3718C /* audioContentWithoutPermission.json in Resources */,
 				E889A9A3280670A900E3718C /* activeOrders.json in Resources */,
 				E889A9A9280670A900E3718C /* articleContent.json in Resources */,
+				E8CD6240281A6A5100F65C85 /* productIds.json in Resources */,
 				E889A9A6280670A900E3718C /* rootCollection.json in Resources */,
 				E889A9A5280670A900E3718C /* audioContent.json in Resources */,
 				E889A9A8280670A900E3718C /* userPermission.json in Resources */,
@@ -759,6 +766,7 @@
 				E8E14F1A27DB274E007D6875 /* SubscriptionPeriod.swift in Sources */,
 				E845AD7727E4876700A3DC49 /* KPSPurchaseReceiptManager.swift in Sources */,
 				E845AD8A27E4927700A3DC49 /* ReceiptParser.swift in Sources */,
+				E8CD623E281A690500F65C85 /* ProductIdsResponse.swift in Sources */,
 				E889A990280561FE00E3718C /* KPSPurchaseOrder.swift in Sources */,
 				E8E14F1627DB253E007D6875 /* SK1StoreProduct.swift in Sources */,
 				E855722B27E0D13F00C9F8C0 /* PurchaseAPIService.swift in Sources */,

@@ -16,6 +16,7 @@ enum PurchaseAPIService {
     case uploadReceipt(receipt: String, version: Int, serverUrl: String)
     case fetchPaymentStatus(serverUrl: String)
     case fetchTransactions(order: String, serverUrl: String)
+    case fetchProductIds(serverUrl: String)
 
 }
 
@@ -23,7 +24,7 @@ extension PurchaseAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .uploadReceipt(_, _, let serverUrl), .fetchPaymentStatus(let serverUrl), .fetchTransactions(_, let serverUrl):
+        case .uploadReceipt(_, _, let serverUrl), .fetchPaymentStatus(let serverUrl), .fetchTransactions(_, let serverUrl), .fetchProductIds(let serverUrl):
             return URL(string: serverUrl)!
         }
     }
@@ -36,6 +37,8 @@ extension PurchaseAPIService: TargetType {
             return "activeOrders"
         case .fetchTransactions(_, _):
             return "transactions"
+        case .fetchProductIds(_):
+            return "productIds"
         }
     }
     
@@ -43,7 +46,7 @@ extension PurchaseAPIService: TargetType {
         switch self {
         case .uploadReceipt(_, _, _):
             return .post
-        case .fetchPaymentStatus(_), .fetchTransactions(_, _):
+        case .fetchPaymentStatus(_), .fetchTransactions(_, _), .fetchProductIds(_):
             return .get
         }
     }
@@ -64,6 +67,12 @@ extension PurchaseAPIService: TargetType {
                         return Data()
                     }
             return data
+        case .fetchProductIds(_):
+            guard let url = Bundle.resourceBundle.url(forResource: "productIds", withExtension: "json"),
+                  let data = try? Data(contentsOf: url) else {
+                        return Data()
+                    }
+            return data
         }
     }
     
@@ -71,7 +80,7 @@ extension PurchaseAPIService: TargetType {
         switch self {
         case .uploadReceipt(let receipt, let version, _):
             return .requestParameters(parameters: ["receipt": receipt, "storeKitVersion": version], encoding: JSONEncoding.default)
-        case .fetchPaymentStatus(_):
+        case .fetchPaymentStatus(_), .fetchProductIds(_):
             return .requestPlain
         case .fetchTransactions(let order, _):
             return .requestParameters(parameters: ["orderId": order], encoding: URLEncoding.queryString)

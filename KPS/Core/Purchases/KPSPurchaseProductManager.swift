@@ -34,7 +34,8 @@ class KPSPurchaseProductManager: NSObject {
             completion(.success([]))
             return
         }
-        self.completionHandlers[identifiers] = [completion]
+        self.completionHandlers[identifiers, default: []].append(completion)
+        
         let _ = self.startRequest(forIdentifiers: identifiers)
         
     }
@@ -70,6 +71,7 @@ class KPSPurchaseProductManager: NSObject {
             }
         }
     }
+    
 }
 
 extension KPSPurchaseProductManager: SKProductsRequestDelegate {
@@ -79,6 +81,15 @@ extension KPSPurchaseProductManager: SKProductsRequestDelegate {
         let identifiers = Set(response.products.map { $0.productIdentifier })
         
         guard let completionBlocks = self.completionHandlers[identifiers] else {
+            
+            for (key, value) in self.completionHandlers {
+                if identifiers.isSubset(of: key) {
+                    for completion in value {
+                        completion(.success(Set(response.products)))
+                    }
+                }
+                self.completionHandlers.removeValue(forKey: key)
+            }
             return
         }
 
@@ -91,9 +102,13 @@ extension KPSPurchaseProductManager: SKProductsRequestDelegate {
 
     func requestDidFinish(_ request: SKRequest) {
         
+        print("request finish")
+        
     }
 
     func request(_ request: SKRequest, didFailWithError error: Error) {
+        
+        print("request fail with error:\(error)")
         
     }
 

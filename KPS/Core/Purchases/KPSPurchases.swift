@@ -248,6 +248,47 @@ public class KPSPurchases: NSObject {
 public extension KPSPurchases {
 
     /**
+     * Fetches the `productIdentifiers` for our custom endpoint has been set.
+     *
+     * - Note: `completion` may be called without `productIdentifier` that you are expecting. This is usually caused by
+     * there are no correct configuration on the custom endpoint.
+     *
+     * - Parameter completion: An @escaping callback that is called with the available productIdentifiers.
+     * If the fetch fails for any reason it will return an empty array.
+     */
+    func getProductIdentifiers(completion: @escaping (Result<Set<String>, Error>) -> Void) {
+        
+        PurchaseAPIServiceProvider.request(.fetchProductIds(serverUrl: self.serverUrl)) { result in
+            switch result {
+            case let .success(response):
+                do {
+                    let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
+                    let productIdResponse = try JSONDecoder().decode(ProductIdsResponse.self, from: filteredResponse.data)
+                    
+                    //DEBUG
+                    //let response = String(decoding: response.data, as: UTF8.self)
+                    //print(response)
+                    if let productIds = productIdResponse.productIds {
+                        completion(.success(Set(productIds)))
+                    } else {
+                        completion(.success([]))
+                    }
+
+                } catch {
+                    
+                    let errorResponse = String(decoding: response.data, as: UTF8.self)
+                    print("[API Error: \(#function)] \(errorResponse)")
+                    completion(.success([]))
+                }
+            case .failure(let error):
+                print(error.errorDescription ?? "")
+                completion(.failure(error))
+                
+            }
+        }
+    }
+
+    /**
      * Fetches the `KPSPurchaseItem` for your IAPs for given `productIdentifiers`.
      *
      * - Note: `completion` may be called without `KPSPurchaseItem`s that you are expecting. This is usually caused by
@@ -409,6 +450,7 @@ public extension KPSPurchases {
     }
 
 }
+
 // MARK: Configuring Purchases
 public extension KPSPurchases {
 
@@ -539,6 +581,7 @@ private extension KPSPurchases {
 
         if let base64ReceiptData = KPSUtiltiy.getLocalReceiptData() {
             let base64Receipt = base64ReceiptData.base64EncodedString()
+            print(base64Receipt)
             var isPurchaseInTrial: Bool = false
             if let latestTransaction = self.receiptManager.localReceipt!.inAppPurchases.sorted(by: { $0.purchaseDate > $1.purchaseDate }).first {
                 isPurchaseInTrial = latestTransaction.isInTrialPeriod ?? false
