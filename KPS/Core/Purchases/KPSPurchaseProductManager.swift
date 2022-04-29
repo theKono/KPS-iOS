@@ -24,6 +24,8 @@ class KPSPurchaseProductManager: NSObject {
     private let productsRequestFactory: ProductsRequestFactory
     private var completionHandlers: [Set<String>: [Callback]] = [:]
     private var purchaseItems: [Set<String>: Set<KPSPurchaseItem>] = [:]
+    public var hasIntroductoryOfferProduct: Bool = false
+    public var introductoryOfferDays: Int = 0
     init(productsRequestFactory: ProductsRequestFactory = ProductsRequestFactory()) {
         self.productsRequestFactory = productsRequestFactory
     }
@@ -66,8 +68,15 @@ class KPSPurchaseProductManager: NSObject {
                 .map { Set($0.map(SK1StoreProduct.init).map(KPSPurchaseItem.from(product:))) }
             
             completion(result)
-            if let items = try? result.get() {
+            if let items = try? result.get() { 
                 self.purchaseItems[uniqueIdentifier] = items
+                for item in items {
+                    if item.introductoryDiscount != nil {
+                        self.hasIntroductoryOfferProduct = true
+                        self.introductoryOfferDays = item.introductoryDiscount!.subscriptionPeriod.days
+                        break
+                    }
+                }
             }
         }
     }

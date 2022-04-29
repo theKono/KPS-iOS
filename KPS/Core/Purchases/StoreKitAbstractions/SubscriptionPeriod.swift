@@ -13,7 +13,18 @@ public class SubscriptionPeriod: NSObject {
 
     public let value: Int
     public let unit: Unit
-
+    public var days: Int {
+        let dayPerPeriod: Int = {
+            switch self.unit {
+            case .day: return 1
+            case .week: return 7
+            case .month: return 30
+            case .year: return 365
+            case .unknown: return 1
+            }
+        }()
+        return self.value * dayPerPeriod
+    }
     public init(value: Int, unit: Unit) {
         assert(value > 0, "Invalid value: \(value)")
 

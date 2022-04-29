@@ -133,13 +133,21 @@ public class KPSPurchases: NSObject {
     private weak var privateDelegate: KPSPurchasesDelegate?
     private var purchaseItem: KPSPurchaseItem?
     private var verifyCompleteBlock: PurchaseCompletedBlock?
+    
     /**
      * Indicates whether the user is allowed to get trial period.
      */
     public var trailEligible: Bool {
         guard let receipt = self.receiptManager.localReceipt else {return true}
         
-        return receipt.inAppPurchases.count == 0
+        return receipt.inAppPurchases.count == 0 && self.productManager.hasIntroductoryOfferProduct
+    }
+    
+    /**
+     * Indicates the trail period days
+     */
+    public var introductoryOfferDays: Int {
+        return self.productManager.introductoryOfferDays
     }
 
     public var customerType: CustomerType = .Unknown {
