@@ -114,23 +114,8 @@ public class KPSPurchases: NSObject {
      * Delegate for `Purchases` instance. The delegate is responsible for handling promotional product purchases and
      * changes to customer information.
      */
-    public var delegate: KPSPurchasesDelegate? {
-        get { privateDelegate }
-        set {
-            guard newValue !== privateDelegate else {
-                print(Strings.purchase.purchases_delegate_set_multiple_times)
-                return
-            }
+    public weak var delegate: KPSPurchasesDelegate?
 
-            if newValue == nil {
-                print(Strings.purchase.purchases_delegate_set_to_nil)
-            }
-
-            privateDelegate = newValue
-        }
-    }
-
-    private weak var privateDelegate: KPSPurchasesDelegate?
     private var purchaseItem: KPSPurchaseItem?
     private var verifyCompleteBlock: PurchaseCompletedBlock?
     
@@ -157,7 +142,7 @@ public class KPSPurchases: NSObject {
 
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSPurchaseCustomerTypeChanged"), object: nil, userInfo: ["customerType": customerType])
             }
-            privateDelegate?.kpsPurchase(purchase: self, customerTypeDidChange: customerType)
+            delegate?.kpsPurchase(purchase: self, customerTypeDidChange: customerType)
         }
     }
     
@@ -212,7 +197,6 @@ public class KPSPurchases: NSObject {
     deinit {
         notificationCenter.removeObserver(self)
         
-        privateDelegate = nil
     }
 
     static func clearSingleton() {
@@ -401,7 +385,7 @@ public extension KPSPurchases {
     func showManageSubscriptions() {
         //purchasesOrchestrator.showManageSubscription(completion: completion)
         
-        let subscriptionURL = URL.init(string: "https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions")!
+        let subscriptionURL = URL.init(string: "https://apps.apple.com/account/subscriptions")!
         // itms-apps://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions
         UIApplication.shared.open(subscriptionURL)
         
@@ -589,7 +573,7 @@ private extension KPSPurchases {
 
         if let base64ReceiptData = KPSUtiltiy.getLocalReceiptData() {
             let base64Receipt = base64ReceiptData.base64EncodedString()
-            print(base64Receipt)
+            //print(base64Receipt)
             var isPurchaseInTrial: Bool = false
             if let latestTransaction = self.receiptManager.localReceipt!.inAppPurchases.sorted(by: { $0.purchaseDate > $1.purchaseDate }).first {
                 isPurchaseInTrial = latestTransaction.isInTrialPeriod ?? false
