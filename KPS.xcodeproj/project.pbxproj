@@ -34,6 +34,8 @@
 		E845AD9127E4938100A3DC49 /* ArraySlice_UInt8+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD9027E4938100A3DC49 /* ArraySlice_UInt8+Extensions.swift */; };
 		E845AD9327E493AB00A3DC49 /* UInt8+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD9227E493AB00A3DC49 /* UInt8+Extensions.swift */; };
 		E845AD9527E4945600A3DC49 /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E845AD9427E4945600A3DC49 /* FoundationExtensions.swift */; };
+		E84ADA562824C633007F89A0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E84ADA552824C633007F89A0 /* Images.xcassets */; };
+		E84ADA592824C7B3007F89A0 /* KPSToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84ADA582824C7B3007F89A0 /* KPSToast.swift */; };
 		E855722B27E0D13F00C9F8C0 /* PurchaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E855722A27E0D13F00C9F8C0 /* PurchaseAPIService.swift */; };
 		E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */ = {isa = PBXBuildFile; fileRef = E85FAB77275A3152006418CD /* KPS-iOS.podspec */; };
 		E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */; };
@@ -68,7 +70,6 @@
 		E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */; };
 		E8A4C8CB26BFD2590082B4F7 /* KPSClientMediaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8CA26BFD2590082B4F7 /* KPSClientMediaTests.swift */; };
 		E8A4C8CE26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8CD26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift */; };
-		E8A4C8D026C11EAC0082B4F7 /* WhatYouWant.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */; };
 		E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */; };
 		E8A4C8DC26C4B3AE0082B4F7 /* KPSArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */; };
 		E8CD623E281A690500F65C85 /* ProductIdsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CD623D281A690500F65C85 /* ProductIdsResponse.swift */; };
@@ -138,8 +139,10 @@
 		E845AD9027E4938100A3DC49 /* ArraySlice_UInt8+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArraySlice_UInt8+Extensions.swift"; sourceTree = "<group>"; };
 		E845AD9227E493AB00A3DC49 /* UInt8+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt8+Extensions.swift"; sourceTree = "<group>"; };
 		E845AD9427E4945600A3DC49 /* FoundationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
+		E84ADA552824C633007F89A0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E84ADA582824C7B3007F89A0 /* KPSToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSToast.swift; sourceTree = "<group>"; };
 		E855722A27E0D13F00C9F8C0 /* PurchaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseAPIService.swift; sourceTree = "<group>"; };
-		E85FAB77275A3152006418CD /* KPS-iOS.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "KPS-iOS.podspec"; sourceTree = SOURCE_ROOT; };
+		E85FAB77275A3152006418CD /* KPS-iOS.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "KPS-iOS.podspec"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSContentMeta.swift; sourceTree = "<group>"; };
 		E88396C526ECF76800B9C9F7 /* KPSCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSCollection.swift; sourceTree = "<group>"; };
 		E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSImageResource.swift; sourceTree = "<group>"; };
@@ -172,7 +175,6 @@
 		E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = IronBacon.mp3; sourceTree = "<group>"; };
 		E8A4C8CA26BFD2590082B4F7 /* KPSClientMediaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientMediaTests.swift; sourceTree = "<group>"; };
 		E8A4C8CD26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientMediaContentDelegateMock.swift; sourceTree = "<group>"; };
-		E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = WhatYouWant.mp3; sourceTree = "<group>"; };
 		E8A4C8D126C186D50082B4F7 /* XCTest+Eventually.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+Eventually.swift"; sourceTree = "<group>"; };
 		E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSArticle.swift; sourceTree = "<group>"; };
 		E8CD623D281A690500F65C85 /* ProductIdsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductIdsResponse.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				E833103626AAADDF00A6AA59 /* Core */,
 				E8E14F0127D89560007D6875 /* Logging */,
 				E833105026AB077600A6AA59 /* Model */,
+				E84ADA572824C768007F89A0 /* Views */,
 				E8E14EFC27D89356007D6875 /* Networking */,
 				E833108D26B43CDE00A6AA59 /* Resources */,
 				E833100226A4100E00A6AA59 /* KPS.h */,
@@ -343,6 +346,7 @@
 		E833108D26B43CDE00A6AA59 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E84ADA552824C633007F89A0 /* Images.xcassets */,
 				E889A999280670A900E3718C /* activeOrders.json */,
 				E889A99F280670A900E3718C /* articleContent.json */,
 				E889A99B280670A900E3718C /* audioContent.json */,
@@ -354,7 +358,6 @@
 				E889A9A0280670A900E3718C /* transactions.json */,
 				E889A99E280670A900E3718C /* userPermission.json */,
 				E8CD623F281A6A5100F65C85 /* productIds.json */,
-				E8A4C8CF26C11EAC0082B4F7 /* WhatYouWant.mp3 */,
 				E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */,
 			);
 			path = Resources;
@@ -402,6 +405,14 @@
 				E845AD9427E4945600A3DC49 /* FoundationExtensions.swift */,
 			);
 			path = Converter;
+			sourceTree = "<group>";
+		};
+		E84ADA572824C768007F89A0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E84ADA582824C7B3007F89A0 /* KPSToast.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E8855F9F280D66CD0067CA09 /* Purchase */ = {
@@ -633,13 +644,13 @@
 				E889A9A7280670A900E3718C /* audioContentWithoutPermission.json in Resources */,
 				E889A9A3280670A900E3718C /* activeOrders.json in Resources */,
 				E889A9A9280670A900E3718C /* articleContent.json in Resources */,
+				E84ADA562824C633007F89A0 /* Images.xcassets in Resources */,
 				E8CD6240281A6A5100F65C85 /* productIds.json in Resources */,
 				E889A9A6280670A900E3718C /* rootCollection.json in Resources */,
 				E889A9A5280670A900E3718C /* audioContent.json in Resources */,
 				E889A9A8280670A900E3718C /* userPermission.json in Resources */,
 				E889A9AA280670A900E3718C /* transactions.json in Resources */,
 				E889A9A1280670A900E3718C /* previewArticleContent.json in Resources */,
-				E8A4C8D026C11EAC0082B4F7 /* WhatYouWant.mp3 in Resources */,
 				E889A9A2280670A900E3718C /* folderContent.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -748,6 +759,7 @@
 				E8E14F2027DB29EA007D6875 /* SK1StoreProductDiscount.swift in Sources */,
 				E845AD8C27E492AE00A3DC49 /* ReceiptParsingError.swift in Sources */,
 				E8E14F1327DB22EB007D6875 /* KPSPurchaseItem.swift in Sources */,
+				E84ADA592824C7B3007F89A0 /* KPSToast.swift in Sources */,
 				E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */,
 				E8855FB12816795B0067CA09 /* KPSAuthCredential.swift in Sources */,
 				E8E14F1127DB1EFE007D6875 /* KPSTransactionManager.swift in Sources */,
