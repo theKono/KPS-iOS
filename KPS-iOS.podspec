@@ -104,7 +104,7 @@ Pod::Spec.new do |spec|
 
   # spec.resource  = "icon.png"
   # spec.resources = "Resources/*.png"
-    spec.resource_bundles = {"KPS_iOS" => "KPS/Resources/*"}
+    spec.resource_bundles = {"KPS_Resource" => "KPS/Resources/*"}
 
   # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
