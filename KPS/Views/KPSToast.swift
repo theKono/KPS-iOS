@@ -24,7 +24,7 @@ public class KPSToast {
     
     public static func show(_ view: UIView, message: String, type: KPSToastType, completion: (()->())? = nil) {
         let messageView = generateCustomizeToastView(message: message, type: type)
-        view.showToast(messageView) { didTap in 
+        view.showToast(messageView, duration: 1.5) { didTap in
             completion?()
         }
     }
@@ -51,8 +51,10 @@ public class KPSToast {
         let iconImageView: UIImageView = UIImageView(image: iconImage)
         let messageLabel: UILabel = UILabel()
         messageLabel.text = message
+        messageLabel.numberOfLines = 0
         messageLabel.textColor = .white
         messageLabel.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.systemFont(ofSize: 14, weight: .regular))
+        messageLabel.sizeToFit()
         
         view.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { make in
@@ -65,7 +67,10 @@ public class KPSToast {
             make.top.equalToSuperview().inset(14)
             make.bottom.equalToSuperview().inset(16)
             make.left.equalTo(iconImageView.snp.right).offset(13)
+            make.right.equalToSuperview().inset(16)
         }
+        let rectOfLabel = messageLabel.textRect(forBounds: CGRect(x: 0, y: 0, width: 310, height: CGFloat.greatestFiniteMagnitude), limitedToNumberOfLines: 0)
+        view.frame = CGRect(x: 0, y: 0, width: 355, height: rectOfLabel.height + 30.0)
         return view
     }
     
