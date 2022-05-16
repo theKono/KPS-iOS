@@ -6,7 +6,7 @@
 //
 
 
-public protocol KPSClientAnalyticDelegate: class {
+public protocol KPSClientAnalyticDelegate: AnyObject {
     
     func kpsClient(client: KPSClient, playedRecord record: KPSPlayRecord)
     

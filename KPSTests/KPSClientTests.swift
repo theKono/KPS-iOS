@@ -58,6 +58,10 @@ class KPSClientTests: XCTestCase {
         stubClient.login(keyID: access_id, token: access_token, completion: {result in })
         XCTAssertEqual(stubClient.currentUserId, "testUser")
         XCTAssertTrue(stubClient.isUserLoggedIn)
+        
+        //TODO: need to think the dependency of KPSClient and KPSPurchase
+        //current situation is not testable....
+        
     }
     
     func testLoginFailedInvalidUser() {
@@ -162,7 +166,20 @@ class KPSClientTests: XCTestCase {
         }
     }
     
-    
+    func testFetchUserPermissionSucceed() {
+        stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
+        
+        stubClient.fetchPermissions { [weak self] result in
+            switch result {
+            case .success(let permissions):
+                XCTAssertEqual(permissions.count, 2)
+                XCTAssertEqual(self?.stubClient.userPermissions.count, 2)
+            case .failure(_):
+                XCTAssert(false)
+            }
+        }
+    }
     func customSuccessEndpointClosure(_ target: CoreAPIService) -> Endpoint {
         return Endpoint(url: URL(target: target).absoluteString,
                         sampleResponseClosure: { .networkResponse(200, target.sampleData) },

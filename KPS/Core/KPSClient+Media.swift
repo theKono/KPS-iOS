@@ -21,7 +21,7 @@ public enum MediaPlayerState {
 }
 
 
-public protocol KPSClientMediaContentDelegate: class {
+public protocol KPSClientMediaContentDelegate: AnyObject {
     
     func kpsClient(client: KPSClient, playerStateDidChange state: MediaPlayerState)
     func kpsClient(client: KPSClient, playerPlayTimeDidChange currentTime: TimeInterval, totalTime: TimeInterval)
@@ -56,13 +56,12 @@ extension KPSClient {
                 let currentTime = CMTimeGetSeconds(currentItem.currentTime())
                 
                 guard duration.value > 0 && duration.timescale > 0 else {return}
-                let totalTime   = TimeInterval(duration.value) / TimeInterval(duration.timescale)
+                
                 self.currentTime = currentTime
 
                 guard let timeFrames = self.currentPlayAudioContent?.timeFrames,
                       let paragraphContent = self.currentPlayAudioContent?.paragraphContents else { return }
                 
-                var highlightSegment: Int = -1
                 var left: Int = 0, right: Int = timeFrames.count - 1
                 while left <= right {
                     let mid = left + (right-left) / 2
@@ -341,7 +340,6 @@ extension KPSClient {
             }
             currentParagraph = paragraphIndex
             currentHighlightRange = range
-            print("currentParagraph: \(currentParagraph)  currentHighlightRange: \(currentHighlightRange)")
         }
     }
     
@@ -427,7 +425,7 @@ extension KPSClient {
     
     internal func getAVPlayerItem(source: KPSAudioContent) -> AVPlayerItem {
         let item = AVPlayerItem(url: source.streamingUrl!)
-        item.audioTimePitchAlgorithm = .spectral
+        item.audioTimePitchAlgorithm = .timeDomain
         return item
     }
     

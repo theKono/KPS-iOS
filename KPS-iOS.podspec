@@ -88,7 +88,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "Classes", "Classes/**/*.{h,m}","KPS/**/*.{h,m,swift,json}"
+  spec.source_files  = "KPS/**/*.{swift}"
   spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
@@ -104,7 +104,7 @@ Pod::Spec.new do |spec|
 
   # spec.resource  = "icon.png"
   # spec.resources = "Resources/*.png"
-    spec.resource_bundles = {"KPS_iOS" => "KPS/Resources/*"}
+    spec.resource_bundles = {"KPS_Resource" => "KPS/Resources/*"}
 
   # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
@@ -117,7 +117,7 @@ Pod::Spec.new do |spec|
 
   # spec.framework  = "SomeFramework"
   # spec.frameworks = "SomeFramework", "AnotherFramework"
-    spec.framework = "Foundation", "UIKit", "AVFoundation"
+    spec.framework = "Foundation", "UIKit", "AVFoundation", "StoreKit"
 
   # spec.library   = "iconv"
   # spec.libraries = "iconv", "xml2"
@@ -134,5 +134,6 @@ Pod::Spec.new do |spec|
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
     spec.dependency "Moya", "~> 14.0"
-
+    spec.dependency "Toast-Swift", "~> 5.0.1"
+    spec.dependency "SnapKit", "~> 5.0.0"
 end

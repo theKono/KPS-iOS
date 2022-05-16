@@ -18,7 +18,9 @@ target 'KPS' do
   
   # Pods for KPS
   pod 'Moya', '~> 14.0'
-
+  pod 'Toast-Swift', '~> 5.0.1'
+  pod 'SnapKit', '~> 5.0.0'
+  
   target 'KPSTests' do
     inherit! :complete
   end

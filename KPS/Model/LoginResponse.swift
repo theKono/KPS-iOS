@@ -6,7 +6,7 @@
 // MARK: - LoginResponse
 public struct LoginResponse: Codable {
     let isNew: Bool
-    let kpsSession: String
+    public let kpsSession: String
     let user: KPSUser
 
     enum CodingKeys: String, CodingKey {
@@ -26,4 +26,22 @@ public struct KPSUser: Codable {
     }
 }
 
+public struct PermissionResponse {
+    
+    enum CodingKeys: String, CodingKey {
+        case error, permissions
+    }
+    public var error: String?
+    public var permissions: [String: Any]?
+}
 
+extension PermissionResponse: Decodable {
+    public init(from decoder: Decoder) throws {
+
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        error = try container.decodeIfPresent(String.self, forKey: .error)
+        permissions = try container.decodeIfPresent([String: Any].self, forKey: .permissions)
+        
+    }
+
+}

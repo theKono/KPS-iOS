@@ -1,0 +1,11 @@
+{
+    "error": null,
+    "productIds": [
+        "fairytalesDev.aycr_monthly",
+        "com.thekono.summitTest.aycr_monthly"
+    ],
+    "permissions": {
+        "fairytalesDev.aycr_monthly": "VIP",
+        "com.thekono.summitTest.aycr_monthly": "VVIP"
+    }
+}

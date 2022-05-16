@@ -4,18 +4,19 @@
 //
 
 import Foundation
-import Moya
 
 public final class KPSUtiltiy {
 
     public init() {}
     
-    public func add(a: Int, b: Int) -> Int {
-        return a + b
+    static func getLocalReceiptData() -> Data? {
+        
+        guard let localReceiptPath = Bundle.main.appStoreReceiptURL?.path else { return nil }
+        if FileManager.default.fileExists(atPath: localReceiptPath) {
+            if let receiptData = FileManager.default.contents(atPath: localReceiptPath) {
+                return receiptData
+            }
+        }
+        return nil
     }
-    
-    public func sub(a: Int, b: Int) -> Int {
-        return a - b
-    }
-    
 }
