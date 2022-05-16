@@ -76,7 +76,7 @@ public enum KPSPurchaseEnv {
         case .stg:
             return "https://kps-stg.thekono.com/api/v1/projects/"
         case .prd:
-            return " https://kps.thekono.com/api/v1/projects/"
+            return "https://kps.thekono.com/api/v1/projects/"
         }
     }
 }

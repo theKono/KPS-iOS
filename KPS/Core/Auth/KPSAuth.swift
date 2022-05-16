@@ -40,7 +40,7 @@ public enum KPSAuthEnv {
         case .stg:
             return "https://kps-auth-stg.thekono.com/api/v1/"
         case .prd:
-            return " https://kps-auth.thekono.com/api/v1/"
+            return "https://kps-auth.thekono.com/api/v1/"
         }
     }
     
