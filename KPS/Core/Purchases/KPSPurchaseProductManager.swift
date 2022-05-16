@@ -24,6 +24,8 @@ class KPSPurchaseProductManager: NSObject {
     private let productsRequestFactory: ProductsRequestFactory
     private var completionHandlers: [Set<String>: [Callback]] = [:]
     private var purchaseItems: [Set<String>: Set<KPSPurchaseItem>] = [:]
+    public var hasIntroductoryOfferProduct: Bool = false
+    public var introductoryOfferDays: Int = 0
     init(productsRequestFactory: ProductsRequestFactory = ProductsRequestFactory()) {
         self.productsRequestFactory = productsRequestFactory
     }
@@ -34,7 +36,8 @@ class KPSPurchaseProductManager: NSObject {
             completion(.success([]))
             return
         }
-        self.completionHandlers[identifiers] = [completion]
+        self.completionHandlers[identifiers, default: []].append(completion)
+        
         let _ = self.startRequest(forIdentifiers: identifiers)
         
     }
@@ -65,11 +68,19 @@ class KPSPurchaseProductManager: NSObject {
                 .map { Set($0.map(SK1StoreProduct.init).map(KPSPurchaseItem.from(product:))) }
             
             completion(result)
-            if let items = try? result.get() {
+            if let items = try? result.get() { 
                 self.purchaseItems[uniqueIdentifier] = items
+                for item in items {
+                    if item.introductoryDiscount != nil {
+                        self.hasIntroductoryOfferProduct = true
+                        self.introductoryOfferDays = item.introductoryDiscount!.subscriptionPeriod.days
+                        break
+                    }
+                }
             }
         }
     }
+    
 }
 
 extension KPSPurchaseProductManager: SKProductsRequestDelegate {
@@ -79,6 +90,15 @@ extension KPSPurchaseProductManager: SKProductsRequestDelegate {
         let identifiers = Set(response.products.map { $0.productIdentifier })
         
         guard let completionBlocks = self.completionHandlers[identifiers] else {
+            
+            for (key, value) in self.completionHandlers {
+                if identifiers.isSubset(of: key) {
+                    for completion in value {
+                        completion(.success(Set(response.products)))
+                    }
+                }
+                self.completionHandlers.removeValue(forKey: key)
+            }
             return
         }
 
@@ -91,9 +111,13 @@ extension KPSPurchaseProductManager: SKProductsRequestDelegate {
 
     func requestDidFinish(_ request: SKRequest) {
         
+        print("request finish")
+        
     }
 
     func request(_ request: SKRequest, didFailWithError error: Error) {
+        
+        print("request fail with error:\(error)")
         
     }
 

@@ -62,6 +62,25 @@ public enum KPSPurchaseError: Swift.Error {
 }
 
 
+// MARK: KPS Purchase Service Env
+public enum KPSPurchaseEnv {
+    
+    case dev
+    case stg
+    case prd
+    
+    var baseUrl: String{
+        switch self{
+        case .dev:
+            return "https://kps-dev.thekono.com/api/v1/projects/"
+        case .stg:
+            return "https://kps-stg.thekono.com/api/v1/projects/"
+        case .prd:
+            return "https://kps.thekono.com/api/v1/projects/"
+        }
+    }
+}
+
 
 /**
  * `Purchases` is the entry point. It should be instantiated as soon as your app has a unique
@@ -95,32 +114,25 @@ public class KPSPurchases: NSObject {
      * Delegate for `Purchases` instance. The delegate is responsible for handling promotional product purchases and
      * changes to customer information.
      */
-    public var delegate: KPSPurchasesDelegate? {
-        get { privateDelegate }
-        set {
-            guard newValue !== privateDelegate else {
-                print(Strings.purchase.purchases_delegate_set_multiple_times)
-                return
-            }
+    public weak var delegate: KPSPurchasesDelegate?
 
-            if newValue == nil {
-                print(Strings.purchase.purchases_delegate_set_to_nil)
-            }
-
-            privateDelegate = newValue
-        }
-    }
-
-    private weak var privateDelegate: KPSPurchasesDelegate?
     private var purchaseItem: KPSPurchaseItem?
     private var verifyCompleteBlock: PurchaseCompletedBlock?
+    
     /**
      * Indicates whether the user is allowed to get trial period.
      */
     public var trailEligible: Bool {
         guard let receipt = self.receiptManager.localReceipt else {return true}
         
-        return receipt.inAppPurchases.count == 0
+        return receipt.inAppPurchases.count == 0 && self.productManager.hasIntroductoryOfferProduct
+    }
+    
+    /**
+     * Indicates the trail period days
+     */
+    public var introductoryOfferDays: Int {
+        return self.productManager.introductoryOfferDays
     }
 
     public var customerType: CustomerType = .Unknown {
@@ -130,7 +142,7 @@ public class KPSPurchases: NSObject {
 
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSPurchaseCustomerTypeChanged"), object: nil, userInfo: ["customerType": customerType])
             }
-            privateDelegate?.kpsPurchase(purchase: self, customerTypeDidChange: customerType)
+            delegate?.kpsPurchase(purchase: self, customerTypeDidChange: customerType)
         }
     }
     
@@ -185,7 +197,6 @@ public class KPSPurchases: NSObject {
     deinit {
         notificationCenter.removeObserver(self)
         
-        privateDelegate = nil
     }
 
     static func clearSingleton() {
@@ -227,6 +238,47 @@ public class KPSPurchases: NSObject {
 
 // MARK: Purchasing
 public extension KPSPurchases {
+
+    /**
+     * Fetches the `productIdentifiers` for our custom endpoint has been set.
+     *
+     * - Note: `completion` may be called without `productIdentifier` that you are expecting. This is usually caused by
+     * there are no correct configuration on the custom endpoint.
+     *
+     * - Parameter completion: An @escaping callback that is called with the available productIdentifiers.
+     * If the fetch fails for any reason it will return an empty array.
+     */
+    func getProductIdentifiers(completion: @escaping (Result<Set<String>, Error>) -> Void) {
+        
+        PurchaseAPIServiceProvider.request(.fetchProductIds(serverUrl: self.serverUrl)) { result in
+            switch result {
+            case let .success(response):
+                do {
+                    let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
+                    let productIdResponse = try JSONDecoder().decode(ProductIdsResponse.self, from: filteredResponse.data)
+                    
+                    //DEBUG
+                    //let response = String(decoding: response.data, as: UTF8.self)
+                    //print(response)
+                    if let productIds = productIdResponse.productIds {
+                        completion(.success(Set(productIds)))
+                    } else {
+                        completion(.success([]))
+                    }
+
+                } catch {
+                    
+                    let errorResponse = String(decoding: response.data, as: UTF8.self)
+                    print("[API Error: \(#function)] \(errorResponse)")
+                    completion(.success([]))
+                }
+            case .failure(let error):
+                print(error.errorDescription ?? "")
+                completion(.failure(error))
+                
+            }
+        }
+    }
 
     /**
      * Fetches the `KPSPurchaseItem` for your IAPs for given `productIdentifiers`.
@@ -333,7 +385,7 @@ public extension KPSPurchases {
     func showManageSubscriptions() {
         //purchasesOrchestrator.showManageSubscription(completion: completion)
         
-        let subscriptionURL = URL.init(string: "https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions")!
+        let subscriptionURL = URL.init(string: "https://apps.apple.com/account/subscriptions")!
         // itms-apps://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions
         UIApplication.shared.open(subscriptionURL)
         
@@ -390,12 +442,12 @@ public extension KPSPurchases {
     }
 
 }
+
 // MARK: Configuring Purchases
 public extension KPSPurchases {
 
     /**
-     * Configures an instance of the Purchases SDK with a custom userDefaults. Use this constructor if you want to
-     * sync status across a shared container, such as between a host app and an extension. The instance of the
+     * Configures an instance of the Purchases SDK with a custom userDefaults.
      * Purchases SDK will be set as a singleton.
      * You should access the singleton instance using ``Purchases.shared``
      *
@@ -410,6 +462,25 @@ public extension KPSPurchases {
         setDefaultInstance(purchases)
         return purchases
     }
+    
+    /**
+     * Config KPS Purchase module with KPS Content Server service
+     * Purchases SDK will be set as a singleton.
+     * You should access the singleton instance using ``Purchases.shared``
+     *
+     * - Parameter project: The project Id we use in KPS Content Server
+     * - Parameter env: The server environment setting we want to use
+     
+     * - Returns: An instantiated `Purchases` object that has been set as a singleton.
+     */
+    @discardableResult static func configure(withProjectId projectId: String, env: KPSPurchaseEnv) -> KPSPurchases {
+        let endpointUrl = env.baseUrl+projectId
+        let subscriptionManager = SubscriptionManager(serverUrl: endpointUrl)
+        let purchases = KPSPurchases(serverUrl: endpointUrl, subscriptionManager: subscriptionManager)
+        setDefaultInstance(purchases)
+        return purchases
+    }
+    
 }
 
 // MARK: Transaction
@@ -502,6 +573,7 @@ private extension KPSPurchases {
 
         if let base64ReceiptData = KPSUtiltiy.getLocalReceiptData() {
             let base64Receipt = base64ReceiptData.base64EncodedString()
+            //print(base64Receipt)
             var isPurchaseInTrial: Bool = false
             if let latestTransaction = self.receiptManager.localReceipt!.inAppPurchases.sorted(by: { $0.purchaseDate > $1.purchaseDate }).first {
                 isPurchaseInTrial = latestTransaction.isInTrialPeriod ?? false

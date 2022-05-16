@@ -12,7 +12,7 @@ extension Bundle {
     
     static var resourceBundle: Bundle {
 
-        if let resourceBundleURL = Bundle.current.url(forResource: "KPS_iOS", withExtension: "bundle") {
+        if let resourceBundleURL = Bundle.current.url(forResource: "KPS_Resource", withExtension: "bundle") {
             // Create a bundle object for the bundle found at that URL.
             guard let resourceBundle = Bundle(url: resourceBundleURL)
                 else { fatalError("Cannot access SDK.bundle!") }

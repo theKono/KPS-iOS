@@ -164,6 +164,14 @@ public extension KPSPurchaseItem {
         return period.pricePerMonth(withTotalPrice: self.price) as NSDecimalNumber?
     }
 
+    /// The price of the `pricePerMonth`
+    /// - Returns: `nil` if the product is not a subscription.
+    var localizedPricePerMonth: String? {
+        guard let price = self.pricePerMonth else { return nil }
+        
+        return String(format: "%@%@ %.0f",self.localizedCurrencyString, self.localizedCurrencySymbol, ceil(price.doubleValue))
+    }
+    
     /// The price of the `introductoryPrice` formatted using ``priceFormatter``.
     /// - Returns: `nil` if there is no `introductoryPrice`.
     var localizedIntroductoryPriceString: String? {
