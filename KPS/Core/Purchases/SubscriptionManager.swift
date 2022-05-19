@@ -15,8 +15,8 @@ public enum CustomerSubscriptionStatus {
 }
 
 public enum CustomerPaymentStatus {
-    static let interruptedByPause: String = "paused"
-    static let interruptedByKill: String = "killed"
+    static let interruptedByPause: String = "PAUSED"
+    static let interruptedByKill: String = "KILLED"
     static let interruptedByPlanChanged: String = "UPDOWNGRADED"
     
     case Paused
