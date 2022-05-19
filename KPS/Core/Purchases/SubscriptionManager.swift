@@ -15,7 +15,6 @@ public enum CustomerSubscriptionStatus {
 }
 
 public enum CustomerPaymentStatus {
-    static let interruptedByPause: String = "PAUSED"
     static let interruptedByKill: String = "KILLED"
     static let interruptedByPlanChanged: String = "UPDOWNGRADED"
     
@@ -68,8 +67,6 @@ class SubscriptionManager {
             if let interruptedType = order.latestTransaction.interruptedType {
                 if interruptedType == CustomerPaymentStatus.interruptedByKill {
                     paymentStatus = .Killed
-                } else if interruptedType == CustomerPaymentStatus.interruptedByPause {
-                    paymentStatus = .Paused
                 } else if interruptedType == CustomerPaymentStatus.interruptedByPlanChanged {
                     paymentStatus = .PlanChanged
                 }
@@ -79,6 +76,8 @@ class SubscriptionManager {
                 } else {
                     if order.gracePeriodEnd != nil && order.gracePeriodEnd! > currentTimeStamp_ms {
                         paymentStatus = .GracePeriod
+                    } else if order.pauseResumeTime != nil && order.pauseResumeTime! > currentTimeStamp_ms {
+                        paymentStatus = .Paused
                     } else if order.nextPlan != nil {
                         paymentStatus = .OnHold
                     } else {
