@@ -136,4 +136,6 @@ Pod::Spec.new do |spec|
     spec.dependency "Moya", "~> 14.0"
     spec.dependency "Toast-Swift", "~> 5.0.1"
     spec.dependency "SnapKit", "~> 5.0.0"
+    spec.dependency "DeviceKit", "~> 4.0"
+    spec.dependency "Kingfisher", "~> 7.0"
 end
