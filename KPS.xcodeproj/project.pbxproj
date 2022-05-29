@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		C2E82FE58B8F9BF98685E74B /* Pods_KPS_KPSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BAE52B314AE2D8F2390C9C7 /* Pods_KPS_KPSTests.framework */; };
+		E825CE7628435D5E008527C6 /* KPSArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825CE7528435D5E008527C6 /* KPSArticleTableViewCell.swift */; };
+		E825CE7828435EBD008527C6 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825CE7728435EBD008527C6 /* UIFont+Extensions.swift */; };
+		E825CE7A284361A0008527C6 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825CE79284361A0008527C6 /* UIColor.swift */; };
+		E825CE7C2843647B008527C6 /* KPSViewComponentConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825CE7B2843647B008527C6 /* KPSViewComponentConstants.swift */; };
 		E833100926A4100E00A6AA59 /* KPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8330FFF26A4100E00A6AA59 /* KPS.framework */; };
 		E833101026A4100E00A6AA59 /* KPS.h in Headers */ = {isa = PBXBuildFile; fileRef = E833100226A4100E00A6AA59 /* KPS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833103126A417CC00A6AA59 /* KPSUtility.swift */; };
@@ -108,6 +112,10 @@
 		B1B1F3A83BAAA5F378116184 /* Pods-KPS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPS.debug.xcconfig"; path = "Target Support Files/Pods-KPS/Pods-KPS.debug.xcconfig"; sourceTree = "<group>"; };
 		E3AEEF5E789FDC4CF50D8D15 /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7DF22ABB67C81660A12B8C6 /* Pods-KPS-KPSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPS-KPSTests.debug.xcconfig"; path = "Target Support Files/Pods-KPS-KPSTests/Pods-KPS-KPSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E825CE7528435D5E008527C6 /* KPSArticleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSArticleTableViewCell.swift; sourceTree = "<group>"; };
+		E825CE7728435EBD008527C6 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
+		E825CE79284361A0008527C6 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		E825CE7B2843647B008527C6 /* KPSViewComponentConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSViewComponentConstants.swift; sourceTree = "<group>"; };
 		E8330FFF26A4100E00A6AA59 /* KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E833100226A4100E00A6AA59 /* KPS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPS.h; sourceTree = "<group>"; };
 		E833100326A4100E00A6AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -244,6 +252,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E825CE7428435D29008527C6 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E825CE7528435D5E008527C6 /* KPSArticleTableViewCell.swift */,
+				E825CE7B2843647B008527C6 /* KPSViewComponentConstants.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		E8330FF526A4100E00A6AA59 = {
 			isa = PBXGroup;
 			children = (
@@ -339,6 +356,8 @@
 				E833108A26B3B0F100A6AA59 /* Codable+Extension.swift */,
 				E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */,
 				E88C466926CD260C001243F5 /* ThreadSafeArray.swift */,
+				E825CE7728435EBD008527C6 /* UIFont+Extensions.swift */,
+				E825CE79284361A0008527C6 /* UIColor.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -410,6 +429,7 @@
 		E84ADA572824C768007F89A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E825CE7428435D29008527C6 /* Components */,
 				E84ADA582824C7B3007F89A0 /* KPSToast.swift */,
 			);
 			path = Views;
@@ -736,6 +756,7 @@
 				E845AD8827E4923F00A3DC49 /* ASN1ObjectIdentifierBuilder.swift in Sources */,
 				E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */,
 				E89BC16B277DA60C001633C5 /* KPSPlayRecord.swift in Sources */,
+				E825CE7628435D5E008527C6 /* KPSArticleTableViewCell.swift in Sources */,
 				E833108B26B3B0F100A6AA59 /* Codable+Extension.swift in Sources */,
 				E8855FAA28159C180067CA09 /* KPSAuth.swift in Sources */,
 				E8E14F0B27DB1EAC007D6875 /* KPSPurchaseProductManager.swift in Sources */,
@@ -748,6 +769,7 @@
 				E845AD8327E4919300A3DC49 /* AppleReceipt.swift in Sources */,
 				E845AD8E27E4930400A3DC49 /* ASN1ObjectIdentifier.swift in Sources */,
 				E845AD9327E493AB00A3DC49 /* UInt8+Extensions.swift in Sources */,
+				E825CE7828435EBD008527C6 /* UIFont+Extensions.swift in Sources */,
 				E8E14F0427D895AD007D6875 /* Strings.swift in Sources */,
 				E889A9942805657600E3718C /* TransactionResponse.swift in Sources */,
 				E845AD8527E491EB00A3DC49 /* InAppPurchase.swift in Sources */,
@@ -774,6 +796,8 @@
 				E8855FAF281679320067CA09 /* KPSAuthResponse.swift in Sources */,
 				E8E14F0927DB166E007D6875 /* SubscriptionManager.swift in Sources */,
 				E88C466A26CD260C001243F5 /* ThreadSafeArray.swift in Sources */,
+				E825CE7C2843647B008527C6 /* KPSViewComponentConstants.swift in Sources */,
+				E825CE7A284361A0008527C6 /* UIColor.swift in Sources */,
 				E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */,
 				E8E14F1A27DB274E007D6875 /* SubscriptionPeriod.swift in Sources */,
 				E845AD7727E4876700A3DC49 /* KPSPurchaseReceiptManager.swift in Sources */,
