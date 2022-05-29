@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import DeviceKit
 
 public final class KPSUtiltiy {
 
@@ -18,5 +19,13 @@ public final class KPSUtiltiy {
             }
         }
         return nil
+    }
+    
+    static var deviceIsPad: Bool {
+        return Device.current.isPad
+    }
+    
+    static var deviceIsPhone: Bool {
+        return Device.current.isPhone
     }
 }
