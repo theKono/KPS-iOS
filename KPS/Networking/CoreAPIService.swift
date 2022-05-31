@@ -14,6 +14,8 @@ enum CoreAPIService {
     
     case fetchRootCollection(server: Server)
     case fetchCollection(Id: String, isNeedParent: Bool, isNeedSiblings: Bool, server: Server)
+    
+    case fetchArticle(Id: String, isNeedParent: Bool, isNeedSiblings: Bool, server: Server)
 }
 
 
@@ -23,6 +25,10 @@ extension CoreAPIService: TargetType {
         switch self {
         case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server):
           return server.projectUrl
+        case .fetchArticle(_, _, _, let server):
+            return server.projectUrl
+            // for dev
+//            return server.baseUrl.appendingPathComponent("/projects/61398d3c62cbe46b8b9e58af")
         }
     }
     var path: String {
@@ -37,6 +43,8 @@ extension CoreAPIService: TargetType {
             return "/content"
         case .fetchCollection(let Id, _, _, _):
             return "/content/\(Id)"
+        case .fetchArticle(let Id, _, _, _):
+            return "/content/\(Id)"
         }
     }
     var method: Moya.Method {
@@ -45,7 +53,7 @@ extension CoreAPIService: TargetType {
             return .put
         case .logout(_):
             return .delete
-        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _):
+        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _), .fetchArticle(_, _, _, _):
             return .get
         }
     }
@@ -54,6 +62,8 @@ extension CoreAPIService: TargetType {
         case .logout(_), .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _), .fetchRootCollection(_): // Send no parameters
             return .requestPlain
         case .fetchCollection(_, let isNeedParent, let isNeedSibling, _):
+            return .requestParameters(parameters: ["parent": isNeedParent, "siblings": isNeedSibling], encoding: URLEncoding.queryString)
+        case .fetchArticle(_, let isNeedParent, let isNeedSibling, _):
             return .requestParameters(parameters: ["parent": isNeedParent, "siblings": isNeedSibling], encoding: URLEncoding.queryString)
         case .login(let keyId, let token, _):
             return .requestParameters(parameters: ["kid": keyId, "token": token], encoding: JSONEncoding.default)
@@ -81,6 +91,12 @@ extension CoreAPIService: TargetType {
             return data
         case .fetchCollection(_, _, _, _):
             guard let url = Bundle.resourceBundle.url(forResource: "folderContent", withExtension: "json"),
+                  let data = try? Data(contentsOf: url) else {
+                        return Data()
+                    }
+            return data
+        case .fetchArticle(_, _, _, _):
+            guard let url = Bundle.resourceBundle.url(forResource: "articleContent", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }

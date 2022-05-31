@@ -98,6 +98,7 @@
 		E8E14F1E27DB2996007D6875 /* SK2StoreProductDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1D27DB2996007D6875 /* SK2StoreProductDiscount.swift */; };
 		E8E14F2027DB29EA007D6875 /* SK1StoreProductDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1F27DB29EA007D6875 /* SK1StoreProductDiscount.swift */; };
 		E8E14F2227DF1B77007D6875 /* CustomerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F2127DF1B77007D6875 /* CustomerInfo.swift */; };
+		F81A26C62841155F00FBCD82 /* KPSClient+Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,6 +215,7 @@
 		E8E14F1F27DB29EA007D6875 /* SK1StoreProductDiscount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SK1StoreProductDiscount.swift; sourceTree = "<group>"; };
 		E8E14F2127DF1B77007D6875 /* CustomerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerInfo.swift; sourceTree = "<group>"; };
 		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KPSClient+Article.swift"; sourceTree = "<group>"; };
 		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -332,6 +334,7 @@
 				E833103726AAAE1D00A6AA59 /* KPSClient.swift */,
 				E89BC168277DA5FA001633C5 /* KPSClient+Analytic.swift */,
 				E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */,
+				F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */,
 				E8E14EFB27D8932D007D6875 /* Purchases */,
 				E8855FA4281598BB0067CA09 /* Auth */,
 			);
@@ -772,6 +775,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E845AD8827E4923F00A3DC49 /* ASN1ObjectIdentifierBuilder.swift in Sources */,
+				F81A26C62841155F00FBCD82 /* KPSClient+Article.swift in Sources */,
 				E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */,
 				E825CEC92844746E008527C6 /* KPSBookInfoView.swift in Sources */,
 				E89BC16B277DA60C001633C5 /* KPSPlayRecord.swift in Sources */,
