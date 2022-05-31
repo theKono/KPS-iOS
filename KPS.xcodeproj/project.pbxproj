@@ -99,6 +99,7 @@
 		E8E14F2027DB29EA007D6875 /* SK1StoreProductDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1F27DB29EA007D6875 /* SK1StoreProductDiscount.swift */; };
 		E8E14F2227DF1B77007D6875 /* CustomerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F2127DF1B77007D6875 /* CustomerInfo.swift */; };
 		F81A26C62841155F00FBCD82 /* KPSClient+Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */; };
+		F8B890C32845DE5F00C7BDD7 /* KPSClientArticleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,6 +217,7 @@
 		E8E14F2127DF1B77007D6875 /* CustomerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerInfo.swift; sourceTree = "<group>"; };
 		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KPSClient+Article.swift"; sourceTree = "<group>"; };
+		F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientArticleTests.swift; sourceTree = "<group>"; };
 		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -318,6 +320,7 @@
 		E833100C26A4100E00A6AA59 /* KPSTests */ = {
 			isa = PBXGroup;
 			children = (
+				F8B890C12845DE0800C7BDD7 /* Article */,
 				E8855F9F280D66CD0067CA09 /* Purchase */,
 				E8855FA1280D68900067CA09 /* Media */,
 				E833109226B44C1B00A6AA59 /* KPSClientTests.swift */,
@@ -580,6 +583,14 @@
 				E8E14F1D27DB2996007D6875 /* SK2StoreProductDiscount.swift */,
 			);
 			path = StoreKitAbstractions;
+			sourceTree = "<group>";
+		};
+		F8B890C12845DE0800C7BDD7 /* Article */ = {
+			isa = PBXGroup;
+			children = (
+				F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */,
+			);
+			path = Article;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -851,6 +862,7 @@
 				E833103326A417CC00A6AA59 /* KPSUtility.swift in Sources */,
 				E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */,
 				E833109326B44C1B00A6AA59 /* KPSClientTests.swift in Sources */,
+				F8B890C32845DE5F00C7BDD7 /* KPSClientArticleTests.swift in Sources */,
 				E8A4C8CE26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift in Sources */,
 				E8855FA3280D69000067CA09 /* KPSPurchaseDelegateMock.swift in Sources */,
 				E889A9962805CF4900E3718C /* KPSPurchaseTests.swift in Sources */,
