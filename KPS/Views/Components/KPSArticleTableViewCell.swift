@@ -48,7 +48,6 @@ public class KPSArticleTableViewCell: UITableViewCell {
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 2.0
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .red
         return imageView
     }()
     

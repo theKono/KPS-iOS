@@ -40,7 +40,6 @@ public class KPSBookInfoView: UIView {
         imageView.layer.borderColor = UIColor.borderGray.cgColor
         imageView.layer.borderWidth = 1.0
         imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .red
         return imageView
     }()
     
