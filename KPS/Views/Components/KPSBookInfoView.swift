@@ -134,29 +134,30 @@ public class KPSBookInfoView: UIView {
         
         actionButton.addTarget(self, action: #selector(didTapActionBtn), for: .touchUpInside)
         
+        actionButton.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(ComponentConstants.normalHorizontalMargin)
+            make.top.equalTo(bookNameLabel.snp.bottom).offset(ComponentConstants.largeComponentInterSpacing)
+            make.height.equalTo(ComponentConstants.actionButtonHeight)
+        }
+        
+        
+        addSubview(bookDescriptionLabel)
+        bookDescriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(actionButton.snp.bottom).offset(ComponentConstants.normalComponentInterSpacing)
+            make.left.right.equalTo(actionButton)
+            make.height.lessThanOrEqualTo(ComponentConstants.bookInfoDescriptionHeight)
+        }
+        
+        addSubview(moreButton)
+        moreButton.addTarget(self, action: #selector(didTapMoreBtn), for: .touchUpInside)
+        
         if KPSUtiltiy.deviceIsPhone {
             
-            actionButton.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(ComponentConstants.normalHorizontalMargin)
-                make.top.equalTo(bookNameLabel.snp.bottom).offset(ComponentConstants.largeComponentInterSpacing)
-                make.height.equalTo(ComponentConstants.actionButtonHeight)
-            }
-            
-            
-            addSubview(bookDescriptionLabel)
-            bookDescriptionLabel.snp.makeConstraints { make in
-                make.top.equalTo(actionButton.snp.bottom).offset(ComponentConstants.normalComponentInterSpacing)
-                make.left.right.equalTo(actionButton)
-                make.height.lessThanOrEqualTo(ComponentConstants.bookInfoDescriptionHeight)
-            }
-            
-            addSubview(moreButton)
             moreButton.snp.makeConstraints { make in
                 make.left.equalTo(bookDescriptionLabel.snp.left)
                 make.top.equalTo(bookDescriptionLabel.snp.bottom).offset(ComponentConstants.normalComponentInterSpacing)
                 make.height.equalTo(ComponentConstants.bookInfoMoreButtonHeight)
             }
-            moreButton.addTarget(self, action: #selector(didTapMoreBtn), for: .touchUpInside)
             
             addSubview(separator)
             separator.snp.makeConstraints { make in
@@ -167,10 +168,10 @@ public class KPSBookInfoView: UIView {
             }   
         } else {
             
-            actionButton.snp.makeConstraints { make in
-                make.left.right.equalToSuperview().inset(ComponentConstants.normalHorizontalMargin)
-                make.top.equalTo(bookNameLabel.snp.bottom).offset(ComponentConstants.largeComponentInterSpacing)
-                make.height.equalTo(ComponentConstants.actionButtonHeight)
+            moreButton.snp.makeConstraints { make in
+                make.left.equalTo(bookDescriptionLabel.snp.left)
+                make.top.equalTo(bookDescriptionLabel.snp.bottom).offset(ComponentConstants.normalComponentInterSpacing)
+                make.height.equalTo(ComponentConstants.bookInfoMoreButtonHeight)
                 make.bottom.equalToSuperview()
             }
             
