@@ -11,13 +11,31 @@ import UIKit
 
 public struct KPSArticleTableCellViewModel {
     
+    public var id: String
     var articleTitle: String
-    var articleDescriptioin: String?
+    var articleMagazineName: String?
+    var articleIssueName: String?
+    var articleDescription: String?
     var mainImageURL: String
     
-    public init(articleTitle: String, articleDescriptioin: String?, mainImageURL: String) {
+    var articleDetailText: String {
+        if let description = articleDescription,
+           description.count > 0 {
+            return description
+        } else {
+            guard let magazineName = articleMagazineName,
+                  let issueName = articleIssueName else { return "" }
+            return String(format: "%@ %@", magazineName, issueName)
+        }
+    }
+    
+    
+    public init(id: String, articleTitle: String, articleMagazineName: String?, articleIssueName: String?, articleDescription: String?, mainImageURL: String) {
+        self.id = id
         self.articleTitle = articleTitle
-        self.articleDescriptioin = articleDescriptioin
+        self.articleMagazineName = articleMagazineName
+        self.articleIssueName = articleIssueName
+        self.articleDescription = articleDescription
         self.mainImageURL = mainImageURL
     }
     
@@ -93,7 +111,7 @@ public class KPSArticleTableViewCell: UITableViewCell {
         titleLabel.text = viewModel.articleTitle
         titleLabel.sizeToFit()
         
-        descriptionLabel.text = viewModel.articleDescriptioin
+        descriptionLabel.text = viewModel.articleDetailText
         descriptionLabel.sizeToFit()
         mainImageView.kf.setImage(with: URL(string: viewModel.mainImageURL))
     }
