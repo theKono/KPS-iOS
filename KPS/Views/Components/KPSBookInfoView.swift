@@ -141,10 +141,12 @@ public class KPSBookInfoView: UIView {
         
         
         addSubview(bookDescriptionLabel)
+        let descriptionSpacing: CGFloat = KPSUtiltiy.deviceIsPhone ? 36.0 : 32.0
+        let descriptionHeight: CGFloat = KPSUtiltiy.deviceIsPhone ? 60.0 : 80.0
         bookDescriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(actionButton.snp.bottom).offset(ComponentConstants.normalComponentInterSpacing)
+            make.top.equalTo(actionButton.snp.bottom).offset(descriptionSpacing)
             make.left.right.equalTo(actionButton)
-            make.height.lessThanOrEqualTo(ComponentConstants.bookInfoDescriptionHeight)
+            make.height.lessThanOrEqualTo(descriptionHeight)
         }
         
         addSubview(moreButton)
@@ -154,7 +156,7 @@ public class KPSBookInfoView: UIView {
             
             moreButton.snp.makeConstraints { make in
                 make.left.equalTo(bookDescriptionLabel.snp.left)
-                make.top.equalTo(bookDescriptionLabel.snp.bottom).offset(ComponentConstants.normalComponentInterSpacing)
+                make.top.equalTo(bookDescriptionLabel.snp.bottom).offset(ComponentConstants.tightComponentInterSpacing)
                 make.height.equalTo(ComponentConstants.bookInfoMoreButtonHeight)
             }
             
@@ -169,7 +171,7 @@ public class KPSBookInfoView: UIView {
             
             moreButton.snp.makeConstraints { make in
                 make.left.equalTo(bookDescriptionLabel.snp.left)
-                make.top.equalTo(bookDescriptionLabel.snp.bottom).offset(ComponentConstants.normalComponentInterSpacing)
+                make.top.equalTo(bookDescriptionLabel.snp.bottom).offset(ComponentConstants.tightComponentInterSpacing)
                 make.height.equalTo(ComponentConstants.bookInfoMoreButtonHeight)
                 make.bottom.equalToSuperview()
             }

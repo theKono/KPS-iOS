@@ -19,7 +19,6 @@ internal struct ComponentConstants {
     static let actionButtonHeight: CGFloat = 48.0
     
     static let bookInfoImageHeight: CGFloat = 260.0
-    static let bookInfoDescriptionHeight: CGFloat = 114.0
     static let bookInfoMoreButtonHeight: CGFloat = 22.0
     //MARK: spacing related constants
     static let smallVerticalMargin: CGFloat = 16.0
