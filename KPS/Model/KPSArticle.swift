@@ -35,17 +35,21 @@ public struct KPSArticle {
     }
     
     public let id, type: String
-    public let name, description, authors: [String: String]
+    public let name, description: [String: String]
+    public let authors: [String: [String]]
     public let order: Int
     public let coverList: [String]
     public let isPublic, isFree: Bool
     public var permissions: [String: Bool]?
-    public let customData, fitReadingData, pdfData: [String: Any]?
-    public var images: [KPSImageResource]
+    public let customData, fitReadingData: [String: Any]?
+    public let pdfData: KPSPDFContent?
+    public var resources: [String: KPSResourceType]
     
     public var parent: KPSContentMeta?
     public var siblings: [KPSContentMeta]?
     
+    public var errorDescription: String?
+    public var error: KPSContentError?
     
 }
 
@@ -54,10 +58,12 @@ extension KPSArticle: Decodable {
     public init(from decoder: Decoder) throws {
 
         let baseContainer = try decoder.container(keyedBy: CodingKeys.self)
-        let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .contentNode)
         
+        errorDescription = try baseContainer.decodeIfPresent(String.self, forKey: .error)
         parent = try baseContainer.decodeIfPresent(KPSContentMeta.self, forKey: .parentNode)
         siblings = try baseContainer.decodeIfPresent([KPSContentMeta].self, forKey: .siblingNodes)
+        
+        let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .contentNode)
         
         id = try container.decode(String.self, forKey: .id)
         type = try container.decode(String.self, forKey: .type)
@@ -72,9 +78,9 @@ extension KPSArticle: Decodable {
         coverList = try covers.decode([String].self, forKey: .list)
                 
         let info = try container.nestedContainer(keyedBy: infoContainerKeys.self, forKey: .info)
-        authors = try info.decode([String: String].self, forKey: .authors)
+        authors = try info.decode([String: [String]].self, forKey: .authors)
         
-        images = try container.decode([KPSImageResource].self, forKey: .resources)
+        resources = try container.decode([String: KPSResourceType].self, forKey: .resources)
         
         isPublic = try container.decode(Bool.self, forKey: .publicData)
         isFree = try container.decode(Bool.self, forKey: .free)
@@ -84,8 +90,34 @@ extension KPSArticle: Decodable {
         let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .content)
         
         fitReadingData = try contentDataContainer.decodeIfPresent([String: Any].self, forKey: .fitReading)
-        pdfData = try contentDataContainer.decodeIfPresent([String: Any].self, forKey: .pdf)
+        pdfData = try contentDataContainer.decodeIfPresent(KPSPDFContent.self, forKey: .pdf)
         
+        // MARK: Handle audio resource info (premium content)
+        if errorDescription != nil {
+            if !isPublic {
+                if !isFree {
+                    var userHasPermission = false
+                    let userPurcahsedPermission = KPSClient.shared.userPermissions
+                    if let requirePermissions = permissions {
+                        for (permission, _) in requirePermissions {
+                            if userPurcahsedPermission.contains(permission) {
+                                userHasPermission = true
+                                break
+                            }
+                        }
+                        error = userHasPermission ? .userBlocked : .needPurchase
+                    } else {
+                        error = .userBlocked
+                    }
+                } else {
+                    if KPSClient.shared.isUserLBlocked {
+                       error = .userBlocked
+                    } else {
+                        error = .needLogin
+                    }
+                }
+            }
+        }
     }
     
 }
