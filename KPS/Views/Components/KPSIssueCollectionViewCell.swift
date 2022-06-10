@@ -10,8 +10,8 @@ import UIKit
 public struct KPSIssueCollectionViewCellViewModel {
     
     public var id: String
+    public var mainImageURL: String
     var issueTitle: String
-    var mainImageURL: String
     
     public init(id: String, issueTitle: String, mainImageURL: String) {
         self.id = id
@@ -27,7 +27,7 @@ public class KPSIssueCollectionViewCell: UICollectionViewCell {
     //MARK: Views
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 1
+        label.numberOfLines = 2
         label.font = UIFont.font(ofType: .Body_2)
         label.textAlignment = .left
         return label
@@ -45,7 +45,7 @@ public class KPSIssueCollectionViewCell: UICollectionViewCell {
     }()
 
     //MARK: Properties
-    public let extraHeight: CGFloat = 30.0
+    public let extraHeight: CGFloat = 52.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,7 +69,6 @@ public class KPSIssueCollectionViewCell: UICollectionViewCell {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(mainImageView.snp.bottom).offset(8)
             make.left.right.equalTo(mainImageView)
-            //make.bottom.equalToSuperview()
         }
     }
     
