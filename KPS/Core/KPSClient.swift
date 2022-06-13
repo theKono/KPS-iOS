@@ -322,6 +322,7 @@ extension KPSClient {
                 self.currentUserId = response.user.id
                 KPSClient.sessionToken = response.kpsSession
                 self.isUserLoggedIn = true
+                self.isUserLBlocked = response.user.status == 0
                 if !KPSPurchases.isConfigured {
                     self.fetchPermissions { permissionResult in
                         switch permissionResult {
@@ -337,6 +338,7 @@ extension KPSClient {
                 
             case let .failure(error):
                 self.isUserLoggedIn = false
+                self.isUserLBlocked = true
                 do {
                     let errorDescription = try error.response?.mapJSON()
                     print(errorDescription ?? "")
@@ -358,6 +360,7 @@ extension KPSClient {
                     self.isUserLoggedIn = false
                     self.mediaPlayerReset(isNeedClearPlayList: true)
                     self.userPermissions = []
+                    self.isUserLBlocked = true
                     KPSClient.sessionToken = nil
                     completion?(.success(response))
                 } catch let error {
