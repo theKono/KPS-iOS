@@ -39,7 +39,13 @@ public enum CustomerPaymentStatus {
     }
 }
 
-
+public enum SubscriptionProvider: String {
+    
+    case ios
+    case android
+    case kps
+    
+}
 class SubscriptionManager {
 
     internal static let anonymousRegex = #"\$RCAnonymousID:([a-z0-9]{32})$"#
