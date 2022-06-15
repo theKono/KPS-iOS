@@ -383,12 +383,19 @@ public extension KPSPurchases {
      * If it was not successful, there will be an `Error`.
      */
     func showManageSubscriptions() {
-        //purchasesOrchestrator.showManageSubscription(completion: completion)
         
-        let subscriptionURL = URL.init(string: "https://apps.apple.com/account/subscriptions")!
-        // itms-apps://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions
-        UIApplication.shared.open(subscriptionURL)
+        guard let subscriptionProvider = subscriptionManager.latestOrder?.provider else { return }
         
+        switch subscriptionProvider {
+        case .ios:
+            let subscriptionURL = URL.init(string: "https://apps.apple.com/account/subscriptions")!
+            UIApplication.shared.open(subscriptionURL)
+        case .android:
+            let subscriptionURL = URL.init(string: "https://play.google.com/store/account/subscriptions")!
+            UIApplication.shared.open(subscriptionURL)
+        default:
+            break
+        }
     }
 }
 
