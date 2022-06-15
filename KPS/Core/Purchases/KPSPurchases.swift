@@ -424,7 +424,8 @@ public extension KPSPurchases {
             customerType = .Trial_VIP(
                 currentPlan: currentPlan,
                 nextPlan: subscriptionManager.latestOrder?.nextPlan,
-                expireTime: expireTime
+                expireTime: expireTime,
+                platform: subscriptionManager.latestOrder?.provider
             )
         } else if subscriptionManager.subscriptionStatus == .Active {
             guard let currentPlan = subscriptionManager.latestOrder?.latestTransaction.plan,
@@ -436,7 +437,8 @@ public extension KPSPurchases {
             customerType = .VIP(
                 currentPlan: currentPlan,
                 nextPlan: subscriptionManager.latestOrder?.nextPlan,
-                expireTime: expireTime
+                expireTime: expireTime,
+                platform: subscriptionManager.latestOrder?.provider
             )
         }
     }
