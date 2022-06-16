@@ -377,6 +377,30 @@ extension KPSClient {
         }
     }
     
+    public func fetchCurrentUser(completion: @escaping (Result<KPSUser, MoyaError>) -> ()) {
+        
+        let resultClosure: ((Result<SessionResponse, MoyaError>) -> Void) = { result in
+            
+            switch result {
+            case let .success(response):
+                self.isUserLBlocked = response.puser.status == 0
+                self.currentUserId = response.puser.id
+                completion(.success(response.puser))
+                
+                
+            case let .failure(error):
+                do {
+                    let errorDescription = try error.response?.mapJSON()
+                    print(errorDescription ?? "")
+                    completion(.failure(error))
+                } catch _ {
+                    print("decode error")
+                }
+            }
+        }
+        request(target: .fetchCurrentUser(server: KPSClient.config.baseServer), completion: resultClosure)
+    }
+    
     public func fetchPermissions(completion: ((Result<Set<String>, MoyaError>) -> ())?) {
         let resultClosure: ((Result<PermissionResponse, MoyaError>) -> Void) = { [weak self] result in
             
