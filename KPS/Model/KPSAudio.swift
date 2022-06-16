@@ -137,10 +137,10 @@ extension KPSAudioContent: Decodable {
                         error = .userBlocked
                     }
                 } else {
-                    if KPSClient.shared.isUserLBlocked {
-                       error = .userBlocked
-                    } else {
+                    if user == nil {
                         error = .needLogin
+                    } else {
+                        error = .userBlocked
                     }
                 }
             }
