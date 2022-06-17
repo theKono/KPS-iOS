@@ -7,6 +7,7 @@
 
 import Foundation
 import StoreKit
+import Moya
 
 // MARK: Block definitions
 /**
@@ -30,6 +31,7 @@ public enum KPSPurchaseError: Swift.Error {
     case productAlreadyPurchased
     case ownServer
     case receiptExpire
+    case sessionInvalid
     case network
     case unknown
     
@@ -55,6 +57,8 @@ public enum KPSPurchaseError: Swift.Error {
             return "網路無法正常連接"
         case .receiptExpire:
             return "有效期限已過期"
+        case .sessionInvalid:
+            return "請嘗試重新登入後再次購買"
         case .unknown:
             return "未知的錯誤，您可能正在使用越獄手機"
         }
@@ -69,7 +73,7 @@ public enum KPSPurchaseEnv {
     case stg
     case prd
     
-    var baseUrl: String{
+    var baseUrl: String {
         switch self{
         case .dev:
             return "https://kps-dev.thekono.com/api/v1/projects/"
@@ -78,6 +82,10 @@ public enum KPSPurchaseEnv {
         case .prd:
             return "https://kps.thekono.com/api/v1/projects/"
         }
+    }
+    
+    var sessionKey: String {
+        return "kps_session"
     }
 }
 
@@ -97,7 +105,6 @@ public class KPSPurchases: NSObject {
     ///         If there's a chance that may have not happened yet, you can use ``isConfigured``
     ///         to check if it's safe to call.
     /// - Seealso: ``isConfigured``.
-    @objc(sharedPurchases)
     public static var shared: KPSPurchases {
         guard let purchases = purchases else {
             fatalError(Strings.purchase.purchases_nil.description)
@@ -159,25 +166,68 @@ public class KPSPurchases: NSObject {
     private let subscriptionManager: SubscriptionManager
     private let receiptManager: KPSPurchaseReceiptManager
     private let serverUrl: String
+    private let apiServiceProvider: MoyaProvider<PurchaseAPIService>
+    
+    private static var networkProvider: MoyaProvider<PurchaseAPIService> = MoyaProvider<PurchaseAPIService>(endpointClosure: KPSPurchases.customizeEndpoint)
+    private static let customizeEndpoint = { (target: PurchaseAPIService) -> Endpoint in
+        let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
+        
+        guard let sessionToken = KPSPurchases.sessionToken,
+            let sessionKey = KPSPurchases.sessionKey else { return defaultEndpoint }
+        switch target {
+        case .fetchProductIds:
+            return defaultEndpoint
+        default:
+            return defaultEndpoint.adding(newHTTPHeaderFields: [sessionKey: sessionToken])
+        }
+    }
+    private static var sessionKey: String? {
+        get {
+            return UserDefaults.standard.string(forKey: "kps_purhcase_session_key")
+        }
+        set(newToken) {
+            guard let token = newToken else {
+                UserDefaults.standard.removeObject(forKey: "kps_purhcase_session_key")
+                return
+            }
+            UserDefaults.standard.set(token, forKey: "kps_purhcase_session_key")
+        }
+    }
+    
+    private static var sessionToken: String? {
+        get {
+            return UserDefaults.standard.string(forKey: "kps_purhcase_session_token")
+        }
+        set(newToken) {
+            guard let token = newToken else {
+                UserDefaults.standard.removeObject(forKey: "kps_purhcase_session_token")
+                return
+            }
+            UserDefaults.standard.set(token, forKey: "kps_purhcase_session_token")
+        }
+    }
+    
+    
     private var isUserPurchasing: Bool
     fileprivate static let initLock = NSLock()
 
 
     init(serverUrl: String,
+         apiServiceProvider: MoyaProvider<PurchaseAPIService> = KPSPurchases.networkProvider,
          contentServer: KPSClient = KPSClient.shared,
          productManager: KPSPurchaseProductManager = KPSPurchaseProductManager(),
          transactionManager: KPSTransactionManager = KPSTransactionManager(),
-         subscriptionManager: SubscriptionManager,
          receiptManager: KPSPurchaseReceiptManager = KPSPurchaseReceiptManager(),
          notificationCenter: NotificationCenter = NotificationCenter.default) {
         
         self.serverUrl = serverUrl
+        self.apiServiceProvider = apiServiceProvider
         self.contentServer = contentServer
         self.notificationCenter = notificationCenter
         self.productManager = productManager
         self.transactionManager = transactionManager
         self.receiptManager = receiptManager
-        self.subscriptionManager = subscriptionManager
+        self.subscriptionManager = SubscriptionManager(serverUrl: serverUrl, apiServiceProvider: KPSPurchases.networkProvider)
         self.isUserPurchasing = false
         super.init()
         
@@ -233,6 +283,10 @@ public class KPSPurchases: NSObject {
             completion?()
         }
     }
+    
+    public func updateSessionToken(_ token: String?) {
+        KPSPurchases.sessionToken = token
+    }
 }
 
 
@@ -250,7 +304,7 @@ public extension KPSPurchases {
      */
     func getProductIdentifiers(completion: @escaping (Result<Set<String>, Error>) -> Void) {
         
-        PurchaseAPIServiceProvider.request(.fetchProductIds(serverUrl: self.serverUrl)) { result in
+        apiServiceProvider.request(.fetchProductIds(serverUrl: self.serverUrl)) { result in
             switch result {
             case let .success(response):
                 do {
@@ -465,9 +519,10 @@ public extension KPSPurchases {
      *
      * - Returns: An instantiated `Purchases` object that has been set as a singleton.
      */
-    @discardableResult static func configure(withServerUrl endpointUrl: String) -> KPSPurchases {
-        let subscriptionManager = SubscriptionManager(serverUrl: endpointUrl)
-        let purchases = KPSPurchases(serverUrl: endpointUrl, subscriptionManager: subscriptionManager)
+    @discardableResult static func configure(withServerUrl endpointUrl: String, sessionKey: String) -> KPSPurchases {
+        KPSPurchases.sessionKey = sessionKey
+        
+        let purchases = KPSPurchases(serverUrl: endpointUrl)
         setDefaultInstance(purchases)
         return purchases
     }
@@ -483,9 +538,10 @@ public extension KPSPurchases {
      * - Returns: An instantiated `Purchases` object that has been set as a singleton.
      */
     @discardableResult static func configure(withProjectId projectId: String, env: KPSPurchaseEnv) -> KPSPurchases {
-        let endpointUrl = env.baseUrl+projectId
-        let subscriptionManager = SubscriptionManager(serverUrl: endpointUrl)
-        let purchases = KPSPurchases(serverUrl: endpointUrl, subscriptionManager: subscriptionManager)
+        let endpointUrl = env.baseUrl + projectId
+        KPSPurchases.sessionKey = env.sessionKey
+        
+        let purchases = KPSPurchases(serverUrl: endpointUrl)
         setDefaultInstance(purchases)
         return purchases
     }
@@ -588,25 +644,27 @@ private extension KPSPurchases {
                 isPurchaseInTrial = latestTransaction.isInTrialPeriod ?? false
             }
             
-            
-            
-            PurchaseAPIServiceProvider.request(.uploadReceipt(receipt: base64Receipt, version: 1, serverUrl: self.serverUrl)) { [weak self] result in
+            apiServiceProvider.request(.uploadReceipt(receipt: base64Receipt, version: 1, serverUrl: self.serverUrl)) { [weak self] result in
                 
                 switch result {
                 case let .success(response):
                     do {
                         let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
-                        let _ = String(decoding: filteredResponse.data, as: UTF8.self)
-                        self?.syncPaymentStatus() {
-                            if self?.subscriptionManager.subscriptionStatus == .None {
-                                self?.verifyCompleteBlock?(self?.purchaseItem, false, .receiptExpire)
-                            } else {
-                                self?.verifyCompleteBlock?(self?.purchaseItem, isPurchaseInTrial, nil)
+                        let responseStr = String(decoding: filteredResponse.data, as: UTF8.self)
+                        
+                        if responseStr.contains("kpsSignInToken") {
+                            self?.verifyCompleteBlock?(self?.purchaseItem, false, .sessionInvalid)
+                            self?.finishPurchaseAction()
+                        } else {
+                        
+                            self?.syncPaymentStatus() {
+                                if self?.subscriptionManager.subscriptionStatus == .None {
+                                    self?.verifyCompleteBlock?(self?.purchaseItem, false, .receiptExpire)
+                                } else {
+                                    self?.verifyCompleteBlock?(self?.purchaseItem, isPurchaseInTrial, nil)
+                                }
+                                self?.finishPurchaseAction()
                             }
-                            
-                            self?.verifyCompleteBlock = nil
-                            self?.purchaseItem = nil
-                            self?.isUserPurchasing = false
                         }
                     } catch _ {
                         
@@ -619,24 +677,25 @@ private extension KPSPurchases {
                         default:
                             self?.verifyCompleteBlock?(self?.purchaseItem, false, .ownServer)
                         }
-                        self?.verifyCompleteBlock = nil
-                        self?.purchaseItem = nil
-                        self?.isUserPurchasing = false
+                        self?.finishPurchaseAction()
                     }
                 case .failure(let error):
                     print(error.errorDescription ?? "")
                     self?.verifyCompleteBlock?(self?.purchaseItem, false, .ownServer)
-                    self?.verifyCompleteBlock = nil
-                    self?.purchaseItem = nil
-                    self?.isUserPurchasing = false
+                    self?.finishPurchaseAction()
                 }
             }
         }
         else {
             verifyCompleteBlock?(purchaseItem, false, .unknown)
-            verifyCompleteBlock = nil
-            purchaseItem = nil
+            finishPurchaseAction()
         }
+    }
+    
+    private func finishPurchaseAction() {
+        verifyCompleteBlock = nil
+        purchaseItem = nil
+        isUserPurchasing = false
     }
 }
 
