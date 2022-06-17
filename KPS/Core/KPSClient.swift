@@ -34,7 +34,7 @@ public final class KPSClient: NSObject {
     public internal(set) var currentUserId: String?
 
     /// Current session token
-    static var sessionToken: String? {
+    public static var sessionToken: String? {
         get {
             return UserDefaults.standard.string(forKey: "kps_session")
         }
