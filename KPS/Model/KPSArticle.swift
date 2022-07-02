@@ -92,7 +92,7 @@ extension KPSArticle: Decodable {
         fitReadingData = try contentDataContainer.decodeIfPresent([String: Any].self, forKey: .fitReading)
         pdfData = try contentDataContainer.decodeIfPresent(KPSPDFContent.self, forKey: .pdf)
         
-        // MARK: Handle audio resource info (premium content)
+        // MARK: Handle resource info (premium content)
         if errorDescription != nil {
             if !isPublic {
                 if !isFree {

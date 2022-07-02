@@ -13,6 +13,10 @@ public struct KPSContentMeta {
         case free
     }
     
+    enum ContentDataKeys: String, CodingKey {
+        case fitReading, pdf
+    }
+    
     public var id: String
     public var type: String?
     public var order: Int?
@@ -23,6 +27,7 @@ public struct KPSContentMeta {
     public let publicContentInfo: [String: Any]?
     public var images: [KPSImageResource] = []
     public var customData: [String: Any]?
+    public let pdfData: KPSPDFContent?
     public var isCollectionType: Bool {
         return type != "article" && type != "audio" && type != "video"
     }
@@ -39,6 +44,8 @@ extension KPSContentMeta: Decodable {
         name = try container.decodeIfPresent([String: String].self, forKey: .name)
         description = try container.decodeIfPresent([String: String].self, forKey: .description)
         publicContentInfo = try container.decodeIfPresent([String: Any].self, forKey: .content)
+        let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .content)
+        pdfData = try contentDataContainer.decodeIfPresent(KPSPDFContent.self, forKey: .pdf)
         
         isPublic = try container.decodeIfPresent(Bool.self, forKey: .publicData)
         isFree = try container.decodeIfPresent(Bool.self, forKey: .free)
