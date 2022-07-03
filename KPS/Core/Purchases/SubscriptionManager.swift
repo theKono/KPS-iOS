@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Moya
 
 public enum CustomerSubscriptionStatus {
     
@@ -39,11 +40,19 @@ public enum CustomerPaymentStatus {
     }
 }
 
-
+public enum SubscriptionProvider: String {
+    
+    case ios
+    case android
+    case kps
+    
+}
 class SubscriptionManager {
 
     internal static let anonymousRegex = #"\$RCAnonymousID:([a-z0-9]{32})$"#
     private var serverUrl: String
+    private var apiServiceProvider: MoyaProvider<PurchaseAPIService>
+    
     public var paymentStatus: CustomerPaymentStatus
     public var subscriptionStatus: CustomerSubscriptionStatus {
         return paymentStatus.subscriptionStatus
@@ -51,9 +60,10 @@ class SubscriptionManager {
     public var latestOrder: KPSPurchaseOrder?
     public var ownOrderIds: [String] = []
     public var syncDate: Date?
-    init(serverUrl: String) {
+    init(serverUrl: String, apiServiceProvider: MoyaProvider<PurchaseAPIService>) {
         self.serverUrl = serverUrl
         self.paymentStatus = .None
+        self.apiServiceProvider = apiServiceProvider
     }
 
     static func generateRandomID() -> String {
@@ -92,7 +102,7 @@ class SubscriptionManager {
     
     public func updatePaymentStatus(_ completion: (() -> Void)? = nil) {
         
-        PurchaseAPIServiceProvider.request(.fetchPaymentStatus(serverUrl: self.serverUrl)) { [weak self] result in
+        apiServiceProvider.request(.fetchPaymentStatus(serverUrl: self.serverUrl)) { [weak self] result in
             
             self?.syncDate = Date()
             defer {
@@ -128,7 +138,7 @@ class SubscriptionManager {
             return
         }
 
-        PurchaseAPIServiceProvider.request(.fetchTransactions(order: latestOrder.id, serverUrl: self.serverUrl)) { result in
+        apiServiceProvider.request(.fetchTransactions(order: latestOrder.id, serverUrl: self.serverUrl)) { result in
             
             switch result {
             case let .success(response):
