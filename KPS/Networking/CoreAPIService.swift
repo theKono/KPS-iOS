@@ -23,12 +23,8 @@ extension CoreAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server):
+        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server):
           return server.projectUrl
-        case .fetchArticle(_, _, _, let server):
-            return server.projectUrl
-            // for dev
-//            return server.baseUrl.appendingPathComponent("/projects/61398d3c62cbe46b8b9e58af")
         }
     }
     var path: String {
@@ -95,8 +91,17 @@ extension CoreAPIService: TargetType {
                         return Data()
                     }
             return data
-        case .fetchArticle(_, _, _, _):
-            guard let url = Bundle.resourceBundle.url(forResource: "articleContent", withExtension: "json"),
+        case .fetchArticle(let articleId, _, _, _):
+            var resFileName: String
+            if articleId == "articleContentWithWrongArticleId" {
+                resFileName = "articleContentWithWrongArticleId"
+            } else if articleId == "articleContentWithoutPermission" {
+                resFileName = "articleContentWithoutPermission"
+            } else {
+                resFileName = "articleContent"
+            }
+            
+            guard let url = Bundle.resourceBundle.url(forResource: resFileName, withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }

@@ -4,11 +4,11 @@
     "id": "62995c9ee9a2b3c63280d9b5",
     "type": "article",
     "name": {
-      "zh-TW": "一起推動數位與遠距醫療減碳大行動！",
+      "zh-TW": "pdf test 1",
       "en-US": ""
     },
     "description": {
-      "zh-TW": "近日，前臺北醫學大學附設醫院院長陳瑞杰醫師有篇觀點文章，文中提及「醫療健康產業，是被忽略的碳排大戶......；美國國家醫學院(Institute of Medicine)公眾健康與永續報告書中，載明醫療健康產業直接或間接產生總碳排放，佔10%全美總碳排......；如果十分之一臺灣民眾改用『通訊診療』，每年將可減少1.63百萬噸二氧化碳當量排放。",
+      "zh-TW": "pdf test description",
       "en-US": ""
     },
     "orderInParent": 4,
@@ -25,16 +25,18 @@
     "info": {
       "authors": {
         "zh-TW": [
-          "林明定"
+          "qwer"
         ],
         "en-US": [
           
         ]
       }
     },
-    "public": true,
+    "public": false,
     "free": false,
-    "permissions": null,
+    "permissions": {
+        "VIP": true
+    },
     "resources": {
       "62995c9ee9a2b3c63280d9b6": {
         "type": "IMAGE",
