@@ -180,6 +180,33 @@ class KPSClientTests: XCTestCase {
             }
         }
     }
+    
+    func testFetchCurrentUserSucceed() {
+        stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
+        
+        stubClient.fetchCurrentUser(completion: {result in})
+        XCTAssertFalse(stubClient.isUserLBlocked)
+        XCTAssertEqual(stubClient.currentUserId, "testUser")
+    }
+    
+    func testFetchCurrentUserNetworkError() {
+        
+        stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customNetworkErrorEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+        stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
+        let expectation = expectation(description: "fetch current user")
+        stubClient.fetchCurrentUser(completion: {result in
+            switch result {
+            case .failure:
+                expectation.fulfill()
+            default:
+                break
+            }
+        })
+        waitForExpectations(timeout: 1)
+    }
+    
+    
     func customSuccessEndpointClosure(_ target: CoreAPIService) -> Endpoint {
         return Endpoint(url: URL(target: target).absoluteString,
                         sampleResponseClosure: { .networkResponse(200, target.sampleData) },
@@ -188,5 +215,15 @@ class KPSClientTests: XCTestCase {
                         httpHeaderFields: target.headers)
     }
     
+    func customNetworkErrorEndpointClosure(_ target: CoreAPIService) -> Endpoint {
+            let error = NSError(domain: NSURLErrorDomain, code: NSURLErrorNotConnectedToInternet, userInfo: nil)
+        return Endpoint(
+                    url: URL(target: target).absoluteString,
+            sampleResponseClosure: { .networkError(error) },
+            method: target.method,
+            task: target.task,
+            httpHeaderFields: target.headers
+            )
+    }
     
 }

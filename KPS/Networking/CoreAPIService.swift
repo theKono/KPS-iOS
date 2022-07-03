@@ -7,6 +7,7 @@ import Moya
 enum CoreAPIService {
     case login(keyId: String, token: String, server: Server)
     case logout(server: Server)
+    case fetchCurrentUser(server: Server)
     case fetchUserPermission(server: Server)
     
     case fetchAudio(audioId: String, server: Server)
@@ -20,13 +21,13 @@ extension CoreAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server):
+        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server):
           return server.projectUrl
         }
     }
     var path: String {
         switch self {
-        case .login(_, _, _), .logout(_):
+        case .login(_, _, _), .logout(_), .fetchCurrentUser(_):
             return "/sessions"
         case .fetchUserPermission(_):
             return "/puser_permissions"
@@ -44,13 +45,13 @@ extension CoreAPIService: TargetType {
             return .put
         case .logout(_):
             return .delete
-        case .fetchUserPermission(_), .fetchAudio(_, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _):
+        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _):
             return .get
         }
     }
     var task: Task {
         switch self {
-        case .logout(_), .fetchUserPermission(_), .fetchAudio(_, _), .fetchRootCollection(_): // Send no parameters
+        case .logout(_), .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _), .fetchRootCollection(_): // Send no parameters
             return .requestPlain
         case .fetchCollection(_, let isNeedParent, let isNeedSibling, _):
             return .requestParameters(parameters: ["parent": isNeedParent, "siblings": isNeedSibling], encoding: URLEncoding.queryString)
@@ -64,6 +65,8 @@ extension CoreAPIService: TargetType {
             return "{\"error\": \"null\", \"isNew\": false,\"kps_session\":\"testSessionToken\",\"puser\": {\"puid\": \"testUser\", \"status\": 1}}".utf8Encoded
         case .logout(_):
             return "{\"first_name\": \"Harry\", \"last_name\": \"Potter\"}".utf8Encoded
+        case .fetchCurrentUser(_):
+            return "{\"puser\": {\"puid\": \"testUser\", \"status\": 1}}".utf8Encoded
         case .fetchUserPermission(_):
             guard let url = Bundle.resourceBundle.url(forResource: "userPermission", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {

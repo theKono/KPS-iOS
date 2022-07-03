@@ -15,6 +15,10 @@ public struct LoginResponse: Codable {
         case user = "puser"
     }
 }
+struct SessionResponse: Codable {
+    let puser: KPSUser
+}
+
 public struct KPSUser: Codable {
     
     let id: String
