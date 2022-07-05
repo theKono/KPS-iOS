@@ -69,43 +69,39 @@ class KPSClientArticleTests: XCTestCase {
     
     func testFetchArticleContentWithoutPermission() {
         let mockArticleId = "articleContentWithoutPermission"
-        let customFailedEndpointClosure = { (target: CoreAPIService) -> Endpoint in
-            return Endpoint(url: URL(target: target).absoluteString,
-                            sampleResponseClosure: { .networkResponse(401, target.sampleData) },
-                            method: target.method,
-                            task: target.task,
-                            httpHeaderFields: target.headers)
-        }
-
-        stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customFailedEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+        
+        stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customUserNotLoginErrorEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
         sut = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         sut.fetchArticleContent(Id: mockArticleId) { result in
             switch result {
             case .success(let articleContent):
                 XCTAssertEqual(articleContent.error, .needLogin)
                 break
-            default: break
+            default:
+                XCTAssert(false)
+                break
             }
         }
     }
     
     func testFetchArticleContentWithWrongArticleId() {
         let mockArticleId = "articleContentWithWrongArticleId"
-        let customFailedEndpointClosure = { (target: CoreAPIService) -> Endpoint in
-            return Endpoint(url: URL(target: target).absoluteString,
-                            sampleResponseClosure: { .networkResponse(404, target.sampleData) },
-                            method: target.method,
-                            task: target.task,
-                            httpHeaderFields: target.headers)
-        }
-        stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customFailedEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+        
+        stubbingProvider = MoyaProvider<CoreAPIService>(endpointClosure: customContentNotFoundErrorEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
         sut = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         sut.fetchArticleContent(Id: mockArticleId) { result in
             switch result {
-            case .success(let articleContent):
-                XCTAssertEqual(articleContent.errorDescription, "pcontent not found")
+            case .failure(let error):
+                switch error {
+                case .statusCode(let response):
+                    XCTAssertEqual(response.statusCode, 404)
+                default:
+                    XCTAssert(false)
+                }
                 break
-            default: break
+            default:
+                XCTAssert(false)
+                break
             }
         }
         
@@ -122,13 +118,33 @@ class KPSClientArticleTests: XCTestCase {
             case .failure(let error):
                 XCTAssertNotNil(error)
                 XCTAssertNil(error.response)
-                XCTAssertEqual(error.errorDescription, "The operation couldn’t be completed. (NSURLErrorDomain error -1009.)")
                 break
             default:
+                XCTAssert(false)
                 break
             }
         }
         
+    }
+    
+    func customUserNotLoginErrorEndpointClosure(_ target: CoreAPIService) -> Endpoint {
+        return Endpoint(
+            url: URL(target: target).absoluteString,
+            sampleResponseClosure: { .networkResponse(401, target.sampleData) },
+            method: target.method,
+            task: target.task,
+            httpHeaderFields: target.headers
+        )
+    }
+    
+    func customContentNotFoundErrorEndpointClosure(_ target: CoreAPIService) -> Endpoint {
+        return Endpoint(
+            url: URL(target: target).absoluteString,
+            sampleResponseClosure: { .networkResponse(404, target.sampleData) },
+            method: target.method,
+            task: target.task,
+            httpHeaderFields: target.headers
+        )
     }
     
     func customNetworkErrorEndpointClosure(_ target: CoreAPIService) -> Endpoint {
