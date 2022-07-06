@@ -10,19 +10,6 @@ public struct KPSPDFContent: Decodable {
     public let startPageInParent: Int
     public let pages: [KPSPDFPage]
 
-    enum CodingKeys: String, CodingKey {
-        case orderPageIncreaseRight, startPageInParent, pages
-    }
-    
-    public init(from decoder: Decoder) throws {
-
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        orderPageIncreaseRight = try container.decode(Bool.self, forKey: .orderPageIncreaseRight)
-        startPageInParent = try container.decode(Int.self, forKey: .startPageInParent)
-        pages = try container.decode([KPSPDFPage].self, forKey: .pages)
-
-    }
 }
 
 public struct KPSPDFPage: Decodable {
@@ -30,40 +17,18 @@ public struct KPSPDFPage: Decodable {
     public let version: String
     public let fgs, bgs: [KPSPDFPageInfoComponent]
     public let paddingTop: Double
-
-    enum CodingKeys: String, CodingKey {
-        case bgColor, version, fgs, bgs, paddingTop
-    }
-    
-    public init(from decoder: Decoder) throws {
-
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        bgColor = try container.decode(KPSPDFPageInfoBGColor.self, forKey: .bgColor)
-        version = try container.decode(String.self, forKey: .version)
-        fgs = try container.decode([KPSPDFPageInfoComponent].self, forKey: .fgs)
-        bgs = try container.decode([KPSPDFPageInfoComponent].self, forKey: .bgs)
-        paddingTop = try container.decode(Double.self, forKey: .paddingTop)
-
-    }
     
 }
 
 public struct KPSPDFPageInfoBGColor: Decodable {
     public let r, g, b: Int
 
-    enum CodingKeys: String, CodingKey {
-        case r, g, b
-    }
 }
 
 public struct KPSPDFPageInfoComponent: Decodable {
     public let resourceId: String
     public let position: KPSPDFPageInfoComponentPosition
 
-    enum CodingKeys: String, CodingKey {
-        case resourceId, position
-    }
 }
 
 public struct KPSPDFPageInfoComponentPosition: Decodable {

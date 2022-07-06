@@ -26,11 +26,11 @@ public struct KPSArticle {
         case fitReading, pdf
     }
     
-    enum coverContainerKeys: String, CodingKey {
+    enum CoverContainerKeys: String, CodingKey {
         case list
     }
     
-    enum infoContainerKeys: String, CodingKey {
+    enum InfoContainerKeys: String, CodingKey {
         case authors
     }
     
@@ -74,10 +74,10 @@ extension KPSArticle: Decodable {
         
         customData = try container.decodeIfPresent([String: Any].self, forKey: .customData)
         
-        let covers = try container.nestedContainer(keyedBy: coverContainerKeys.self, forKey: .covers)
+        let covers = try container.nestedContainer(keyedBy: CoverContainerKeys.self, forKey: .covers)
         coverList = try covers.decode([String].self, forKey: .list)
                 
-        let info = try container.nestedContainer(keyedBy: infoContainerKeys.self, forKey: .info)
+        let info = try container.nestedContainer(keyedBy: InfoContainerKeys.self, forKey: .info)
         authors = try info.decode([String: [String]].self, forKey: .authors)
         
         resources = try container.decode([String: KPSResourceType].self, forKey: .resources)
