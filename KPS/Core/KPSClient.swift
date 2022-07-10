@@ -474,7 +474,13 @@ extension KPSClient {
                         } catch _ {
                             
                         }
-                        completion(.failure(.jsonMapping(response)))
+                        
+                        if response.statusCode == 404 {
+                            completion(.failure(.statusCode(response)))
+                            return
+                        } else {
+                            completion(.failure(.jsonMapping(response)))
+                        }
                     }
                 }
             case let .failure(error):
