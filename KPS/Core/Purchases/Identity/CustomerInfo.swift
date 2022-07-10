@@ -20,8 +20,8 @@ public enum CustomerType: Equatable {
     
     case New
     case Free
-    case Trial_VIP(currentPlan: String, nextPlan: String?, expireTime: TimeInterval)
-    case VIP(currentPlan: String, nextPlan: String?, expireTime: TimeInterval)
+    case Trial_VIP(currentPlan: String, nextPlan: String?, expireTime: TimeInterval, platform: SubscriptionProvider?)
+    case VIP(currentPlan: String, nextPlan: String?, expireTime: TimeInterval, platform: SubscriptionProvider?)
     case Unknown
     
     

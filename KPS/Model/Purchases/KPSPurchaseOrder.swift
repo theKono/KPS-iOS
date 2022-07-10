@@ -21,6 +21,9 @@ public struct KPSPurchaseOrder {
     public var gracePeriodEnd: TimeInterval?
     public var pauseResumeTime: TimeInterval?
     public var latestTransaction: KPSPurchaseTransaction
+    public var provider: SubscriptionProvider {
+        return SubscriptionProvider(rawValue: type) ?? .kps
+    }
 }
 
 extension KPSPurchaseOrder: Decodable {

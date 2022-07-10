@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		C2E82FE58B8F9BF98685E74B /* Pods_KPS_KPSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BAE52B314AE2D8F2390C9C7 /* Pods_KPS_KPSTests.framework */; };
+		E801B5D12847A67E0062582F /* KPSIssueCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E801B5D02847A67E0062582F /* KPSIssueCollectionViewCell.swift */; };
+		E825CE7628435D5E008527C6 /* KPSArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825CE7528435D5E008527C6 /* KPSArticleTableViewCell.swift */; };
+		E825CE7828435EBD008527C6 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825CE7728435EBD008527C6 /* UIFont+Extensions.swift */; };
+		E825CE7A284361A0008527C6 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825CE79284361A0008527C6 /* UIColor+Extensions.swift */; };
+		E825CE7C2843647B008527C6 /* KPSViewComponentConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825CE7B2843647B008527C6 /* KPSViewComponentConstants.swift */; };
+		E825CEC92844746E008527C6 /* KPSBookInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825CEC82844746E008527C6 /* KPSBookInfoView.swift */; };
+		E825CECC2844779A008527C6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E825CECE2844779A008527C6 /* Localizable.strings */; };
+		E825CED12845CAC1008527C6 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825CED02845CAC1008527C6 /* UIImage+Extensions.swift */; };
+		E825CED32845CC27008527C6 /* KPSSperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E825CED22845CC27008527C6 /* KPSSperator.swift */; };
 		E833100926A4100E00A6AA59 /* KPS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8330FFF26A4100E00A6AA59 /* KPS.framework */; };
 		E833101026A4100E00A6AA59 /* KPS.h in Headers */ = {isa = PBXBuildFile; fileRef = E833100226A4100E00A6AA59 /* KPS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E833103126A417CC00A6AA59 /* KPSUtility.swift */; };
@@ -59,7 +68,7 @@
 		E889A9A6280670A900E3718C /* rootCollection.json in Resources */ = {isa = PBXBuildFile; fileRef = E889A99C280670A900E3718C /* rootCollection.json */; };
 		E889A9A7280670A900E3718C /* audioContentWithoutPermission.json in Resources */ = {isa = PBXBuildFile; fileRef = E889A99D280670A900E3718C /* audioContentWithoutPermission.json */; };
 		E889A9A8280670A900E3718C /* userPermission.json in Resources */ = {isa = PBXBuildFile; fileRef = E889A99E280670A900E3718C /* userPermission.json */; };
-		E889A9A9280670A900E3718C /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = E889A99F280670A900E3718C /* articleContent.json */; };
+		E889A9A9280670A900E3718C /* articleContentWithoutPermission.json in Resources */ = {isa = PBXBuildFile; fileRef = E889A99F280670A900E3718C /* articleContentWithoutPermission.json */; };
 		E889A9AA280670A900E3718C /* transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = E889A9A0280670A900E3718C /* transactions.json */; };
 		E88C466826CCB034001243F5 /* KPSAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88C466726CCB034001243F5 /* KPSAudio.swift */; };
 		E88C466A26CD260C001243F5 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88C466926CD260C001243F5 /* ThreadSafeArray.swift */; };
@@ -89,6 +98,13 @@
 		E8E14F1E27DB2996007D6875 /* SK2StoreProductDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1D27DB2996007D6875 /* SK2StoreProductDiscount.swift */; };
 		E8E14F2027DB29EA007D6875 /* SK1StoreProductDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F1F27DB29EA007D6875 /* SK1StoreProductDiscount.swift */; };
 		E8E14F2227DF1B77007D6875 /* CustomerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F2127DF1B77007D6875 /* CustomerInfo.swift */; };
+		F81A26C62841155F00FBCD82 /* KPSClient+Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */; };
+		F82981DA2870AC3B00E2F51A /* articleContentWithWrongArticleId.json in Resources */ = {isa = PBXBuildFile; fileRef = F82981D92870AC3B00E2F51A /* articleContentWithWrongArticleId.json */; };
+		F8B890C32845DE5F00C7BDD7 /* KPSClientArticleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */; };
+		F8B890C9284EFC0800C7BDD7 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = F8B890C8284EFC0800C7BDD7 /* articleContent.json */; };
+		F8B890CB284F38DC00C7BDD7 /* KPSFileResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */; };
+		F8B890CD2850515B00C7BDD7 /* KPSResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CC2850515B00C7BDD7 /* KPSResourceType.swift */; };
+		F8B890CF28507A0300C7BDD7 /* KPSPDFContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +124,16 @@
 		B1B1F3A83BAAA5F378116184 /* Pods-KPS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPS.debug.xcconfig"; path = "Target Support Files/Pods-KPS/Pods-KPS.debug.xcconfig"; sourceTree = "<group>"; };
 		E3AEEF5E789FDC4CF50D8D15 /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7DF22ABB67C81660A12B8C6 /* Pods-KPS-KPSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPS-KPSTests.debug.xcconfig"; path = "Target Support Files/Pods-KPS-KPSTests/Pods-KPS-KPSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E801B5D02847A67E0062582F /* KPSIssueCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSIssueCollectionViewCell.swift; sourceTree = "<group>"; };
+		E825CE7528435D5E008527C6 /* KPSArticleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSArticleTableViewCell.swift; sourceTree = "<group>"; };
+		E825CE7728435EBD008527C6 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
+		E825CE79284361A0008527C6 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		E825CE7B2843647B008527C6 /* KPSViewComponentConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSViewComponentConstants.swift; sourceTree = "<group>"; };
+		E825CEC82844746E008527C6 /* KPSBookInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSBookInfoView.swift; sourceTree = "<group>"; };
+		E825CECD2844779A008527C6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E825CECF2845C1D2008527C6 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		E825CED02845CAC1008527C6 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		E825CED22845CC27008527C6 /* KPSSperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSSperator.swift; sourceTree = "<group>"; };
 		E8330FFF26A4100E00A6AA59 /* KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E833100226A4100E00A6AA59 /* KPS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPS.h; sourceTree = "<group>"; };
 		E833100326A4100E00A6AA59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -164,7 +190,7 @@
 		E889A99C280670A900E3718C /* rootCollection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rootCollection.json; sourceTree = "<group>"; };
 		E889A99D280670A900E3718C /* audioContentWithoutPermission.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = audioContentWithoutPermission.json; sourceTree = "<group>"; };
 		E889A99E280670A900E3718C /* userPermission.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = userPermission.json; sourceTree = "<group>"; };
-		E889A99F280670A900E3718C /* articleContent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
+		E889A99F280670A900E3718C /* articleContentWithoutPermission.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = articleContentWithoutPermission.json; sourceTree = "<group>"; };
 		E889A9A0280670A900E3718C /* transactions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
 		E88C466726CCB034001243F5 /* KPSAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSAudio.swift; sourceTree = "<group>"; };
 		E88C466926CD260C001243F5 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
@@ -195,6 +221,13 @@
 		E8E14F1F27DB29EA007D6875 /* SK1StoreProductDiscount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SK1StoreProductDiscount.swift; sourceTree = "<group>"; };
 		E8E14F2127DF1B77007D6875 /* CustomerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerInfo.swift; sourceTree = "<group>"; };
 		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KPSClient+Article.swift"; sourceTree = "<group>"; };
+		F82981D92870AC3B00E2F51A /* articleContentWithWrongArticleId.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = articleContentWithWrongArticleId.json; sourceTree = "<group>"; };
+		F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientArticleTests.swift; sourceTree = "<group>"; };
+		F8B890C8284EFC0800C7BDD7 /* articleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
+		F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSFileResource.swift; sourceTree = "<group>"; };
+		F8B890CC2850515B00C7BDD7 /* KPSResourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSResourceType.swift; sourceTree = "<group>"; };
+		F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPDFContent.swift; sourceTree = "<group>"; };
 		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -244,6 +277,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E825CE7428435D29008527C6 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E825CE7528435D5E008527C6 /* KPSArticleTableViewCell.swift */,
+				E801B5D02847A67E0062582F /* KPSIssueCollectionViewCell.swift */,
+				E825CEC82844746E008527C6 /* KPSBookInfoView.swift */,
+				E825CED22845CC27008527C6 /* KPSSperator.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		E8330FF526A4100E00A6AA59 = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +330,7 @@
 		E833100C26A4100E00A6AA59 /* KPSTests */ = {
 			isa = PBXGroup;
 			children = (
+				F8B890C12845DE0800C7BDD7 /* Article */,
 				E8855F9F280D66CD0067CA09 /* Purchase */,
 				E8855FA1280D68900067CA09 /* Media */,
 				E833109226B44C1B00A6AA59 /* KPSClientTests.swift */,
@@ -302,6 +347,7 @@
 				E833103726AAAE1D00A6AA59 /* KPSClient.swift */,
 				E89BC168277DA5FA001633C5 /* KPSClient+Analytic.swift */,
 				E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */,
+				F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */,
 				E8E14EFB27D8932D007D6875 /* Purchases */,
 				E8855FA4281598BB0067CA09 /* Auth */,
 			);
@@ -328,6 +374,9 @@
 				E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */,
 				E88396C526ECF76800B9C9F7 /* KPSCollection.swift */,
 				E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */,
+				F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */,
+				F8B890CC2850515B00C7BDD7 /* KPSResourceType.swift */,
+				F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -339,6 +388,9 @@
 				E833108A26B3B0F100A6AA59 /* Codable+Extension.swift */,
 				E83310A426B53EB400A6AA59 /* Bundle+Extension.swift */,
 				E88C466926CD260C001243F5 /* ThreadSafeArray.swift */,
+				E825CE7728435EBD008527C6 /* UIFont+Extensions.swift */,
+				E825CE79284361A0008527C6 /* UIColor+Extensions.swift */,
+				E825CED02845CAC1008527C6 /* UIImage+Extensions.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -348,7 +400,9 @@
 			children = (
 				E84ADA552824C633007F89A0 /* Images.xcassets */,
 				E889A999280670A900E3718C /* activeOrders.json */,
-				E889A99F280670A900E3718C /* articleContent.json */,
+				F8B890C8284EFC0800C7BDD7 /* articleContent.json */,
+				F82981D92870AC3B00E2F51A /* articleContentWithWrongArticleId.json */,
+				E889A99F280670A900E3718C /* articleContentWithoutPermission.json */,
 				E889A99B280670A900E3718C /* audioContent.json */,
 				E889A99D280670A900E3718C /* audioContentWithoutPermission.json */,
 				E889A99A280670A900E3718C /* audioContentWithWordTime.json */,
@@ -359,6 +413,7 @@
 				E889A99E280670A900E3718C /* userPermission.json */,
 				E8CD623F281A6A5100F65C85 /* productIds.json */,
 				E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */,
+				E825CECE2844779A008527C6 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -410,6 +465,8 @@
 		E84ADA572824C768007F89A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E825CE7428435D29008527C6 /* Components */,
+				E825CE7B2843647B008527C6 /* KPSViewComponentConstants.swift */,
 				E84ADA582824C7B3007F89A0 /* KPSToast.swift */,
 			);
 			path = Views;
@@ -543,6 +600,14 @@
 			path = StoreKitAbstractions;
 			sourceTree = "<group>";
 		};
+		F8B890C12845DE0800C7BDD7 /* Article */ = {
+			isa = PBXGroup;
+			children = (
+				F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */,
+			);
+			path = Article;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -621,6 +686,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hant",
 			);
 			mainGroup = E8330FF526A4100E00A6AA59;
 			productRefGroup = E833100026A4100E00A6AA59 /* Products */;
@@ -638,16 +704,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F82981DA2870AC3B00E2F51A /* articleContentWithWrongArticleId.json in Resources */,
 				E889A9A4280670A900E3718C /* audioContentWithWordTime.json in Resources */,
 				E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */,
 				E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */,
 				E889A9A7280670A900E3718C /* audioContentWithoutPermission.json in Resources */,
 				E889A9A3280670A900E3718C /* activeOrders.json in Resources */,
-				E889A9A9280670A900E3718C /* articleContent.json in Resources */,
+				F8B890C9284EFC0800C7BDD7 /* articleContent.json in Resources */,
+				E889A9A9280670A900E3718C /* articleContentWithoutPermission.json in Resources */,
 				E84ADA562824C633007F89A0 /* Images.xcassets in Resources */,
 				E8CD6240281A6A5100F65C85 /* productIds.json in Resources */,
 				E889A9A6280670A900E3718C /* rootCollection.json in Resources */,
 				E889A9A5280670A900E3718C /* audioContent.json in Resources */,
+				E825CECC2844779A008527C6 /* Localizable.strings in Resources */,
 				E889A9A8280670A900E3718C /* userPermission.json in Resources */,
 				E889A9AA280670A900E3718C /* transactions.json in Resources */,
 				E889A9A1280670A900E3718C /* previewArticleContent.json in Resources */,
@@ -734,8 +803,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E845AD8827E4923F00A3DC49 /* ASN1ObjectIdentifierBuilder.swift in Sources */,
+				F81A26C62841155F00FBCD82 /* KPSClient+Article.swift in Sources */,
 				E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */,
+				E825CEC92844746E008527C6 /* KPSBookInfoView.swift in Sources */,
 				E89BC16B277DA60C001633C5 /* KPSPlayRecord.swift in Sources */,
+				E825CE7628435D5E008527C6 /* KPSArticleTableViewCell.swift in Sources */,
 				E833108B26B3B0F100A6AA59 /* Codable+Extension.swift in Sources */,
 				E8855FAA28159C180067CA09 /* KPSAuth.swift in Sources */,
 				E8E14F0B27DB1EAC007D6875 /* KPSPurchaseProductManager.swift in Sources */,
@@ -748,16 +820,21 @@
 				E845AD8327E4919300A3DC49 /* AppleReceipt.swift in Sources */,
 				E845AD8E27E4930400A3DC49 /* ASN1ObjectIdentifier.swift in Sources */,
 				E845AD9327E493AB00A3DC49 /* UInt8+Extensions.swift in Sources */,
+				E825CE7828435EBD008527C6 /* UIFont+Extensions.swift in Sources */,
 				E8E14F0427D895AD007D6875 /* Strings.swift in Sources */,
+				F8B890CF28507A0300C7BDD7 /* KPSPDFContent.swift in Sources */,
 				E889A9942805657600E3718C /* TransactionResponse.swift in Sources */,
 				E845AD8527E491EB00A3DC49 /* InAppPurchase.swift in Sources */,
 				E845AD7C27E490BD00A3DC49 /* ASN1ContainerBuilder.swift in Sources */,
+				E825CED32845CC27008527C6 /* KPSSperator.swift in Sources */,
 				E8E14F0027D8949D007D6875 /* KPSPurchaseDelegate.swift in Sources */,
 				E8E14F1827DB264B007D6875 /* SK2StoreProduct.swift in Sources */,
 				E8E14F2227DF1B77007D6875 /* CustomerInfo.swift in Sources */,
 				E845AD9527E4945600A3DC49 /* FoundationExtensions.swift in Sources */,
+				F8B890CB284F38DC00C7BDD7 /* KPSFileResource.swift in Sources */,
 				E8E14F2027DB29EA007D6875 /* SK1StoreProductDiscount.swift in Sources */,
 				E845AD8C27E492AE00A3DC49 /* ReceiptParsingError.swift in Sources */,
+				F8B890CD2850515B00C7BDD7 /* KPSResourceType.swift in Sources */,
 				E8E14F1327DB22EB007D6875 /* KPSPurchaseItem.swift in Sources */,
 				E84ADA592824C7B3007F89A0 /* KPSToast.swift in Sources */,
 				E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */,
@@ -774,15 +851,19 @@
 				E8855FAF281679320067CA09 /* KPSAuthResponse.swift in Sources */,
 				E8E14F0927DB166E007D6875 /* SubscriptionManager.swift in Sources */,
 				E88C466A26CD260C001243F5 /* ThreadSafeArray.swift in Sources */,
+				E825CE7C2843647B008527C6 /* KPSViewComponentConstants.swift in Sources */,
+				E825CE7A284361A0008527C6 /* UIColor+Extensions.swift in Sources */,
 				E88396C426ECF16F00B9C9F7 /* KPSContentMeta.swift in Sources */,
 				E8E14F1A27DB274E007D6875 /* SubscriptionPeriod.swift in Sources */,
 				E845AD7727E4876700A3DC49 /* KPSPurchaseReceiptManager.swift in Sources */,
+				E801B5D12847A67E0062582F /* KPSIssueCollectionViewCell.swift in Sources */,
 				E845AD8A27E4927700A3DC49 /* ReceiptParser.swift in Sources */,
 				E8CD623E281A690500F65C85 /* ProductIdsResponse.swift in Sources */,
 				E889A990280561FE00E3718C /* KPSPurchaseOrder.swift in Sources */,
 				E8E14F1627DB253E007D6875 /* SK1StoreProduct.swift in Sources */,
 				E855722B27E0D13F00C9F8C0 /* PurchaseAPIService.swift in Sources */,
 				E89BC167277D883D001633C5 /* String+Extension.swift in Sources */,
+				E825CED12845CAC1008527C6 /* UIImage+Extensions.swift in Sources */,
 				E8A4C8DC26C4B3AE0082B4F7 /* KPSArticle.swift in Sources */,
 				E88396C826ECFACC00B9C9F7 /* KPSImageResource.swift in Sources */,
 				E833105226AB0A4500A6AA59 /* LoginResponse.swift in Sources */,
@@ -801,6 +882,7 @@
 				E833103326A417CC00A6AA59 /* KPSUtility.swift in Sources */,
 				E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */,
 				E833109326B44C1B00A6AA59 /* KPSClientTests.swift in Sources */,
+				F8B890C32845DE5F00C7BDD7 /* KPSClientArticleTests.swift in Sources */,
 				E8A4C8CE26BFD4500082B4F7 /* KPSClientMediaContentDelegateMock.swift in Sources */,
 				E8855FA3280D69000067CA09 /* KPSPurchaseDelegateMock.swift in Sources */,
 				E889A9962805CF4900E3718C /* KPSPurchaseTests.swift in Sources */,
@@ -817,11 +899,24 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		E825CECE2844779A008527C6 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E825CECD2844779A008527C6 /* en */,
+				E825CECF2845C1D2008527C6 /* zh-Hant */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		E833101126A4100E00A6AA59 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -886,6 +981,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

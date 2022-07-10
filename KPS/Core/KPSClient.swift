@@ -34,7 +34,7 @@ public final class KPSClient: NSObject {
     public internal(set) var currentUserId: String?
 
     /// Current session token
-    static var sessionToken: String? {
+    public static var sessionToken: String? {
         get {
             return UserDefaults.standard.string(forKey: "kps_session")
         }
@@ -322,6 +322,7 @@ extension KPSClient {
                 self.currentUserId = response.user.id
                 KPSClient.sessionToken = response.kpsSession
                 self.isUserLoggedIn = true
+                self.isUserLBlocked = response.user.status == 0
                 if !KPSPurchases.isConfigured {
                     self.fetchPermissions { permissionResult in
                         switch permissionResult {
@@ -337,6 +338,7 @@ extension KPSClient {
                 
             case let .failure(error):
                 self.isUserLoggedIn = false
+                self.isUserLBlocked = true
                 do {
                     let errorDescription = try error.response?.mapJSON()
                     print(errorDescription ?? "")
@@ -358,6 +360,7 @@ extension KPSClient {
                     self.isUserLoggedIn = false
                     self.mediaPlayerReset(isNeedClearPlayList: true)
                     self.userPermissions = []
+                    self.isUserLBlocked = true
                     KPSClient.sessionToken = nil
                     completion?(.success(response))
                 } catch let error {
@@ -372,6 +375,30 @@ extension KPSClient {
                 completion?(.failure(error))
             }
         }
+    }
+    
+    public func fetchCurrentUser(completion: @escaping (Result<KPSUser, MoyaError>) -> ()) {
+        
+        let resultClosure: ((Result<SessionResponse, MoyaError>) -> Void) = { result in
+            
+            switch result {
+            case let .success(response):
+                self.isUserLBlocked = response.puser.status == 0
+                self.currentUserId = response.puser.id
+                completion(.success(response.puser))
+                
+                
+            case let .failure(error):
+                do {
+                    let errorDescription = try error.response?.mapJSON()
+                    print(errorDescription ?? "")
+                    completion(.failure(error))
+                } catch _ {
+                    print("decode error")
+                }
+            }
+        }
+        request(target: .fetchCurrentUser(server: KPSClient.config.baseServer), completion: resultClosure)
     }
     
     public func fetchPermissions(completion: ((Result<Set<String>, MoyaError>) -> ())?) {
@@ -447,7 +474,13 @@ extension KPSClient {
                         } catch _ {
                             
                         }
-                        completion(.failure(.jsonMapping(response)))
+                        
+                        if response.statusCode == 404 {
+                            completion(.failure(.statusCode(response)))
+                            return
+                        } else {
+                            completion(.failure(.jsonMapping(response)))
+                        }
                     }
                 }
             case let .failure(error):

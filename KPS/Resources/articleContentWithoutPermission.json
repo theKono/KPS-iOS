@@ -1,0 +1,748 @@
+{
+    "error": "puser not logged in",
+    "contentNode": {
+        "id": "62625d6b5b1b1106e55d31f0",
+        "type": "article",
+        "name": {
+            "zh-TW": "pdf test 1",
+            "en-US": "ped test 1"
+        },
+        "description": {
+            "zh-TW": "pdf test description",
+            "en-US": "pdf test description"
+        },
+        "orderInParent": 20,
+        "customData": null,
+        "covers": {
+            "list": [
+                "62625d6b5b1b1106e55d31f1"
+            ]
+        },
+        "info": {
+            "authors": {
+                "zh-TW": [
+                    "qwer"
+                ],
+                "en-US": [
+                    "qwer"
+                ]
+            }
+        },
+        "resources": {
+            "62625d6b5b1b1106e55d31f1": {
+                "type": "IMAGE",
+                "width": 1950,
+                "height": 1300,
+                "thumbnails": [
+                    100,
+                    320,
+                    480,
+                    640,
+                    800,
+                    1024,
+                    1280,
+                    1600,
+                    1920,
+                    1950
+                ],
+                "urls": {
+                    "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/100.jpeg",
+                    "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/320.jpeg",
+                    "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/480.jpeg",
+                    "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/640.jpeg",
+                    "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/800.jpeg",
+                    "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1024.jpeg",
+                    "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1280.jpeg",
+                    "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1600.jpeg",
+                    "1920": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1920.jpeg",
+                    "1950": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1950.jpeg"
+                },
+                "webpUrls": {
+                    "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/100.webp",
+                    "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/320.webp",
+                    "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/480.webp",
+                    "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/640.webp",
+                    "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/800.webp",
+                    "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1024.webp",
+                    "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1280.webp",
+                    "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1600.webp",
+                    "1920": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1920.webp",
+                    "1950": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1950.webp"
+                }
+            }
+        },
+        "public": false,
+        "free": true,
+        "permissions": {
+            "permission1": true
+        },
+        "content": {
+            "fitReading": null,
+            "pdf": {
+                "orderPageIncreaseRight": false,
+                "startPageInParent": 13,
+                "pages": [
+                    {
+                        "paddingTop": 130.25,
+                        "bgColor": {
+                            "r": 255,
+                            "g": 255,
+                            "b": 255
+                        },
+                        "version": "0",
+                        "bgs": [
+                            {
+                                "resourceId": "62625da95b1b1106e55d31f2",
+                                "position": {
+                                    "top": 0,
+                                    "left": 0,
+                                    "width": 100
+                                }
+                            }
+                        ],
+                        "fgs": [
+                            {
+                                "resourceId": "62625daa5b1b1106e55d31f3",
+                                "position": {
+                                    "top": 0,
+                                    "left": 0,
+                                    "width": 100
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "siblingNodes": [
+        {
+            "id": "61f0fbe257b706553ab42795",
+            "type": "audio",
+            "name": {
+                "zh-TW": "Back to the Beginning"
+            },
+            "description": {
+                "zh-TW": "Back to the Beginning"
+            },
+            "orderInParent": 20,
+            "customData": null,
+            "covers": {
+                "list": [
+                    "61f0fdc057b706553ab427ab"
+                ]
+            },
+            "info": {
+                "authors": {
+                    "zh-TW": [
+                        "Kono"
+                    ]
+                }
+            },
+            "resources": {
+                "61f0fdc057b706553ab427ab": {
+                    "type": "IMAGE",
+                    "width": 574,
+                    "height": 900,
+                    "thumbnails": [
+                        100,
+                        320,
+                        480,
+                        574
+                    ],
+                    "urls": {
+                        "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0fbe257b706553ab42795/resources/61f0fdc057b706553ab427ab/100.jpeg",
+                        "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0fbe257b706553ab42795/resources/61f0fdc057b706553ab427ab/320.jpeg",
+                        "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0fbe257b706553ab42795/resources/61f0fdc057b706553ab427ab/480.jpeg",
+                        "574": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0fbe257b706553ab42795/resources/61f0fdc057b706553ab427ab/574.jpeg"
+                    },
+                    "webpUrls": {
+                        "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0fbe257b706553ab42795/resources/61f0fdc057b706553ab427ab/100.webp",
+                        "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0fbe257b706553ab42795/resources/61f0fdc057b706553ab427ab/320.webp",
+                        "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0fbe257b706553ab42795/resources/61f0fdc057b706553ab427ab/480.webp",
+                        "574": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0fbe257b706553ab42795/resources/61f0fdc057b706553ab427ab/574.webp"
+                    }
+                }
+            },
+            "public": false,
+            "free": true,
+            "permissions": null,
+            "content": {
+                "duration": 265.0194,
+                "audioLanguage": "en-US",
+                "textSegments": [
+                    {
+                        "type": "H1",
+                        "start": 2,
+                        "end": 5
+                    },
+                    {
+                        "type": "SPACE",
+                        "start": 0,
+                        "end": 0
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 6,
+                        "end": 10
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 11,
+                        "end": 16
+                    },
+                    {
+                        "type": "SPACE",
+                        "start": 0,
+                        "end": 0
+                    },
+                    {
+                        "type": "QUOTE",
+                        "start": 17,
+                        "end": 21
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 22,
+                        "end": 25
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 26,
+                        "end": 29
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 30,
+                        "end": 35
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 36,
+                        "end": 43
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 44,
+                        "end": 48
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 49,
+                        "end": 55
+                    },
+                    {
+                        "type": "SPACE",
+                        "start": 0,
+                        "end": 0
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 56,
+                        "end": 68
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 69,
+                        "end": 77
+                    },
+                    {
+                        "type": "SPACE",
+                        "start": 0,
+                        "end": 0
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 77,
+                        "end": 95
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 96,
+                        "end": 103
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 103,
+                        "end": 114
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 114,
+                        "end": 122
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 122,
+                        "end": 128
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 129,
+                        "end": 134
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 135,
+                        "end": 143
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 143,
+                        "end": 155
+                    },
+                    {
+                        "type": "SPACE",
+                        "start": 0,
+                        "end": 0
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 157,
+                        "end": 164
+                    },
+                    {
+                        "type": "QUOTE",
+                        "start": 165,
+                        "end": 175
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 176,
+                        "end": 185
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 186,
+                        "end": 191
+                    },
+                    {
+                        "type": "SPACE",
+                        "start": 0,
+                        "end": 0
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 192,
+                        "end": 211
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 212,
+                        "end": 220
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 221,
+                        "end": 234
+                    },
+                    {
+                        "type": "SPACE",
+                        "start": 0,
+                        "end": 0
+                    },
+                    {
+                        "type": "TEXT",
+                        "start": 235,
+                        "end": 249
+                    },
+                    {
+                        "type": "QUOTE",
+                        "start": 251,
+                        "end": 262
+                    }
+                ],
+                "languages": {
+                    "zh-TW": [
+                        {
+                            "content": "第三部分，回到最初的起點"
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "作者們探討人類經驗的根本結構。"
+                        },
+                        {
+                            "content": "討論到針對嬰兒的研究揭示了人類生命富有規律的自然本質。"
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "培理醫生表示：「所有生命都是有規律的。」"
+                        },
+                        {
+                            "content": "在嬰兒時期，存在一種感受自然壓力的模式。"
+                        },
+                        {
+                            "content": "舉例來說，嬰兒餓了想吃東西時就會哭。"
+                        },
+                        {
+                            "content": "而這個壓力會根據照顧者對於他們需求的關注程度來調節。"
+                        },
+                        {
+                            "content": "若嬰兒經常受到關注，他們會發展出較強的壓力反應能力來應付未來生活狀況。"
+                        },
+                        {
+                            "content": "他們的大腦會發展來處理成年生活的複雜情況。"
+                        },
+                        {
+                            "content": "而因早年擁有令人滿意的關係，他們便能從之後的人際關係中獲得滿足。"
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "作者們更深入且詳細地討論平衡與調節的概念，揭示心理作用與生物機制在大腦中的聯結。"
+                        },
+                        {
+                            "content": "他們描述了核心調節網絡這個人類腦中的壓力反應系統。"
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "嬰兒若是反覆受到擾亂或忽視，就無法體驗到健全的規律，而且他們的核心調節網絡可能會發展出「敏化作用」，意味著他們在成長過程面臨到人生中難解的挑戰時，會傾向做出異常的行為反應。"
+                        },
+                        {
+                            "content": "被忽視的嬰兒則可能會面臨自我價值喪失以及對他人缺乏信任感。"
+                        },
+                        {
+                            "content": "作者們討論到一些學童的案例，這些學童因為覺得自己不重要而拒絕參與學校事務，認為為什麼需要嘗試呢？"
+                        },
+                        {
+                            "content": "這些孩童因為他們過去的創傷而做出解離行為，並退縮封閉自己。"
+                        },
+                        {
+                            "content": "這即是原始本能裡的「逃離」反應，在這些孩童的嬰兒時期就建立在他們的核心調節網絡中。"
+                        },
+                        {
+                            "content": "另外有些孩童可能會拒絕配合並在教室到處搗亂。"
+                        },
+                        {
+                            "content": "他們的反應是對外的，為嬰兒時期就建立在他們核心調節網絡中的「戰鬥」反應。"
+                        },
+                        {
+                            "content": "培理醫生強調，不同的異常行為需要先用「經歷了什麼？」去理解，而後才能開啟有意義的療程和治癒行為。"
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "培理醫生將嬰兒對日常需求的滿足與獎勵的概念做聯結。"
+                        },
+                        {
+                            "content": "他說道：每個人都需要感覺到每天固定收到獎勵，因為這種「從痛苦中解脫的愉悅會成為一種效力強大的獎勵。」"
+                        },
+                        {
+                            "content": "壓力雖是生活的一部分，但我們大腦中神經網絡對壓力的反應以及克服一個挑戰所產生的滿足感，也都是生活在運轉的一部分。"
+                        },
+                        {
+                            "content": "他表示，我們都有著所謂的「獎勵桶」需要被裝填。"
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "在嬰兒時期就建立健康的壓力反應系統（核心調節網絡）的人們，傾向用所獲得的正向關係來裝填他們的獎勵桶，這些正向關係可能來自工作、學校、朋友或家人關係中，或發生在像嗜好或運動愛好這種有規律性、重複性的活動中。"
+                        },
+                        {
+                            "content": "但是，建立健康的關係對嬰兒時期壓力反應系統就失衡的人們而言可能很困難。"
+                        },
+                        {
+                            "content": "他們更有可能用酒精、毒品及吃不健康食物的「安慰性進食」來滿足心理上的需求或逃避壓力，填滿他們的獎勵桶。\n"
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "培理醫生主張，嬰兒時期的體驗和大腦對其做出的反應能夠生成一種對世界的歸屬感，而這種「關係健康」是人們福祉必不可缺的要素。"
+                        },
+                        {
+                            "content": "就如同培理醫生所說：「人際關係是裝填我們獎勵桶的最健康的方式。與他人的聯結能夠調節我們，並給予正向回饋。」"
+                        }
+                    ],
+                    "en-US": [
+                        {
+                            "content": "Part 3  Back to the Beginning"
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "The authors explore the fundamental structure of human experience."
+                        },
+                        {
+                            "content": "They discuss how studies of infants reveal the rhythmic nature of human life."
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "Dr. Perry states that “All life is rhythmic.” "
+                        },
+                        {
+                            "content": "In infancy, there is a pattern of feeling natural stress."
+                        },
+                        {
+                            "content": "For example, babies cry when wanting food."
+                        },
+                        {
+                            "content": "This stress is regulated by the caregivers’ attention to their needs."
+                        },
+                        {
+                            "content": "Regularly attended to, infants develop stronger stress response capabilities for future life situations. "
+                        },
+                        {
+                            "content": "Their brain develops to deal with the complexities of adult life."
+                        },
+                        {
+                            "content": "They obtain satisfaction through relationships, having had satisfactory early ones."
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "The authors discuss the idea of balance and regulation in more depth and detail, revealing the connection of the psychological effects and biological mechanisms in the brain."
+                        },
+                        {
+                            "content": "They describe the core regulatory networks (CRNs) that are the human stress response systems in the brain."
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "If there is repeated disruption or neglect, then the infants will not experience the healthy rhythm and may develop a “sensitization” of their CRNs, meaning they will tend to act in dysfunctional ways to challenging life events as they grow up."
+                        },
+                        {
+                            "content": "Infants who are neglected may experience a loss of self-worth and lack of trust in others. "
+                        },
+                        {
+                            "content": "The authors discuss cases of schoolchildren who refuse to participate in school because they feel they don’t matter, so what’s the point of trying?"
+                        },
+                        {
+                            "content": "These children experience dissociation as a result of their past trauma and retreat into themselves."
+                        },
+                        {
+                            "content": "This is a primitive “flight” response established in their CRNs in infancy."
+                        },
+                        {
+                            "content": "Other children may refuse to cooperate and cause disruption in the classroom."
+                        },
+                        {
+                            "content": "Their response is external, a “fight” response that became set in their CRNs as infants."
+                        },
+                        {
+                            "content": "Dr. Perry emphasizes that different dysfunctional behaviors need to be understood by asking the question “What happened?” before any meaningful treatment or healing can begin."
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "Dr. Perry links the infant’s need for satisfaction of their daily needs to the idea of reward."
+                        },
+                        {
+                            "content": "Everyone, he says, needs to feel rewarded on a daily basis because “the pleasure that comes from the relief of distress becomes a powerful reward.” "
+                        },
+                        {
+                            "content": "Stress is a part of life, but so is our response to it in the neural networks in our brains, and the satisfying feeling a challenge has been overcome."
+                        },
+                        {
+                            "content": "He states that we all have “reward buckets” that need to be filled."
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "People who have developed healthy stress response systems (CRNs) during infancy will tend to fill their reward buckets through the positive relationships they may have at work, school, with friends or family, or with rhythmic, repeated activities such as hobbies or sports."
+                        },
+                        {
+                            "content": "However, people with dysregulated stress response systems from infancy may find it difficult to form healthy relationships."
+                        },
+                        {
+                            "content": "They are much more likely to fill their reward buckets by using alcohol or drugs and by “comfort eating”—eating unhealthy foods to satisfy psychological needs or escape stress.\n"
+                        },
+                        {
+                            "content": ""
+                        },
+                        {
+                            "content": "Dr. Perry claims that the experiences and the resulting responses of the brain during infancy can create a feeling of belonging in the world and that “relational health” is essential for human well-being."
+                        },
+                        {
+                            "content": "As Dr. Perry says, “The healthiest way to refill our reward bucket is through relationships. Connectedness regulates and rewards us.”"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": "62625d6b5b1b1106e55d31f0",
+            "type": "article",
+            "name": {
+                "zh-TW": "pdf test 1",
+                "en-US": "ped test 1"
+            },
+            "description": {
+                "zh-TW": "pdf test description",
+                "en-US": "pdf test description"
+            },
+            "orderInParent": 20,
+            "customData": null,
+            "covers": {
+                "list": [
+                    "62625d6b5b1b1106e55d31f1"
+                ]
+            },
+            "info": {
+                "authors": {
+                    "zh-TW": [
+                        "qwer"
+                    ],
+                    "en-US": [
+                        "qwer"
+                    ]
+                }
+            },
+            "resources": {
+                "62625d6b5b1b1106e55d31f1": {
+                    "type": "IMAGE",
+                    "width": 1950,
+                    "height": 1300,
+                    "thumbnails": [
+                        100,
+                        320,
+                        480,
+                        640,
+                        800,
+                        1024,
+                        1280,
+                        1600,
+                        1920,
+                        1950
+                    ],
+                    "urls": {
+                        "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/100.jpeg",
+                        "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/320.jpeg",
+                        "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/480.jpeg",
+                        "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/640.jpeg",
+                        "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/800.jpeg",
+                        "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1024.jpeg",
+                        "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1280.jpeg",
+                        "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1600.jpeg",
+                        "1920": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1920.jpeg",
+                        "1950": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1950.jpeg"
+                    },
+                    "webpUrls": {
+                        "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/100.webp",
+                        "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/320.webp",
+                        "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/480.webp",
+                        "640": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/640.webp",
+                        "800": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/800.webp",
+                        "1024": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1024.webp",
+                        "1280": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1280.webp",
+                        "1600": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1600.webp",
+                        "1920": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1920.webp",
+                        "1950": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/6257c6433a5f99da1b7ffc7a/contents/62625d6b5b1b1106e55d31f0/resources/62625d6b5b1b1106e55d31f1/1950.webp"
+                    }
+                }
+            },
+            "public": false,
+            "free": true,
+            "permissions": {
+                "permission1": true
+            },
+            "content": {
+                "fitReading": null,
+                "pdf": {
+                    "orderPageIncreaseRight": false,
+                    "startPageInParent": 13,
+                    "pages": [
+                        {
+                            "paddingTop": 130.25,
+                            "bgColor": {
+                                "r": 255,
+                                "g": 255,
+                                "b": 255
+                            },
+                            "version": "0",
+                            "bgs": [
+                                {
+                                    "resourceId": "62625da95b1b1106e55d31f2",
+                                    "position": {
+                                        "top": 0,
+                                        "left": 0,
+                                        "width": 100
+                                    }
+                                }
+                            ],
+                            "fgs": [
+                                {
+                                    "resourceId": "62625daa5b1b1106e55d31f3",
+                                    "position": {
+                                        "top": 0,
+                                        "left": 0,
+                                        "width": 100
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "parentNode": {
+        "id": "61f0f4b857b706553ab4273e",
+        "type": "book",
+        "name": {
+            "zh-TW": "What Happened to You?"
+        },
+        "description": {
+            "zh-TW": "<b>一本治癒與協助克服創傷的書</b><br><br>在《你經歷了什麼？談創傷、韌性與治癒》一書中，布魯斯・培理醫生和歐普拉・溫芙蕾帶領我們踏上一段旅程，幫助我們了解自身以及他人的問題，還有我們身處世界的大小煩擾事。<br>知名談話節目主持人歐普拉與心理學家培理醫生討論了與人生經驗有根本關聯的三方面──創傷、韌性以及治癒。創傷是種深層的痛苦經驗，它會持續影響我們。先前的創傷會讓生活日益艱難，韌性則是處理其生活壓力的能力。而治癒為藉由先理解「發生的事」並一步步往韌性邁進，以此來克服創傷。<br>作者們一開始藉真實案例討論受創傷影響的人們以及創傷如何揮之不去地困擾他們當前的生活情況。他們拆解創傷如何對我們大腦造成實際的生理改變，而導致核心調節網絡機能失調。作者們再藉由討論嬰兒的生命經驗，描述人類富有規律的生活結構與其每日的自然壓力及壓力應對。<br>創傷可能會對整個群體造成影響，還可能會世世代代承繼下去。事實上，沒有人能免於遭受創傷。由於當今居住於大城市的人們正逐漸變得離群孤立，主要溝通皆透過科技設備，使得整個現代世界都正歷經創傷。我們之中許多人不再有機會接觸到傳統社會中的「精神支持人際網」。因此，治癒便需要以全球的規模來實行。我們都需要去檢視「已發生的事」，才能為我們自己與這個世界建立一個正向的未來。"
+        },
+        "orderInParent": 0,
+        "customData": null,
+        "covers": {
+            "list": [
+                "61f0f5d057b706553ab4273f"
+            ]
+        },
+        "info": {
+            "authors": {
+                "zh-TW": [
+                    "Kono"
+                ]
+            }
+        },
+        "resources": {
+            "61f0f5d057b706553ab4273f": {
+                "type": "IMAGE",
+                "width": 574,
+                "height": 900,
+                "thumbnails": [
+                    100,
+                    320,
+                    480,
+                    574
+                ],
+                "urls": {
+                    "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0f4b857b706553ab4273e/resources/61f0f5d057b706553ab4273f/100.jpeg",
+                    "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0f4b857b706553ab4273e/resources/61f0f5d057b706553ab4273f/320.jpeg",
+                    "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0f4b857b706553ab4273e/resources/61f0f5d057b706553ab4273f/480.jpeg",
+                    "574": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0f4b857b706553ab4273e/resources/61f0f5d057b706553ab4273f/574.jpeg"
+                },
+                "webpUrls": {
+                    "100": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0f4b857b706553ab4273e/resources/61f0f5d057b706553ab4273f/100.webp",
+                    "320": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0f4b857b706553ab4273e/resources/61f0f5d057b706553ab4273f/320.webp",
+                    "480": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0f4b857b706553ab4273e/resources/61f0f5d057b706553ab4273f/480.webp",
+                    "574": "https://storage.googleapis.com/kps_dev_public/projects/61398d3c62cbe46b8b9e58af/users/61134822e9db342e20967f3d/contents/61f0f4b857b706553ab4273e/resources/61f0f5d057b706553ab4273f/574.webp"
+                }
+            }
+        },
+        "content": {
+            "orderChildrenIncreaseRight": true
+        }
+    },
+    "puser": null
+}

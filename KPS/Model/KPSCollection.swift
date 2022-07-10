@@ -11,7 +11,7 @@ public struct KPSCollection {
         case error, childNodes, contentNode, parentNode, siblingNodes, puser
     }
     enum RootKeys: String, CodingKey {
-        case id,type,name,covers,resources
+        case id, type, name, description, covers, resources
     }
     
     public var children: [KPSContentMeta]
@@ -19,7 +19,7 @@ public struct KPSCollection {
     public var siblings: [KPSContentMeta]?
     public var id: String
     public var type: String?
-    public var name: [String: String]?
+    public var name, description: [String: String]?
     public var images: [KPSImageResource]
     public var metaData: KPSContentMeta
 }
@@ -40,6 +40,7 @@ extension KPSCollection: Decodable {
         id = try container.decode(String.self, forKey: .id)
         type = try container.decodeIfPresent(String.self, forKey: .type)
         name = try container.decodeIfPresent([String: String].self, forKey: .name)
+        description = try container.decodeIfPresent([String: String].self, forKey: .description)
         images = []
         
         if let _ = type {

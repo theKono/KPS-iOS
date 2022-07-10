@@ -16,6 +16,7 @@ class KPSPurchaseTests: XCTestCase {
     
     let mockDelegate: KPSPurchasesDelegate = KPSPurchaseDelegateMock()
     let mockEndpointURL: String = "https://purchase.thekono.com"
+    let mockEnpointSessionKey: String = "session_key"
     
     override func setUp() {
         
@@ -23,7 +24,7 @@ class KPSPurchaseTests: XCTestCase {
 
     func testPurchaseConfigSuccess() {
         
-        KPSPurchases.configure(withServerUrl: mockEndpointURL)
+        KPSPurchases.configure(withServerUrl: mockEndpointURL, sessionKey: mockEnpointSessionKey)
         XCTAssertTrue(KPSPurchases.isConfigured)
     }
     
@@ -31,7 +32,7 @@ class KPSPurchaseTests: XCTestCase {
         
         
         stubbingProvider = MoyaProvider<PurchaseAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-        KPSPurchases.configure(withServerUrl: "test_url")
+        KPSPurchases.configure(withServerUrl: mockEndpointURL, sessionKey: mockEnpointSessionKey)
         sut = KPSPurchases.shared
         sut.getCurrentCustomerType { type in
             XCTAssertEqual(type, .New)
