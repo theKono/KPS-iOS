@@ -383,11 +383,15 @@ extension KPSClient {
             
             switch result {
             case let .success(response):
-                self.isUserLBlocked = response.puser.status == 0
-                self.currentUserId = response.puser.id
-                completion(.success(response.puser))
+                guard let remoteUser = response.puser else {
+                    completion(.failure(MoyaError.statusCode(Response(statusCode: 401, data: Data()))))
+                    return
+                }
                 
-                
+                self.isUserBlocked = remoteUser.status == 0
+                self.currentUserId = remoteUser.id
+                completion(.success(remoteUser))
+
             case let .failure(error):
                 do {
                     let errorDescription = try error.response?.mapJSON()
