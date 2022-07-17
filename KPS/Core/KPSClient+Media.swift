@@ -187,8 +187,28 @@ extension KPSClient {
                 completion(.success(content))
                 
             case let .failure(error):
-                guard let _ = error.response else { return }
-                
+                guard let errorResponse = error.response else { return }
+                if (401..<404) ~= errorResponse.statusCode {
+                    do {
+                        var errorStateContent = try JSONDecoder().decode(KPSAudioContent.self, from: errorResponse.data)
+                        errorStateContent.collectionId = weakSelf.mediaPlayCollectionId
+                        errorStateContent.collectionName = weakSelf.mediaPlayCollectionName
+                        switch errorResponse.statusCode {
+                        case 401:
+                            errorStateContent.error = .needLogin
+                        case 402:
+                            errorStateContent.error = .userBlocked
+                        case 403:
+                            errorStateContent.error = .needPurchase
+                        default:
+                            break
+                        }
+                        completion(.success(errorStateContent))
+                        return
+                    } catch _ {
+                        
+                    }
+                }
                 completion(.failure(error))
             }
         }
