@@ -110,7 +110,7 @@ extension KPSArticle: Decodable {
                         error = .userBlocked
                     }
                 } else {
-                    if KPSClient.shared.isUserLBlocked {
+                    if KPSClient.shared.isUserBlocked {
                        error = .userBlocked
                     } else {
                         error = .needLogin

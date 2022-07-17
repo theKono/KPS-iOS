@@ -60,7 +60,7 @@ public final class KPSClient: NSObject {
         
     }
     
-    public var isUserLBlocked: Bool {
+    public var isUserBlocked: Bool {
         get {
             return UserDefaults.standard.bool(forKey: "kps_user_blocked")
         }
@@ -322,7 +322,7 @@ extension KPSClient {
                 self.currentUserId = response.user.id
                 KPSClient.sessionToken = response.kpsSession
                 self.isUserLoggedIn = true
-                self.isUserLBlocked = response.user.status == 0
+                self.isUserBlocked = response.user.status == 0
                 if !KPSPurchases.isConfigured {
                     self.fetchPermissions { permissionResult in
                         switch permissionResult {
@@ -338,7 +338,7 @@ extension KPSClient {
                 
             case let .failure(error):
                 self.isUserLoggedIn = false
-                self.isUserLBlocked = true
+                self.isUserBlocked = true
                 do {
                     let errorDescription = try error.response?.mapJSON()
                     print(errorDescription ?? "")
@@ -360,7 +360,7 @@ extension KPSClient {
                     self.isUserLoggedIn = false
                     self.mediaPlayerReset(isNeedClearPlayList: true)
                     self.userPermissions = []
-                    self.isUserLBlocked = true
+                    self.isUserBlocked = true
                     KPSClient.sessionToken = nil
                     completion?(.success(response))
                 } catch let error {
