@@ -458,28 +458,22 @@ extension KPSClient {
             switch result {
             case let .success(response):
                 do {
-                    //let filteredResponse = try response.filterSuccessfulStatusCodes()
-                    let results = try JSONDecoder().decode(T.self, from: response.data)
+                    let filteredResponse = try response.filterSuccessfulStatusCodes()
+                    let results = try JSONDecoder().decode(T.self, from: filteredResponse.data)
                     
                     completion(.success(results))
                 } catch let error {
                     if let customError = error as? MoyaError {
+                        
                         completion(.failure(customError))
                     } else {
-
+                        //TODO: return success but parsing error
                         do{
                             let json = try JSONSerialization.jsonObject(with: response.data, options: .mutableContainers)
                             let dic = json as! Dictionary<String, Any>
                             print(dic)
                         } catch _ {
                             
-                        }
-                        
-                        if response.statusCode == 404 {
-                            completion(.failure(.statusCode(response)))
-                            return
-                        } else {
-                            completion(.failure(.jsonMapping(response)))
                         }
                     }
                 }
