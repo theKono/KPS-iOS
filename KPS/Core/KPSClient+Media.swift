@@ -197,9 +197,9 @@ extension KPSClient {
                         case 401:
                             errorStateContent.error = .needLogin
                         case 402:
-                            errorStateContent.error = .userBlocked
-                        case 403:
                             errorStateContent.error = .needPurchase
+                        case 403:
+                            errorStateContent.error = .userBlocked
                         default:
                             break
                         }
