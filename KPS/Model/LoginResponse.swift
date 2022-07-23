@@ -16,7 +16,7 @@ public struct LoginResponse: Codable {
     }
 }
 struct SessionResponse: Codable {
-    let puser: KPSUser
+    var puser: KPSUser?
 }
 
 public struct KPSUser: Codable {

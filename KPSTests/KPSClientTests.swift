@@ -186,7 +186,7 @@ class KPSClientTests: XCTestCase {
         stubClient = KPSClient(apiKey: appKey, appId: appId, networkProvider: stubbingProvider)
         
         stubClient.fetchCurrentUser(completion: {result in})
-        XCTAssertFalse(stubClient.isUserLBlocked)
+        XCTAssertFalse(stubClient.isUserBlocked)
         XCTAssertEqual(stubClient.currentUserId, "testUser")
     }
     
