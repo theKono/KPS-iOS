@@ -92,32 +92,6 @@ extension KPSArticle: Decodable {
         fitReadingData = try contentDataContainer.decodeIfPresent([String: Any].self, forKey: .fitReading)
         pdfData = try contentDataContainer.decodeIfPresent(KPSPDFContent.self, forKey: .pdf)
         
-        // MARK: Handle resource info (premium content)
-        if errorDescription != nil {
-            if !isPublic {
-                if !isFree {
-                    var userHasPermission = false
-                    let userPurcahsedPermission = KPSClient.shared.userPermissions
-                    if let requirePermissions = permissions {
-                        for (permission, _) in requirePermissions {
-                            if userPurcahsedPermission.contains(permission) {
-                                userHasPermission = true
-                                break
-                            }
-                        }
-                        error = userHasPermission ? .userBlocked : .needPurchase
-                    } else {
-                        error = .userBlocked
-                    }
-                } else {
-                    if KPSClient.shared.isUserBlocked {
-                       error = .userBlocked
-                    } else {
-                        error = .needLogin
-                    }
-                }
-            }
-        }
     }
     
 }
