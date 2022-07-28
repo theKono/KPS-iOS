@@ -71,7 +71,7 @@ extension KPSAudioContent: Decodable {
         let errorDescription = try baseContainer.decodeIfPresent(String.self, forKey: .error)
         
         let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .contentNode)
-        let user = try baseContainer.decodeIfPresent(KPSUser.self, forKey: .puser)
+        let user = try baseContainer.decodeIfPresent(KPSUserModel.self, forKey: .puser)
         if let user = user {
             KPSClient.shared.isUserBlocked = user.status == 0
         }
