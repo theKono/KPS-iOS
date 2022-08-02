@@ -73,7 +73,7 @@ extension KPSAudioContent: Decodable {
         let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .contentNode)
         let user = try baseContainer.decodeIfPresent(KPSUser.self, forKey: .puser)
         if let user = user {
-            KPSClient.shared.isUserLBlocked = user.status == 0
+            KPSClient.shared.isUserBlocked = user.status == 0
         }
         
         id = try container.decode(String.self, forKey: .id)
@@ -121,29 +121,6 @@ extension KPSAudioContent: Decodable {
             byWordTimeFrames = parsedWordTimeFrames(info: audioResourceInfoRaw)
         
         } else {
-            if !isPublic {
-                if !isFree {
-                    var userHasPermission = false
-                    let userPurcahsedPermission = KPSClient.shared.userPermissions
-                    if let requirePermissions = permissions {
-                        for (permission, _) in requirePermissions {
-                            if userPurcahsedPermission.contains(permission) {
-                                userHasPermission = true
-                                break
-                            }
-                        }
-                        error = userHasPermission ? .userBlocked : .needPurchase
-                    } else {
-                        error = .userBlocked
-                    }
-                } else {
-                    if user == nil {
-                        error = .needLogin
-                    } else {
-                        error = .userBlocked
-                    }
-                }
-            }
             length = try contentDataContainer.decode(Double.self, forKey: .duration)
         }
         

@@ -60,7 +60,7 @@ public final class KPSClient: NSObject {
         
     }
     
-    public var isUserLBlocked: Bool {
+    public var isUserBlocked: Bool {
         get {
             return UserDefaults.standard.bool(forKey: "kps_user_blocked")
         }
@@ -322,7 +322,7 @@ extension KPSClient {
                 self.currentUserId = response.user.id
                 KPSClient.sessionToken = response.kpsSession
                 self.isUserLoggedIn = true
-                self.isUserLBlocked = response.user.status == 0
+                self.isUserBlocked = response.user.status == 0
                 if !KPSPurchases.isConfigured {
                     self.fetchPermissions { permissionResult in
                         switch permissionResult {
@@ -338,7 +338,7 @@ extension KPSClient {
                 
             case let .failure(error):
                 self.isUserLoggedIn = false
-                self.isUserLBlocked = true
+                self.isUserBlocked = true
                 do {
                     let errorDescription = try error.response?.mapJSON()
                     print(errorDescription ?? "")
@@ -360,7 +360,7 @@ extension KPSClient {
                     self.isUserLoggedIn = false
                     self.mediaPlayerReset(isNeedClearPlayList: true)
                     self.userPermissions = []
-                    self.isUserLBlocked = true
+                    self.isUserBlocked = true
                     KPSClient.sessionToken = nil
                     completion?(.success(response))
                 } catch let error {
@@ -383,11 +383,15 @@ extension KPSClient {
             
             switch result {
             case let .success(response):
-                self.isUserLBlocked = response.puser.status == 0
-                self.currentUserId = response.puser.id
-                completion(.success(response.puser))
+                guard let remoteUser = response.puser else {
+                    completion(.failure(MoyaError.statusCode(Response(statusCode: 401, data: Data()))))
+                    return
+                }
                 
-                
+                self.isUserBlocked = remoteUser.status == 0
+                self.currentUserId = remoteUser.id
+                completion(.success(remoteUser))
+
             case let .failure(error):
                 do {
                     let errorDescription = try error.response?.mapJSON()
@@ -458,28 +462,22 @@ extension KPSClient {
             switch result {
             case let .success(response):
                 do {
-                    //let filteredResponse = try response.filterSuccessfulStatusCodes()
-                    let results = try JSONDecoder().decode(T.self, from: response.data)
+                    let filteredResponse = try response.filterSuccessfulStatusCodes()
+                    let results = try JSONDecoder().decode(T.self, from: filteredResponse.data)
                     
                     completion(.success(results))
                 } catch let error {
                     if let customError = error as? MoyaError {
+                        
                         completion(.failure(customError))
                     } else {
-
+                        //TODO: return success but parsing error
                         do{
                             let json = try JSONSerialization.jsonObject(with: response.data, options: .mutableContainers)
                             let dic = json as! Dictionary<String, Any>
                             print(dic)
                         } catch _ {
                             
-                        }
-                        
-                        if response.statusCode == 404 {
-                            completion(.failure(.statusCode(response)))
-                            return
-                        } else {
-                            completion(.failure(.jsonMapping(response)))
                         }
                     }
                 }
