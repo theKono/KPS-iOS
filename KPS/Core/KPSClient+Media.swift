@@ -184,6 +184,10 @@ extension KPSClient {
                 var content = response
                 content.collectionId = weakSelf.mediaPlayCollectionId
                 content.collectionName = weakSelf.mediaPlayCollectionName
+                
+                if content.puser == nil {
+                    content.error = .needLogin
+                }
                 completion(.success(content))
                 
             case let .failure(error):
