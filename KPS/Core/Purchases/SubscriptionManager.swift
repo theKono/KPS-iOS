@@ -114,8 +114,17 @@ class SubscriptionManager {
                     let filteredResponse = try response.filterSuccessfulStatusAndRedirectCodes()
                     let orderResponse = try JSONDecoder().decode(ActiveOrderResponse.self, from: filteredResponse.data)
 
-                    self?.latestOrder = orderResponse.activeOrders.sorted {
-                        $0.createTime > $1.createTime
+                    let modifyExpiredTimeOrders = orderResponse.activeOrders.map { order -> KPSPurchaseOrder in
+                        var modifiedOrder = order
+                        if order.type == "ios" {
+                            if let interuptedTime = order.latestTransaction.interruptedTime {
+                                modifiedOrder.latestTransaction.end = interuptedTime
+                            }
+                        }
+                        return modifiedOrder
+                    }
+                    self?.latestOrder = modifyExpiredTimeOrders.sorted {
+                        $0.latestTransaction.end > $1.latestTransaction.end
                     }.first
                     self?.ownOrderIds = orderResponse.activeOrders.map{ return $0.id}
                     self?.updateSubscriptionStatus()

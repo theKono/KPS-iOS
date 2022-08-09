@@ -207,6 +207,7 @@ public class KPSBookInfoView: UIView {
                     make.centerX.equalToSuperview()
                 }
                 weakSelf.mainImageView.layoutIfNeeded()
+                weakSelf.layoutIfNeeded()
             default:
                 break
             }
