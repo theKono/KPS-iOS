@@ -377,7 +377,7 @@ extension KPSClient {
         }
     }
     
-    public func fetchCurrentUser(completion: @escaping (Result<KPSUser, MoyaError>) -> ()) {
+    public func fetchCurrentUser(completion: @escaping (Result<KPSUserModel, MoyaError>) -> ()) {
         
         let resultClosure: ((Result<SessionResponse, MoyaError>) -> Void) = { result in
             

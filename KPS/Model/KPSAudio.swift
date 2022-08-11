@@ -60,7 +60,7 @@ public struct KPSAudioContent {
         }
         return res
     }
-    
+    public var puser: KPSUserModel?
 }
 
 extension KPSAudioContent: Decodable {
@@ -71,8 +71,8 @@ extension KPSAudioContent: Decodable {
         let errorDescription = try baseContainer.decodeIfPresent(String.self, forKey: .error)
         
         let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .contentNode)
-        let user = try baseContainer.decodeIfPresent(KPSUser.self, forKey: .puser)
-        if let user = user {
+        puser = try baseContainer.decodeIfPresent(KPSUserModel.self, forKey: .puser)
+        if let user = puser {
             KPSClient.shared.isUserBlocked = user.status == 0
         }
         
