@@ -210,7 +210,8 @@ public final class KPSClient: NSObject {
     
     internal var mediaPlayerState = MediaPlayerState.nonSetSource {
         didSet {
-            if oldValue != mediaPlayerState {
+            // Note: Try to propogate the error status to main app whenever error occur
+            if oldValue != mediaPlayerState || mediaPlayerState == .error {
                 mediaContentDelegate?.kpsClient(client: self, playerStateDidChange: mediaPlayerState)
             }
         }

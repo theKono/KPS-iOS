@@ -532,10 +532,10 @@ extension KPSClient {
                 
                 switch keyPath {
                 case "status":
-                    if item.status == .failed {
-                        mediaPlayerState = .error
-                    } else if mediaPlayer.status == AVPlayer.Status.failed {
+                    if mediaPlayer.status == AVPlayer.Status.failed {
                         mediaPlayer = createDefaultAVPlayer()
+                        mediaPlayerState = .error
+                    } else if item.status == .failed {
                         mediaPlayerState = .error
                     } else if mediaPlayer.status == AVPlayer.Status.readyToPlay {
                         mediaPlayerState = .bufferFetched
