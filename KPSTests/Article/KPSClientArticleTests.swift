@@ -50,7 +50,7 @@ class KPSClientArticleTests: XCTestCase {
                 XCTAssertNotNil(articleContent.permissions?["VIP"])
                 
                 XCTAssertNotNil(articleContent.customData)
-                XCTAssertNil(articleContent.fitReadingData)
+                XCTAssertNotNil(articleContent.fitReadingData)
                 XCTAssertNotNil(articleContent.pdfData)
                 XCTAssertNotNil(articleContent.resources)
                 

@@ -41,8 +41,9 @@ public struct KPSArticle {
     public let coverList: [String]
     public let isPublic, isFree: Bool
     public var permissions: [String: Bool]?
-    public let customData, fitReadingData: [String: Any]?
+    public let customData: [String: Any]?
     public let pdfData: KPSPDFContent?
+    public let fitReadingData: KPSFitReadingContent?
     public var resources: [String: KPSResourceType]
     
     public var parent: KPSContentMeta?
@@ -91,7 +92,7 @@ extension KPSArticle: Decodable {
                                        
         let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .content)
         
-        fitReadingData = try contentDataContainer.decodeIfPresent([String: Any].self, forKey: .fitReading)
+        fitReadingData = try contentDataContainer.decodeIfPresent(KPSFitReadingContent.self, forKey: .fitReading)
         pdfData = try contentDataContainer.decodeIfPresent(KPSPDFContent.self, forKey: .pdf)
         
     }
