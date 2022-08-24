@@ -1731,5 +1731,9 @@
             },
             "audioLanguage": "en-US"
         }
+    },
+    "puser": {
+        "puid": "testUser",
+        "status": 1
     }
 }

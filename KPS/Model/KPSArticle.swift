@@ -41,12 +41,14 @@ public struct KPSArticle {
     public let coverList: [String]
     public let isPublic, isFree: Bool
     public var permissions: [String: Bool]?
-    public let customData, fitReadingData: [String: Any]?
+    public let customData: [String: Any]?
     public let pdfData: KPSPDFContent?
+    public let fitReadingData: KPSFitReadingContent?
     public var resources: [String: KPSResourceType]
     
     public var parent: KPSContentMeta?
     public var siblings: [KPSContentMeta]?
+    public var puser: KPSUserModel?
     
     public var errorDescription: String?
     public var error: KPSContentError?
@@ -62,6 +64,7 @@ extension KPSArticle: Decodable {
         errorDescription = try baseContainer.decodeIfPresent(String.self, forKey: .error)
         parent = try baseContainer.decodeIfPresent(KPSContentMeta.self, forKey: .parentNode)
         siblings = try baseContainer.decodeIfPresent([KPSContentMeta].self, forKey: .siblingNodes)
+        puser =  try baseContainer.decodeIfPresent(KPSUserModel.self, forKey: .puser)
         
         let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .contentNode)
         
@@ -89,35 +92,9 @@ extension KPSArticle: Decodable {
                                        
         let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .content)
         
-        fitReadingData = try contentDataContainer.decodeIfPresent([String: Any].self, forKey: .fitReading)
+        fitReadingData = try contentDataContainer.decodeIfPresent(KPSFitReadingContent.self, forKey: .fitReading)
         pdfData = try contentDataContainer.decodeIfPresent(KPSPDFContent.self, forKey: .pdf)
         
-        // MARK: Handle resource info (premium content)
-        if errorDescription != nil {
-            if !isPublic {
-                if !isFree {
-                    var userHasPermission = false
-                    let userPurcahsedPermission = KPSClient.shared.userPermissions
-                    if let requirePermissions = permissions {
-                        for (permission, _) in requirePermissions {
-                            if userPurcahsedPermission.contains(permission) {
-                                userHasPermission = true
-                                break
-                            }
-                        }
-                        error = userHasPermission ? .userBlocked : .needPurchase
-                    } else {
-                        error = .userBlocked
-                    }
-                } else {
-                    if KPSClient.shared.isUserLBlocked {
-                       error = .userBlocked
-                    } else {
-                        error = .needLogin
-                    }
-                }
-            }
-        }
     }
     
 }

@@ -184,11 +184,35 @@ extension KPSClient {
                 var content = response
                 content.collectionId = weakSelf.mediaPlayCollectionId
                 content.collectionName = weakSelf.mediaPlayCollectionName
+                
+                if content.puser == nil {
+                    content.error = .needLogin
+                }
                 completion(.success(content))
                 
             case let .failure(error):
-                guard let _ = error.response else { return }
-                
+                guard let errorResponse = error.response else { return }
+                if (401..<404) ~= errorResponse.statusCode {
+                    do {
+                        var errorStateContent = try JSONDecoder().decode(KPSAudioContent.self, from: errorResponse.data)
+                        errorStateContent.collectionId = weakSelf.mediaPlayCollectionId
+                        errorStateContent.collectionName = weakSelf.mediaPlayCollectionName
+                        switch errorResponse.statusCode {
+                        case 401:
+                            errorStateContent.error = .needLogin
+                        case 402:
+                            errorStateContent.error = .needPurchase
+                        case 403:
+                            errorStateContent.error = .userBlocked
+                        default:
+                            break
+                        }
+                        completion(.success(errorStateContent))
+                        return
+                    } catch _ {
+                        
+                    }
+                }
                 completion(.failure(error))
             }
         }
@@ -508,10 +532,10 @@ extension KPSClient {
                 
                 switch keyPath {
                 case "status":
-                    if item.status == .failed {
-                        mediaPlayerState = .error
-                    } else if mediaPlayer.status == AVPlayer.Status.failed {
+                    if mediaPlayer.status == AVPlayer.Status.failed {
                         mediaPlayer = createDefaultAVPlayer()
+                        mediaPlayerState = .error
+                    } else if item.status == .failed {
                         mediaPlayerState = .error
                     } else if mediaPlayer.status == AVPlayer.Status.readyToPlay {
                         mediaPlayerState = .bufferFetched

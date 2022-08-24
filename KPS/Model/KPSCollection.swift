@@ -31,9 +31,9 @@ extension KPSCollection: Decodable {
         children = try baseContainer.decode([KPSContentMeta].self, forKey: .childNodes)
         metaData = try baseContainer.decode(KPSContentMeta.self, forKey: .contentNode)
         
-        let user = try baseContainer.decodeIfPresent(KPSUser.self, forKey: .puser)
+        let user = try baseContainer.decodeIfPresent(KPSUserModel.self, forKey: .puser)
         if let user = user {
-            KPSClient.shared.isUserLBlocked = user.status == 0
+            KPSClient.shared.isUserBlocked = user.status == 0
         }
         
         let container = try baseContainer.nestedContainer(keyedBy: RootKeys.self, forKey: .contentNode)

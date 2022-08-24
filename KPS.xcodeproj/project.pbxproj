@@ -100,6 +100,7 @@
 		E8E14F2227DF1B77007D6875 /* CustomerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F2127DF1B77007D6875 /* CustomerInfo.swift */; };
 		F81A26C62841155F00FBCD82 /* KPSClient+Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */; };
 		F82981DA2870AC3B00E2F51A /* articleContentWithWrongArticleId.json in Resources */ = {isa = PBXBuildFile; fileRef = F82981D92870AC3B00E2F51A /* articleContentWithWrongArticleId.json */; };
+		F8B6840A28A9E751002ABC33 /* KPSFitReadingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */; };
 		F8B890C32845DE5F00C7BDD7 /* KPSClientArticleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */; };
 		F8B890C9284EFC0800C7BDD7 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = F8B890C8284EFC0800C7BDD7 /* articleContent.json */; };
 		F8B890CB284F38DC00C7BDD7 /* KPSFileResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */; };
@@ -223,6 +224,7 @@
 		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KPSClient+Article.swift"; sourceTree = "<group>"; };
 		F82981D92870AC3B00E2F51A /* articleContentWithWrongArticleId.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = articleContentWithWrongArticleId.json; sourceTree = "<group>"; };
+		F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSFitReadingContent.swift; sourceTree = "<group>"; };
 		F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientArticleTests.swift; sourceTree = "<group>"; };
 		F8B890C8284EFC0800C7BDD7 /* articleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
 		F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSFileResource.swift; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 				F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */,
 				F8B890CC2850515B00C7BDD7 /* KPSResourceType.swift */,
 				F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */,
+				F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -803,6 +806,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E845AD8827E4923F00A3DC49 /* ASN1ObjectIdentifierBuilder.swift in Sources */,
+				F8B6840A28A9E751002ABC33 /* KPSFitReadingContent.swift in Sources */,
 				F81A26C62841155F00FBCD82 /* KPSClient+Article.swift in Sources */,
 				E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */,
 				E825CEC92844746E008527C6 /* KPSBookInfoView.swift in Sources */,

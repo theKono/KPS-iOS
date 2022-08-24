@@ -14,11 +14,13 @@ public struct KPSBookInfoViewModel {
     var bookName: String
     var bookDescription: String?
     var mainImageURL: String
+    var imageSize: CGSize?
     
-    public init(bookName: String, bookDescription: String?, mainImageURL: String) {
+    public init(bookName: String, bookDescription: String?, mainImageURL: String, imageSize: CGSize?) {
         self.bookName = bookName
         self.bookDescription = bookDescription
         self.mainImageURL = mainImageURL
+        self.imageSize = imageSize
     }
     
 }
@@ -192,6 +194,19 @@ public class KPSBookInfoView: UIView {
         
         bookNameLabel.text = viewModel.bookName
         bookDescriptionLabel.text = viewModel.bookDescription
+        
+        if let imageSize = viewModel.imageSize {
+            let imageAspectRatio: CGFloat = CGFloat(imageSize.height) / CGFloat(imageSize.width)
+            let imageViewMargin = KPSUtiltiy.deviceIsPhone ? ComponentConstants.bookInfoImagePhoneMargin : ComponentConstants.normalHorizontalMargin
+            
+            mainImageView.snp.remakeConstraints { make in
+                make.top.equalToSuperview()
+                make.height.equalTo(self.mainImageView.snp.width).multipliedBy(imageAspectRatio).priority(.high)
+                make.left.right.equalToSuperview().inset(imageViewMargin)
+                make.centerX.equalToSuperview()
+            }
+        }
+        
         mainImageView.kf.setImage(with: URL(string: viewModel.mainImageURL)) { [weak self] result in
             
             guard let weakSelf = self else { return }
@@ -207,6 +222,7 @@ public class KPSBookInfoView: UIView {
                     make.centerX.equalToSuperview()
                 }
                 weakSelf.mainImageView.layoutIfNeeded()
+                weakSelf.layoutIfNeeded()
             default:
                 break
             }

@@ -7,7 +7,7 @@
 public struct LoginResponse: Codable {
     let isNew: Bool
     public let kpsSession: String
-    let user: KPSUser
+    let user: KPSUserModel
 
     enum CodingKeys: String, CodingKey {
         case isNew
@@ -16,13 +16,13 @@ public struct LoginResponse: Codable {
     }
 }
 struct SessionResponse: Codable {
-    let puser: KPSUser
+    var puser: KPSUserModel?
 }
 
-public struct KPSUser: Codable {
+public struct KPSUserModel: Codable {
     
-    let id: String
-    let status: Int
+    public let id: String
+    public let status: Int
     
     enum CodingKeys: String, CodingKey {
         case id = "puid"
