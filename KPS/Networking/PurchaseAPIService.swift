@@ -77,8 +77,19 @@ extension PurchaseAPIService: TargetType {
                     }
             return data
             
-        case .redeemKPSCoupon(_, _):
-            return Data()
+        case .redeemKPSCoupon(let couponId, _):
+            var resFileName: String
+            if couponId == "couponRedeemWithError" {
+                resFileName = "couponRedeemWithError"
+            } else {
+                resFileName = "couponRedeem"
+            }
+            
+            guard let url = Bundle.resourceBundle.url(forResource: resFileName, withExtension: "json"),
+                  let data = try? Data(contentsOf: url) else {
+                        return Data()
+                    }
+            return data
         }
     }
     

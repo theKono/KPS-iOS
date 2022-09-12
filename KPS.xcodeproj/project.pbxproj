@@ -100,9 +100,10 @@
 		E8E14F2227DF1B77007D6875 /* CustomerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E14F2127DF1B77007D6875 /* CustomerInfo.swift */; };
 		F81A26C62841155F00FBCD82 /* KPSClient+Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */; };
 		F82981DA2870AC3B00E2F51A /* articleContentWithWrongArticleId.json in Resources */ = {isa = PBXBuildFile; fileRef = F82981D92870AC3B00E2F51A /* articleContentWithWrongArticleId.json */; };
-		F8324CE028C71F5A009B4005 /* coupon.json in Resources */ = {isa = PBXBuildFile; fileRef = F8324CDF28C71F5A009B4005 /* coupon.json */; };
 		F8324CE228C7271D009B4005 /* KPSCouponResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8324CE128C7271D009B4005 /* KPSCouponResponse.swift */; };
 		F8324CE928C87980009B4005 /* KPSCouponManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8324CE828C87980009B4005 /* KPSCouponManager.swift */; };
+		F8324D0128CF5E8B009B4005 /* couponRedeemWithError.json in Resources */ = {isa = PBXBuildFile; fileRef = F8324D0028CF5E8B009B4005 /* couponRedeemWithError.json */; };
+		F8324D0528CF5EDF009B4005 /* couponRedeem.json in Resources */ = {isa = PBXBuildFile; fileRef = F8324D0428CF5EDF009B4005 /* couponRedeem.json */; };
 		F8B6840A28A9E751002ABC33 /* KPSFitReadingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */; };
 		F8B890C32845DE5F00C7BDD7 /* KPSClientArticleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */; };
 		F8B890C9284EFC0800C7BDD7 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = F8B890C8284EFC0800C7BDD7 /* articleContent.json */; };
@@ -227,9 +228,10 @@
 		EAD0C78CD6C0FB894AEF4FAE /* Pods_KPS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KPSClient+Article.swift"; sourceTree = "<group>"; };
 		F82981D92870AC3B00E2F51A /* articleContentWithWrongArticleId.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = articleContentWithWrongArticleId.json; sourceTree = "<group>"; };
-		F8324CDF28C71F5A009B4005 /* coupon.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = coupon.json; sourceTree = "<group>"; };
 		F8324CE128C7271D009B4005 /* KPSCouponResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSCouponResponse.swift; sourceTree = "<group>"; };
 		F8324CE828C87980009B4005 /* KPSCouponManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSCouponManager.swift; sourceTree = "<group>"; };
+		F8324D0028CF5E8B009B4005 /* couponRedeemWithError.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = couponRedeemWithError.json; sourceTree = "<group>"; };
+		F8324D0428CF5EDF009B4005 /* couponRedeem.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = couponRedeem.json; sourceTree = "<group>"; };
 		F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSFitReadingContent.swift; sourceTree = "<group>"; };
 		F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientArticleTests.swift; sourceTree = "<group>"; };
 		F8B890C8284EFC0800C7BDD7 /* articleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
@@ -421,7 +423,8 @@
 				E889A9A0280670A900E3718C /* transactions.json */,
 				E889A99E280670A900E3718C /* userPermission.json */,
 				E8CD623F281A6A5100F65C85 /* productIds.json */,
-				F8324CDF28C71F5A009B4005 /* coupon.json */,
+				F8324D0428CF5EDF009B4005 /* couponRedeem.json */,
+				F8324D0028CF5E8B009B4005 /* couponRedeemWithError.json */,
 				E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */,
 				E825CECE2844779A008527C6 /* Localizable.strings */,
 			);
@@ -716,18 +719,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8324CE028C71F5A009B4005 /* coupon.json in Resources */,
 				F82981DA2870AC3B00E2F51A /* articleContentWithWrongArticleId.json in Resources */,
 				E889A9A4280670A900E3718C /* audioContentWithWordTime.json in Resources */,
 				E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */,
 				E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */,
 				E889A9A7280670A900E3718C /* audioContentWithoutPermission.json in Resources */,
 				E889A9A3280670A900E3718C /* activeOrders.json in Resources */,
+				F8324D0528CF5EDF009B4005 /* couponRedeem.json in Resources */,
 				F8B890C9284EFC0800C7BDD7 /* articleContent.json in Resources */,
 				E889A9A9280670A900E3718C /* articleContentWithoutPermission.json in Resources */,
 				E84ADA562824C633007F89A0 /* Images.xcassets in Resources */,
 				E8CD6240281A6A5100F65C85 /* productIds.json in Resources */,
 				E889A9A6280670A900E3718C /* rootCollection.json in Resources */,
+				F8324D0128CF5E8B009B4005 /* couponRedeemWithError.json in Resources */,
 				E889A9A5280670A900E3718C /* audioContent.json in Resources */,
 				E825CECC2844779A008527C6 /* Localizable.strings in Resources */,
 				E889A9A8280670A900E3718C /* userPermission.json in Resources */,
