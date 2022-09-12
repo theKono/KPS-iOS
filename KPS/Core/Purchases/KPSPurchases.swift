@@ -430,6 +430,11 @@ public extension KPSPurchases {
     }
 
 
+    @available(iOS 14.0, *)
+    func presentCodeRedemptionSheet() {
+        transactionManager.presentCodeRedemptionSheet()
+    }
+    
 
     /**
      * Use this function to open the manage subscriptions page.
