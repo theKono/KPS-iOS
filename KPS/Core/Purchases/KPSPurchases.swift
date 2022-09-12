@@ -165,6 +165,7 @@ public class KPSPurchases: NSObject {
     private let transactionManager: KPSTransactionManager
     private let subscriptionManager: SubscriptionManager
     private let receiptManager: KPSPurchaseReceiptManager
+    private let couponManager: KPSCouponManager
     private let serverUrl: String
     private let apiServiceProvider: MoyaProvider<PurchaseAPIService>
     
@@ -228,6 +229,7 @@ public class KPSPurchases: NSObject {
         self.transactionManager = transactionManager
         self.receiptManager = receiptManager
         self.subscriptionManager = SubscriptionManager(serverUrl: serverUrl, apiServiceProvider: KPSPurchases.networkProvider)
+        self.couponManager = KPSCouponManager(serverUrl: serverUrl, apiServiceProvider: KPSPurchases.networkProvider)
         self.isUserPurchasing = false
         super.init()
         
@@ -726,4 +728,28 @@ private extension KPSPurchases {
         
     }
 
+}
+
+// MARK: - KPS Coupon
+public extension KPSPurchases {
+    
+    func redeemCoupon(code: String, completion: @escaping(Result<KPSCouponResponse, MoyaError>) -> ()) {
+        
+        couponManager.redeemCoupon(code: code) {  [weak self] result in
+            guard let weakSelf = self else { return }
+            
+            switch result {
+            case .success(let couponInfo):
+                
+                weakSelf.syncPaymentStatus() {
+                    completion(.success(couponInfo))
+                }
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    
 }
