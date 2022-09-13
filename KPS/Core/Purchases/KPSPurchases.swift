@@ -592,6 +592,8 @@ private extension KPSPurchases {
         if isUserPurchasing {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSPurchasedTransactionComplete"), object: nil, userInfo: nil)
             uploadLocalReceipt()
+        } else {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSPurchasedNewTransaction"), object: nil, userInfo: nil)
         }
     }
 
