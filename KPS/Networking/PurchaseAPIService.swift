@@ -17,6 +17,7 @@ enum PurchaseAPIService {
     case fetchPaymentStatus(serverUrl: String)
     case fetchTransactions(order: String, serverUrl: String)
     case fetchProductIds(serverUrl: String)
+    case redeemKPSCoupon(couponId: String, serverUrl: String)
 
 }
 
@@ -24,7 +25,7 @@ extension PurchaseAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .uploadReceipt(_, _, let serverUrl), .fetchPaymentStatus(let serverUrl), .fetchTransactions(_, let serverUrl), .fetchProductIds(let serverUrl):
+        case .uploadReceipt(_, _, let serverUrl), .fetchPaymentStatus(let serverUrl), .fetchTransactions(_, let serverUrl), .fetchProductIds(let serverUrl), .redeemKPSCoupon(_, let serverUrl):
             return URL(string: serverUrl)!
         }
     }
@@ -39,12 +40,14 @@ extension PurchaseAPIService: TargetType {
             return "transactions"
         case .fetchProductIds(_):
             return "productIds"
+        case .redeemKPSCoupon(let couponId, _):
+            return "coupons/\(couponId)/redeem"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .uploadReceipt(_, _, _):
+        case .uploadReceipt(_, _, _), .redeemKPSCoupon(_, _):
             return .post
         case .fetchPaymentStatus(_), .fetchTransactions(_, _), .fetchProductIds(_):
             return .get
@@ -73,6 +76,20 @@ extension PurchaseAPIService: TargetType {
                         return Data()
                     }
             return data
+            
+        case .redeemKPSCoupon(let couponId, _):
+            var resFileName: String
+            if couponId == "couponRedeemWithError" {
+                resFileName = "couponRedeemWithError"
+            } else {
+                resFileName = "couponRedeem"
+            }
+            
+            guard let url = Bundle.resourceBundle.url(forResource: resFileName, withExtension: "json"),
+                  let data = try? Data(contentsOf: url) else {
+                        return Data()
+                    }
+            return data
         }
     }
     
@@ -80,7 +97,7 @@ extension PurchaseAPIService: TargetType {
         switch self {
         case .uploadReceipt(let receipt, let version, _):
             return .requestParameters(parameters: ["receipt": receipt, "storeKitVersion": version], encoding: JSONEncoding.default)
-        case .fetchPaymentStatus(_), .fetchProductIds(_):
+        case .fetchPaymentStatus(_), .fetchProductIds(_), .redeemKPSCoupon(_, _):
             return .requestPlain
         case .fetchTransactions(let order, _):
             return .requestParameters(parameters: ["orderId": order], encoding: URLEncoding.queryString)

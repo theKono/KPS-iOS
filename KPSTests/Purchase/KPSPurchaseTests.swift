@@ -19,7 +19,9 @@ class KPSPurchaseTests: XCTestCase {
     let mockEnpointSessionKey: String = "session_key"
     
     override func setUp() {
-        
+        stubbingProvider = MoyaProvider<PurchaseAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+        KPSPurchases.configure(withServerUrl: mockEndpointURL, sessionKey: mockEnpointSessionKey)
+        sut = KPSPurchases.shared
     }
 
     func testPurchaseConfigSuccess() {
@@ -30,14 +32,45 @@ class KPSPurchaseTests: XCTestCase {
     
     func testGetCurrentCustomerTypeSuccess() {
         
-        
-        stubbingProvider = MoyaProvider<PurchaseAPIService>(endpointClosure: customSuccessEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-        KPSPurchases.configure(withServerUrl: mockEndpointURL, sessionKey: mockEnpointSessionKey)
-        sut = KPSPurchases.shared
         sut.getCurrentCustomerType { type in
             XCTAssertEqual(type, .New)
         }
         
+    }
+    
+    func testRedeemCouponSuccess() {
+               
+        let mockArticleId = "redeemCouponTest"
+        sut.redeemCoupon(code: mockArticleId) { result in
+            switch result {
+            case .success(let couponInfo):
+                
+                XCTAssertEqual(couponInfo.coupon?.code, "2IEG3H79BFBVV8O7WV")
+                XCTAssertEqual(couponInfo.coupon?.campaign, "2022 events")
+                XCTAssertEqual(couponInfo.coupon?.timeLength, 86400)
+                XCTAssertEqual(couponInfo.coupon?.plan, "1 日 Coupon")
+                XCTAssertEqual(couponInfo.coupon?.transactionName, "coupon")
+                XCTAssertEqual(couponInfo.coupon?.periodStart, 1661765892000)
+                XCTAssertEqual(couponInfo.coupon?.periodEnd, 1662111492000)
+                XCTAssertNil(couponInfo.error)
+                break
+            default: break
+            }
+        }
+    }
+    
+    func testRedeemCouponWithError() {
+        let mockArticleId = "redeemCouponWithError"
+        sut.redeemCoupon(code: mockArticleId) { result in
+            switch result {
+            case .success(let couponInfo):
+                
+                XCTAssertEqual(couponInfo.error, "coupon not found")
+                XCTAssertNil(couponInfo.coupon)
+                break
+            default: break
+            }
+        }
     }
 
     func customSuccessEndpointClosure(_ target: PurchaseAPIService) -> Endpoint {
