@@ -233,6 +233,7 @@ public class KPSPurchases: NSObject {
         self.isUserPurchasing = false
         super.init()
         
+        SKPaymentQueue.default().add(self.transactionManager)
         self.transactionManager.delegate = self
         syncPaymentStatus()
     }
@@ -649,7 +650,7 @@ private extension KPSPurchases {
             let base64Receipt = base64ReceiptData.base64EncodedString()
             //print(base64Receipt)
             var isPurchaseInTrial: Bool = false
-            if let latestTransaction = self.receiptManager.localReceipt!.inAppPurchases.sorted(by: { $0.purchaseDate > $1.purchaseDate }).first {
+            if let latestTransaction = self.receiptManager.localReceipt?.inAppPurchases.sorted(by: { $0.purchaseDate > $1.purchaseDate }).first {
                 isPurchaseInTrial = latestTransaction.isInTrialPeriod ?? false
             }
             
