@@ -233,6 +233,7 @@ public class KPSPurchases: NSObject {
         self.isUserPurchasing = false
         super.init()
         
+        SKPaymentQueue.default().add(self.transactionManager)
         self.transactionManager.delegate = self
         syncPaymentStatus()
     }
@@ -430,6 +431,11 @@ public extension KPSPurchases {
     }
 
 
+    @available(iOS 14.0, *)
+    func presentCodeRedemptionSheet() {
+        transactionManager.presentCodeRedemptionSheet()
+    }
+    
 
     /**
      * Use this function to open the manage subscriptions page.
@@ -587,6 +593,8 @@ private extension KPSPurchases {
         if isUserPurchasing {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSPurchasedTransactionComplete"), object: nil, userInfo: nil)
             uploadLocalReceipt()
+        } else {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSPurchasedNewTransaction"), object: nil, userInfo: nil)
         }
     }
 
@@ -642,7 +650,7 @@ private extension KPSPurchases {
             let base64Receipt = base64ReceiptData.base64EncodedString()
             //print(base64Receipt)
             var isPurchaseInTrial: Bool = false
-            if let latestTransaction = self.receiptManager.localReceipt!.inAppPurchases.sorted(by: { $0.purchaseDate > $1.purchaseDate }).first {
+            if let latestTransaction = self.receiptManager.localReceipt?.inAppPurchases.sorted(by: { $0.purchaseDate > $1.purchaseDate }).first {
                 isPurchaseInTrial = latestTransaction.isInTrialPeriod ?? false
             }
             
