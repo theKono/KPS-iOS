@@ -1,0 +1,12 @@
+{
+    "error": null,
+    "coupon": {
+        "code": "2IEG3H79BFBVV8O7WV",
+        "campaign": "2022 events",
+        "timeLength": 86400,
+        "plan": "1 日 Coupon",
+        "transactionName": "coupon",
+        "start": 1661765892000,
+        "end": 1662111492000
+    }
+}

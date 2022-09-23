@@ -165,6 +165,7 @@ public class KPSPurchases: NSObject {
     private let transactionManager: KPSTransactionManager
     private let subscriptionManager: SubscriptionManager
     private let receiptManager: KPSPurchaseReceiptManager
+    private let couponManager: KPSCouponManager
     private let serverUrl: String
     private let apiServiceProvider: MoyaProvider<PurchaseAPIService>
     
@@ -228,9 +229,11 @@ public class KPSPurchases: NSObject {
         self.transactionManager = transactionManager
         self.receiptManager = receiptManager
         self.subscriptionManager = SubscriptionManager(serverUrl: serverUrl, apiServiceProvider: KPSPurchases.networkProvider)
+        self.couponManager = KPSCouponManager(serverUrl: serverUrl, apiServiceProvider: KPSPurchases.networkProvider)
         self.isUserPurchasing = false
         super.init()
         
+        SKPaymentQueue.default().add(self.transactionManager)
         self.transactionManager.delegate = self
         syncPaymentStatus()
     }
@@ -428,6 +431,11 @@ public extension KPSPurchases {
     }
 
 
+    @available(iOS 14.0, *)
+    func presentCodeRedemptionSheet() {
+        transactionManager.presentCodeRedemptionSheet()
+    }
+    
 
     /**
      * Use this function to open the manage subscriptions page.
@@ -585,6 +593,8 @@ private extension KPSPurchases {
         if isUserPurchasing {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSPurchasedTransactionComplete"), object: nil, userInfo: nil)
             uploadLocalReceipt()
+        } else {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "KPSPurchasedNewTransaction"), object: nil, userInfo: nil)
         }
     }
 
@@ -640,7 +650,7 @@ private extension KPSPurchases {
             let base64Receipt = base64ReceiptData.base64EncodedString()
             //print(base64Receipt)
             var isPurchaseInTrial: Bool = false
-            if let latestTransaction = self.receiptManager.localReceipt!.inAppPurchases.sorted(by: { $0.purchaseDate > $1.purchaseDate }).first {
+            if let latestTransaction = self.receiptManager.localReceipt?.inAppPurchases.sorted(by: { $0.purchaseDate > $1.purchaseDate }).first {
                 isPurchaseInTrial = latestTransaction.isInTrialPeriod ?? false
             }
             
@@ -726,4 +736,28 @@ private extension KPSPurchases {
         
     }
 
+}
+
+// MARK: - KPS Coupon
+public extension KPSPurchases {
+    
+    func redeemCoupon(code: String, completion: @escaping(Result<KPSCouponResponse, MoyaError>) -> ()) {
+        
+        couponManager.redeemCoupon(code: code) {  [weak self] result in
+            guard let weakSelf = self else { return }
+            
+            switch result {
+            case .success(let couponInfo):
+                
+                weakSelf.syncPaymentStatus() {
+                    completion(.success(couponInfo))
+                }
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    
 }
