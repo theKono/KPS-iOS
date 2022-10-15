@@ -233,7 +233,7 @@ public class KPSPurchases: NSObject {
         self.isUserPurchasing = false
         super.init()
         
-        SKPaymentQueue.default().add(self.transactionManager)
+        //SKPaymentQueue.default().add(self.transactionManager)
         self.transactionManager.delegate = self
         syncPaymentStatus()
     }
