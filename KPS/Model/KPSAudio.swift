@@ -352,7 +352,11 @@ public struct KPSAudioFileInfo {
     public let duration: Double
     public let streamingUrl: String
     init(info: [String: Any]) {
-        duration = info["duration"] as! Double
+        if let durationInt = info["duration"] as? Int {
+            duration = Double(durationInt)
+        } else {
+            duration = info["duration"] as! Double
+        }
         streamingUrl = info["streamingUrl"] as! String
     }
 }
