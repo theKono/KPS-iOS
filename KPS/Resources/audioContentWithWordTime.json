@@ -66,7 +66,7 @@
             },
             "61dbb5142422e40a2cd63ea9": {
                 "type": "AUDIO",
-                "duration": 149.4,
+                "duration": 149,
                 "streamingUrl": "https://kps-dev.thekono.com/api/v1/projects/61398d3c62cbe46b8b9e58af/streams/61de651d3940e9000ea36fcf/playlist.m3u8",
                 "sentences": [
                     {
