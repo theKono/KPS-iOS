@@ -17,6 +17,9 @@ public struct KPSArticleTableCellViewModel {
     var articleIssueName: String?
     var articleDescription: String?
     var mainImageURL: String
+    var isFree: Bool?
+    var isPublic: Bool?
+    public var orderInParent: Int?
     
     var articleDetailText: String {
         if let description = articleDescription,
@@ -30,13 +33,16 @@ public struct KPSArticleTableCellViewModel {
     }
     
     
-    public init(id: String, articleTitle: String, articleMagazineName: String?, articleIssueName: String?, articleDescription: String?, mainImageURL: String) {
+    public init(id: String, articleTitle: String, articleMagazineName: String?, articleIssueName: String?, articleDescription: String?, mainImageURL: String, isFree: Bool?, isPublic: Bool?, orderInParent: Int?) {
         self.id = id
         self.articleTitle = articleTitle
         self.articleMagazineName = articleMagazineName
         self.articleIssueName = articleIssueName
         self.articleDescription = articleDescription
         self.mainImageURL = mainImageURL
+        self.isFree = isFree
+        self.isPublic = isPublic
+        self.orderInParent = orderInParent
     }
     
 }

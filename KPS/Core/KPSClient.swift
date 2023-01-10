@@ -444,6 +444,13 @@ extension KPSClient {
         }
         
     }
+    
+    //startChildOrderInParent, startChildId 用在 paging，會回傳此參數之後的資料，兩個參數要同時給
+    // 固定回 15 筆資料
+    public func fetchCollectionWithPaging(Id: String, isNeedParent: Bool = false, isNeedSiblings: Bool = false, startChildOrderInParent: Int? = nil, startChildId: String? = nil, completion: @escaping(Result<KPSCollection, MoyaError>) -> ()) {
+        
+        request(target: .fetchCollectionWithPaging(Id: Id, isNeedParent: isNeedParent, isNeedSiblings: isNeedSiblings, startChildOrderInParent: startChildOrderInParent, startChildId: startChildId, server: KPSClient.config.baseServer), completion: completion)
+    }
 }
 
 
@@ -527,10 +534,28 @@ extension KPSClient {
 
 public struct Server {
     
+    enum Version {
+        case v1
+        case v2
+        
+        var versionString: String {
+            switch self {
+            case .v1:
+                return "/v1"
+            case .v2:
+                return "/v2"
+            }
+        }
+    }
+    
     var appId: String = ""
     var baseUrl: URL
     var projectUrl: URL {
-        return baseUrl.appendingPathComponent("/projects/\(appId)")
+        return baseUrl.appendingPathComponent("\(Version.v1.versionString)/projects/\(appId)")
+    }
+    
+    func projectUrl(version: Version) -> URL {
+        return baseUrl.appendingPathComponent("\(version.versionString)/projects/\(appId)")
     }
     
     private init(baseUrl: URL) {
@@ -539,19 +564,19 @@ public struct Server {
     
     public static func develop() -> Server {
         return Server(
-            baseUrl: URL(string: "https://kps-dev.thekono.com/api/v1")!
+            baseUrl: URL(string: "https://kps-dev.thekono.com/api")!
         )
     }
     
     public static func staging() -> Server {
         return Server(
-            baseUrl: URL(string: "https://kps-stg.thekono.com/api/v1")!
+            baseUrl: URL(string: "https://kps-stg.thekono.com/api")!
         )
     }
     
     public static func prod() -> Server {
         return Server(
-            baseUrl: URL(string: "https://kps.thekono.com/api/v1")!
+            baseUrl: URL(string: "https://kps.thekono.com/api")!
         )
     }
     
