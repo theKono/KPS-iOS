@@ -14,6 +14,7 @@ enum CoreAPIService {
     
     case fetchRootCollection(server: Server)
     case fetchCollection(Id: String, isNeedParent: Bool, isNeedSiblings: Bool, server: Server)
+    case fetchCollectionWithPaging(Id: String, isNeedParent: Bool, isNeedSiblings: Bool, startChildOrderInParent: Int?, startChildId: String?, server: Server)
     
     case fetchArticle(Id: String, isNeedParent: Bool, isNeedSiblings: Bool, server: Server)
 }
@@ -24,7 +25,11 @@ extension CoreAPIService: TargetType {
     var baseURL: URL {
         switch self {
         case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server):
-          return server.projectUrl
+            return server.projectUrl
+            
+        case .fetchCollectionWithPaging(_, _, _, _, _, let server):
+            return server.projectUrl(version: .v2)
+            
         }
     }
     var path: String {
@@ -39,6 +44,8 @@ extension CoreAPIService: TargetType {
             return "/content"
         case .fetchCollection(let Id, _, _, _):
             return "/content/\(Id)"
+        case .fetchCollectionWithPaging(let Id, _, _, _, _, _):
+            return "/content/\(Id)"
         case .fetchArticle(let Id, _, _, _):
             return "/content/\(Id)"
         }
@@ -49,7 +56,7 @@ extension CoreAPIService: TargetType {
             return .put
         case .logout(_):
             return .delete
-        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _), .fetchArticle(_, _, _, _):
+        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _),.fetchArticle(_, _, _, _):
             return .get
         }
     }
@@ -59,6 +66,11 @@ extension CoreAPIService: TargetType {
             return .requestPlain
         case .fetchCollection(_, let isNeedParent, let isNeedSibling, _):
             return .requestParameters(parameters: ["parent": isNeedParent, "siblings": isNeedSibling], encoding: URLEncoding.queryString)
+        case .fetchCollectionWithPaging(_, let isNeedParent, let isNeedSibling, let startChildOrderInParent, let startChildId, _):
+            var paramDic: [String : Any] = ["parent": isNeedParent, "siblings": isNeedSibling]
+            paramDic["startChildOrderInParent"] = startChildOrderInParent
+            paramDic["startChildId"] = startChildId
+            return .requestParameters(parameters: paramDic, encoding: URLEncoding.queryString)
         case .fetchArticle(_, let isNeedParent, let isNeedSibling, _):
             return .requestParameters(parameters: ["parent": isNeedParent, "siblings": isNeedSibling], encoding: URLEncoding.queryString)
         case .login(let keyId, let token, _):
@@ -85,7 +97,7 @@ extension CoreAPIService: TargetType {
                         return Data()
                     }
             return data
-        case .fetchCollection(_, _, _, _):
+        case .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _):
             guard let url = Bundle.resourceBundle.url(forResource: "folderContent", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()

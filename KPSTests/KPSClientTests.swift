@@ -27,13 +27,13 @@ class KPSClientTests: XCTestCase {
     func testDevClientInit() {
         
         KPSClient.config = .init(apiKey: appKey, appId: appId, server: .develop())
-        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-dev.thekono.com/api/v1")
+        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-dev.thekono.com/api")
         XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-dev.thekono.com/api/v1/projects/\(appId)")
     }
     
     func testStagClientInit() {
         KPSClient.config = .init(apiKey: appKey, appId: appId, server: .staging())
-        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-stg.thekono.com/api/v1")
+        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps-stg.thekono.com/api")
         XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps-stg.thekono.com/api/v1/projects/\(appId)")
     }
     
@@ -43,7 +43,7 @@ class KPSClientTests: XCTestCase {
         KPSClient.config = .init(apiKey: appKey, appId: appId)
         XCTAssertEqual(KPSClient.shared.apiKey, appKey)
         XCTAssertEqual(KPSClient.shared.appId, appId)
-        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps.thekono.com/api/v1")
+        XCTAssertEqual(KPSClient.config.baseServer.baseUrl.absoluteString, "https://kps.thekono.com/api")
         XCTAssertEqual(KPSClient.config.baseServer.projectUrl.absoluteString, "https://kps.thekono.com/api/v1/projects/\(appId)")
     }
     
