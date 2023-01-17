@@ -84,7 +84,11 @@ class KPSTransactionManager: NSObject, SKPaymentTransactionObserver {
 extension KPSTransactionManager: SKPaymentQueueDelegate {
 
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        let latestTransaction = transactions.sorted {
+        let validTransactions = transactions.filter {
+            $0.transactionState == .purchased
+        }
+        
+        let latestTransaction = validTransactions.sorted {
             $0.transactionDate ?? Date() > $1.transactionDate ?? Date()
         }.first
         

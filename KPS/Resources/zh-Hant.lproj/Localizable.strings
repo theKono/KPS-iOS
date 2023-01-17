@@ -7,3 +7,6 @@
 */
 "start_reading" = "開始閱讀";
 "more_description" = "詳細介紹";
+
+"content_tag_free" = "免費（需登入）";
+"content_tag_public" = "公開";

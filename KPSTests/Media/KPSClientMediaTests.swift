@@ -57,7 +57,7 @@ class KPSClientMediaTests: XCTestCase {
                 XCTAssertNil(audioContent.error)
                 XCTAssertNil(audioContent.errorDescription)
                 XCTAssertEqual(audioContent.id, "testTrack3")
-                XCTAssertEqual(audioContent.length, 149.4)
+                XCTAssertEqual(audioContent.length, 149)
                 XCTAssertEqual(audioContent.streamingUrl?.absoluteString, "https://kps-dev.thekono.com/api/v1/projects/61398d3c62cbe46b8b9e58af/streams/61de651d3940e9000ea36fcf/playlist.m3u8")
                 XCTAssertTrue(audioContent.isFree)
                 XCTAssertNotNil(audioContent.firstAuthor)

@@ -5,7 +5,7 @@
 
 // MARK: - LoginResponse
 public struct LoginResponse: Codable {
-    let isNew: Bool
+    public let isNew: Bool
     public let kpsSession: String
     let user: KPSUserModel
 
