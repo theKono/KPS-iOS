@@ -17,6 +17,8 @@ enum CoreAPIService {
     case fetchCollectionWithPaging(Id: String, isNeedParent: Bool, isNeedSiblings: Bool, startChildOrderInParent: Int?, startChildId: String?, server: Server)
     
     case fetchArticle(Id: String, isNeedParent: Bool, isNeedSiblings: Bool, server: Server)
+    
+    case updateFCMToken(token: String, server: Server)
 }
 
 
@@ -24,7 +26,7 @@ extension CoreAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server):
+        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server), .updateFCMToken(_, let server):
             return server.projectUrl
             
         case .fetchCollectionWithPaging(_, _, _, _, _, let server):
@@ -48,11 +50,13 @@ extension CoreAPIService: TargetType {
             return "/content/\(Id)"
         case .fetchArticle(let Id, _, _, _):
             return "/content/\(Id)"
+        case .updateFCMToken(_, _):
+            return "/pushTokens"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .login(_, _, _):
+        case .login(_, _, _), .updateFCMToken(_, _):
             return .put
         case .logout(_):
             return .delete
@@ -75,6 +79,8 @@ extension CoreAPIService: TargetType {
             return .requestParameters(parameters: ["parent": isNeedParent, "siblings": isNeedSibling], encoding: URLEncoding.queryString)
         case .login(let keyId, let token, _):
             return .requestParameters(parameters: ["kid": keyId, "token": token], encoding: JSONEncoding.default)
+        case .updateFCMToken(let token, _):
+            return .requestParameters(parameters: ["pushToken" : token], encoding: JSONEncoding.default)
         }
     }
     var sampleData: Data {
@@ -132,6 +138,8 @@ extension CoreAPIService: TargetType {
                     return Data()
                 }
             return data
+        case .updateFCMToken(_, _):
+            return "{\"error\": \"null\"}".utf8Encoded
         }
         
     }
