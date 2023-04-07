@@ -10,7 +10,7 @@ import Foundation
 public struct KPSAudioContent {
     
     enum CodingKeys: String, CodingKey {
-        case error, contentNode, puser
+        case error, contentNode, puser, siblingNodes, parentNode
     }
     
     enum RootKeys: String, CodingKey {
@@ -35,6 +35,8 @@ public struct KPSAudioContent {
         case list
     }
     
+    public var parent: KPSContentMeta?
+    public var siblings: [KPSContentMeta]?
     public let id, type: String
     public let name, description: [String: String]
     public let authors: [String: [String]]
@@ -75,6 +77,8 @@ extension KPSAudioContent: Decodable {
         if let user = puser {
             KPSClient.shared.isUserBlocked = user.status == 0
         }
+        parent = try baseContainer.decodeIfPresent(KPSContentMeta.self, forKey: .parentNode)
+        siblings = try baseContainer.decodeIfPresent([KPSContentMeta].self, forKey: .siblingNodes)
         
         id = try container.decode(String.self, forKey: .id)
         type = try container.decode(String.self, forKey: .type)

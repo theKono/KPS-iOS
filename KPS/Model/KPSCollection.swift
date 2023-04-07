@@ -29,6 +29,9 @@ extension KPSCollection: Decodable {
 
         let baseContainer = try decoder.container(keyedBy: CodingKeys.self)
         children = try baseContainer.decode([KPSContentMeta].self, forKey: .childNodes)
+        parent = try baseContainer.decodeIfPresent(KPSContentMeta.self, forKey: .parentNode)
+        siblings = try baseContainer.decodeIfPresent([KPSContentMeta].self, forKey: .siblingNodes)
+        
         metaData = try baseContainer.decode(KPSContentMeta.self, forKey: .contentNode)
         
         let user = try baseContainer.decodeIfPresent(KPSUserModel.self, forKey: .puser)
