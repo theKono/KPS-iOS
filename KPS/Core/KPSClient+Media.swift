@@ -170,11 +170,19 @@ extension KPSClient {
         
     }
     
+    public func playAudioContents(playList: [KPSContentMeta], collectionMeta: KPSContentMeta) {
+
+        mediaPlayList = playList
+        mediaPlayCollectionId = collectionMeta.id
+        mediaPlayCollectionName = collectionMeta.name
+        mediaPlayCollectionImage = collectionMeta.images.first
+    }
+    
     public func getPlayList() -> [KPSContentMeta] {
         return mediaPlayList
     }
     
-    public func fetchAudioContent(audioId: String, completion: @escaping(Result<KPSAudioContent, MoyaError>) -> ()) {
+    public func fetchAudioContent(audioId: String, isNeedParent: Bool = false, isNeedSiblings: Bool = false, completion: @escaping(Result<KPSAudioContent, MoyaError>) -> ()) {
         
         let resultClosure: ((Result<KPSAudioContent, MoyaError>) -> Void) = { [weak self] result in
             
@@ -216,7 +224,7 @@ extension KPSClient {
                 completion(.failure(error))
             }
         }
-        request(target:.fetchAudio(audioId: audioId, server: KPSClient.config.baseServer), completion: resultClosure)
+        request(target:.fetchAudio(audioId: audioId, isNeedParent: isNeedParent, isNeedSiblings: isNeedSiblings, server: KPSClient.config.baseServer), completion: resultClosure)
     }
     
     
