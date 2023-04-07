@@ -170,6 +170,14 @@ extension KPSClient {
         
     }
     
+    public func playAudioContents(playList: [KPSContentMeta], collectionMeta: KPSContentMeta) {
+
+        mediaPlayList = playList
+        mediaPlayCollectionId = collectionMeta.id
+        mediaPlayCollectionName = collectionMeta.name
+        mediaPlayCollectionImage = collectionMeta.images.first
+    }
+    
     public func getPlayList() -> [KPSContentMeta] {
         return mediaPlayList
     }
