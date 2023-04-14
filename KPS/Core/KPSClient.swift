@@ -492,6 +492,8 @@ extension KPSClient {
                         completion(.failure(customError))
                     } else {
                         //TODO: return success but parsing error
+                        completion(.failure(.objectMapping(error, response)))
+                        
                         do{
                             let json = try JSONSerialization.jsonObject(with: response.data, options: .mutableContainers)
                             let dic = json as! Dictionary<String, Any>
