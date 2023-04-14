@@ -193,7 +193,7 @@ extension KPSClient {
                 content.collectionId = weakSelf.mediaPlayCollectionId
                 content.collectionName = weakSelf.mediaPlayCollectionName
                 
-                if content.puser == nil {
+                if !content.isPublic && content.puser == nil {
                     content.error = .needLogin
                 }
                 completion(.success(content))
