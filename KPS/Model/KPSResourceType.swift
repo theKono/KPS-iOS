@@ -8,6 +8,17 @@
 public enum KPSResourceType {
     case IMAGE(KPSImageResource)
     case FILE(KPSFileResource)
+    case AUDIO(KPSAudioResource)
+    
+    enum PredictKeys: String, CodingKey {
+        case type
+    }
+    
+    enum TargetObjectType: String, Decodable {
+        case IMAGE
+        case FILE
+        case AUDIO
+    }
     
     public var srcURL: String {
         switch self {
@@ -15,6 +26,8 @@ public enum KPSResourceType {
             return imageResource.mainImageURL
         case .FILE(let fileResource):
             return fileResource.url
+        case .AUDIO(let audioResource):
+            return audioResource.streamingUrl
         }
     }
 }
@@ -22,13 +35,19 @@ public enum KPSResourceType {
 extension KPSResourceType: Decodable {
     
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        do {
-            self = try .IMAGE(container.decode(KPSImageResource.self))
-        } catch {
-            do {
-                self = try .FILE(container.decode(KPSFileResource.self))
-            }
+        let singleValueContainer = try decoder.singleValueContainer()
+        
+        let container = try decoder.container(keyedBy: PredictKeys.self)
+        let targetObjectType = try container.decode(TargetObjectType.self, forKey: .type)
+        
+        switch targetObjectType {
+        case .IMAGE:
+            self = try .IMAGE(singleValueContainer.decode(KPSImageResource.self))
+        case .FILE:
+            self = try .FILE(singleValueContainer.decode(KPSFileResource.self))
+        case .AUDIO:
+            self = try .AUDIO(singleValueContainer.decode(KPSAudioResource.self))
+            
         }
     }
 }

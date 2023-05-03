@@ -104,6 +104,7 @@
 		F8324CE928C87980009B4005 /* KPSCouponManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8324CE828C87980009B4005 /* KPSCouponManager.swift */; };
 		F8324D0128CF5E8B009B4005 /* couponRedeemWithError.json in Resources */ = {isa = PBXBuildFile; fileRef = F8324D0028CF5E8B009B4005 /* couponRedeemWithError.json */; };
 		F8324D0528CF5EDF009B4005 /* couponRedeem.json in Resources */ = {isa = PBXBuildFile; fileRef = F8324D0428CF5EDF009B4005 /* couponRedeem.json */; };
+		F84010562A02555F00AA0289 /* KPSAudioResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84010552A02555F00AA0289 /* KPSAudioResource.swift */; };
 		F8B6840A28A9E751002ABC33 /* KPSFitReadingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */; };
 		F8B890C32845DE5F00C7BDD7 /* KPSClientArticleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */; };
 		F8B890C9284EFC0800C7BDD7 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = F8B890C8284EFC0800C7BDD7 /* articleContent.json */; };
@@ -232,6 +233,7 @@
 		F8324CE828C87980009B4005 /* KPSCouponManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSCouponManager.swift; sourceTree = "<group>"; };
 		F8324D0028CF5E8B009B4005 /* couponRedeemWithError.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = couponRedeemWithError.json; sourceTree = "<group>"; };
 		F8324D0428CF5EDF009B4005 /* couponRedeem.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = couponRedeem.json; sourceTree = "<group>"; };
+		F84010552A02555F00AA0289 /* KPSAudioResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSAudioResource.swift; sourceTree = "<group>"; };
 		F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSFitReadingContent.swift; sourceTree = "<group>"; };
 		F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientArticleTests.swift; sourceTree = "<group>"; };
 		F8B890C8284EFC0800C7BDD7 /* articleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
@@ -381,6 +383,7 @@
 				E833105126AB0A4500A6AA59 /* LoginResponse.swift */,
 				E8A4C8DB26C4B3AE0082B4F7 /* KPSArticle.swift */,
 				E88C466726CCB034001243F5 /* KPSAudio.swift */,
+				F84010552A02555F00AA0289 /* KPSAudioResource.swift */,
 				E88396C326ECF16F00B9C9F7 /* KPSContentMeta.swift */,
 				E88396C526ECF76800B9C9F7 /* KPSCollection.swift */,
 				E88396C726ECFACC00B9C9F7 /* KPSImageResource.swift */,
@@ -868,6 +871,7 @@
 				E845AD8127E4917600A3DC49 /* ASN1Container.swift in Sources */,
 				E89BC169277DA5FA001633C5 /* KPSClient+Analytic.swift in Sources */,
 				E8E14F1E27DB2996007D6875 /* SK2StoreProductDiscount.swift in Sources */,
+				F84010562A02555F00AA0289 /* KPSAudioResource.swift in Sources */,
 				E8855FAF281679320067CA09 /* KPSAuthResponse.swift in Sources */,
 				E8E14F0927DB166E007D6875 /* SubscriptionManager.swift in Sources */,
 				E88C466A26CD260C001243F5 /* ThreadSafeArray.swift in Sources */,
