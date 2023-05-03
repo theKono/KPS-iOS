@@ -27,6 +27,10 @@ public struct KPSAudioContent {
         case authors
     }
     
+    enum CoverKeys: String, CodingKey {
+        case list
+    }
+    
     enum ContentDataKeys: String, CodingKey {
         case textSegments, languages, audioLanguage, duration, resource
     }
@@ -40,6 +44,7 @@ public struct KPSAudioContent {
     public let id, type: String
     public let name, description: [String: String]
     public let authors: [String: [String]]
+    public var coverImages: [KPSImageResource] = []
     public let order: Int
     public let isPublic, isFree: Bool
     public var length: Double?
@@ -97,6 +102,27 @@ extension KPSAudioContent: Decodable {
             authors = [:]
         }
         let resources = try container.decode([String: Any].self, forKey: .resources)
+        
+        let imageResources = try container.decode([String: KPSResourceType].self, forKey: .resources)
+        
+        if let _ = try container.decodeIfPresent([String: Any].self, forKey: .covers) {
+            let coverIdContainer = try container.decode([String:[String]].self, forKey: .covers)
+            let coverResourceIds = coverIdContainer["list"]!
+            
+            var images: [KPSImageResource] = []
+            
+            for id in coverResourceIds {
+                if let resourceType = imageResources[id] {
+                    switch resourceType {
+                    case .IMAGE(let imageResource):
+                        images.append(imageResource)
+                    default:
+                        return
+                    }
+                }
+            }
+            coverImages = images
+        }
         
         let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .content)
         let defaultLang = try contentDataContainer.decode(String.self, forKey: .audioLanguage)
