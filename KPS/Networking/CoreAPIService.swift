@@ -19,6 +19,8 @@ enum CoreAPIService {
     case fetchArticle(Id: String, isNeedParent: Bool, isNeedSiblings: Bool, server: Server)
     
     case updateFCMToken(token: String, server: Server)
+    
+    case search(keyword: String, server: Server)
 }
 
 
@@ -26,7 +28,7 @@ extension CoreAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, _, _, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server), .updateFCMToken(_, let server):
+        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, _, _, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server), .updateFCMToken(_, let server), .search(_, let server):
             return server.projectUrl
             
         case .fetchCollectionWithPaging(_, _, _, _, _, let server):
@@ -52,6 +54,8 @@ extension CoreAPIService: TargetType {
             return "/content/\(Id)"
         case .updateFCMToken(_, _):
             return "/pushTokens"
+        case .search(_, _):
+            return "/search"
         }
     }
     var method: Moya.Method {
@@ -60,7 +64,7 @@ extension CoreAPIService: TargetType {
             return .put
         case .logout(_):
             return .delete
-        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _, _, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _),.fetchArticle(_, _, _, _):
+        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _, _, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _),.fetchArticle(_, _, _, _), .search(_, _):
             return .get
         }
     }
@@ -86,6 +90,8 @@ extension CoreAPIService: TargetType {
             return .requestParameters(parameters: ["kid": keyId, "token": token], encoding: JSONEncoding.default)
         case .updateFCMToken(let token, _):
             return .requestParameters(parameters: ["pushToken" : token], encoding: JSONEncoding.default)
+        case .search(let keyword, _):
+            return .requestParameters(parameters: ["keyword" : keyword], encoding: queryEncoding)
         }
     }
     var sampleData: Data {
@@ -145,6 +151,13 @@ extension CoreAPIService: TargetType {
             return data
         case .updateFCMToken(_, _):
             return "{\"error\": \"null\"}".utf8Encoded
+        case .search(_, _):
+            guard let url = Bundle.resourceBundle.url(forResource: "searchResult", withExtension: "json"),
+                  let data = try? Data(contentsOf: url)
+            else {
+                return Data()
+            }
+            return data
         }
         
     }
