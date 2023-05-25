@@ -105,12 +105,16 @@
 		F8324D0128CF5E8B009B4005 /* couponRedeemWithError.json in Resources */ = {isa = PBXBuildFile; fileRef = F8324D0028CF5E8B009B4005 /* couponRedeemWithError.json */; };
 		F8324D0528CF5EDF009B4005 /* couponRedeem.json in Resources */ = {isa = PBXBuildFile; fileRef = F8324D0428CF5EDF009B4005 /* couponRedeem.json */; };
 		F84010562A02555F00AA0289 /* KPSAudioResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84010552A02555F00AA0289 /* KPSAudioResource.swift */; };
+		F840106F2A0B567800AA0289 /* KPSClient+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F840106E2A0B567800AA0289 /* KPSClient+Search.swift */; };
+		F84010712A0B57A500AA0289 /* searchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = F84010702A0B57A500AA0289 /* searchResult.json */; };
+		F84010732A0B77A400AA0289 /* KPSSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84010722A0B77A400AA0289 /* KPSSearch.swift */; };
 		F8B6840A28A9E751002ABC33 /* KPSFitReadingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */; };
 		F8B890C32845DE5F00C7BDD7 /* KPSClientArticleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */; };
 		F8B890C9284EFC0800C7BDD7 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = F8B890C8284EFC0800C7BDD7 /* articleContent.json */; };
 		F8B890CB284F38DC00C7BDD7 /* KPSFileResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */; };
 		F8B890CD2850515B00C7BDD7 /* KPSResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CC2850515B00C7BDD7 /* KPSResourceType.swift */; };
 		F8B890CF28507A0300C7BDD7 /* KPSPDFContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */; };
+		F8CD374A2A1F5615002F829D /* KPSClientSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CD37492A1F5615002F829D /* KPSClientSearchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -234,12 +238,16 @@
 		F8324D0028CF5E8B009B4005 /* couponRedeemWithError.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = couponRedeemWithError.json; sourceTree = "<group>"; };
 		F8324D0428CF5EDF009B4005 /* couponRedeem.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = couponRedeem.json; sourceTree = "<group>"; };
 		F84010552A02555F00AA0289 /* KPSAudioResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSAudioResource.swift; sourceTree = "<group>"; };
+		F840106E2A0B567800AA0289 /* KPSClient+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KPSClient+Search.swift"; sourceTree = "<group>"; };
+		F84010702A0B57A500AA0289 /* searchResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = searchResult.json; sourceTree = "<group>"; };
+		F84010722A0B77A400AA0289 /* KPSSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSSearch.swift; sourceTree = "<group>"; };
 		F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSFitReadingContent.swift; sourceTree = "<group>"; };
 		F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientArticleTests.swift; sourceTree = "<group>"; };
 		F8B890C8284EFC0800C7BDD7 /* articleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
 		F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSFileResource.swift; sourceTree = "<group>"; };
 		F8B890CC2850515B00C7BDD7 /* KPSResourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSResourceType.swift; sourceTree = "<group>"; };
 		F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPDFContent.swift; sourceTree = "<group>"; };
+		F8CD37492A1F5615002F829D /* KPSClientSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientSearchTests.swift; sourceTree = "<group>"; };
 		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -342,6 +350,7 @@
 		E833100C26A4100E00A6AA59 /* KPSTests */ = {
 			isa = PBXGroup;
 			children = (
+				F8CD37482A1F55EF002F829D /* Search */,
 				F8B890C12845DE0800C7BDD7 /* Article */,
 				E8855F9F280D66CD0067CA09 /* Purchase */,
 				E8855FA1280D68900067CA09 /* Media */,
@@ -360,6 +369,7 @@
 				E89BC168277DA5FA001633C5 /* KPSClient+Analytic.swift */,
 				E8A4C8BF26BB869A0082B4F7 /* KPSClient+Media.swift */,
 				F81A26C52841155F00FBCD82 /* KPSClient+Article.swift */,
+				F840106E2A0B567800AA0289 /* KPSClient+Search.swift */,
 				E8E14EFB27D8932D007D6875 /* Purchases */,
 				E8855FA4281598BB0067CA09 /* Auth */,
 			);
@@ -391,6 +401,7 @@
 				F8B890CC2850515B00C7BDD7 /* KPSResourceType.swift */,
 				F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */,
 				F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */,
+				F84010722A0B77A400AA0289 /* KPSSearch.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -430,6 +441,7 @@
 				F8324D0028CF5E8B009B4005 /* couponRedeemWithError.json */,
 				E8A4C8C326BBD6DE0082B4F7 /* IronBacon.mp3 */,
 				E825CECE2844779A008527C6 /* Localizable.strings */,
+				F84010702A0B57A500AA0289 /* searchResult.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -626,6 +638,14 @@
 			path = Article;
 			sourceTree = "<group>";
 		};
+		F8CD37482A1F55EF002F829D /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				F8CD37492A1F5615002F829D /* KPSClientSearchTests.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -724,6 +744,7 @@
 			files = (
 				F82981DA2870AC3B00E2F51A /* articleContentWithWrongArticleId.json in Resources */,
 				E889A9A4280670A900E3718C /* audioContentWithWordTime.json in Resources */,
+				F84010712A0B57A500AA0289 /* searchResult.json in Resources */,
 				E8A4C8C426BBD6DE0082B4F7 /* IronBacon.mp3 in Resources */,
 				E85FAB78275A3152006418CD /* KPS-iOS.podspec in Resources */,
 				E889A9A7280670A900E3718C /* audioContentWithoutPermission.json in Resources */,
@@ -827,6 +848,7 @@
 				F81A26C62841155F00FBCD82 /* KPSClient+Article.swift in Sources */,
 				E88396C626ECF76800B9C9F7 /* KPSCollection.swift in Sources */,
 				E825CEC92844746E008527C6 /* KPSBookInfoView.swift in Sources */,
+				F840106F2A0B567800AA0289 /* KPSClient+Search.swift in Sources */,
 				E89BC16B277DA60C001633C5 /* KPSPlayRecord.swift in Sources */,
 				E825CE7628435D5E008527C6 /* KPSArticleTableViewCell.swift in Sources */,
 				E833108B26B3B0F100A6AA59 /* Codable+Extension.swift in Sources */,
@@ -869,6 +891,7 @@
 				E889A992280563AE00E3718C /* ActiveOrderResponse.swift in Sources */,
 				E88C466826CCB034001243F5 /* KPSAudio.swift in Sources */,
 				E845AD8127E4917600A3DC49 /* ASN1Container.swift in Sources */,
+				F84010732A0B77A400AA0289 /* KPSSearch.swift in Sources */,
 				E89BC169277DA5FA001633C5 /* KPSClient+Analytic.swift in Sources */,
 				E8E14F1E27DB2996007D6875 /* SK2StoreProductDiscount.swift in Sources */,
 				F84010562A02555F00AA0289 /* KPSAudioResource.swift in Sources */,
@@ -904,6 +927,7 @@
 				E8A4C8CB26BFD2590082B4F7 /* KPSClientMediaTests.swift in Sources */,
 				E833103526A417F800A6AA59 /* KPSUtilityTest.swift in Sources */,
 				E833103326A417CC00A6AA59 /* KPSUtility.swift in Sources */,
+				F8CD374A2A1F5615002F829D /* KPSClientSearchTests.swift in Sources */,
 				E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */,
 				E833109326B44C1B00A6AA59 /* KPSClientTests.swift in Sources */,
 				F8B890C32845DE5F00C7BDD7 /* KPSClientArticleTests.swift in Sources */,
