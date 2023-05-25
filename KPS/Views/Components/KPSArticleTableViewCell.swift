@@ -47,6 +47,9 @@ public struct KPSArticleTableCellViewModel {
     var isPublic: Bool?
     public var orderInParent: Int?
     
+    var highlightTitle: NSAttributedString?
+    var highlightDetail: NSAttributedString?
+    
     var articleDetailText: String {
         if let description = articleDescription,
            description.count > 0 {
@@ -58,8 +61,23 @@ public struct KPSArticleTableCellViewModel {
         }
     }
     
+    var titleAttributedString: NSAttributedString {
+        if let highlightTitle = highlightTitle {
+            return highlightTitle
+        } else {
+            return NSAttributedString(string: articleTitle)
+        }
+    }
     
-    public init(id: String, articleTitle: String, articleMagazineName: String?, articleIssueName: String?, articleDescription: String?, mainImageURL: String, isFree: Bool?, isPublic: Bool?, orderInParent: Int?) {
+    var detailAttributedString: NSAttributedString {
+        if let highlightDetail = highlightDetail {
+            return highlightDetail
+        } else {
+            return NSAttributedString(string: articleDetailText)
+        }
+    }
+    
+    public init(id: String, articleTitle: String, articleMagazineName: String?, articleIssueName: String?, articleDescription: String?, mainImageURL: String, isFree: Bool?, isPublic: Bool?, orderInParent: Int?, highlightTitle: NSAttributedString? = nil, highlightDetail: NSAttributedString? = nil) {
         self.id = id
         self.articleTitle = articleTitle
         self.articleMagazineName = articleMagazineName
@@ -69,6 +87,8 @@ public struct KPSArticleTableCellViewModel {
         self.isFree = isFree
         self.isPublic = isPublic
         self.orderInParent = orderInParent
+        self.highlightTitle = highlightTitle
+        self.highlightDetail = highlightDetail
     }
     
 }
@@ -158,10 +178,10 @@ public class KPSArticleTableViewCell: UITableViewCell {
     
     public func update(with viewModel: KPSArticleTableCellViewModel) {
         
-        titleLabel.text = viewModel.articleTitle
+        titleLabel.attributedText = viewModel.titleAttributedString
         titleLabel.sizeToFit()
         
-        descriptionLabel.text = viewModel.articleDetailText
+        descriptionLabel.attributedText = viewModel.detailAttributedString
         descriptionLabel.sizeToFit()
         mainImageView.kf.setImage(with: URL(string: viewModel.mainImageURL))
         
@@ -196,7 +216,7 @@ public class KPSArticleTableViewCell: UITableViewCell {
         let tagViewHorizontalMargin: CGFloat = 8;
         
         tagView.snp.makeConstraints { make in
-            make.height.equalTo(tagViewHeight)
+            make.height.greaterThanOrEqualTo(tagViewHeight)
         }
         
         tagView.backgroundColor = UIColor.lightGray

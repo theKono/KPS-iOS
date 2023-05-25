@@ -1,0 +1,1452 @@
+
+{
+  "error": null,
+  "result": [
+    {
+      "id": "62b97fd850b1fcfaf412b083",
+      "type": "article",
+      "name": {
+        "zh-TW": "臺灣細胞治療名醫研究大盤點",
+        "en-US": ""
+      },
+      "description": {
+        "zh-TW": "臺灣再生醫療已經吹響號角，生醫研發能量持續投入，特別是最了解臨床需求的醫師，正從不同專科切入細胞治療，盼為未滿足醫療需求尋求解答。目前，雖然免疫治療癌症開放多、進展卻緩慢，而鎖定高齡化社會需求的骨科、難癒傷口、醫美進展快速。",
+        "en-US": ""
+      },
+      "orderInParent": 69,
+      "customData": {
+        "is_highlight": false,
+        "magazine_name": "環球生技月刊",
+        "issue_name": "2022/4月號 第94期"
+      },
+      "covers": {
+        "list": [
+          "62f63320d76b0a92e06ba1ea"
+        ]
+      },
+      "info": {
+        "authors": {
+          "zh-TW": [
+            "撰文/吳培安"
+          ],
+          "en-US": [
+            
+          ]
+        }
+      },
+      "searchHighlights": [
+        {
+          "score": 2.884824275970459,
+          "path": "content.fitReading.content.content.text",
+          "texts": [
+            {
+              "value": "目前，雖然免疫治療",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "開放多、進展卻緩慢，而鎖定高齡化社會需求的骨科、難癒傷口、醫美進展快速。",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "score": 3.268669366836548,
+          "path": "content.fitReading.content.content.text",
+          "texts": [
+            {
+              "value": "免疫細胞",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "治療備受期待成效卻難評估",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "score": 2.281604051589966,
+          "path": "content.fitReading.content.content.text",
+          "texts": [
+            {
+              "value": "此外，相較於實體癌，臺灣主導免疫細胞治療",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "、臨床進展較快的醫師，多以血癌治療為主，且這些醫師多半過去有骨髓移植經驗，對於細胞治療引發之免疫副作用掌握經驗較多。",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "score": 2.69511342048645,
+          "path": "content.fitReading.content.content.text",
+          "texts": [
+            {
+              "value": "前北醫大臺北",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "中心院長李冠德(現轉任臺中榮總血液腫瘤科)，為北醫大發展細胞治療的核心人物之一。",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "score": 2.9745559692382812,
+          "path": "content.fitReading.content.content.text",
+          "texts": [
+            {
+              "value": "在非",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "治療之中，除了因運動傷害或長期耗損的骨科問題外，鎖定高齡化社會治療需求的難癒傷口、神經退化和醫美，同樣也備受期待，甚至有人認為，這些領域的需求市場龐大，將有機會超過",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "治療。",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "score": 1.5509655475616455,
+          "path": "description.zh-TW",
+          "texts": [
+            {
+              "value": "目前，雖然免疫治療",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "開放多、進展卻緩慢，而鎖定高齡化社會需求的骨科、難癒傷口、醫美進展快速。",
+              "type": "text"
+            }
+          ]
+        }
+      ],
+      "public": false,
+      "free": false,
+      "permissions": null,
+      "content": {
+        "pdf": {
+          "orderPageIncreaseRight": true,
+          "startPageInParent": 69,
+          "pages": [
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1f1",
+                  "position": {
+                    "width": 9.08333333333,
+                    "top": 2.55918106206,
+                    "left": 3.91666666667
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1f2",
+                  "position": {
+                    "width": 27.4166666667,
+                    "top": 2.30326295585,
+                    "left": 14.5833333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1f3",
+                  "position": {
+                    "width": 74.1666666667,
+                    "top": 12.9238643634,
+                    "left": 8.5
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1f4",
+                  "position": {
+                    "width": 83.25,
+                    "top": 22.0729366603,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1f5",
+                  "position": {
+                    "width": 39.75,
+                    "top": 33.9731285988,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1f6",
+                  "position": {
+                    "width": 1.66666666667,
+                    "top": 95.9692898273,
+                    "left": 5.41666666667
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1f7",
+                  "position": {
+                    "width": 39.75,
+                    "top": 33.9731285988,
+                    "left": 51.8333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1f8",
+                  "position": {
+                    "width": 39.75,
+                    "top": 68.8419705694,
+                    "left": 51.8333333333
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1fb",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1f9",
+                  "position": {
+                    "width": 45.6666666667,
+                    "top": 6.39795265515,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1fa",
+                  "position": {
+                    "width": 33.6666666667,
+                    "top": 18.0422264875,
+                    "left": 58
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1fc",
+                  "position": {
+                    "width": 9.08333333333,
+                    "top": 2.55918106206,
+                    "left": 3.91666666667
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1fd",
+                  "position": {
+                    "width": 27.4166666667,
+                    "top": 2.30326295585,
+                    "left": 14.5833333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1fe",
+                  "position": {
+                    "width": 39.8333333333,
+                    "top": 16.122840691,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba1ff",
+                  "position": {
+                    "width": 42.5833333333,
+                    "top": 68.6500319898,
+                    "left": 5.5
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba200",
+                  "position": {
+                    "width": 39.8333333333,
+                    "top": 5.69417786308,
+                    "left": 51.8333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba201",
+                  "position": {
+                    "width": 39.75,
+                    "top": 30.390275112,
+                    "left": 51.8333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba202",
+                  "position": {
+                    "width": 39.75,
+                    "top": 36.2124120282,
+                    "left": 51.8333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba203",
+                  "position": {
+                    "width": 39.75,
+                    "top": 48.8163787588,
+                    "left": 51.8333333333
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                {
+                  "resourceId": "62f63320d76b0a92e06ba207",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62f63320d76b0a92e06ba204",
+                  "position": {
+                    "width": 40.5833333333,
+                    "top": 5.69417786308,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba205",
+                  "position": {
+                    "width": 40.5833333333,
+                    "top": 5.69417786308,
+                    "left": 51.0833333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba206",
+                  "position": {
+                    "width": 4.75,
+                    "top": 99.9360204734,
+                    "left": 1.33333333333
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62f63320d76b0a92e06ba208",
+                  "position": {
+                    "width": 9.08333333333,
+                    "top": 2.55918106206,
+                    "left": 3.91666666667
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba209",
+                  "position": {
+                    "width": 27.4166666667,
+                    "top": 2.30326295585,
+                    "left": 14.5833333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba20a",
+                  "position": {
+                    "width": 39.75,
+                    "top": 16.122840691,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba20b",
+                  "position": {
+                    "width": 1.58333333333,
+                    "top": 95.9692898273,
+                    "left": 5.5
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba20c",
+                  "position": {
+                    "width": 39.8333333333,
+                    "top": 12.0921305182,
+                    "left": 51.8333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba20d",
+                  "position": {
+                    "width": 39.8333333333,
+                    "top": 39.6033269354,
+                    "left": 51.8333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba20e",
+                  "position": {
+                    "width": 39.75,
+                    "top": 46.3211772233,
+                    "left": 51.8333333333
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba20f",
+                  "position": {
+                    "width": 39.75,
+                    "top": 53.8707613564,
+                    "left": 51.8333333333
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62f63320d76b0a92e06ba210",
+                  "position": {
+                    "width": 96.75,
+                    "top": 0,
+                    "left": 3.25
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba211",
+                  "position": {
+                    "width": 91.3333333333,
+                    "top": 50.7357645553,
+                    "left": 2.91666666667
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba212",
+                  "position": {
+                    "width": 91.3333333333,
+                    "top": 55.4062699936,
+                    "left": 2.91666666667
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba213",
+                  "position": {
+                    "width": 92,
+                    "top": 63.5956493922,
+                    "left": 2.91666666667
+                  }
+                },
+                {
+                  "resourceId": "62f63320d76b0a92e06ba214",
+                  "position": {
+                    "width": 100,
+                    "top": 88.3557261676,
+                    "left": 0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "fitReading": {
+          "content": [
+            {
+              "type": "preface",
+              "htmlText": "臺灣再生醫療已經吹響號角，生醫研發能量持續投入，特別是最了解臨床需求的醫師，正從不同專科切入細胞治療，盼為未滿足醫療需求尋求解答。目前，雖然免疫治療癌症開放多、進展卻緩慢，而鎖定高齡化社會需求的骨科、難癒傷口、醫美進展快速。"
+            }
+          ],
+          "type": "doc"
+        }
+      },
+      "resources": {
+        "62f63320d76b0a92e06ba1ea": {
+          "type": "IMAGE",
+          "width": 583,
+          "height": 448,
+          "thumbnails": [
+            100,
+            320,
+            480,
+            583
+          ],
+          "urls": {
+            "100": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fd850b1fcfaf412b083/resources/62f63320d76b0a92e06ba1ea/100.png",
+            "320": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fd850b1fcfaf412b083/resources/62f63320d76b0a92e06ba1ea/320.png",
+            "480": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fd850b1fcfaf412b083/resources/62f63320d76b0a92e06ba1ea/480.png",
+            "583": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fd850b1fcfaf412b083/resources/62f63320d76b0a92e06ba1ea/583.png"
+          },
+          "webpUrls": {
+            "100": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fd850b1fcfaf412b083/resources/62f63320d76b0a92e06ba1ea/100.webp",
+            "320": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fd850b1fcfaf412b083/resources/62f63320d76b0a92e06ba1ea/320.webp",
+            "480": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fd850b1fcfaf412b083/resources/62f63320d76b0a92e06ba1ea/480.webp",
+            "583": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fd850b1fcfaf412b083/resources/62f63320d76b0a92e06ba1ea/583.webp"
+          }
+        }
+      }
+    },
+    {
+      "id": "62a31e481e71677057fd7eb5",
+      "type": "article",
+      "name": {
+        "zh-TW": "臺灣細胞治療名醫研究大盤點",
+        "en-US": ""
+      },
+      "description": {
+        "zh-TW": "臺灣再生醫療已經吹響號角，生醫研發能量持續投入，特別是最了解臨床需求的醫師，正從不同專科切入細胞治療，盼為未滿足醫療需求尋求解答。目前，雖然免疫治療癌症開放多、進展卻緩慢，而鎖定高齡化社會需求的骨科、難癒傷口、醫美進展快速。",
+        "en-US": ""
+      },
+      "orderInParent": 70,
+      "customData": {
+        "is_highlight": false,
+        "magazine_name": "環球生技月刊",
+        "issue_name": "2022/4月號 第94期"
+      },
+      "covers": {
+        "list": [
+          "62a31e481e71677057fd7eb6"
+        ]
+      },
+      "info": {
+        "authors": {
+          "zh-TW": [
+            "撰文/吳培安"
+          ],
+          "en-US": [
+            
+          ]
+        }
+      },
+      "searchHighlights": [
+        {
+          "score": 1.5509655475616455,
+          "path": "description.zh-TW",
+          "texts": [
+            {
+              "value": "目前，雖然免疫治療",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "開放多、進展卻緩慢，而鎖定高齡化社會需求的骨科、難癒傷口、醫美進展快速。",
+              "type": "text"
+            }
+          ]
+        }
+      ],
+      "public": true,
+      "free": false,
+      "permissions": null,
+      "content": {
+        "pdf": {
+          "orderPageIncreaseRight": true,
+          "startPageInParent": 70,
+          "pages": [
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7eba",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7eb7",
+                  "position": {
+                    "width": 0.0833333333333,
+                    "top": 2.55918106206,
+                    "left": 12.9166666667
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7eb8",
+                  "position": {
+                    "width": 2.66666666667,
+                    "top": 3.13499680102,
+                    "left": 14.5833333333
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7eb9",
+                  "position": {
+                    "width": 24.5833333333,
+                    "top": 2.30326295585,
+                    "left": 17.4166666667
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7ebd",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7ebb",
+                  "position": {
+                    "width": 45.6666666667,
+                    "top": 6.39795265515,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ebc",
+                  "position": {
+                    "width": 33.6666666667,
+                    "top": 18.0422264875,
+                    "left": 58
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7ec2",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7ebe",
+                  "position": {
+                    "width": 0.0833333333333,
+                    "top": 2.55918106206,
+                    "left": 12.9166666667
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ebf",
+                  "position": {
+                    "width": 2.66666666667,
+                    "top": 3.13499680102,
+                    "left": 14.5833333333
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ec0",
+                  "position": {
+                    "width": 24.5833333333,
+                    "top": 2.30326295585,
+                    "left": 17.4166666667
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ec1",
+                  "position": {
+                    "width": 39.8333333333,
+                    "top": 5.69417786308,
+                    "left": 51.8333333333
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7ec6",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7ec3",
+                  "position": {
+                    "width": 40.5833333333,
+                    "top": 5.69417786308,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ec4",
+                  "position": {
+                    "width": 40.5833333333,
+                    "top": 5.69417786308,
+                    "left": 51.0833333333
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ec5",
+                  "position": {
+                    "width": 4.75,
+                    "top": 99.9360204734,
+                    "left": 1.33333333333
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7ecb",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7ec7",
+                  "position": {
+                    "width": 0.0833333333333,
+                    "top": 2.55918106206,
+                    "left": 12.9166666667
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ec8",
+                  "position": {
+                    "width": 27.4166666667,
+                    "top": 2.30326295585,
+                    "left": 14.5833333333
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ec9",
+                  "position": {
+                    "width": 39.8333333333,
+                    "top": 12.0921305182,
+                    "left": 51.8333333333
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7eca",
+                  "position": {
+                    "width": 1.66666666667,
+                    "top": 91.6826615483,
+                    "left": 84.3333333333
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7ed2",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "62a31e481e71677057fd7ecc",
+                  "position": {
+                    "width": 96.75,
+                    "top": 0,
+                    "left": 3.25
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ecd",
+                  "position": {
+                    "width": 91.3333333333,
+                    "top": 50.7357645553,
+                    "left": 2.91666666667
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ece",
+                  "position": {
+                    "width": 91.3333333333,
+                    "top": 58.349328215,
+                    "left": 2.91666666667
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ecf",
+                  "position": {
+                    "width": 91.3333333333,
+                    "top": 66.6026871401,
+                    "left": 2.91666666667
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ed0",
+                  "position": {
+                    "width": 92,
+                    "top": 75.4318618042,
+                    "left": 2.91666666667
+                  }
+                },
+                {
+                  "resourceId": "62a31e481e71677057fd7ed1",
+                  "position": {
+                    "width": 100,
+                    "top": 88.3557261676,
+                    "left": 0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "fitReading": null
+      },
+      "resources": {
+        "62a31e481e71677057fd7eb6": {
+          "type": "IMAGE",
+          "width": 583,
+          "height": 448,
+          "thumbnails": [
+            100,
+            320,
+            480,
+            583
+          ],
+          "urls": {
+            "100": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62a31e481e71677057fd7eb5/resources/62a31e481e71677057fd7eb6/100.png",
+            "320": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62a31e481e71677057fd7eb5/resources/62a31e481e71677057fd7eb6/320.png",
+            "480": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62a31e481e71677057fd7eb5/resources/62a31e481e71677057fd7eb6/480.png",
+            "583": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62a31e481e71677057fd7eb5/resources/62a31e481e71677057fd7eb6/583.png"
+          },
+          "webpUrls": {
+            "100": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62a31e481e71677057fd7eb5/resources/62a31e481e71677057fd7eb6/100.webp",
+            "320": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62a31e481e71677057fd7eb5/resources/62a31e481e71677057fd7eb6/320.webp",
+            "480": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62a31e481e71677057fd7eb5/resources/62a31e481e71677057fd7eb6/480.webp",
+            "583": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62a31e481e71677057fd7eb5/resources/62a31e481e71677057fd7eb6/583.webp"
+          }
+        }
+      }
+    },
+    {
+      "id": "62b97fe750b1fcfaf412b0ab",
+      "type": "article",
+      "name": {
+        "zh-TW": "民眾如何看待細胞治療？專業醫師為您說明！",
+        "en-US": ""
+      },
+      "description": {
+        "zh-TW": "政府和生技業者無不期盼再生醫療發展，但站在醫療前線的醫師卻表示，現階段由於價格過於昂貴，民眾對細胞治療接受度仍然不高，且短期內恐怕難有醫療保險解套，期盼「再生醫療三法」能夠提供完整的規範框架、促進產業升級，未來才有機會讓價格降低，普及民眾。",
+        "en-US": ""
+      },
+      "orderInParent": 75,
+      "customData": {
+        "is_highlight": false,
+        "magazine_name": "環球生技月刊",
+        "issue_name": "2022/4月號 第94期"
+      },
+      "covers": {
+        "list": [
+          "6306eaaea04ec3229ec19cdb"
+        ]
+      },
+      "info": {
+        "authors": {
+          "zh-TW": [
+            "撰文/吳培安"
+          ],
+          "en-US": [
+            
+          ]
+        }
+      },
+      "searchHighlights": [
+        {
+          "score": 2.5310111045837402,
+          "path": "content.fitReading.content.content.text",
+          "texts": [
+            {
+              "value": "臺灣已在2018年轉為高齡社會，依國家發展委員會推估將在2025年邁入超高齡，而「",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "」和「高齡化」正是再生醫療聚焦的治療目標。",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "score": 2.515148878097534,
+          "path": "content.fitReading.content.content.text",
+          "texts": [
+            {
+              "value": "像是膝關節軟骨缺損、退化性關節炎、慢性難癒傷口、醫美等非癌用途的細胞療法，整個療程要價往往動輒數十萬元，而",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "治療可達百萬元。",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "score": 3.0539608001708984,
+          "path": "content.fitReading.content.content.text",
+          "texts": [
+            {
+              "value": "不過，南山人壽已經在2020年9月率全臺之先，宣布推出",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "免疫細胞治療保單，針對實體癌第四期自體免疫細胞治療提供給付，補強",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "險的保障缺口，也是目前唯一針對細胞治療的保險。",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "score": 2.997576951980591,
+          "path": "content.fitReading.content.content.text",
+          "texts": [
+            {
+              "value": "葉士芃就表示，絕大多數會諮詢細胞治療的",
+              "type": "text"
+            },
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "患者，大致分成兩種。",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "score": 2.5266337394714355,
+          "path": "content.fitReading.content.content.text",
+          "texts": [
+            {
+              "value": "癌症",
+              "type": "hit"
+            },
+            {
+              "value": "治療應該要整體規劃，一開始就和病人討論選項，不要放到最後才考慮細胞治療，而是在身體狀況還可以的時候就先把細胞準備好。",
+              "type": "text"
+            }
+          ]
+        }
+      ],
+      "public": false,
+      "free": false,
+      "permissions": null,
+      "content": {
+        "pdf": {
+          "orderPageIncreaseRight": true,
+          "startPageInParent": 75,
+          "pages": [
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "6306eaaea04ec3229ec19ce2",
+                  "position": {
+                    "width": 66.1666666667,
+                    "top": 2.30326295585,
+                    "left": 3.91666666667
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19ce3",
+                  "position": {
+                    "width": 83.1666666667,
+                    "top": 25.5918106206,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19ce4",
+                  "position": {
+                    "width": 39.75,
+                    "top": 33.2053742802,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19ce5",
+                  "position": {
+                    "width": 39.8333333333,
+                    "top": 34.6129238644,
+                    "left": 51.8333333333
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19ce6",
+                  "position": {
+                    "width": 1.58333333333,
+                    "top": 95.9692898273,
+                    "left": 5.5
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                {
+                  "resourceId": "6306eaaea04ec3229ec19ce9",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "6306eaaea04ec3229ec19ce7",
+                  "position": {
+                    "width": 48.1666666667,
+                    "top": 0,
+                    "left": 0
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19ce8",
+                  "position": {
+                    "width": 4.75,
+                    "top": 99.9360204734,
+                    "left": 1.33333333333
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cea",
+                  "position": {
+                    "width": 45,
+                    "top": 2.30326295585,
+                    "left": 3.91666666667
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19ceb",
+                  "position": {
+                    "width": 39.75,
+                    "top": 34.3570057582,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cec",
+                  "position": {
+                    "width": 39.75,
+                    "top": 54.9584133077,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19ced",
+                  "position": {
+                    "width": 1.58333333333,
+                    "top": 95.9692898273,
+                    "left": 5.5
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cee",
+                  "position": {
+                    "width": 40.5833333333,
+                    "top": 8.89315419066,
+                    "left": 51.0833333333
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cef",
+                  "position": {
+                    "width": 37.5,
+                    "top": 31.1580294306,
+                    "left": 51.1666666667
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cf0",
+                  "position": {
+                    "width": 39.75,
+                    "top": 34.3570057582,
+                    "left": 51.8333333333
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cf1",
+                  "position": {
+                    "width": 39.75,
+                    "top": 41.3307741523,
+                    "left": 51.8333333333
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cf4",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cf2",
+                  "position": {
+                    "width": 85.3333333333,
+                    "top": 11.9641714651,
+                    "left": 7.33333333333
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cf3",
+                  "position": {
+                    "width": 4.75,
+                    "top": 99.9360204734,
+                    "left": 1.33333333333
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cf5",
+                  "position": {
+                    "width": 45,
+                    "top": 2.30326295585,
+                    "left": 3.91666666667
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cf6",
+                  "position": {
+                    "width": 39.6666666667,
+                    "top": 31.1580294306,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cf7",
+                  "position": {
+                    "width": 40.5833333333,
+                    "top": 8.89315419066,
+                    "left": 51.0833333333
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cf8",
+                  "position": {
+                    "width": 16.75,
+                    "top": 31.1580294306,
+                    "left": 51.1666666667
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cf9",
+                  "position": {
+                    "width": 39.75,
+                    "top": 34.6769033909,
+                    "left": 8.33333333333
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cfa",
+                  "position": {
+                    "width": 42.5833333333,
+                    "top": 59.9488163788,
+                    "left": 5.5
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cfb",
+                  "position": {
+                    "width": 15.3333333333,
+                    "top": 34.6769033909,
+                    "left": 51.9166666667
+                  }
+                },
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cfc",
+                  "position": {
+                    "width": 39.75,
+                    "top": 37.0441458733,
+                    "left": 51.8333333333
+                  }
+                }
+              ]
+            },
+            {
+              "bgColor": {
+                "r": 255,
+                "b": 255,
+                "g": 255
+              },
+              "version": "0",
+              "fgs": [
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cfe",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ],
+              "paddingTop": 130.25,
+              "bgs": [
+                {
+                  "resourceId": "6306eaaea04ec3229ec19cfd",
+                  "position": {
+                    "width": 100,
+                    "top": 0,
+                    "left": 0
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "fitReading": {
+          "content": [
+            {
+              "type": "preface",
+              "htmlText": "政府和生技業者無不期盼再生醫療發展，但站在醫療前線的醫師卻表示，現階段由於價格過於昂貴，民眾對細胞治療接受度仍然不高，且短期內恐怕難有醫療保險解套，期盼「再生醫療三法」能夠提供完整的規範框架、促進產業升級，未來才有機會讓價格降低，普及民眾。"
+            }
+          ],
+          "type": "doc"
+        }
+      },
+      "resources": {
+        "6306eaaea04ec3229ec19cdb": {
+          "type": "IMAGE",
+          "width": 519,
+          "height": 347,
+          "thumbnails": [
+            100,
+            320,
+            480,
+            519
+          ],
+          "urls": {
+            "100": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fe750b1fcfaf412b0ab/resources/6306eaaea04ec3229ec19cdb/100.png",
+            "320": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fe750b1fcfaf412b0ab/resources/6306eaaea04ec3229ec19cdb/320.png",
+            "480": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fe750b1fcfaf412b0ab/resources/6306eaaea04ec3229ec19cdb/480.png",
+            "519": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fe750b1fcfaf412b0ab/resources/6306eaaea04ec3229ec19cdb/519.png"
+          },
+          "webpUrls": {
+            "100": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fe750b1fcfaf412b0ab/resources/6306eaaea04ec3229ec19cdb/100.webp",
+            "320": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fe750b1fcfaf412b0ab/resources/6306eaaea04ec3229ec19cdb/320.webp",
+            "480": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fe750b1fcfaf412b0ab/resources/6306eaaea04ec3229ec19cdb/480.webp",
+            "519": "https://storage.googleapis.com/kps_dev_public/projects/62a16147b6baaae26814970f/users/PRIVATE_API/contents/62b97fe750b1fcfaf412b0ab/resources/6306eaaea04ec3229ec19cdb/519.webp"
+          }
+        }
+      }
+    }
+  ]
+}
+

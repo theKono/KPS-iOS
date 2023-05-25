@@ -29,7 +29,7 @@ public enum KPSPurchaseError: Swift.Error {
     case paymentNotAllowed
     case productNotAvailable
     case productAlreadyPurchased
-    case ownServer
+    case ownServer(errorMsg: String?)
     case receiptExpire
     case sessionInvalid
     case network
@@ -51,7 +51,10 @@ public enum KPSPurchaseError: Swift.Error {
             return "當前購買選項不可用"
         case .productAlreadyPurchased:
             return "您目前正在訂閱期間"
-        case .ownServer:
+        case .ownServer(let error):
+            if let error = error {
+                return "伺服器連接錯誤（\(error)）"
+            }
             return "伺服器連接錯誤"
         case .network:
             return "網路無法正常連接"
@@ -682,16 +685,18 @@ private extension KPSPurchases {
                         print("[API Error: \(#function)] \(errorResponse)")
                         
                         switch response.statusCode{
+                        case 401:
+                            self?.verifyCompleteBlock?(self?.purchaseItem, false, .sessionInvalid)
                         case 403:
                             self?.verifyCompleteBlock?(self?.purchaseItem, false, .receiptExpire)
                         default:
-                            self?.verifyCompleteBlock?(self?.purchaseItem, false, .ownServer)
+                            self?.verifyCompleteBlock?(self?.purchaseItem, false, .ownServer(errorMsg: errorResponse))
                         }
                         self?.finishPurchaseAction()
                     }
                 case .failure(let error):
                     print(error.errorDescription ?? "")
-                    self?.verifyCompleteBlock?(self?.purchaseItem, false, .ownServer)
+                    self?.verifyCompleteBlock?(self?.purchaseItem, false, .ownServer(errorMsg: error.errorDescription))
                     self?.finishPurchaseAction()
                 }
             }

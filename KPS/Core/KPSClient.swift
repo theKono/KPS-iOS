@@ -428,6 +428,18 @@ extension KPSClient {
         request(target: .fetchUserPermission(server: KPSClient.config.baseServer), completion: resultClosure)
     }
     
+    public func updateFCMToken(_ token: String, completion: @escaping(Result<Moya.Response, MoyaError>) -> ()) {
+        
+        networkProvider.request(.updateFCMToken(token: token, server: KPSClient.config.baseServer)) { result in
+            switch result {
+            case .success(let response):
+                completion(.success(response))
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
 
 // MARK: Data Related API
@@ -480,6 +492,8 @@ extension KPSClient {
                         completion(.failure(customError))
                     } else {
                         //TODO: return success but parsing error
+                        completion(.failure(.objectMapping(error, response)))
+                        
                         do{
                             let json = try JSONSerialization.jsonObject(with: response.data, options: .mutableContainers)
                             let dic = json as! Dictionary<String, Any>

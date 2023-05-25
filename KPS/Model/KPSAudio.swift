@@ -10,7 +10,7 @@ import Foundation
 public struct KPSAudioContent {
     
     enum CodingKeys: String, CodingKey {
-        case error, contentNode, puser
+        case error, contentNode, puser, siblingNodes, parentNode
     }
     
     enum RootKeys: String, CodingKey {
@@ -27,6 +27,10 @@ public struct KPSAudioContent {
         case authors
     }
     
+    enum CoverKeys: String, CodingKey {
+        case list
+    }
+    
     enum ContentDataKeys: String, CodingKey {
         case textSegments, languages, audioLanguage, duration, resource
     }
@@ -35,9 +39,12 @@ public struct KPSAudioContent {
         case list
     }
     
+    public var parent: KPSContentMeta?
+    public var siblings: [KPSContentMeta]?
     public let id, type: String
     public let name, description: [String: String]
     public let authors: [String: [String]]
+    public var coverImages: [KPSImageResource] = []
     public let order: Int
     public let isPublic, isFree: Bool
     public var length: Double?
@@ -75,6 +82,8 @@ extension KPSAudioContent: Decodable {
         if let user = puser {
             KPSClient.shared.isUserBlocked = user.status == 0
         }
+        parent = try baseContainer.decodeIfPresent(KPSContentMeta.self, forKey: .parentNode)
+        siblings = try baseContainer.decodeIfPresent([KPSContentMeta].self, forKey: .siblingNodes)
         
         id = try container.decode(String.self, forKey: .id)
         type = try container.decode(String.self, forKey: .type)
@@ -92,7 +101,22 @@ extension KPSAudioContent: Decodable {
         } else {
             authors = [:]
         }
-        let resources = try container.decode([String: Any].self, forKey: .resources)
+        
+        let resources = try container.decode([String: KPSResourceType].self, forKey: .resources)
+        
+        if let _ = try container.decodeIfPresent([String: Any].self, forKey: .covers) {
+            let coverIdContainer = try container.decode([String:[String]].self, forKey: .covers)
+            let coverResourceIds = coverIdContainer["list"]!
+            
+            var images: [KPSImageResource] = []
+            
+            for id in coverResourceIds {
+                if case .IMAGE(let imageResource) = resources[id] {
+                    images.append(imageResource)
+                }
+            }
+            coverImages = images
+        }
         
         let contentDataContainer = try container.nestedContainer(keyedBy: ContentDataKeys.self, forKey: .content)
         let defaultLang = try contentDataContainer.decode(String.self, forKey: .audioLanguage)
@@ -112,13 +136,12 @@ extension KPSAudioContent: Decodable {
         // MARK: Handle audio resource info (premium content)
         if errorDescription == nil {
             let audioResourceId = try contentDataContainer.decode(String.self, forKey: .resource)
-
-            let audioResourceInfoRaw = resources[audioResourceId] as! [String: Any]
-            let audioResourceInfo = KPSAudioFileInfo(info: audioResourceInfoRaw)
-            length = audioResourceInfo.duration
-            streamingUrl = URL(string: audioResourceInfo.streamingUrl)!
             
-            byWordTimeFrames = parsedWordTimeFrames(info: audioResourceInfoRaw)
+            if case .AUDIO(let audioResource) = resources[audioResourceId] {
+                length = audioResource.duration
+                streamingUrl = URL(string: audioResource.streamingUrl)!
+                byWordTimeFrames = parsedWordTimeFrames(sentences: audioResource.sentences)
+            }
         
         } else {
             length = try contentDataContainer.decode(Double.self, forKey: .duration)
@@ -319,22 +342,19 @@ extension KPSAudioContent: Decodable {
     
 }
 
-private func parsedWordTimeFrames(info: [String: Any]) -> [TimeFrameInfo] {
+private func parsedWordTimeFrames(sentences: [[String: Any]]) -> [TimeFrameInfo] {
     
     var res: [TimeFrameInfo] = []
     
-    
-    if let sentences = info["sentences"] as? [[String: Any]] {
-        for sentence in sentences {
+    for sentence in sentences {
+        
+        if let wordRawInfos = sentence["words"] as? [[String: Any]] {
             
-            if let wordRawInfos = sentence["words"] as? [[String: Any]] {
-            
-                for wordRawInfo in wordRawInfos {
-                    guard let _ = wordRawInfo["word"],
-                          let _ = wordRawInfo["start"],
-                          let _ = wordRawInfo["end"] else { continue }
-                    res.append(TimeFrameInfo(wordRawInfo))
-                }
+            for wordRawInfo in wordRawInfos {
+                guard let _ = wordRawInfo["word"],
+                      let _ = wordRawInfo["start"],
+                      let _ = wordRawInfo["end"] else { continue }
+                res.append(TimeFrameInfo(wordRawInfo))
             }
         }
     }
@@ -346,19 +366,6 @@ public struct KPSAudioTextInfo: Decodable {
     public let type: String
     public let end, start: TimeValue
 
-}
-
-public struct KPSAudioFileInfo {
-    public let duration: Double
-    public let streamingUrl: String
-    init(info: [String: Any]) {
-        if let durationInt = info["duration"] as? Int {
-            duration = Double(durationInt)
-        } else {
-            duration = info["duration"] as! Double
-        }
-        streamingUrl = info["streamingUrl"] as! String
-    }
 }
 
 public struct KPSAudioText {
