@@ -114,6 +114,7 @@
 		F8B890CB284F38DC00C7BDD7 /* KPSFileResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */; };
 		F8B890CD2850515B00C7BDD7 /* KPSResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CC2850515B00C7BDD7 /* KPSResourceType.swift */; };
 		F8B890CF28507A0300C7BDD7 /* KPSPDFContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */; };
+		F8CD374A2A1F5615002F829D /* KPSClientSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CD37492A1F5615002F829D /* KPSClientSearchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -246,6 +247,7 @@
 		F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSFileResource.swift; sourceTree = "<group>"; };
 		F8B890CC2850515B00C7BDD7 /* KPSResourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSResourceType.swift; sourceTree = "<group>"; };
 		F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPDFContent.swift; sourceTree = "<group>"; };
+		F8CD37492A1F5615002F829D /* KPSClientSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientSearchTests.swift; sourceTree = "<group>"; };
 		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -348,6 +350,7 @@
 		E833100C26A4100E00A6AA59 /* KPSTests */ = {
 			isa = PBXGroup;
 			children = (
+				F8CD37482A1F55EF002F829D /* Search */,
 				F8B890C12845DE0800C7BDD7 /* Article */,
 				E8855F9F280D66CD0067CA09 /* Purchase */,
 				E8855FA1280D68900067CA09 /* Media */,
@@ -635,6 +638,14 @@
 			path = Article;
 			sourceTree = "<group>";
 		};
+		F8CD37482A1F55EF002F829D /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				F8CD37492A1F5615002F829D /* KPSClientSearchTests.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -916,6 +927,7 @@
 				E8A4C8CB26BFD2590082B4F7 /* KPSClientMediaTests.swift in Sources */,
 				E833103526A417F800A6AA59 /* KPSUtilityTest.swift in Sources */,
 				E833103326A417CC00A6AA59 /* KPSUtility.swift in Sources */,
+				F8CD374A2A1F5615002F829D /* KPSClientSearchTests.swift in Sources */,
 				E8A4C8D226C186D50082B4F7 /* XCTest+Eventually.swift in Sources */,
 				E833109326B44C1B00A6AA59 /* KPSClientTests.swift in Sources */,
 				F8B890C32845DE5F00C7BDD7 /* KPSClientArticleTests.swift in Sources */,
