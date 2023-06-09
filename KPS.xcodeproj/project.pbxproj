@@ -114,6 +114,7 @@
 		F8B890CB284F38DC00C7BDD7 /* KPSFileResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */; };
 		F8B890CD2850515B00C7BDD7 /* KPSResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CC2850515B00C7BDD7 /* KPSResourceType.swift */; };
 		F8B890CF28507A0300C7BDD7 /* KPSPDFContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */; };
+		F8BF0DA42A2849DA00005A66 /* KPSFolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BF0DA32A2849DA00005A66 /* KPSFolderTableViewCell.swift */; };
 		F8CD374A2A1F5615002F829D /* KPSClientSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CD37492A1F5615002F829D /* KPSClientSearchTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -247,6 +248,7 @@
 		F8B890CA284F38DC00C7BDD7 /* KPSFileResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSFileResource.swift; sourceTree = "<group>"; };
 		F8B890CC2850515B00C7BDD7 /* KPSResourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSResourceType.swift; sourceTree = "<group>"; };
 		F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSPDFContent.swift; sourceTree = "<group>"; };
+		F8BF0DA32A2849DA00005A66 /* KPSFolderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSFolderTableViewCell.swift; sourceTree = "<group>"; };
 		F8CD37492A1F5615002F829D /* KPSClientSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientSearchTests.swift; sourceTree = "<group>"; };
 		FB2D8D38E46C889B6297FE6E /* libPods-KPSExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KPSExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -303,6 +305,7 @@
 				E825CE7528435D5E008527C6 /* KPSArticleTableViewCell.swift */,
 				E801B5D02847A67E0062582F /* KPSIssueCollectionViewCell.swift */,
 				E825CEC82844746E008527C6 /* KPSBookInfoView.swift */,
+				F8BF0DA32A2849DA00005A66 /* KPSFolderTableViewCell.swift */,
 				E825CED22845CC27008527C6 /* KPSSperator.swift */,
 			);
 			path = Components;
@@ -870,6 +873,7 @@
 				E845AD8527E491EB00A3DC49 /* InAppPurchase.swift in Sources */,
 				E845AD7C27E490BD00A3DC49 /* ASN1ContainerBuilder.swift in Sources */,
 				E825CED32845CC27008527C6 /* KPSSperator.swift in Sources */,
+				F8BF0DA42A2849DA00005A66 /* KPSFolderTableViewCell.swift in Sources */,
 				E8E14F0027D8949D007D6875 /* KPSPurchaseDelegate.swift in Sources */,
 				E8E14F1827DB264B007D6875 /* SK2StoreProduct.swift in Sources */,
 				E8E14F2227DF1B77007D6875 /* CustomerInfo.swift in Sources */,
