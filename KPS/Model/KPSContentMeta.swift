@@ -5,6 +5,15 @@
 //  Created by mingshing on 2021/9/11.
 //
 
+public enum KPSContentType: String {
+    case audio
+    case article
+    case folder
+    case album
+    case book
+    case unknown
+}
+
 public struct KPSContentMeta {
     
     enum CodingKeys: String, CodingKey {
@@ -31,6 +40,11 @@ public struct KPSContentMeta {
     public let fitReadingData: KPSFitReadingContent?
     public var isCollectionType: Bool {
         return type != "article" && type != "audio" && type != "video"
+    }
+    
+    public var contentType: KPSContentType {
+        let typeString: String = type ?? ""
+        return KPSContentType(rawValue: typeString) ?? .unknown
     }
 }
 
