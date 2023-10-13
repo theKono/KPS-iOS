@@ -22,6 +22,7 @@ target 'KPS' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'DeviceKit', '~> 4.0'
   pod 'Kingfisher', '~> 7.0'
+  pod 'SwiftRichString', '~> 3.7.2'
   
   target 'KPSTests' do
     inherit! :complete

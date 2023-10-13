@@ -11,6 +11,8 @@ public enum KPSContentType: String {
     case folder
     case album
     case book
+    case chapter
+    case section
     case unknown
 }
 

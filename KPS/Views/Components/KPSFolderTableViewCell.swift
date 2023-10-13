@@ -7,6 +7,7 @@
 
 import Kingfisher
 import UIKit
+import SwiftRichString
 
 public struct KPSFolderTableCellViewModel {
     public var id: String
@@ -14,11 +15,34 @@ public struct KPSFolderTableCellViewModel {
     var folderDescription: String?
     var mainImageURL: String
     
-    public init(id: String, folderName: String, folderDescription: String?, mainImageURL: String) {
+    var highlightTitle: NSAttributedString?
+    var highlightDetail: NSAttributedString?
+    
+    var titleAttributedString: NSAttributedString {
+        if let highlightTitle = highlightTitle {
+            return highlightTitle
+        } else {
+            return NSAttributedString(string: folderName)
+        }
+    }
+    
+    var detailAttributedString: NSAttributedString {
+        if let highlightDetail = highlightDetail {
+            return highlightDetail
+        } else {
+            return NSAttributedString(string: folderDescription ?? "")
+        }
+    }
+    
+    public init(id: String, folderName: String, folderDescription: String?, mainImageURL: String, highlightTitle: NSAttributedString?
+                = nil, highlightDetail: NSAttributedString? = nil) {
         self.id = id
         self.folderName = folderName
-        self.folderDescription = folderDescription
+        let description = folderDescription?.replacingOccurrences(of: "<br>", with: "")
+        self.folderDescription = description
         self.mainImageURL = mainImageURL
+        self.highlightTitle = highlightTitle
+        self.highlightDetail = highlightDetail
     }
 }
 
@@ -29,6 +53,7 @@ public class KPSFolderTableViewCell: UITableViewCell {
         label.numberOfLines = 2
         label.font = UIFont.font(ofType: .Heading_2)
         label.textAlignment = .left
+        label.sizeToFit()
         return label
     }()
     
@@ -45,7 +70,7 @@ public class KPSFolderTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 2.0
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -102,10 +127,9 @@ public class KPSFolderTableViewCell: UITableViewCell {
     
     public func update(with viewModel: KPSFolderTableCellViewModel) {
         
-        titleLabel.text = viewModel.folderName
+        titleLabel.attributedText = viewModel.titleAttributedString
+        descriptionLabel.attributedText = viewModel.detailAttributedString
         titleLabel.sizeToFit()
-        
-        descriptionLabel.text = viewModel.folderDescription
         descriptionLabel.sizeToFit()
         mainImageView.kf.setImage(with: URL(string: viewModel.mainImageURL))
         

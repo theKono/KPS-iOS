@@ -138,4 +138,5 @@ Pod::Spec.new do |spec|
     spec.dependency "SnapKit", "~> 5.0.0"
     spec.dependency "DeviceKit", "~> 4.0"
     spec.dependency "Kingfisher", "~> 7.0"
+    spec.dependency "SwiftRichString", "~> 3.7.2"
 end
