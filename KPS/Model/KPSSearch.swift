@@ -26,6 +26,8 @@ public struct KPSSearchResult {
         case fitReading, pdf
     }
     
+    public var contentMeta: KPSContentMeta?
+    
     public var id: String
     public var type: String?
     public var order: Int?
@@ -47,6 +49,7 @@ public struct KPSSearchResult {
 extension KPSSearchResult: Decodable {
     public init(from decoder: Decoder) throws {
 
+        contentMeta = try KPSContentMeta(from: decoder)
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         id = try container.decode(String.self, forKey: .id)

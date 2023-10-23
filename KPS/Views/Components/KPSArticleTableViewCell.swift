@@ -149,14 +149,14 @@ public class KPSArticleTableViewCell: UITableViewCell {
             make.size.equalTo(ComponentConstants.articleTableViewImageSize)
             make.top.equalToSuperview().inset(ComponentConstants.smallVerticalMargin)
             make.bottom.lessThanOrEqualToSuperview().inset(ComponentConstants.smallVerticalMargin)
-            make.right.equalToSuperview().inset(horizontalMargin)
+            make.left.equalToSuperview().inset(horizontalMargin)
         }
         
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(mainImageView.snp.top)
-            make.left.equalToSuperview().inset(horizontalMargin)
-            make.right.equalTo(mainImageView.snp.left).offset(-ComponentConstants.smallVerticalMargin)
+            make.right.equalToSuperview().inset(horizontalMargin)
+            make.left.equalTo(mainImageView.snp.right).offset(ComponentConstants.smallVerticalMargin)
         }
         
         
