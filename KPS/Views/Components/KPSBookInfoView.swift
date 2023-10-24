@@ -15,12 +15,14 @@ public struct KPSBookInfoViewModel {
     var bookDescription: String?
     var mainImageURL: String
     var imageSize: CGSize?
+    var isActionButtonEnable: Bool
     
-    public init(bookName: String, bookDescription: String?, mainImageURL: String, imageSize: CGSize?) {
+    public init(bookName: String, bookDescription: String?, mainImageURL: String, imageSize: CGSize?, isActionButtonEnable: Bool = true) {
         self.bookName = bookName
         self.bookDescription = bookDescription
         self.mainImageURL = mainImageURL
         self.imageSize = imageSize
+        self.isActionButtonEnable = isActionButtonEnable
     }
     
 }
@@ -227,5 +229,23 @@ public class KPSBookInfoView: UIView {
                 break
             }
         }
+        
+        if viewModel.isActionButtonEnable {
+            actionButton.isHidden = false
+            actionButton.snp.remakeConstraints { make in
+                make.left.right.equalToSuperview().inset(ComponentConstants.normalHorizontalMargin)
+                make.top.equalTo(bookNameLabel.snp.bottom).offset(ComponentConstants.largeComponentInterSpacing)
+                make.height.equalTo(ComponentConstants.actionButtonHeight)
+            }
+        } else {
+            actionButton.isHidden = true
+            actionButton.snp.remakeConstraints { make in
+                make.left.right.equalToSuperview().inset(ComponentConstants.normalHorizontalMargin)
+                make.bottom.equalTo(bookNameLabel.snp.bottom)
+                make.height.equalTo(ComponentConstants.actionButtonHeight)
+            }
+        }
     }
+    
+    
 }
