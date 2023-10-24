@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "KPS-iOS"
-  spec.version      = "0.4.0"
+  spec.version      = "0.5.0"
   spec.summary      = "Kono Publisher Service SDK for iOS platform."
 
   # This description is used to generate tags and improve search results.
