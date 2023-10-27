@@ -53,7 +53,6 @@ public struct KPSAudioContent {
     public var content: [KPSAudioText] = []
     public var paragraphContents: [KPSAudioText] = []
     internal var timeFrames: [TimeFrameInfo] = []
-    internal var byWordTimeFrames: [TimeFrameInfo] = []
     public var streamingUrl: URL?
     public var collectionId: String?
     public var collectionName: [String: String]?
@@ -140,7 +139,6 @@ extension KPSAudioContent: Decodable {
             if case .AUDIO(let audioResource) = resources[audioResourceId] {
                 length = audioResource.duration
                 streamingUrl = URL(string: audioResource.streamingUrl)!
-                byWordTimeFrames = parsedWordTimeFrames(sentences: audioResource.sentences)
             }
         
         } else {
@@ -179,7 +177,6 @@ extension KPSAudioContent: Decodable {
                 parsedText[i].translation[lang] = translation[i]["content"]
             }
             var opSentenceIdx: Int = 0
-            var mappingTimeFrameIdx: Int = 0
             
             for paragraphIdx in 0..<paragraphContents.count {
                 var currentLocation = 0
@@ -209,108 +206,10 @@ extension KPSAudioContent: Decodable {
                         if lang == defaultLang {
                             let sentenceStartPosition = currentLocation - trimmed.withoutHtmlTags.count
                             
-                            /** Implementation note:
-                             *  We need to split the string by white space first, then remove the html tag
-                             *  The reason is sometimes the html will not concated to any string,
-                             *  If we remove the html tag first, we will lack of a white space when we put the raw string into richString generator
-                             **/
-                            if !byWordTimeFrames.isEmpty {
-                                // if we have time info for word, parse the word timeframe info
-                                let allTokens = parsedText[i].text.components(separatedBy: [" "]).filter({!$0.isEmpty})
-                                var accumlatedLength = 0
-
-                                if !allTokens.isEmpty {
-                                    let lookForwardCount = 10
-                                    var googleParsedStartTime: Double = 0.0
-                                    
-                                    //HACK solution for google api missing lots of words
-                                    byWordTimeFrames = byWordTimeFrames.filter({
-                                        $0.endTime > (timeFrames[mappingTimeFrameIdx].startTime - 0.2)
-                                    })
-                                    
-                                    for word in allTokens {
-                                        var displayLength: Int
-                                        
-                                        if word.isHTMLTag {
-                                            displayLength = 0
-                                        } else {
-                                            let checkBound = min(byWordTimeFrames.count, lookForwardCount)
-                                            let checkedWord = word.withoutHtmlTags.trimmingCharacters(in: .whitespacesAndNewlines)
-                                            
-                                            if checkedWord.isSymbol {
-                                                // Ignore find the time frame process for symbol
-                                                displayLength = word.count
-                                            } else {
-                                                for checkedIdx in 0..<checkBound {
-                                                
-                                                    if checkedWord =~ byWordTimeFrames[checkedIdx].text {
-                                                        
-                                                        // add missing mapping word highlight
-                                                        if let previousInfo = paragraphContents[paragraphIdx].partitionInfos.last {
-                                                            var googlePredictCharCount: Int = 0
-                                                            let currentUnMappedCharCount = sentenceStartPosition + accumlatedLength - previousInfo.paragraphLocation.length - previousInfo.paragraphLocation.location
-                                                            
-                                                            
-                                                            if checkedIdx > 0 {
-                                                                
-                                                                /* special case
-                                                                   original text: fly on the wall listening in on a casual
-                                                                   google return: fly-on-the-wall, listening, in, on
-                                                                   
-                                                                   our algo will map the first "on" to the google's second on
-                                                                   and insert the wrong time stamp
-                                                                   
-                                                                   Try to add additional check to skip this mapping
-                                                                 */
-                                                                for idx in 0..<checkedIdx {
-                                                                    googlePredictCharCount += byWordTimeFrames[idx].text.count
-                                                                }
-                                                                if (googlePredictCharCount - currentUnMappedCharCount) > 2*checkedIdx {
-                                                                    continue
-                                                                }
-                                                                
-                                                                byWordTimeFrames[checkedIdx-1].paragraphLocation = NSRange(location: sentenceStartPosition, length: accumlatedLength)
-                                                                byWordTimeFrames[checkedIdx-1].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, byWordTimeFrames[0].startTime)
-                                                                paragraphContents[paragraphIdx].partitionInfos.append(byWordTimeFrames[checkedIdx-1])
-                                                            }
-                                                        }
-                                                        
-                                                        byWordTimeFrames[checkedIdx].paragraphLocation = NSRange(location: sentenceStartPosition, length: accumlatedLength + checkedWord.count)
-                                                        byWordTimeFrames[checkedIdx].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, byWordTimeFrames[checkedIdx].startTime)
-                                                        byWordTimeFrames[checkedIdx].startTime = min(byWordTimeFrames[checkedIdx].startTime, byWordTimeFrames[checkedIdx].endTime - 0.1)
-                                                        if accumlatedLength == 0 {
-                                                            googleParsedStartTime = byWordTimeFrames[checkedIdx].startTime
-                                                        }
-                                                        paragraphContents[paragraphIdx].partitionInfos.append(byWordTimeFrames[checkedIdx])
-                                                    
-                                                        byWordTimeFrames.removeFirst(checkedIdx+1)
-                                                        break
-                                                    }
-                                                }
-                                                
-                                                displayLength = checkedWord.count
-                                            }
-                                        }
-                                        accumlatedLength += (displayLength + 1)
-                                        //currentLocation = currentLocation + displayLength + 1
-                                    }
-                                    
-                                    
-                                    if timeFrames[mappingTimeFrameIdx].mappingIdx == i {
-                                        if let currentSentenceMaxTimeFrame = paragraphContents[paragraphIdx].partitionInfos.last {
-                                            timeFrames[mappingTimeFrameIdx].endTime = max(timeFrames[mappingTimeFrameIdx].endTime, currentSentenceMaxTimeFrame.endTime)
-                                            timeFrames[mappingTimeFrameIdx].startTime = max(timeFrames[mappingTimeFrameIdx].startTime, googleParsedStartTime)
-                                        }
-
-                                        mappingTimeFrameIdx += 1
-                                    }
-                                }
-                            } else {
-                                // parse the sentence timeframe info
-                                var partitionInfo = TimeFrameInfo(parsedText[i], idx: i)
-                                partitionInfo.paragraphLocation = NSRange(location: sentenceStartPosition, length: currentSentenceLength)
-                                paragraphContents[paragraphIdx].partitionInfos.append(partitionInfo)
-                            }
+                            // parse the sentence timeframe info
+                            var partitionInfo = TimeFrameInfo(parsedText[i], idx: i)
+                            partitionInfo.paragraphLocation = NSRange(location: sentenceStartPosition, length: currentSentenceLength)
+                            paragraphContents[paragraphIdx].partitionInfos.append(partitionInfo)
                         }
                     }
                 }
