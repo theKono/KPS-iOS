@@ -21,7 +21,7 @@ target 'KPS' do
   pod 'Toast-Swift', '~> 5.0.1'
   pod 'SnapKit', '~> 5.0.0'
   pod 'DeviceKit', '~> 4.0'
-  pod 'Kingfisher', '~> 7.0'
+  pod 'Kingfisher'
   pod 'SwiftRichString', '~> 3.7.2'
   
   target 'KPSTests' do

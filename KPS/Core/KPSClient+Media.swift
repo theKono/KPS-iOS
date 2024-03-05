@@ -20,6 +20,13 @@ public enum MediaPlayerState {
     
 }
 
+public enum MediaPlayerRepeatMode: Int {
+    
+    case NoRepeat = 0
+    case SingleTrackRepeat = 1
+    case Repeat = 2
+    
+}
 
 public protocol KPSClientMediaContentDelegate: AnyObject {
     
@@ -462,11 +469,21 @@ extension KPSClient {
     }
     
     @objc internal func playerDidFinishPlaying(notification: NSNotification) {
-    
-        if (currentTrack + 1) == mediaPlayList.count {
-            mediaPlayerStop()
-        } else {
-            mediaPlayerPlay(targetTrack: currentTrack + 1)
+        switch mediaPlayerRepeatMode {
+        case .NoRepeat:
+            if (currentTrack + 1) == mediaPlayList.count {
+                mediaPlayerStop()
+            } else {
+                mediaPlayerPlay(targetTrack: currentTrack + 1)
+            }
+        case .Repeat:
+            if (currentTrack + 1) == mediaPlayList.count {
+                mediaPlayerPlay(targetTrack: 0)
+            } else {
+                mediaPlayerPlay(targetTrack: currentTrack + 1)
+            }
+        case .SingleTrackRepeat:
+            mediaPlayerPlay(targetTrack: currentTrack)
         }
     }
     

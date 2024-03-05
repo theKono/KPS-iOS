@@ -118,6 +118,8 @@ public final class KPSClient: NSObject {
         }
     }
     
+    public var mediaPlayerRepeatMode: MediaPlayerRepeatMode = .NoRepeat
+    
     public var currentTrack: Int = -1 {
         didSet {
             if currentTrack != -1 && currentTrack < mediaPlayList.count {
