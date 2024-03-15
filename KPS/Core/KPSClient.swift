@@ -230,6 +230,12 @@ public final class KPSClient: NSObject {
         }
     }
     
+    internal var mediaPlayerIsPlayListFetching = false
+    
+    internal var mediaPlayLeafNodeList = [KPSContentMeta]()
+    
+    internal var mediaPlayIsHasMoreLeafNode: Bool = true
+    
     internal var mediaPlayCollectionId: String?
     
     internal var mediaPlayCollectionName: [String: String]?
@@ -464,6 +470,12 @@ extension KPSClient {
     public func fetchCollectionWithPaging(Id: String, isNeedParent: Bool = false, isNeedSiblings: Bool = false, startChildOrderInParent: Int? = nil, startChildId: String? = nil, completion: @escaping(Result<KPSCollection, MoyaError>) -> ()) {
         
         request(target: .fetchCollectionWithPaging(Id: Id, isNeedParent: isNeedParent, isNeedSiblings: isNeedSiblings, startChildOrderInParent: startChildOrderInParent, startChildId: startChildId, server: KPSClient.config.baseServer), completion: completion)
+    }
+    
+    /// startFlatOrder, startId: When paging, both are required. No input for getting the first (or last for reverse) page.
+    /// 固定回 15 筆資料
+    public func fetchLeafNodeFromRootNode(rootNodeId: String, startFlatOrder: Int? = nil, startId: String? = nil, reverse: Bool = false, completion: @escaping(Result<KPSLeafNodes, MoyaError>) -> ()) {
+        request(target: .fetchLeafNodeFromRootNode(Id: rootNodeId, startFlatOrder: startFlatOrder, startId: startId, reverse: reverse, server: KPSClient.config.baseServer), completion: completion)
     }
 }
 

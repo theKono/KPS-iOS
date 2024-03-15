@@ -174,7 +174,7 @@ extension KPSClient {
         mediaPlayCollectionId = collection.id
         mediaPlayCollectionName = collection.name
         mediaPlayCollectionImage = collection.images.first
-        
+        mediaPlayLeafNodeList = []
     }
     
     public func playAudioContents(playList: [KPSContentMeta], collectionMeta: KPSContentMeta) {
@@ -183,10 +183,90 @@ extension KPSClient {
         mediaPlayCollectionId = collectionMeta.id
         mediaPlayCollectionName = collectionMeta.name
         mediaPlayCollectionImage = collectionMeta.images.first
+        mediaPlayLeafNodeList = []
+    }
+    
+    public func playAudioContents(fromNode node: KPSContentMeta, completion: @escaping((Bool)->Void)) {
+
+        mediaPlayCollectionId = node.id
+        mediaPlayCollectionName = node.name
+        mediaPlayCollectionImage = node.images.first
+        mediaPlayLeafNodeList = []
+        
+        self.fetchPlayList(from: node) { result in
+            switch result {
+            case .success(let responce):
+                if responce.count > 0 {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            case .failure(let error):
+                completion(false)
+            }
+        }
+        
     }
     
     public func getPlayList() -> [KPSContentMeta] {
         return mediaPlayList
+    }
+    
+    public func fetchPlayList(from node: KPSContentMeta, isLoadMore: Bool = false, completion: @escaping(Result<[KPSContentMeta], MoyaError>) -> ()) {
+        
+        if mediaPlayerIsPlayListFetching { return }
+        
+        let latestLeafNode = mediaPlayLeafNodeList.last
+        
+        if isLoadMore && !mediaPlayIsHasMoreLeafNode {
+            completion(.success([]))
+            return
+        }
+        
+        mediaPlayerIsPlayListFetching = true
+        
+        fetchLeafNodeFromRootNode(rootNodeId: node.id, startFlatOrder: latestLeafNode?.flatOrder, startId: latestLeafNode?.id) { [weak self] result in
+            
+            guard let weakSelf = self else { return }
+            
+            weakSelf.mediaPlayerIsPlayListFetching = false
+            
+            switch result {
+            case .success(let response):
+                let leafNodes = response.leafNodes
+                
+                let audioList: [KPSContentMeta] = leafNodes.filter {
+                    return $0.contentType == .audio
+                }
+                
+                weakSelf.mediaPlayIsHasMoreLeafNode = leafNodes.count == 15
+                
+                
+                if isLoadMore {
+                    weakSelf.mediaPlayLeafNodeList.append(contentsOf: leafNodes)
+                    weakSelf.mediaPlayList.append(contentsOf: audioList)
+
+                } else {
+                    weakSelf.mediaPlayLeafNodeList = leafNodes
+                    weakSelf.mediaPlayList = audioList
+                }
+                
+                if audioList.count == 0 { 
+                    if weakSelf.mediaPlayIsHasMoreLeafNode {
+                        // 沒有音檔就繼續拿
+                        weakSelf.fetchPlayList(from: node, completion: completion)
+                    } else {
+                        completion(.success([]))
+                    }
+                } else {
+                    completion(.success(audioList))
+                }
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
     }
     
     public func fetchAudioContent(audioId: String, isNeedParent: Bool = false, isNeedSiblings: Bool = false, completion: @escaping(Result<KPSAudioContent, MoyaError>) -> ()) {
@@ -244,7 +324,7 @@ extension KPSClient {
         try! AVAudioSession.sharedInstance().setActive(true)
         
         
-        if let targetTrack = targetTrack  {
+        if let targetTrack = targetTrack, targetTrack >= 0 {
             
             mediaPlayerReset()
             mediaPlayerState = .fetchingSource
