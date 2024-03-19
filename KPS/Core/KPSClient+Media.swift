@@ -175,6 +175,7 @@ extension KPSClient {
         mediaPlayCollectionName = collection.name
         mediaPlayCollectionImage = collection.images.first
         mediaPlayLeafNodeList = []
+        mediaPlayIsHasMoreLeafNode = false
     }
     
     public func playAudioContents(playList: [KPSContentMeta], collectionMeta: KPSContentMeta) {
@@ -184,6 +185,7 @@ extension KPSClient {
         mediaPlayCollectionName = collectionMeta.name
         mediaPlayCollectionImage = collectionMeta.images.first
         mediaPlayLeafNodeList = []
+        mediaPlayIsHasMoreLeafNode = false
     }
     
     public func playAudioContents(fromNode node: KPSContentMeta, completion: @escaping((Bool)->Void)) {
@@ -192,8 +194,9 @@ extension KPSClient {
         mediaPlayCollectionName = node.name
         mediaPlayCollectionImage = node.images.first
         mediaPlayLeafNodeList = []
+        mediaPlayIsHasMoreLeafNode = false
         
-        self.fetchPlayList(from: node) { result in
+        self.fetchPlayList(from: node.id) { result in
             switch result {
             case .success(let responce):
                 if responce.count > 0 {
@@ -201,7 +204,7 @@ extension KPSClient {
                 } else {
                     completion(false)
                 }
-            case .failure(let error):
+            case .failure(_):
                 completion(false)
             }
         }
@@ -212,11 +215,28 @@ extension KPSClient {
         return mediaPlayList
     }
     
-    public func fetchPlayList(from node: KPSContentMeta, isLoadMore: Bool = false, completion: @escaping(Result<[KPSContentMeta], MoyaError>) -> ()) {
+    public func loadMorePlayList(completion: ((Result<[KPSContentMeta], MoyaError>)->())? = nil) {
+        
+        guard let nodeId = mediaPlayCollectionId else { return }
+        
+        if !mediaPlayIsHasMoreLeafNode { return }
+        
+        fetchPlayList(from: nodeId, isLoadMore: true) { result in
+            switch result {
+            case .success(let audioList):
+                completion?(.success(audioList))
+            case .failure(let error):
+                completion?(.failure(error))
+            }
+        }
+        
+    }
+    
+    public func fetchPlayList(from nodeId: String, isLoadMore: Bool = false, completion: @escaping(Result<[KPSContentMeta], MoyaError>) -> ()) {
         
         if mediaPlayerIsPlayListFetching { return }
         
-        let latestLeafNode = mediaPlayLeafNodeList.last
+        let latestLeafNode = isLoadMore ? mediaPlayLeafNodeList.last : nil
         
         if isLoadMore && !mediaPlayIsHasMoreLeafNode {
             completion(.success([]))
@@ -225,7 +245,7 @@ extension KPSClient {
         
         mediaPlayerIsPlayListFetching = true
         
-        fetchLeafNodeFromRootNode(rootNodeId: node.id, startFlatOrder: latestLeafNode?.flatOrder, startId: latestLeafNode?.id) { [weak self] result in
+        fetchLeafNodeFromRootNode(rootNodeId: nodeId, startFlatOrder: latestLeafNode?.flatOrder, startId: latestLeafNode?.id) { [weak self] result in
             
             guard let weakSelf = self else { return }
             
@@ -253,8 +273,8 @@ extension KPSClient {
                 
                 if audioList.count == 0 { 
                     if weakSelf.mediaPlayIsHasMoreLeafNode {
-                        // 沒有音檔就繼續拿
-                        weakSelf.fetchPlayList(from: node, completion: completion)
+                        // 繼續拿下一頁直到有音檔
+                        weakSelf.fetchPlayList(from: nodeId, completion: completion)
                     } else {
                         completion(.success([]))
                     }
@@ -316,6 +336,11 @@ extension KPSClient {
     
     
     public func mediaPlayerPlay(targetTrack: Int? = nil, completion: ((Bool)->Void)? = nil) {
+        
+        let needPreFetch = mediaPlayList.count - currentTrack < 15
+        if needPreFetch {
+            loadMorePlayList()
+        }
         
         guard mediaPlayList.count > 0 else {
             isMediaPlaying = false

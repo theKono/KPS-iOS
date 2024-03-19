@@ -234,7 +234,7 @@ public final class KPSClient: NSObject {
     
     internal var mediaPlayLeafNodeList = [KPSContentMeta]()
     
-    internal var mediaPlayIsHasMoreLeafNode: Bool = true
+    internal var mediaPlayIsHasMoreLeafNode: Bool = false
     
     internal var mediaPlayCollectionId: String?
     
