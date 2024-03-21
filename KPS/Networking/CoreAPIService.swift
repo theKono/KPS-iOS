@@ -16,6 +16,8 @@ enum CoreAPIService {
     case fetchCollection(Id: String, isNeedParent: Bool, isNeedSiblings: Bool, server: Server)
     case fetchCollectionWithPaging(Id: String, isNeedParent: Bool, isNeedSiblings: Bool, startChildOrderInParent: Int?, startChildId: String?, server: Server)
     
+    case fetchLeafNodeFromRootNode(Id: String, startFlatOrder: Int?, startId: String?, reverse: Bool, server: Server)
+    
     case fetchArticle(Id: String, isNeedParent: Bool, isNeedSiblings: Bool, server: Server)
     
     case updateFCMToken(token: String, server: Server)
@@ -28,7 +30,7 @@ extension CoreAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, _, _, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server), .updateFCMToken(_, let server), .search(_, let server):
+        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, _, _, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server), .updateFCMToken(_, let server), .search(_, let server), .fetchLeafNodeFromRootNode(_, _, _, _, let server):
             return server.projectUrl
             
         case .fetchCollectionWithPaging(_, _, _, _, _, let server):
@@ -50,6 +52,8 @@ extension CoreAPIService: TargetType {
             return "/content/\(Id)"
         case .fetchCollectionWithPaging(let Id, _, _, _, _, _):
             return "/content/\(Id)"
+        case .fetchLeafNodeFromRootNode(let Id, _, _, _, _):
+            return "/leafNodes/\(Id)"
         case .fetchArticle(let Id, _, _, _):
             return "/content/\(Id)"
         case .updateFCMToken(_, _):
@@ -64,7 +68,7 @@ extension CoreAPIService: TargetType {
             return .put
         case .logout(_):
             return .delete
-        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _, _, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _),.fetchArticle(_, _, _, _), .search(_, _):
+        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _, _, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _), .fetchLeafNodeFromRootNode(_, _, _, _, _), .fetchArticle(_, _, _, _), .search(_, _):
             return .get
         }
     }
@@ -83,6 +87,11 @@ extension CoreAPIService: TargetType {
             var paramDic: [String : Any] = ["parent": isNeedParent, "siblings": isNeedSibling]
             paramDic["startChildOrderInParent"] = startChildOrderInParent
             paramDic["startChildId"] = startChildId
+            return .requestParameters(parameters: paramDic, encoding: queryEncoding)
+        case .fetchLeafNodeFromRootNode(_, let startFlatOrder, let startId, let reverse, _):
+            var paramDic: [String : Any] = ["reverse": reverse]
+            paramDic["startFlatOrder"] = startFlatOrder
+            paramDic["startId"] = startId
             return .requestParameters(parameters: paramDic, encoding: queryEncoding)
         case .fetchArticle(_, let isNeedParent, let isNeedSibling, _):
             return .requestParameters(parameters: ["parent": isNeedParent, "siblings": isNeedSibling], encoding: queryEncoding)
@@ -116,6 +125,12 @@ extension CoreAPIService: TargetType {
             return data
         case .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _):
             guard let url = Bundle.resourceBundle.url(forResource: "folderContent", withExtension: "json"),
+                  let data = try? Data(contentsOf: url) else {
+                        return Data()
+                    }
+            return data
+        case .fetchLeafNodeFromRootNode(_, let startFlatOrder, let startId, let reverse, _):
+            guard let url = Bundle.resourceBundle.url(forResource: "leafNodes", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }

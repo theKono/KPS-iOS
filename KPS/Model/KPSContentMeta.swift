@@ -19,7 +19,7 @@ public enum KPSContentType: String {
 public struct KPSContentMeta {
     
     enum CodingKeys: String, CodingKey {
-        case id, type, name, description, covers, resources, content, info, customData, orderInParent, permissions
+        case id, type, name, description, covers, resources, content, info, customData, orderInParent, permissions, flatOrder
         case publicData = "public"
         case free
     }
@@ -31,6 +31,7 @@ public struct KPSContentMeta {
     public var id: String
     public var type: String?
     public var order: Int?
+    public var flatOrder: Int?
     public var isPublic, isFree: Bool?
     public var name, description: [String: String]?
     public var permissions: [String: Bool]?
@@ -58,6 +59,7 @@ extension KPSContentMeta: Decodable {
         id = try container.decode(String.self, forKey: .id)
         type = try container.decodeIfPresent(String.self, forKey: .type)
         order = try container.decodeIfPresent(Int.self, forKey: .orderInParent)
+        flatOrder = try container.decodeIfPresent(Int.self, forKey: .flatOrder)
         name = try container.decodeIfPresent([String: String].self, forKey: .name)
         description = try container.decodeIfPresent([String: String].self, forKey: .description)
         publicContentInfo = try container.decodeIfPresent([String: Any].self, forKey: .content)
