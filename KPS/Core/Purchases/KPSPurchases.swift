@@ -489,6 +489,7 @@ public extension KPSPurchases {
             customerType = trailEligible ? .New : .Free
         } else if subscriptionManager.subscriptionStatus == .Trial {
             guard let currentPlan = subscriptionManager.latestOrder?.latestTransaction.plan,
+                  let startTime = subscriptionManager.latestOrder?.latestTransaction.begin,
                   let expireTime = subscriptionManager.latestOrder?.latestTransaction.end else {
                 customerType = .New
                 return
@@ -496,11 +497,13 @@ public extension KPSPurchases {
             customerType = .Trial_VIP(
                 currentPlan: currentPlan,
                 nextPlan: subscriptionManager.latestOrder?.nextPlan,
+                startTime: startTime,
                 expireTime: expireTime,
                 platform: subscriptionManager.latestOrder?.provider
             )
         } else if subscriptionManager.subscriptionStatus == .Active {
             guard let currentPlan = subscriptionManager.latestOrder?.latestTransaction.plan,
+                  let startTime = subscriptionManager.latestOrder?.latestTransaction.begin,
                   let expireTime = subscriptionManager.latestOrder?.latestTransaction.end else {
                 customerType = .New
                 return
@@ -509,6 +512,7 @@ public extension KPSPurchases {
             customerType = .VIP(
                 currentPlan: currentPlan,
                 nextPlan: subscriptionManager.latestOrder?.nextPlan,
+                startTime: startTime,
                 expireTime: expireTime,
                 platform: subscriptionManager.latestOrder?.provider
             )
