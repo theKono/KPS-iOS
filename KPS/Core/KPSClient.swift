@@ -477,6 +477,12 @@ extension KPSClient {
     public func fetchLeafNodeFromRootNode(rootNodeId: String, startFlatOrder: Int? = nil, startId: String? = nil, reverse: Bool = false, completion: @escaping(Result<KPSLeafNodes, MoyaError>) -> ()) {
         request(target: .fetchLeafNodeFromRootNode(Id: rootNodeId, startFlatOrder: startFlatOrder, startId: startId, reverse: reverse, server: KPSClient.config.baseServer), completion: completion)
     }
+    
+    public func searchChannel(tags: [String], sortKey: String = "createTime", completion: @escaping (Result<KPSSearchChannel, MoyaError>) -> Void) {
+        
+        request(target: .searchChannel(tags: tags, sortKey: sortKey, server: KPSClient.config.baseServer), completion: completion)
+
+    }
 }
 
 

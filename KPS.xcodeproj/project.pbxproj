@@ -109,6 +109,7 @@
 		F840106F2A0B567800AA0289 /* KPSClient+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F840106E2A0B567800AA0289 /* KPSClient+Search.swift */; };
 		F84010712A0B57A500AA0289 /* searchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = F84010702A0B57A500AA0289 /* searchResult.json */; };
 		F84010732A0B77A400AA0289 /* KPSSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84010722A0B77A400AA0289 /* KPSSearch.swift */; };
+		F8B5FACE2FBD68B800901E3D /* KPSSearchChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B5FACD2FBD68B800901E3D /* KPSSearchChannel.swift */; };
 		F8B6840A28A9E751002ABC33 /* KPSFitReadingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */; };
 		F8B890C32845DE5F00C7BDD7 /* KPSClientArticleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */; };
 		F8B890C9284EFC0800C7BDD7 /* articleContent.json in Resources */ = {isa = PBXBuildFile; fileRef = F8B890C8284EFC0800C7BDD7 /* articleContent.json */; };
@@ -244,6 +245,7 @@
 		F840106E2A0B567800AA0289 /* KPSClient+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KPSClient+Search.swift"; sourceTree = "<group>"; };
 		F84010702A0B57A500AA0289 /* searchResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = searchResult.json; sourceTree = "<group>"; };
 		F84010722A0B77A400AA0289 /* KPSSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSSearch.swift; sourceTree = "<group>"; };
+		F8B5FACD2FBD68B800901E3D /* KPSSearchChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSSearchChannel.swift; sourceTree = "<group>"; };
 		F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KPSFitReadingContent.swift; sourceTree = "<group>"; };
 		F8B890C22845DE5F00C7BDD7 /* KPSClientArticleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPSClientArticleTests.swift; sourceTree = "<group>"; };
 		F8B890C8284EFC0800C7BDD7 /* articleContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = articleContent.json; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				F8B890CE28507A0300C7BDD7 /* KPSPDFContent.swift */,
 				F8B6840928A9E751002ABC33 /* KPSFitReadingContent.swift */,
 				F84010722A0B77A400AA0289 /* KPSSearch.swift */,
+				F8B5FACD2FBD68B800901E3D /* KPSSearchChannel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -887,6 +890,7 @@
 				E845AD8C27E492AE00A3DC49 /* ReceiptParsingError.swift in Sources */,
 				F8B890CD2850515B00C7BDD7 /* KPSResourceType.swift in Sources */,
 				E8E14F1327DB22EB007D6875 /* KPSPurchaseItem.swift in Sources */,
+				F8B5FACE2FBD68B800901E3D /* KPSSearchChannel.swift in Sources */,
 				E84ADA592824C7B3007F89A0 /* KPSToast.swift in Sources */,
 				E833103226A417CC00A6AA59 /* KPSUtility.swift in Sources */,
 				F8324CE928C87980009B4005 /* KPSCouponManager.swift in Sources */,
