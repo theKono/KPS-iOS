@@ -20,6 +20,13 @@ public enum MediaPlayerState {
     
 }
 
+public enum MediaPlayerRepeatMode: Int {
+    
+    case NoRepeat = 0
+    case SingleTrackRepeat = 1
+    case Repeat = 2
+    
+}
 
 public protocol KPSClientMediaContentDelegate: AnyObject {
     
@@ -167,7 +174,8 @@ extension KPSClient {
         mediaPlayCollectionId = collection.id
         mediaPlayCollectionName = collection.name
         mediaPlayCollectionImage = collection.images.first
-        
+        mediaPlayLeafNodeList = []
+        mediaPlayIsHasMoreLeafNode = false
     }
     
     public func playAudioContents(playList: [KPSContentMeta], collectionMeta: KPSContentMeta) {
@@ -176,10 +184,109 @@ extension KPSClient {
         mediaPlayCollectionId = collectionMeta.id
         mediaPlayCollectionName = collectionMeta.name
         mediaPlayCollectionImage = collectionMeta.images.first
+        mediaPlayLeafNodeList = []
+        mediaPlayIsHasMoreLeafNode = false
+    }
+    
+    public func playAudioContents(fromNode node: KPSContentMeta, completion: @escaping((Bool)->Void)) {
+
+        mediaPlayCollectionId = node.id
+        mediaPlayCollectionName = node.name
+        mediaPlayCollectionImage = node.images.first
+        mediaPlayLeafNodeList = []
+        mediaPlayIsHasMoreLeafNode = false
+        
+        self.fetchPlayList(from: node.id) { result in
+            switch result {
+            case .success(let responce):
+                if responce.count > 0 {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            case .failure(_):
+                completion(false)
+            }
+        }
+        
     }
     
     public func getPlayList() -> [KPSContentMeta] {
         return mediaPlayList
+    }
+    
+    public func loadMorePlayList(completion: ((Result<[KPSContentMeta], MoyaError>)->())? = nil) {
+        
+        guard let nodeId = mediaPlayCollectionId else { return }
+        
+        if !mediaPlayIsHasMoreLeafNode { return }
+        
+        fetchPlayList(from: nodeId, isLoadMore: true) { result in
+            switch result {
+            case .success(let audioList):
+                completion?(.success(audioList))
+            case .failure(let error):
+                completion?(.failure(error))
+            }
+        }
+        
+    }
+    
+    public func fetchPlayList(from nodeId: String, isLoadMore: Bool = false, completion: @escaping(Result<[KPSContentMeta], MoyaError>) -> ()) {
+        
+        if mediaPlayerIsPlayListFetching { return }
+        
+        let latestLeafNode = isLoadMore ? mediaPlayLeafNodeList.last : nil
+        
+        if isLoadMore && !mediaPlayIsHasMoreLeafNode {
+            completion(.success([]))
+            return
+        }
+        
+        mediaPlayerIsPlayListFetching = true
+        
+        fetchLeafNodeFromRootNode(rootNodeId: nodeId, startFlatOrder: latestLeafNode?.flatOrder, startId: latestLeafNode?.id) { [weak self] result in
+            
+            guard let weakSelf = self else { return }
+            
+            weakSelf.mediaPlayerIsPlayListFetching = false
+            
+            switch result {
+            case .success(let response):
+                let leafNodes = response.leafNodes
+                
+                let audioList: [KPSContentMeta] = leafNodes.filter {
+                    return $0.contentType == .audio
+                }
+                
+                weakSelf.mediaPlayIsHasMoreLeafNode = leafNodes.count == 15
+                
+                
+                if isLoadMore {
+                    weakSelf.mediaPlayLeafNodeList.append(contentsOf: leafNodes)
+                    weakSelf.mediaPlayList.append(contentsOf: audioList)
+
+                } else {
+                    weakSelf.mediaPlayLeafNodeList = leafNodes
+                    weakSelf.mediaPlayList = audioList
+                }
+                
+                if audioList.count == 0 { 
+                    if weakSelf.mediaPlayIsHasMoreLeafNode {
+                        // 繼續拿下一頁直到有音檔
+                        weakSelf.fetchPlayList(from: nodeId, completion: completion)
+                    } else {
+                        completion(.success([]))
+                    }
+                } else {
+                    completion(.success(audioList))
+                }
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
     }
     
     public func fetchAudioContent(audioId: String, isNeedParent: Bool = false, isNeedSiblings: Bool = false, completion: @escaping(Result<KPSAudioContent, MoyaError>) -> ()) {
@@ -227,73 +334,97 @@ extension KPSClient {
         request(target:.fetchAudio(audioId: audioId, isNeedParent: isNeedParent, isNeedSiblings: isNeedSiblings, server: KPSClient.config.baseServer), completion: resultClosure)
     }
     
-    
-    public func mediaPlayerPlay(targetTrack: Int? = nil, completion: ((Bool)->Void)? = nil) {
-        
-        guard mediaPlayList.count > 0 else {
-            isMediaPlaying = false
+    public func mediaPlayerSelectTrack(_ index: Int, completion: ((Bool)->Void)? = nil) {
+        guard index >= 0, index < mediaPlayList.count else {
+            completion?(false)
             return
         }
-        try! AVAudioSession.sharedInstance().setActive(true)
-        
-        
-        if let targetTrack = targetTrack  {
-            
-            mediaPlayerReset()
-            mediaPlayerState = .fetchingSource
-            fetchAudioContent(audioId: mediaPlayList[targetTrack].id) { [weak self] result in
-                guard let weakSelf = self else { return }
-                if let track = try? result.get() {
-                    weakSelf.currentTrack = targetTrack
-                    weakSelf.currentTime = 0.0
-                    weakSelf.currentPlayAudioContent = track
-                    weakSelf.mediaPlayerState = .sourceFetched
-                    weakSelf.mediaPlayer.removeAllItems()
-                    if track.error == nil {
-                        weakSelf.mediaPlayer.insert(weakSelf.getAVPlayerItem(source: track), after: nil)
-                        weakSelf.mediaPlayerPlayAction()
-                        completion?(true)
-                    } else {
-                        completion?(false)
-                    }
-                } else {
-                    weakSelf.mediaPlayerState = .error
-                    completion?(false)
-                }
+
+        mediaPlayerReset()
+        mediaPlayerState = .fetchingSource
+
+        fetchAudioContent(audioId: mediaPlayList[index].id) { [weak self] result in
+            guard let weakSelf = self else { return }
+
+            guard let track = try? result.get() else {
+                weakSelf.mediaPlayerState = .error
+                completion?(false)
+                return
             }
             
-        } else {
-            if mediaPlayer.items().count > 0 {
+            weakSelf.currentTrack = index
+            weakSelf.currentTime = 0
+            weakSelf.currentPlayAudioContent = track
+            weakSelf.mediaPlayer.removeAllItems()
+            weakSelf.mediaPlayerState = .sourceFetched
+            
+            // 無權限
+            if track.error != nil {
+                completion?(false)
+                return
+            } else {
                 
-                mediaPlayerPlayAction()
+                weakSelf.mediaPlayer.insert(weakSelf.getAVPlayerItem(source: track), after: nil)
                 completion?(true)
+            }
+            
+        }
+    }
+    
+    public func mediaPlayerPlay(
+        targetTrack: Int? = nil,
+        completion: ((Bool) -> Void)? = nil
+    ) {
+        
+        mediaPlayerPreFetchIfNeeded()
+        
+        let isExplicitTarget = (targetTrack != nil && targetTrack! >= 0)
+        
+        let index: Int
+        if let target = targetTrack, target >= 0, target < mediaPlayList.count {
+            index = target
+        } else if currentTrack >= 0, currentTrack < mediaPlayList.count {
+            index = currentTrack
+        } else if !mediaPlayList.isEmpty {
+            index = 0
+        } else {
+            isMediaPlaying = false
+            completion?(false)
+            return
+        }
+        
+        try? AVAudioSession.sharedInstance().setActive(true)
+        // 已準備好，直接播放
+        if !isExplicitTarget && currentTrack == index && mediaPlayer.items().isEmpty == false {
+            mediaPlayerPlayAction()
+            completion?(true)
+            
+        } else {
+            
+            mediaPlayerSelectTrack(index) { [weak self] success in
+                guard let weakSelf = self else { return }
                 
-            } else if currentTrack < mediaPlayList.count && currentTrack >= 0 {
+                guard success else {
+                    completion?(false)
+                    return
+                }
                 
-                mediaPlayerState = .fetchingSource
-                fetchAudioContent(audioId: mediaPlayList[currentTrack].id) { [weak self] result in
-                    guard let weakSelf = self else { return }
-                    if let track = try? result.get() {
-                        weakSelf.currentPlayAudioContent = track
-                        weakSelf.mediaPlayer.removeAllItems()
-                        weakSelf.mediaPlayerState = .sourceFetched
-                        if track.error == nil {
-                            weakSelf.mediaPlayer.insert(weakSelf.getAVPlayerItem(source: track), after: nil)
-                            weakSelf.mediaPlayerPlayAction()
-                            completion?(true)
-                        }
-                        else {
-                            completion?(false)
-                        }
-                    } else {
-                        weakSelf.mediaPlayerState = .error
-                        completion?(false)
-                    }
+                if weakSelf.mediaPlayer.items().isEmpty == false {
+                    weakSelf.mediaPlayerPlayAction()
+                    completion?(true)
+                } else {
+                    completion?(false)
                 }
             }
         }
     }
 
+    func mediaPlayerPreFetchIfNeeded() {
+        let needPreFetch = mediaPlayList.count - currentTrack < 15
+        if needPreFetch {
+            loadMorePlayList()
+        }
+    }
     
     
     internal func mediaPlayerPlayAction() {
@@ -427,12 +558,10 @@ extension KPSClient {
     }
     
     public func mediaPlayerStop() {
-    
         // Define the stop action is reset to the first item within the play list
         mediaPlayer.pause()
-        mediaPlayerPlay(targetTrack: 0) { _ in
-            self.mediaPlayerPause()
-        }
+        mediaPlayerSelectTrack(0)
+        isMediaPlaying = false
     }
     
     public func mediaPlayerReset(isNeedClearPlayList: Bool = false) {
@@ -462,11 +591,21 @@ extension KPSClient {
     }
     
     @objc internal func playerDidFinishPlaying(notification: NSNotification) {
-    
-        if (currentTrack + 1) == mediaPlayList.count {
-            mediaPlayerStop()
-        } else {
-            mediaPlayerPlay(targetTrack: currentTrack + 1)
+        switch mediaPlayerRepeatMode {
+        case .NoRepeat:
+            if (currentTrack + 1) == mediaPlayList.count {
+                mediaPlayerStop()
+            } else {
+                mediaPlayerPlay(targetTrack: currentTrack + 1)
+            }
+        case .Repeat:
+            if (currentTrack + 1) == mediaPlayList.count {
+                mediaPlayerPlay(targetTrack: 0)
+            } else {
+                mediaPlayerPlay(targetTrack: currentTrack + 1)
+            }
+        case .SingleTrackRepeat:
+            mediaPlayerPlay(targetTrack: currentTrack)
         }
     }
     

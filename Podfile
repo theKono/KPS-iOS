@@ -17,11 +17,11 @@ target 'KPS' do
   inhibit_all_warnings!
   
   # Pods for KPS
-  pod 'Moya', '~> 14.0'
+  pod 'Moya', '~> 15.0'
   pod 'Toast-Swift', '~> 5.0.1'
   pod 'SnapKit', '~> 5.0.0'
   pod 'DeviceKit', '~> 4.0'
-  pod 'Kingfisher', '~> 7.0'
+  pod 'Kingfisher'
   pod 'SwiftRichString', '~> 3.7.2'
   
   target 'KPSTests' do

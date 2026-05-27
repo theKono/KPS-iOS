@@ -13,13 +13,14 @@ public enum KPSContentType: String {
     case book
     case chapter
     case section
+    case category
     case unknown
 }
 
 public struct KPSContentMeta {
     
     enum CodingKeys: String, CodingKey {
-        case id, type, name, description, covers, resources, content, info, customData, orderInParent, permissions
+        case id, type, name, description, covers, resources, content, info, customData, orderInParent, permissions, flatOrder, curationTags, paginationToken
         case publicData = "public"
         case free
     }
@@ -31,15 +32,18 @@ public struct KPSContentMeta {
     public var id: String
     public var type: String?
     public var order: Int?
+    public var flatOrder: Int?
     public var isPublic, isFree: Bool?
     public var name, description: [String: String]?
     public var permissions: [String: Bool]?
     public var authors: [String:[String]]?
+    public var curationTags: [String] = []
     public let publicContentInfo: [String: Any]?
     public var images: [KPSImageResource] = []
     public var customData: [String: Any]?
     public let pdfData: KPSPDFContent?
     public let fitReadingData: KPSFitReadingContent?
+    public var paginationToken: String?
     public var isCollectionType: Bool {
         return type != "article" && type != "audio" && type != "video"
     }
@@ -58,6 +62,7 @@ extension KPSContentMeta: Decodable {
         id = try container.decode(String.self, forKey: .id)
         type = try container.decodeIfPresent(String.self, forKey: .type)
         order = try container.decodeIfPresent(Int.self, forKey: .orderInParent)
+        flatOrder = try container.decodeIfPresent(Int.self, forKey: .flatOrder)
         name = try container.decodeIfPresent([String: String].self, forKey: .name)
         description = try container.decodeIfPresent([String: String].self, forKey: .description)
         publicContentInfo = try container.decodeIfPresent([String: Any].self, forKey: .content)
@@ -67,6 +72,10 @@ extension KPSContentMeta: Decodable {
         isPublic = try container.decodeIfPresent(Bool.self, forKey: .publicData)
         isFree = try container.decodeIfPresent(Bool.self, forKey: .free)
         customData = try container.decodeIfPresent([String: Any].self, forKey: .customData)
+        
+        curationTags = try container.decodeIfPresent([String].self, forKey: .curationTags) ?? []
+        paginationToken = try container.decodeIfPresent(String.self, forKey: .paginationToken)
+
         
         if !isCollectionType {
             permissions = try container.decodeIfPresent([String: Bool].self, forKey: .permissions)
