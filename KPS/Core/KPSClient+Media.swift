@@ -334,78 +334,97 @@ extension KPSClient {
         request(target:.fetchAudio(audioId: audioId, isNeedParent: isNeedParent, isNeedSiblings: isNeedSiblings, server: KPSClient.config.baseServer), completion: resultClosure)
     }
     
-    
-    public func mediaPlayerPlay(targetTrack: Int? = nil, completion: ((Bool)->Void)? = nil) {
-        
-        let needPreFetch = mediaPlayList.count - currentTrack < 15
-        if needPreFetch {
-            loadMorePlayList()
-        }
-        
-        guard mediaPlayList.count > 0 else {
-            isMediaPlaying = false
+    public func mediaPlayerSelectTrack(_ index: Int, completion: ((Bool)->Void)? = nil) {
+        guard index >= 0, index < mediaPlayList.count else {
+            completion?(false)
             return
         }
-        try! AVAudioSession.sharedInstance().setActive(true)
-        
-        
-        if let targetTrack = targetTrack, targetTrack >= 0 {
-            
-            mediaPlayerReset()
-            mediaPlayerState = .fetchingSource
-            fetchAudioContent(audioId: mediaPlayList[targetTrack].id) { [weak self] result in
-                guard let weakSelf = self else { return }
-                if let track = try? result.get() {
-                    weakSelf.currentTrack = targetTrack
-                    weakSelf.currentTime = 0.0
-                    weakSelf.currentPlayAudioContent = track
-                    weakSelf.mediaPlayerState = .sourceFetched
-                    weakSelf.mediaPlayer.removeAllItems()
-                    if track.error == nil {
-                        weakSelf.mediaPlayer.insert(weakSelf.getAVPlayerItem(source: track), after: nil)
-                        weakSelf.mediaPlayerPlayAction()
-                        completion?(true)
-                    } else {
-                        completion?(false)
-                    }
-                } else {
-                    weakSelf.mediaPlayerState = .error
-                    completion?(false)
-                }
+
+        mediaPlayerReset()
+        mediaPlayerState = .fetchingSource
+
+        fetchAudioContent(audioId: mediaPlayList[index].id) { [weak self] result in
+            guard let weakSelf = self else { return }
+
+            guard let track = try? result.get() else {
+                weakSelf.mediaPlayerState = .error
+                completion?(false)
+                return
             }
             
-        } else {
-            if mediaPlayer.items().count > 0 {
+            weakSelf.currentTrack = index
+            weakSelf.currentTime = 0
+            weakSelf.currentPlayAudioContent = track
+            weakSelf.mediaPlayer.removeAllItems()
+            weakSelf.mediaPlayerState = .sourceFetched
+            
+            // 無權限
+            if track.error != nil {
+                completion?(false)
+                return
+            } else {
                 
-                mediaPlayerPlayAction()
+                weakSelf.mediaPlayer.insert(weakSelf.getAVPlayerItem(source: track), after: nil)
                 completion?(true)
+            }
+            
+        }
+    }
+    
+    public func mediaPlayerPlay(
+        targetTrack: Int? = nil,
+        completion: ((Bool) -> Void)? = nil
+    ) {
+        
+        mediaPlayerPreFetchIfNeeded()
+        
+        let isExplicitTarget = (targetTrack != nil && targetTrack! >= 0)
+        
+        let index: Int
+        if let target = targetTrack, target >= 0, target < mediaPlayList.count {
+            index = target
+        } else if currentTrack >= 0, currentTrack < mediaPlayList.count {
+            index = currentTrack
+        } else if !mediaPlayList.isEmpty {
+            index = 0
+        } else {
+            isMediaPlaying = false
+            completion?(false)
+            return
+        }
+        
+        try? AVAudioSession.sharedInstance().setActive(true)
+        // 已準備好，直接播放
+        if !isExplicitTarget && currentTrack == index && mediaPlayer.items().isEmpty == false {
+            mediaPlayerPlayAction()
+            completion?(true)
+            
+        } else {
+            
+            mediaPlayerSelectTrack(index) { [weak self] success in
+                guard let weakSelf = self else { return }
                 
-            } else if currentTrack < mediaPlayList.count && currentTrack >= 0 {
+                guard success else {
+                    completion?(false)
+                    return
+                }
                 
-                mediaPlayerState = .fetchingSource
-                fetchAudioContent(audioId: mediaPlayList[currentTrack].id) { [weak self] result in
-                    guard let weakSelf = self else { return }
-                    if let track = try? result.get() {
-                        weakSelf.currentPlayAudioContent = track
-                        weakSelf.mediaPlayer.removeAllItems()
-                        weakSelf.mediaPlayerState = .sourceFetched
-                        if track.error == nil {
-                            weakSelf.mediaPlayer.insert(weakSelf.getAVPlayerItem(source: track), after: nil)
-                            weakSelf.mediaPlayerPlayAction()
-                            completion?(true)
-                        }
-                        else {
-                            completion?(false)
-                        }
-                    } else {
-                        weakSelf.mediaPlayerState = .error
-                        completion?(false)
-                    }
+                if weakSelf.mediaPlayer.items().isEmpty == false {
+                    weakSelf.mediaPlayerPlayAction()
+                    completion?(true)
+                } else {
+                    completion?(false)
                 }
             }
         }
     }
 
+    func mediaPlayerPreFetchIfNeeded() {
+        let needPreFetch = mediaPlayList.count - currentTrack < 15
+        if needPreFetch {
+            loadMorePlayList()
+        }
+    }
     
     
     internal func mediaPlayerPlayAction() {
@@ -539,12 +558,10 @@ extension KPSClient {
     }
     
     public func mediaPlayerStop() {
-    
         // Define the stop action is reset to the first item within the play list
         mediaPlayer.pause()
-        mediaPlayerPlay(targetTrack: 0) { _ in
-            self.mediaPlayerPause()
-        }
+        mediaPlayerSelectTrack(0)
+        isMediaPlaying = false
     }
     
     public func mediaPlayerReset(isNeedClearPlayList: Bool = false) {
