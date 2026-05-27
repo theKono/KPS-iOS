@@ -23,7 +23,7 @@ enum CoreAPIService {
     case updateFCMToken(token: String, server: Server)
     
     case search(keyword: String, server: Server)
-    case searchChannel(tags:[String], sortKey: String, server: Server)
+    case searchChannel(tags:[String], sortKey: String, pagingKey: String?, server: Server)
 }
 
 
@@ -31,7 +31,7 @@ extension CoreAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, _, _, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server), .updateFCMToken(_, let server), .search(_, let server), .fetchLeafNodeFromRootNode(_, _, _, _, let server), .searchChannel(_, _, let server):
+        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, _, _, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server), .updateFCMToken(_, let server), .search(_, let server), .fetchLeafNodeFromRootNode(_, _, _, _, let server), .searchChannel(_, _, _, let server):
             return server.projectUrl
             
         case .fetchCollectionWithPaging(_, _, _, _, _, let server):
@@ -61,7 +61,7 @@ extension CoreAPIService: TargetType {
             return "/pushTokens"
         case .search(_, _):
             return "/search"
-        case .searchChannel(_, _, _):
+        case .searchChannel(_, _, _, _):
             return "/searchChannel"
         }
     }
@@ -71,7 +71,7 @@ extension CoreAPIService: TargetType {
             return .put
         case .logout(_):
             return .delete
-        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _, _, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _), .fetchLeafNodeFromRootNode(_, _, _, _, _), .fetchArticle(_, _, _, _), .search(_, _), .searchChannel(_, _, _):
+        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _, _, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _), .fetchLeafNodeFromRootNode(_, _, _, _, _), .fetchArticle(_, _, _, _), .search(_, _), .searchChannel(_, _, _, _):
             return .get
         }
     }
@@ -104,10 +104,13 @@ extension CoreAPIService: TargetType {
             return .requestParameters(parameters: ["pushToken" : token], encoding: JSONEncoding.default)
         case .search(let keyword, _):
             return .requestParameters(parameters: ["keyword" : keyword], encoding: queryEncoding)
-        case .searchChannel(let tags, let sortKey, _):
+        case .searchChannel(let tags, let sortKey, let pagingKey, _):
             var paramDic: [String: Any] = [:]
             paramDic["tags[]"] = tags
             paramDic["sortKey"] = sortKey
+            if let pagingKey = pagingKey {
+                paramDic["pagingKey"] = pagingKey
+            }
             return .requestParameters(parameters:paramDic, encoding: queryEncoding)
         }
     }

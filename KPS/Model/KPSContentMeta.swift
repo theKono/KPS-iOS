@@ -20,7 +20,7 @@ public enum KPSContentType: String {
 public struct KPSContentMeta {
     
     enum CodingKeys: String, CodingKey {
-        case id, type, name, description, covers, resources, content, info, customData, orderInParent, permissions, flatOrder, curationTags
+        case id, type, name, description, covers, resources, content, info, customData, orderInParent, permissions, flatOrder, curationTags, paginationToken
         case publicData = "public"
         case free
     }
@@ -43,6 +43,7 @@ public struct KPSContentMeta {
     public var customData: [String: Any]?
     public let pdfData: KPSPDFContent?
     public let fitReadingData: KPSFitReadingContent?
+    public var paginationToken: String?
     public var isCollectionType: Bool {
         return type != "article" && type != "audio" && type != "video"
     }
@@ -73,6 +74,8 @@ extension KPSContentMeta: Decodable {
         customData = try container.decodeIfPresent([String: Any].self, forKey: .customData)
         
         curationTags = try container.decodeIfPresent([String].self, forKey: .curationTags) ?? []
+        paginationToken = try container.decodeIfPresent(String.self, forKey: .paginationToken)
+
         
         if !isCollectionType {
             permissions = try container.decodeIfPresent([String: Bool].self, forKey: .permissions)

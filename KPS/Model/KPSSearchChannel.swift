@@ -13,7 +13,7 @@ public struct KPSSearchChannel: Decodable {
     }
     public var error: String?
     public var result: [KPSContentMeta]
-    public var tags: [KPSTag]
+    public var tags: [KPSTag]?
 }
 
 public struct KPSTag: Decodable {
@@ -28,4 +28,5 @@ public struct KPSTag: Decodable {
     public var createTime: Int64?
     public var creatorId: String?
     public var translations: [String: String]?
+    
 }
