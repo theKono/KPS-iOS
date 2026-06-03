@@ -134,7 +134,7 @@ Pod::Spec.new do |spec|
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
     spec.dependency "Moya", "~> 14.0"
-    spec.dependency "Toast-Swift", "~> 5.0.1"
+    spec.dependency "Toast-Swift", "~> 5.1.1"
     spec.dependency "SnapKit", "~> 5.0.0"
     spec.dependency "DeviceKit", "~> 4.0"
     spec.dependency "Kingfisher", "~> 7.0"
