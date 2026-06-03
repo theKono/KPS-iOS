@@ -18,7 +18,7 @@ target 'KPS' do
   
   # Pods for KPS
   pod 'Moya', '~> 15.0'
-  pod 'Toast-Swift', '~> 5.0.1'
+  pod 'Toast-Swift', '~> 5.1.1'
   pod 'SnapKit', '~> 5.0.0'
   pod 'DeviceKit', '~> 4.0'
   pod 'Kingfisher'

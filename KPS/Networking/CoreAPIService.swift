@@ -140,7 +140,7 @@ extension CoreAPIService: TargetType {
                         return Data()
                     }
             return data
-        case .fetchLeafNodeFromRootNode(_, let startFlatOrder, let startId, let reverse, _):
+        case .fetchLeafNodeFromRootNode(_, _, _, _, _):
             guard let url = Bundle.resourceBundle.url(forResource: "leafNodes", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
