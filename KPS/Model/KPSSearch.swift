@@ -65,7 +65,7 @@ extension KPSSearchResult: Decodable {
         isFree = try container.decodeIfPresent(Bool.self, forKey: .free)
         customData = try container.decodeIfPresent([String: Any].self, forKey: .customData)
         
-        searchHighlights = try container.decode([KPSSearchHighlight].self, forKey: .searchHighlights)
+        searchHighlights = try container.decodeIfPresent([KPSSearchHighlight].self, forKey: .searchHighlights) ?? []
         
         if !isCollectionType {
             permissions = try container.decodeIfPresent([String: Bool].self, forKey: .permissions)
