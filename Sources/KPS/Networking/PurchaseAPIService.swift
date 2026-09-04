@@ -5,6 +5,7 @@
 //  Created by mingshing on 2022/3/15.
 //
 
+import Foundation
 import Moya
 
 let PurchaseAPIServiceProvider = MoyaProvider<PurchaseAPIService>()
@@ -59,19 +60,19 @@ extension PurchaseAPIService: TargetType {
         case .uploadReceipt(_, _, _):
             return Data()
         case .fetchPaymentStatus(_):
-            guard let url = Bundle.resourceBundle.url(forResource: "activeOrders", withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: "activeOrders", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
             return data
         case .fetchTransactions(_, _):
-            guard let url = Bundle.resourceBundle.url(forResource: "transactions", withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: "transactions", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
             return data
         case .fetchProductIds(_):
-            guard let url = Bundle.resourceBundle.url(forResource: "productIds", withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: "productIds", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
@@ -85,7 +86,7 @@ extension PurchaseAPIService: TargetType {
                 resFileName = "couponRedeem"
             }
             
-            guard let url = Bundle.resourceBundle.url(forResource: resFileName, withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: resFileName, withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }

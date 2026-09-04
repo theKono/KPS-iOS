@@ -57,7 +57,7 @@ public class KPSBookInfoView: UIView {
     
     private lazy var actionButton: UIButton = {
         let button = UIButton()
-        button.setTitle(NSLocalizedString("start_reading", bundle: Bundle.resourceBundle, comment: ""), for: .normal)
+        button.setTitle(NSLocalizedString("start_reading", bundle: Bundle.module, comment: ""), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.font(ofType: .Heading_2)
         button.backgroundColor = themeColor
@@ -77,7 +77,7 @@ public class KPSBookInfoView: UIView {
     private lazy var moreButton: UIButton = {
         let button = UIButton()
         
-        button.setTitle(NSLocalizedString("more_description", bundle: Bundle.resourceBundle, comment: ""), for: .normal)
+        button.setTitle(NSLocalizedString("more_description", bundle: Bundle.module, comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.font(ofType: .Heading_3)
         button.setTitleColor(themeColor, for: .normal)
         
