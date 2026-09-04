@@ -24,6 +24,7 @@ enum CoreAPIService {
     
     case search(keyword: String, server: Server)
     case searchChannel(tags:[String], sortKey: String, pagingKey: String?, server: Server)
+    case vectorSearch(keyword: String, server: Server)
 }
 
 
@@ -31,7 +32,7 @@ extension CoreAPIService: TargetType {
     
     var baseURL: URL {
         switch self {
-        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, _, _, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server), .updateFCMToken(_, let server), .search(_, let server), .fetchLeafNodeFromRootNode(_, _, _, _, let server), .searchChannel(_, _, _, let server):
+        case .login(_, _, let server), .logout(let server), .fetchUserPermission(let server), .fetchCurrentUser(let server), .fetchAudio(_, _, _, let server), .fetchRootCollection(let server), .fetchCollection(_, _, _, let server), .fetchArticle(_, _, _, let server), .updateFCMToken(_, let server), .search(_, let server), .fetchLeafNodeFromRootNode(_, _, _, _, let server), .searchChannel(_, _, _, let server), .vectorSearch(_, let server):
             return server.projectUrl
             
         case .fetchCollectionWithPaging(_, _, _, _, _, let server):
@@ -63,6 +64,8 @@ extension CoreAPIService: TargetType {
             return "/search"
         case .searchChannel(_, _, _, _):
             return "/searchChannel"
+        case .vectorSearch(_, _):
+            return "/vectorSearch"
         }
     }
     var method: Moya.Method {
@@ -71,7 +74,7 @@ extension CoreAPIService: TargetType {
             return .put
         case .logout(_):
             return .delete
-        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _, _, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _), .fetchLeafNodeFromRootNode(_, _, _, _, _), .fetchArticle(_, _, _, _), .search(_, _), .searchChannel(_, _, _, _):
+        case .fetchCurrentUser(_), .fetchUserPermission(_), .fetchAudio(_, _, _, _), .fetchRootCollection(_), .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _), .fetchLeafNodeFromRootNode(_, _, _, _, _), .fetchArticle(_, _, _, _), .search(_, _), .searchChannel(_, _, _, _), .vectorSearch(_, _):
             return .get
         }
     }
@@ -111,6 +114,13 @@ extension CoreAPIService: TargetType {
             if let pagingKey = pagingKey {
                 paramDic["pagingKey"] = pagingKey
             }
+            return .requestParameters(parameters:paramDic, encoding: queryEncoding)
+        case .vectorSearch(let keyword, _):
+            var paramDic: [String: Any] = [:]
+            paramDic["language"] = "zh-TW"
+            paramDic["type"] = "audio"
+            paramDic["returnParents"] = true
+            paramDic["queryText"] = keyword
             return .requestParameters(parameters:paramDic, encoding: queryEncoding)
         }
     }
@@ -193,6 +203,13 @@ extension CoreAPIService: TargetType {
                     }
                     """
             return mockJSON.utf8Encoded
+        case .vectorSearch(_, _):
+            guard let url = Bundle.resourceBundle.url(forResource: "searchResult", withExtension: "json"),
+                  let data = try? Data(contentsOf: url)
+            else {
+                return Data()
+            }
+            return data
         }
         
     }
