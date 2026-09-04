@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Toast_Swift
+import Toast
 import SnapKit
 
 public enum KPSToastType {
