@@ -5,8 +5,8 @@
 //  Created by mingshing on 2022/5/6.
 //
 
-import Foundation
-import Toast_Swift
+import UIKit
+import Toast
 import SnapKit
 
 public enum KPSToastType {
@@ -39,13 +39,13 @@ public class KPSToast {
         let iconImage: UIImage?
         switch type {
         case .Warning:
-            iconImage = UIImage(named: "iconWarning", in: Bundle.resourceBundle, compatibleWith: nil)
+            iconImage = UIImage(named: "iconWarning", in: Bundle.module, compatibleWith: nil)
         case .Success:
-            iconImage = UIImage(named: "iconSuccess", in: Bundle.resourceBundle, compatibleWith: nil)
+            iconImage = UIImage(named: "iconSuccess", in: Bundle.module, compatibleWith: nil)
         case .Copy:
-            iconImage = UIImage(named: "iconLink", in: Bundle.resourceBundle, compatibleWith: nil)
+            iconImage = UIImage(named: "iconLink", in: Bundle.module, compatibleWith: nil)
         case .Delete:
-            iconImage = UIImage(named: "iconTrash", in: Bundle.resourceBundle, compatibleWith: nil)
+            iconImage = UIImage(named: "iconTrash", in: Bundle.module, compatibleWith: nil)
         }
         
         let iconImageView: UIImageView = UIImageView(image: iconImage)

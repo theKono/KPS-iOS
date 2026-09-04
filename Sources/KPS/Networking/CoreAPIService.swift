@@ -2,6 +2,7 @@
 //  CoreAPIService.swift
 //  KPS
 //
+import Foundation
 import Moya
 
 enum CoreAPIService {
@@ -133,25 +134,25 @@ extension CoreAPIService: TargetType {
         case .fetchCurrentUser(_):
             return "{\"puser\": {\"puid\": \"testUser\", \"status\": 1}}".utf8Encoded
         case .fetchUserPermission(_):
-            guard let url = Bundle.resourceBundle.url(forResource: "userPermission", withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: "userPermission", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
             return data
         case .fetchRootCollection(_):
-            guard let url = Bundle.current.url(forResource: "rootCollection", withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: "rootCollection", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
             return data
         case .fetchCollection(_, _, _, _), .fetchCollectionWithPaging(_, _, _, _, _, _):
-            guard let url = Bundle.resourceBundle.url(forResource: "folderContent", withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: "folderContent", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
             return data
         case .fetchLeafNodeFromRootNode(_, _, _, _, _):
-            guard let url = Bundle.resourceBundle.url(forResource: "leafNodes", withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: "leafNodes", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
@@ -166,7 +167,7 @@ extension CoreAPIService: TargetType {
                 resFileName = "articleContent"
             }
             
-            guard let url = Bundle.resourceBundle.url(forResource: resFileName, withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: resFileName, withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                         return Data()
                     }
@@ -180,7 +181,7 @@ extension CoreAPIService: TargetType {
             } else {
                 resFileName = "audioContent"
             }
-            guard let url = Bundle.resourceBundle.url(forResource: resFileName, withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: resFileName, withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
                     return Data()
                 }
@@ -188,7 +189,7 @@ extension CoreAPIService: TargetType {
         case .updateFCMToken(_, _):
             return "{\"error\": \"null\"}".utf8Encoded
         case .search(_, _):
-            guard let url = Bundle.resourceBundle.url(forResource: "searchResult", withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: "searchResult", withExtension: "json"),
                   let data = try? Data(contentsOf: url)
             else {
                 return Data()
@@ -204,7 +205,7 @@ extension CoreAPIService: TargetType {
                     """
             return mockJSON.utf8Encoded
         case .vectorSearch(_, _):
-            guard let url = Bundle.resourceBundle.url(forResource: "searchResult", withExtension: "json"),
+            guard let url = Bundle.module.url(forResource: "searchResult", withExtension: "json"),
                   let data = try? Data(contentsOf: url)
             else {
                 return Data()

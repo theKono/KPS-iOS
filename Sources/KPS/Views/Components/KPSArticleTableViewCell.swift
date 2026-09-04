@@ -26,9 +26,9 @@ enum KSSArticleTagType: Int{
         case .KSSPlanTypeVIP:
             return "VIP"
         case .KSSPlanTypeFree:
-            return NSLocalizedString("content_tag_free", bundle: Bundle.resourceBundle, comment: "")
+            return NSLocalizedString("content_tag_free", bundle: Bundle.module, comment: "")
         case .KSSPlanTypePublic:
-            return NSLocalizedString("content_tag_public", bundle: Bundle.resourceBundle, comment: "")
+            return NSLocalizedString("content_tag_public", bundle: Bundle.module, comment: "")
         default:
             return ""
         }

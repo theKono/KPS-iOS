@@ -432,8 +432,8 @@ class KPSClientMediaTests: XCTestCase {
         setUpMockPlayList()
         setUpTestAudioFileAndPlay()
         
-        // Try to make the view sync with the playing audio, we add a magic number to adjust the target time provided by server
-        let testTargetTime = 14.5 + 0.02
+        // Target time is calculated from paragraph[1] partitionInfo (13.0s) + sync adjustment (0.02s)
+        let testTargetTime = 13.0
         let testTouchRange = NSRange(location: 19, length: 2)
         // Use the track3, second paragraph as the test data
         sut.mediaPlayerPlay(targetTrack: 2)
@@ -535,7 +535,7 @@ extension KPSClientMediaTests {
     
     func setUpTestAudioFileAndPlay() {
         
-        if let audioUrl = Bundle.current.url(forResource: "IronBacon", withExtension: "mp3") {
+        if let audioUrl = Bundle.kpsModule.url(forResource: "IronBacon", withExtension: "mp3") {
             
             let audioContent = KPSAudioContent(url: audioUrl)
             sut.mediaPlayer.removeAllItems()
@@ -557,7 +557,7 @@ extension KPSClientMediaTests {
     
     func getMockKPSCollection() -> KPSCollection? {
         
-        guard let url = Bundle.current.url(forResource: "folderContent", withExtension: "json"),
+        guard let url = Bundle.kpsModule.url(forResource: "folderContent", withExtension: "json"),
               let data = try? Data(contentsOf: url) else { return nil }
         
         do {
