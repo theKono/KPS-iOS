@@ -19,10 +19,11 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "15.0.0")),
         .package(url: "https://github.com/scalessec/Toast-Swift.git", .upToNextMajor(from: "5.1.1")),
-        .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.0.0")),
-        .package(url: "https://github.com/devicekit/DeviceKit.git", .upToNextMajor(from: "4.0.0")),
+       .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.0.0")),
+       .package(url: "https://github.com/devicekit/DeviceKit.git", .upToNextMajor(from: "4.0.0")),
         .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "7.0.0")),
-        .package(url: "https://github.com/malcommac/SwiftRichString.git", .upToNextMajor(from: "3.7.2"))
+       .package(url: "https://github.com/malcommac/SwiftRichString.git", .upToNextMajor(from: "3.7.2")),
+       .package(url: "https://github.com/realm/realm-swift.git", .upToNextMajor(from: "20.0.0"))
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -30,12 +31,13 @@ let package = Package(
         .target(
             name: "KPS",
             dependencies: [
-                "Moya",
+                .product(name: "Moya", package: "Moya"),
                 .product(name: "Toast", package: "Toast-Swift"),
-                "SnapKit",
-                "DeviceKit",
-                "Kingfisher",
-                "SwiftRichString"
+                .product(name: "SnapKit", package: "SnapKit"),
+                .product(name: "DeviceKit", package: "DeviceKit"),
+                .product(name: "Kingfisher", package: "Kingfisher"),
+                .product(name: "SwiftRichString", package: "SwiftRichString"),
+                .product(name: "RealmSwift", package: "realm-swift")
             ],
             path: "Sources/KPS",
             resources: [
