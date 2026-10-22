@@ -256,7 +256,7 @@ extension KPSClient {
                 let leafNodes = response.leafNodes
                 
                 let audioList: [KPSContentMeta] = leafNodes.filter {
-                    return $0.contentType == .audio
+                    return $0.contentType == .audio || $0.contentType == .audioCollection
                 }
                 
                 weakSelf.mediaPlayIsHasMoreLeafNode = leafNodes.count == 15
@@ -334,6 +334,7 @@ extension KPSClient {
         request(target:.fetchAudio(audioId: audioId, isNeedParent: isNeedParent, isNeedSiblings: isNeedSiblings, server: KPSClient.config.baseServer), completion: resultClosure)
     }
     
+    //MARK: Player Select Track
     public func mediaPlayerSelectTrack(_ index: Int, completion: ((Bool)->Void)? = nil) {
         guard index >= 0, index < mediaPlayList.count else {
             completion?(false)
@@ -342,8 +343,39 @@ extension KPSClient {
 
         mediaPlayerReset()
         mediaPlayerState = .fetchingSource
-
-        fetchAudioContent(audioId: mediaPlayList[index].id) { [weak self] result in
+        
+        let trackMeta = mediaPlayList[index]
+        
+        if trackMeta.contentType == .audioCollection {
+            fetchAudioCollection(id: trackMeta.id) { [weak self] result in
+                guard let weakSelf = self else { return }
+                
+                switch result {
+                case .success(let audioNodes):
+                    
+                    // 第一階段：先拿第一個音檔來播，確保能順利播放
+                    guard let firstAudioId = audioNodes.first?.id else {
+                        weakSelf.mediaPlayerState = .error
+                        completion?(false)
+                        return
+                    }
+                    
+                    // 拿到真正的 audioId 後，去抓實體音檔串流並播放
+                    weakSelf.loadAndPlayAudio(audioId: firstAudioId, trackIndex: index, completion: completion)
+                    
+                case .failure(_):
+                    weakSelf.mediaPlayerState = .error
+                    completion?(false)
+                }
+            }
+        } else {
+            // 原本的舊架構 (album -> audio)：直接拿 trackMeta.id 去抓實體音檔
+            loadAndPlayAudio(audioId: trackMeta.id, trackIndex: index, completion: completion)
+        }
+    }
+    
+    private func loadAndPlayAudio(audioId: String, trackIndex: Int, completion: ((Bool)->Void)?) {
+        fetchAudioContent(audioId: audioId) { [weak self] result in
             guard let weakSelf = self else { return }
 
             guard let track = try? result.get() else {
@@ -352,7 +384,8 @@ extension KPSClient {
                 return
             }
             
-            weakSelf.currentTrack = index
+            // 核心：currentTrack 必須是列表上的 Index，而不是底層音軌的 Index
+            weakSelf.currentTrack = trackIndex
             weakSelf.currentTime = 0
             weakSelf.currentPlayAudioContent = track
             weakSelf.mediaPlayer.removeAllItems()
@@ -363,14 +396,13 @@ extension KPSClient {
                 completion?(false)
                 return
             } else {
-                
                 weakSelf.mediaPlayer.insert(weakSelf.getAVPlayerItem(source: track), after: nil)
                 completion?(true)
             }
-            
         }
     }
     
+    //MARK: Player Play
     public func mediaPlayerPlay(
         targetTrack: Int? = nil,
         completion: ((Bool) -> Void)? = nil

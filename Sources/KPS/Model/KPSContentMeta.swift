@@ -14,6 +14,7 @@ public enum KPSContentType: String {
     case chapter
     case section
     case category
+    case audioCollection
     case unknown
 }
 

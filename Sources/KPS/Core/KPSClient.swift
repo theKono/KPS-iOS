@@ -485,6 +485,22 @@ extension KPSClient {
     }
 }
 
+/// 雙語播放相關
+extension KPSClient {
+    public func fetchAudioCollection(id: String, completion: @escaping(Result<[KPSContentMeta], MoyaError>) -> ()) {
+        fetchCollection(Id: id, isNeedParent: false, isNeedSiblings: false) { result in
+            switch result {
+            case .success(let collection):
+                // childNodes (中/英音檔的 Meta)
+                let audioNodes = collection.children.filter { $0.contentType == .audio }
+                completion(.success(audioNodes))
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+}
 
 // MARK: View Related API
 extension KPSClient {
