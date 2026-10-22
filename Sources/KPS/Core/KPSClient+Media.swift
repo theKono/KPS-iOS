@@ -353,15 +353,24 @@ extension KPSClient {
                 switch result {
                 case .success(let audioNodes):
                     
-                    // 第一階段：先拿第一個音檔來播，確保能順利播放
-                    guard let firstAudioId = audioNodes.first?.id else {
+                    var targetAudioId: String?
+                    
+                    // 尋找符合當前偏好語言的音軌
+                    for node in audioNodes {
+                        if node.audioLanguage == weakSelf.currentAudioLanguage {
+                            targetAudioId = node.id
+                            break
+                        }
+                    }
+                    
+                    // 如果找不到指定語言，拿第一個
+                    guard let finalAudioId = targetAudioId ?? audioNodes.first?.id else {
                         weakSelf.mediaPlayerState = .error
                         completion?(false)
                         return
                     }
                     
-                    // 拿到真正的 audioId 後，去抓實體音檔串流並播放
-                    weakSelf.loadAndPlayAudio(audioId: firstAudioId, trackIndex: index, completion: completion)
+                    weakSelf.loadAndPlayAudio(audioId: finalAudioId, trackIndex: index, completion: completion)
                     
                 case .failure(_):
                     weakSelf.mediaPlayerState = .error
@@ -613,6 +622,63 @@ extension KPSClient {
         
         mediaPlayer.rate = Float(rate)
         
+    }
+    
+    public func mediaPlayerSwitchAudioLanguage(to newLanguage: KPSAudioLanguage, completion: ((Bool) -> Void)? = nil) {
+        // 如果語言一樣就不做事
+        guard currentAudioLanguage != newLanguage else {
+            completion?(true)
+            return
+        }
+        
+        currentAudioLanguage = newLanguage
+        
+        // 確保目前有合法的音軌
+        guard currentTrack >= 0, currentTrack < mediaPlayList.count else {
+            completion?(true)
+            return
+        }
+        
+        let trackMeta = mediaPlayList[currentTrack]
+        
+        if trackMeta.contentType == .audioCollection {
+            let wasPlaying = isMediaPlaying
+            
+            // 【關鍵修改】：記錄切換前的「段落 Index」，而不是時間秒數
+            let savedParagraphIndex = currentParagraph
+            
+            // 重新載入音檔（底層已經會根據 currentAudioLanguage 抓取新語言）
+            mediaPlayerSelectTrack(currentTrack) { [weak self] success in
+                guard let weakSelf = self, success else {
+                    completion?(false)
+                    return
+                }
+                
+                // 嘗試跳轉到對應的段落
+                if savedParagraphIndex >= 0,
+                   let contents = weakSelf.currentPlayAudioContent?.paragraphContents,
+                   contents.count > savedParagraphIndex {
+                    
+                    weakSelf.mediaPlayerSeekParagraph(savedParagraphIndex) { _ in
+                        if wasPlaying {
+                            weakSelf.mediaPlayerPlayAction()
+                        }
+                        completion?(true)
+                    }
+                    
+                } else {
+                    // 退回備案：如果該音軌沒有段落資訊，或者段落對不起來，就直接從 0 秒開始
+                    // mediaPlayerSelectTrack 預設已經把 currentTime 設為 0，所以直接 play 即可
+                    if wasPlaying {
+                        weakSelf.mediaPlayerPlayAction()
+                    }
+                    completion?(true)
+                }
+            }
+        } else {
+            // 舊架構不支援切換，直接回傳成功
+            completion?(true)
+        }
     }
     
     

@@ -183,6 +183,9 @@ public final class KPSClient: NSObject {
     
     public var currentPlayRecord: KPSPlayRecord?
     
+    //MARK: 雙語播放相關
+    public var currentAudioLanguage: KPSAudioLanguage = .en // 預設語言
+    
     //MARK: get only variable
     public var isPlayListLoaded: Bool {
         return mediaPlayList.count > 0
