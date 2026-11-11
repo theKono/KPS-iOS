@@ -16,6 +16,7 @@ public class KPSPlayRecord {
     public var playSpeed: Float
     public var startTime, endTime, length: Double
     private var playedTime: Set<Int>
+    public let trackLanguage: String
     
     init(info: KPSAudioContent, rate: Float, playlistId: String? = nil) {
         collectionId = info.collectionId
@@ -23,6 +24,7 @@ public class KPSPlayRecord {
         trackName = info.name
         trackId = info.id
         playlistNodeId = playlistId ?? info.id
+        trackLanguage = info.audioLanguage
         playSpeed = rate
         startTime = 0.0
         endTime = 0.0
