@@ -649,22 +649,23 @@ extension KPSClient {
         if trackMeta.contentType == .audioCollection {
             let wasPlaying = isMediaPlaying
             
-            // 【關鍵修改】：記錄切換前的「段落 Index」，而不是時間秒數
-            let savedParagraphIndex = currentParagraph
+            // 記錄切換前的「單句 Index」
+            let savedSegmentIndex = currentSegment
             
-            // 重新載入音檔（底層已經會根據 currentAudioLanguage 抓取新語言）
+            // 重新載入音檔
             mediaPlayerSelectTrack(currentTrack) { [weak self] success in
                 guard let weakSelf = self, success else {
                     completion?(false)
                     return
                 }
                 
-                // 嘗試跳轉到對應的段落
-                if savedParagraphIndex >= 0,
-                   let contents = weakSelf.currentPlayAudioContent?.paragraphContents,
-                   contents.count > savedParagraphIndex {
+                // 嘗試切換至當前句子
+                if savedSegmentIndex >= 0,
+                   let contents = weakSelf.currentPlayAudioContent?.content,
+                   savedSegmentIndex < contents.count {
                     
-                    weakSelf.mediaPlayerSeekParagraph(savedParagraphIndex) { _ in
+                    // 呼叫 SeekSegment 跳轉
+                    weakSelf.mediaPlayerSeekSegment(savedSegmentIndex) { _ in
                         if wasPlaying {
                             weakSelf.mediaPlayerPlayAction()
                         }
@@ -672,7 +673,7 @@ extension KPSClient {
                     }
                     
                 } else {
-                    // 退回備案：如果該音軌沒有段落資訊，或者段落對不起來，就直接從 0 秒開始
+                    // 退回備案：如果單句對不起來，就直接從 0 秒開始播放
                     // mediaPlayerSelectTrack 預設已經把 currentTime 設為 0，所以直接 play 即可
                     if wasPlaying {
                         weakSelf.mediaPlayerPlayAction()
