@@ -414,10 +414,15 @@ extension KPSClient {
     //MARK: Player Play
     public func mediaPlayerPlay(
         targetTrack: Int? = nil,
+        audioLanguage: KPSAudioLanguage? = nil,
         completion: ((Bool) -> Void)? = nil
     ) {
         
         mediaPlayerPreFetchIfNeeded()
+        
+        if let lang = audioLanguage {
+            self.currentAudioLanguage = lang
+        }
         
         let isExplicitTarget = (targetTrack != nil && targetTrack! >= 0)
         
