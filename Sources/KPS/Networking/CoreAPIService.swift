@@ -66,7 +66,7 @@ extension CoreAPIService: TargetType {
         case .searchChannel(_, _, _, _):
             return "/searchChannel"
         case .vectorSearch(_, _):
-            return "/vectorSearch"
+            return "/hybridSearch"
         }
     }
     var method: Moya.Method {
@@ -118,10 +118,11 @@ extension CoreAPIService: TargetType {
             return .requestParameters(parameters:paramDic, encoding: queryEncoding)
         case .vectorSearch(let keyword, _):
             var paramDic: [String: Any] = [:]
-            paramDic["language"] = "zh-TW"
-            paramDic["type"] = "audio"
-            paramDic["returnParents"] = true
             paramDic["queryText"] = keyword
+            paramDic["language"] = "zh-TW"
+            paramDic["vectorSearchType"] = "audio"
+            paramDic["targetTypes"] = "album,book"
+            paramDic["returnVectorSearchResultParents"] = true
             return .requestParameters(parameters:paramDic, encoding: queryEncoding)
         }
     }
