@@ -353,24 +353,29 @@ extension KPSClient {
                 switch result {
                 case .success(let audioNodes):
                     
-                    var targetAudioId: String?
+                    var targetAudioNode: KPSContentMeta?
                     
                     // 尋找符合當前偏好語言的音軌
                     for node in audioNodes {
                         if node.audioLanguage == weakSelf.currentAudioLanguage {
-                            targetAudioId = node.id
+                            targetAudioNode = node
                             break
                         }
                     }
                     
                     // 如果找不到指定語言，拿第一個
-                    guard let finalAudioId = targetAudioId ?? audioNodes.first?.id else {
+                    guard let finalNode = targetAudioNode ?? audioNodes.first else {
                         weakSelf.mediaPlayerState = .error
                         completion?(false)
                         return
                     }
                     
-                    weakSelf.loadAndPlayAudio(audioId: finalAudioId, trackIndex: index, completion: completion)
+                    if let targetAudioLang = finalNode.audioLanguage,
+                       weakSelf.currentAudioLanguage != targetAudioLang {
+                        weakSelf.currentAudioLanguage = targetAudioLang
+                    }
+                    
+                    weakSelf.loadAndPlayAudio(audioId: finalNode.id, trackIndex: index, completion: completion)
                     
                 case .failure(_):
                     weakSelf.mediaPlayerState = .error

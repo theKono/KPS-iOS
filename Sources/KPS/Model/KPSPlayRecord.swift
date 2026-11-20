@@ -24,7 +24,7 @@ public class KPSPlayRecord {
         trackName = info.name
         trackId = info.id
         playlistNodeId = playlistId ?? info.id
-        trackLanguage = info.audioLanguage
+        trackLanguage = info.audioLanguage.rawValue
         playSpeed = rate
         startTime = 0.0
         endTime = 0.0

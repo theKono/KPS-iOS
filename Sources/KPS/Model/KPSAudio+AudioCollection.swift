@@ -24,8 +24,12 @@ public enum KPSAudioLanguage: String {
 extension KPSAudioContent {
     
     /// 從 customData 讀取 audioCollectionLang
-    public var audioLanguage: String {
-        return customData?["audioCollectionLang"] as? String ?? KPSAudioLanguage.en.rawValue
+    public var audioLanguage: KPSAudioLanguage {
+        if let langString = customData?["audioCollectionLang"] as? String,
+           let language = KPSAudioLanguage(rawValue: langString) {
+            return language
+        }
+        return .en // 預設 fallback 為英文
     }
     
 }
