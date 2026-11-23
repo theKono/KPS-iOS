@@ -183,6 +183,9 @@ public final class KPSClient: NSObject {
     
     public var currentPlayRecord: KPSPlayRecord?
     
+    //MARK: 雙語播放相關
+    public var currentAudioLanguage: KPSAudioLanguage = .en // 預設語言
+    
     //MARK: get only variable
     public var isPlayListLoaded: Bool {
         return mediaPlayList.count > 0
@@ -196,12 +199,18 @@ public final class KPSClient: NSObject {
                 currentHighlightRange = nil
                 mediaContentDelegate?.kpsClient(client: self, playerCurrentContent: currentPlayAudioContent)
                 setNowPlayingInfo()
+                
                 if currentPlayRecord != nil {
-                    
                     uploadPlayedRecord()
                 }
-                if currentPlayAudioContent != nil && currentPlayAudioContent?.error == nil {
-                    currentPlayRecord = KPSPlayRecord(info: currentPlayAudioContent!, rate: mediaPlayerRate)
+                
+                if let content = currentPlayAudioContent, content.error == nil {
+                    var playlistNodeId: String? = nil
+                    if currentTrack >= 0 && currentTrack < mediaPlayList.count {
+                        playlistNodeId = mediaPlayList[currentTrack].id
+                    }
+                    
+                    currentPlayRecord = KPSPlayRecord(info: content, rate: mediaPlayerRate, playlistId: playlistNodeId)
                 } else {
                     
                 }
@@ -485,6 +494,22 @@ extension KPSClient {
     }
 }
 
+/// 雙語播放相關
+extension KPSClient {
+    public func fetchAudioCollection(id: String, completion: @escaping(Result<[KPSContentMeta], MoyaError>) -> ()) {
+        fetchCollection(Id: id, isNeedParent: false, isNeedSiblings: false) { result in
+            switch result {
+            case .success(let collection):
+                // childNodes (中/英音檔的 Meta)
+                let audioNodes = collection.children.filter { $0.contentType == .audio }
+                completion(.success(audioNodes))
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+}
 
 // MARK: View Related API
 extension KPSClient {

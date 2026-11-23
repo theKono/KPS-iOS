@@ -256,7 +256,7 @@ extension KPSClient {
                 let leafNodes = response.leafNodes
                 
                 let audioList: [KPSContentMeta] = leafNodes.filter {
-                    return $0.contentType == .audio
+                    return $0.contentType == .audio || $0.contentType == .audioCollection
                 }
                 
                 weakSelf.mediaPlayIsHasMoreLeafNode = leafNodes.count == 15
@@ -334,6 +334,7 @@ extension KPSClient {
         request(target:.fetchAudio(audioId: audioId, isNeedParent: isNeedParent, isNeedSiblings: isNeedSiblings, server: KPSClient.config.baseServer), completion: resultClosure)
     }
     
+    //MARK: Player Select Track
     public func mediaPlayerSelectTrack(_ index: Int, completion: ((Bool)->Void)? = nil) {
         guard index >= 0, index < mediaPlayList.count else {
             completion?(false)
@@ -342,8 +343,53 @@ extension KPSClient {
 
         mediaPlayerReset()
         mediaPlayerState = .fetchingSource
-
-        fetchAudioContent(audioId: mediaPlayList[index].id) { [weak self] result in
+        
+        let trackMeta = mediaPlayList[index]
+        
+        if trackMeta.contentType == .audioCollection {
+            fetchAudioCollection(id: trackMeta.id) { [weak self] result in
+                guard let weakSelf = self else { return }
+                
+                switch result {
+                case .success(let audioNodes):
+                    
+                    var targetAudioNode: KPSContentMeta?
+                    
+                    // 尋找符合當前偏好語言的音軌
+                    for node in audioNodes {
+                        if node.audioLanguage == weakSelf.currentAudioLanguage {
+                            targetAudioNode = node
+                            break
+                        }
+                    }
+                    
+                    // 如果找不到指定語言，拿第一個
+                    guard let finalNode = targetAudioNode ?? audioNodes.first else {
+                        weakSelf.mediaPlayerState = .error
+                        completion?(false)
+                        return
+                    }
+                    
+                    if let targetAudioLang = finalNode.audioLanguage,
+                       weakSelf.currentAudioLanguage != targetAudioLang {
+                        weakSelf.currentAudioLanguage = targetAudioLang
+                    }
+                    
+                    weakSelf.loadAndPlayAudio(audioId: finalNode.id, trackIndex: index, completion: completion)
+                    
+                case .failure(_):
+                    weakSelf.mediaPlayerState = .error
+                    completion?(false)
+                }
+            }
+        } else {
+            // 原本的舊架構 (album -> audio)：直接拿 trackMeta.id 去抓實體音檔
+            loadAndPlayAudio(audioId: trackMeta.id, trackIndex: index, completion: completion)
+        }
+    }
+    
+    private func loadAndPlayAudio(audioId: String, trackIndex: Int, completion: ((Bool)->Void)?) {
+        fetchAudioContent(audioId: audioId) { [weak self] result in
             guard let weakSelf = self else { return }
 
             guard let track = try? result.get() else {
@@ -352,7 +398,8 @@ extension KPSClient {
                 return
             }
             
-            weakSelf.currentTrack = index
+            // 核心：currentTrack 必須是列表上的 Index，而不是底層音軌的 Index
+            weakSelf.currentTrack = trackIndex
             weakSelf.currentTime = 0
             weakSelf.currentPlayAudioContent = track
             weakSelf.mediaPlayer.removeAllItems()
@@ -363,20 +410,24 @@ extension KPSClient {
                 completion?(false)
                 return
             } else {
-                
                 weakSelf.mediaPlayer.insert(weakSelf.getAVPlayerItem(source: track), after: nil)
                 completion?(true)
             }
-            
         }
     }
     
+    //MARK: Player Play
     public func mediaPlayerPlay(
         targetTrack: Int? = nil,
+        audioLanguage: KPSAudioLanguage? = nil,
         completion: ((Bool) -> Void)? = nil
     ) {
         
         mediaPlayerPreFetchIfNeeded()
+        
+        if let lang = audioLanguage {
+            self.currentAudioLanguage = lang
+        }
         
         let isExplicitTarget = (targetTrack != nil && targetTrack! >= 0)
         
@@ -581,6 +632,64 @@ extension KPSClient {
         
         mediaPlayer.rate = Float(rate)
         
+    }
+    
+    public func mediaPlayerSwitchAudioLanguage(to newLanguage: KPSAudioLanguage, completion: ((Bool) -> Void)? = nil) {
+        // 如果語言一樣就不做事
+        guard currentAudioLanguage != newLanguage else {
+            completion?(true)
+            return
+        }
+        
+        currentAudioLanguage = newLanguage
+        
+        // 確保目前有合法的音軌
+        guard currentTrack >= 0, currentTrack < mediaPlayList.count else {
+            completion?(true)
+            return
+        }
+        
+        let trackMeta = mediaPlayList[currentTrack]
+        
+        if trackMeta.contentType == .audioCollection {
+            let wasPlaying = isMediaPlaying
+            
+            // 記錄切換前的「單句 Index」
+            let savedSegmentIndex = currentSegment
+            
+            // 重新載入音檔
+            mediaPlayerSelectTrack(currentTrack) { [weak self] success in
+                guard let weakSelf = self, success else {
+                    completion?(false)
+                    return
+                }
+                
+                // 嘗試切換至當前句子
+                if savedSegmentIndex >= 0,
+                   let contents = weakSelf.currentPlayAudioContent?.content,
+                   savedSegmentIndex < contents.count {
+                    
+                    // 呼叫 SeekSegment 跳轉
+                    weakSelf.mediaPlayerSeekSegment(savedSegmentIndex) { _ in
+                        if wasPlaying {
+                            weakSelf.mediaPlayerPlayAction()
+                        }
+                        completion?(true)
+                    }
+                    
+                } else {
+                    // 退回備案：如果單句對不起來，就直接從 0 秒開始播放
+                    // mediaPlayerSelectTrack 預設已經把 currentTime 設為 0，所以直接 play 即可
+                    if wasPlaying {
+                        weakSelf.mediaPlayerPlayAction()
+                    }
+                    completion?(true)
+                }
+            }
+        } else {
+            // 舊架構不支援切換，直接回傳成功
+            completion?(true)
+        }
     }
     
     
